@@ -1,0 +1,23 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_PulseMeter.h' )]
+  [ArduinoClass( 'Mitov::PulseMeter' )]
+  [CreateName( 'PulseMeter' )]
+  [Name( 'Pulse Meter' )]
+  [Category( TArduinoDigitalMeasurementToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FOldValue' )]
+  +TArduinoPulseMeter : TArduinoCommonUnsignedEnableSource
+
+    [OWPrimaryPin]
+    [ArduinoInterruptChange( '_Interrupt', True, 'InterruptHandler' )]
+    [ArduinoAddVariableIfPinInterruptConnected( Boolean, 'FChanged' )]
+    InputPin : TOWArduinoDigitalInterruptSinkPin
+
+    [NamePostfix( '(mS)' )]
+    OutputPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

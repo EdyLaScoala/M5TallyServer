@@ -1,0 +1,38 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoKumanRobotMotorShieldChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoKumanRobotMotorShieldChannel : TArduinoBasicMotorShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Left Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '5' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '7' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '8' )]
+  TArduinoKumanRobotMotorShieldChannelLeft : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Right Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '6' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '13' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '12' )]
+  TArduinoKumanRobotMotorShieldChannelRight : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [CreateName( 'Motor Shield' )]
+  [Category( TArduinoKumanToolbarCategory )]
+  [Category( TArduinoDCMottorsToolbarCategory )]
+  [Name( 'Kuman/Xiro Robot Motor Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '5', 'Left Motor Enable' )]
+  [ArduinoShieldPin( '7', 'Left Motor Forward' )]
+  [ArduinoShieldPin( '8', 'Left Motor Reverse' )]
+  [ArduinoShieldPin( '6', 'Right Motor Enable' )]
+  [ArduinoShieldPin( '13', 'Left Motor Forward' )]
+  [ArduinoShieldPin( '12', 'Left Motor Reverse' )]
+  +TArduinoKumanRobotMotorShield : TArduinoShield, IStandardShield
+
+    [AddItem( TArduinoKumanRobotMotorShieldChannelLeft )]
+    [AddItem( TArduinoKumanRobotMotorShieldChannelRight )]
+    Motors : TArduinoKumanRobotMotorShieldChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

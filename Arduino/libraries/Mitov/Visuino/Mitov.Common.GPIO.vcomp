@@ -1,0 +1,27 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  TArduinoI2CGPIOBasic : TArduinoComponent
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    Channels : TArduinoDigitalGPIOChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoI2CGPIO : TArduinoI2CGPIOBasic
+
+    Address : TArduinoUInt8
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoEnableI2CGPIO : TArduinoI2CGPIO
+
+    Enabled  : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

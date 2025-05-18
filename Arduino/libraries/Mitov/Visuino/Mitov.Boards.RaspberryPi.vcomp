@@ -1,0 +1,138 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Raspberry Pi' )]
+  TRaspberryPiCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ARM' )]
+  TArduinoARMCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'RP2040' )]
+  TRP2040Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ARM' )]
+  [Category( TRaspberryPiCategory )]
+  [AlternateCategory( TArduinoARMCategory )]
+  [ParentImage( TArduinoARMCategory )]
+  TRaspberryPiARMCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'RP2040' )]
+  [Category( TRaspberryPiCategory )]
+  [AlternateCategory( TRP2040Category )]
+  [ParentImage( TRP2040Category )]
+  TRaspberryPiRP2040Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IRaspberryPiShield )]
+  TArduinoRaspberryPiHats : TArduinoShields;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RaspberryPi_Console.h' )]
+  [ArduinoClass( 'Mitov::RaspberryPiConsole' )]
+  [CreateName( 'Console' )]
+  [Name( 'Console' )]
+  +TArduinoRaspberryPiConsoleModule : TArduinoShield
+
+    [OWPinGroup( TArduinoRaspberryPiConsoleModule )]
+    [OWPrimaryPin]
+    [ArduinoPinPair( TArduinoRaspberryPiConsoleModule )]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+
+    [OWPinGroup( TArduinoBasicSerial )]
+    [OWPrimaryPin]
+    [ArduinoPinPair( TArduinoRaspberryPiConsoleModule )]
+    OutputPin : TOWArduinoByteCharTextSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRaspberryPiEthernetSockets : TArduinoBasicSockets;
+//---------------------------------------------------------------------------
+  [ArduinoHelpPostfix( '(Raspberry Pi Sockets)' )]
+  [PersistentCollection( TArduinoRaspberryPiEthernetSockets )]
+  [ArduinoClass( 'Mitov::TCPClientSocket' )] //<Mitov::BasicEthernetShield,EthernetClient>' )]
+  [ArduinoInclude( 'Mitov_RPi_Client.h' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicTCPClientSocket_Implementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_CLIENT', 'RPi_Client' )]
+  +TArduinoRaspberryPiTCPClientSocket : TArduinoBasicTCPClientSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRaspberryPiEthernetSockets )]
+  [ArduinoHelpPostfix( '(Raspberry Pi Sockets)' )]
+  [ArduinoClass( 'Mitov::TCPServerSocket' )] //<Mitov::BasicEthernetShield,EthernetServer,EthernetClient>' )]
+  [ArduinoInclude( 'Mitov_RPi_Client.h' )]
+  [ArduinoInclude( 'Mitov_RPi_Server.h' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'SERVER', 'Mitov::AcceptWrapper<Mitov::RPi_Server, Mitov::RPi_Client>' )]
+  [ArduinoTemplateParameter( 'CLIENT', 'Mitov::RPi_Client' )]
+  +TArduinoRaspberryPiTCPServerSocket : TArduinoBasicTCPServerSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRaspberryPiEthernetSockets )]
+  [ArduinoHelpPostfix( '(Raspberry Pi Sockets)' )]
+  [ArduinoClass( 'Mitov::UDPSocket' )] //<Mitov::BasicEthernetShield,EthernetUDP>' )]
+  [ArduinoInclude( 'Mitov_RPi_Udp.h' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'CLIENT', 'Mitov::RPi_UDP' )]
+  +TArduinoRaspberryPiUDPSocket : TArduinoBasicUDPSocket;
+//---------------------------------------------------------------------------
+  [CreateName( 'Network' )]
+  [Name( 'Network' )]
+  [ArduinoInclude( 'RaspberryPi_Network_Module.h' )]
+  [ArduinoClass( 'Mitov::RaspberryPiNetworkModule' )]
+  +TArduinoRaspberryPiNetworkModule : TArduinoShield
+
+    [ArduinoExcludeCollectionItems]
+    Sockets : TArduinoRaspberryPiEthernetSockets
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoSpeedOnlySerial : TArduinoBasicSpeedSerial;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_ARDUINO_RASPBERRY_PI' )]
+  [ArduinoBoardArchitecture( 'piduino' )]
+  [ArduinoBoardCompileParams( 'RaspberryPi:piduino:bplus' )]
+  TArduino_Raspberry_Pi_Basic_Board : TArduinoBoardExtendableImplementation
+
+    [AddItem( TArduinoRaspberryPiConsoleModule )]
+    [AddItem( TArduinoRaspberryPiNetworkModule )]
+    Modules : TArduinoModules
+    
+    [AddItem( TArduinoSpeedOnlySerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalPullUpDownI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 3,  1, TArduinoAdditionalDigitalPullUpDownI2C0Channel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 4,  5, TArduinoAdditionalDigitalPullUpDownChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 9,  1, TArduinoAdditionalDigitalPullUpDownSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 10, 1, TArduinoAdditionalDigitalPullUpDownSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 11, 1, TArduinoAdditionalDigitalPullUpDownSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 12, 2, TArduinoAdditionalDigitalPullUpDownPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 14, 1, TArduinoAdditionalDigitalPullUpDownSerial0Channel, 'Digital(TX)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 15, 1, TArduinoAdditionalDigitalPullUpDownSerial0Channel, 'Digital(RX)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 16, 2, TArduinoAdditionalDigitalPullUpDownChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 18, 2, TArduinoAdditionalDigitalPullUpDownPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 20, 8, TArduinoAdditionalDigitalPullUpDownChannel )]
+    Digital : TArduinoDigitalChannels
+    
+    [ComponentEditorEntryDesign( 'Add &Hats ...' )]
+    [Name( 'Hats' )]
+    Shields : TArduinoRaspberryPiHats
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Raspberry Pi' )]
+  [Category( TRaspberryPiARMCategory )]
+  [ParentImage( TRaspberryPiCategory )]
+  +TArduino_Raspberry_Pi_Board : TArduino_Raspberry_Pi_Basic_Board
+  
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

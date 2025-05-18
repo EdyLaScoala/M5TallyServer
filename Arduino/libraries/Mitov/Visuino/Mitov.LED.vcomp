@@ -1,0 +1,99 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoCommonLEDRGB : TArduinoCommonColorSink
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    [ArduinoFullColor]
+    InitialValue : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGB LED' )]
+  [CreateName( 'LED' )]
+  [ArduinoInclude( 'Mitov_RGB_LED.h' )]
+  [ArduinoClass( 'Mitov::RGBLed' )]
+  [Category( TArduinoDigitalDisplaysToolbarCategory )]
+  [ArduinoStart]
+  [ParentImage( TArduinoBasicRGBLEDModule )]
+  +TArduinoLEDRGB : TArduinoCommonLEDRGB
+
+    [OWPrimaryPin]
+    RedOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    GreenOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    BlueOutputPin : TOWArduinoAnalogSourcePin
+
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGBW LED' )]
+  [CreateName( 'LED' )]
+  [ArduinoInclude( 'Mitov_RGB_LED.h' )]
+  [ArduinoClass( 'Mitov::RGBWLed' )]
+  [Category( TArduinoDigitalDisplaysToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoLEDRGBW : TArduinoCommonRGBWColorSink
+
+    [OWPrimaryPin]
+    RedOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    GreenOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    BlueOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    WhiteOutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    [ArduinoFullColor]
+    InitialValue : TRGBWColor = Null
+
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RGB_LED.h' )]
+  [ArduinoClass( 'Mitov::Arduino_SingleRGBLedModule' )]
+  [Name( 'RGB LED' )]
+  [CreateName( 'RGB LED' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ParentImage( TArduinoLEDRGB )]
+  [CollectionItemAssociation( TArduinoLEDRGB )]
+  TArduinoSingleRGBLed_Basic_Module : TArduinoShield
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoColorSinkPin
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    [ArduinoFullColor]
+    InitialValue : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RGB_LED.h' )]
+  [ArduinoClass( 'Mitov::Arduino_SingleRGBLedModule' )]
+  [Name( 'RGB LED' )]
+  [CreateName( 'RGB LED' )]
+  TArduinoSingleRGBLed_Basic_Element : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoColorSinkPin
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    [ArduinoFullColor]
+    InitialValue : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Arduino_SingleInvertedRGBLedModule' )]
+  TArduinoSingleRGBLed_Inverted_Basic_Module : TArduinoSingleRGBLed_Basic_Module;
+//---------------------------------------------------------------------------
+; // Mitov

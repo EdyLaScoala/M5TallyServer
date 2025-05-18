@@ -1,0 +1,42 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LEGO_RCX_LightSensor.h' )]
+  [ArduinoClass( 'Mitov::LEGO_RCX_LightSensor' )]
+  [Name( 'LEGO RCX Light Sensor' )]
+  [CreateName( 'LightSensor' )]
+  [ArduinoWebKeywords( 'LEGO RCX Light Sensor' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FHasValue' )]
+  +TArduinoLEGORCXLightSensor : TArduinoCommonClockedAnalogEnableSource
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    ChargeOutputPin : TOWArduinoDigitalOutputSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    SensorInputPin : TOWArduinoAnalogInputSinkPin
+
+    [ValueRange( 1, 10000 )]
+    ChargePeriod : Unsigned = 2
+
+    Normalize : Boolean = True
+
+    [ValueRange( 0, 1023 )]
+    MinValue : Unsigned = 90
+
+    [ValueRange( 1, 1024 )]
+    MaxValue : Unsigned = 160
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

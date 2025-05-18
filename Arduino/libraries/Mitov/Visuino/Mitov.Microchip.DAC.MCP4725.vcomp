@@ -1,0 +1,56 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoMicrochipMCP4725ShiftDownMode : Enum
+
+    sdm1K
+    sdm100K
+    sdm500K
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_MCP4725.h' )]
+  [ArduinoClass( 'Mitov::Microchip_MCP4725' )]
+  TArduinoMicrochipMCP4725BasicExtender : Extender
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+//    [ArduinoUseBindingSetter]
+//    Enabled
+
+    [ArduinoUseBindingCheckSetter( 'UpdateValue' )]
+    ShiftDown : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateValue' )]
+    [OldName( 'ShitDownMode' )]
+    ShiftDownMode : TArduinoMicrochipMCP4725ShiftDownMode = sdm500K
+
+    WriteToEEPROM : Boolean = False
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [CreateName( 'DAC' )]
+  [ArduinoWebKeywords( 'Microchip MCP4725' )]
+  [Category( TArduinoAnalogOutputToolbarCategory )]
+  TArduinoMicrochipMCP4725Basic : TArduinoI2CClockedEnableComponent, TArduinoMicrochipMCP4725BasicExtender
+
+    [DesignRange( $60, $67 )]
+    Address : TArduinoUInt8 = $62
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip I2C Digital To Analog Converter (DAC) - MCP4725' )]
+  +TArduinoMicrochipMCP4725 : TArduinoMicrochipMCP4725Basic;
+//---------------------------------------------------------------------------
+  *TArduinoMicrochipMCP4725BasicShield : TArduinoClockEnabledBasicShield, TArduinoMicrochipMCP4725BasicExtender;
+//---------------------------------------------------------------------------
+; // Mitov

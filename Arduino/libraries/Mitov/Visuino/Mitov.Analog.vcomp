@@ -1,0 +1,494 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoAnalogSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoValue_BasicExtender : Extender
+  
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    [ArduinoAddPostfixIfElementHasAttribute( ArduinoValueStateAttribute, 'State' )]
+    Elements
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoValue_BasicSateActiveExtender : TArduinoValue_BasicExtender
+  
+    [ArduinoAddVariableIfElementHasAttribute( ArduinoValueStateAttribute, Boolean, 'FStateActive', False )]
+    Elements
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoValue_Extender : TArduinoValue_BasicSateActiveExtender
+
+    [ArduinoUseBindingCheckSetter( 'UpdateValue' )]
+    [ArduinoNonSharedBinding]
+    [ArduinoFlexibleVariableIfCollectionElements( Elements )]
+    Value
+
+    [ArduinoTemplateParameterCollectionCountOfAttribute( 'COUNT_Ramp_Elements', ArduinoValueRampAttribute )]
+    [ArduinoSizedAddVariableIfElementHasAttribute( ArduinoValueRampAttribute, Unsigned, 'FActiveElement', 0, 1 )]
+    [ArduinoAddPostfixIfElementHasAttribute( ArduinoValueRampAttribute, 'Ramp' )]
+    Elements
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [CreateName( 'AnalogValue' )]
+  [Name( 'Analog Value' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Category( TArduinoAnalogDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoFloatValue : TArduinoCommonClockedAnalogSource, TArduinoValue_Extender
+
+    Value : Single = 0.0
+
+    Elements : TArduinoAnalogSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterCollectionIndexOfAttribute( ArduinoValueRampAttribute )]
+  TArduinoBasicSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoAnalogSetValueElements )]
+  [ArduinoHelpPostfix( '(Analog Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicAnalogSetValueElement : TArduinoBasicSetValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonMux.h' )]
+  [ArduinoClass( 'Mitov::CommonMux' )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  TArduinoMux_Extender : Extender
+
+//    [ArduinoChangeOnlyPin]
+//    OutputPin
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoUnsignedSinkPin
+
+    [OWExcludeBindings]
+    [ValueRange( 0, 4000 )]
+    [ArduinoFlexibleVariable]
+    InitialChannel : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Mux(Multi channel Switch)' )]
+  [CreateName( 'AnalogMux' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogMux : TArduinoAnalogMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonDemux.h' )]
+  [ArduinoClass( 'Mitov::CommonDemux' )]
+  TArduinoDemux_Extender : Extender
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoUnsignedSinkPin
+
+    [OWExcludeBindings]
+    [ValueRange( 0, 4000 )]
+    [ArduinoFlexibleVariable]
+    InitialChannel : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'AnalogDemux' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogDemux : TArduinoCommonAnalogSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoAnalogSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Switch.h' )]
+  [ArduinoClass( 'Mitov::CommonSwitch' )]
+  [ArduinoVariable( Boolean, 'FPopulated' )]
+  [ArduinoVariable( Boolean, 'FOutputStarted' )]
+  TArduinoSwitch_Extender : Extender
+  
+    EnableInputPin : TOWArduinoDigitalSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialEnabled : Boolean = False
+
+    IgnoreSame : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [ArduinoContructorParameter( '0.0f' )]
+  [Name( 'Analog On/Off Switch' )]
+  [CreateName( 'AnalogSwitch' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogSwitch : TArduinoCommonAnalogSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonMux.h' )]
+  [ArduinoClass( 'Mitov::ToggleSwitch' )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  TArduinoToggleSwitch_Extender : Extender
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoFlexibleVariable]
+    InitialSelectValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Toggle Switch' )]
+  [CreateName( 'AnalogToggleSwitch' )]
+  [ArduinoContructorParameter( '0.0f' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogToggleSwitch : TArduinoCommonAnalogSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonDemux.h' )]
+  [ArduinoClass( 'Mitov::ToggleDemux' )]
+  TArduinoToggleDemux_Extender : Extender
+
+    [OWPrimaryPin]
+    SelectInputPin: TOWArduinoDigitalSinkPin
+
+    [ArduinoFlexibleVariable]
+    InitialSelectValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Toggle Demux' )]
+  [CreateName( 'AnalogToggleDemux' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogToggleDemux : TArduinoCommonAnalogSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin  : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoExclude]
+  TArduinoMultiSource_Extender : Extender
+
+    [ArduinoPassTroughPin( 'OutputPins' )]
+    InputPin
+    
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'AnalogMultiSource' )]
+  [Name( 'Analog Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogMultiSource : TArduinoCommonAnalogSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogNonFlexibleSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoAnalogNonFlexibleSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::RepeatSource' )]
+  TArduinoRepeat_Extender : Extender
+
+    Count : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatAnalog' )]
+  [Name( 'Repeat Analog' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatAnalog : TArduinoCommonAnalogFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RampToValue.h' )]
+  [ArduinoClass( 'Mitov::RampToValue' )]
+  [CreateName( 'RampToValue' )]
+  [Name( 'Ramp To Analog Value' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin( 'SystemLoopBeginElapsed( AElapsedMicros )' )]
+  [ArduinoElapsedMicros]
+  +TArduinoRampToValue : TArduinoCommonAnalogFilter
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInitialValue' )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+    [MinValue( 0 )]
+    [ NamePostfix( '(S)' ) ]
+    [ReplaceValue(0.0, 0.00001)]
+    Slope : Single = 1.0
+
+    [MinValue( 0 )]
+    MaxStep : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_MultiMerger.h' )]
+  [ArduinoClass( 'Mitov::MultiMerger' )]
+  TArduinoMultiMerger_Extender : Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Multi-Source Merger' )]
+  [CreateName( 'AnalogMultiMerger' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogMultiMerger : TArduinoAnalogMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SchmittTrigger.h' )]
+  [ArduinoClass( 'Mitov::SchmittTrigger' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Schmitt Trigger (Hysteresis)' )]
+  [CreateName( 'SchmittTrigger' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoAnalogSchmittTrigger : TArduinoCommonAnalogEnableSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Value : Single = 0.5
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Threshold : Single = 0.25
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Remember.h' )]
+  TArduinoRemember_Basic_Extender : Extender
+
+    [Name( 'Remember (Write)' )]
+    [ArduinoPinDisconnectedAddPostfix( '_Simple' )]
+    RememberInputPin : TOWArduinoClockSinkPin
+
+    [Name( 'Recall (Read)' )]
+    [ArduinoPinIsConnectedFlag]
+    RecallInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Remember' )]
+  TArduinoRemember_Extender : TArduinoRemember_Basic_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'float' )]
+  [ArduinoTemplateParameter( 'DATA', 'float' )]
+  [CreateName( 'RememberAnalog' )]
+  [Name( 'Remember Analog Value' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoRememberAnalog : TArduinoCommonAnalogFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( Single, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreValues' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [Name( 'Ignore Analog Values' )]
+  [CreateName( 'IgnoreAnalogValues' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  +TArduinoIgnoreAnalogValues : TArduinoCommonAnalogFilter
+
+    Value : Single = 0.0
+
+    PassValuesBellow : Boolean = False
+    PassEqualValues : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'float &', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AExclude' )]
+  [Name( 'Exclude' )]
+  TArduinoIgnoreAnalogValuesExcludeCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoIgnoreAnalogValuesExcludeCallChain]
+  TArduinoAnalogRangeElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoBasicRangeElement : TArduinoBasicNamedExludePersistent
+
+    PassEqualMax : Boolean = False
+    PassEqualMin : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Ranges)' )]
+  [ArduinoClass( 'Mitov::IgnoreRangeElement' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [Name( 'Range' )]
+  [CreateName( 'Range' )]
+  [PersistentCollection( TArduinoAnalogRangeElements )]
+  +TArduinoAnalogRangeElement : TArduinoBasicRangeElement
+
+    Min : Single = 0.0
+    Max : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreRanges' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [Name( 'Ignore Analog Ranges' )]
+  [CreateName( 'IgnoreAnalogRanges' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  +TArduinoIgnoreAnalogRanges : TArduinoCommonAnalogFilter
+
+    IgnoredOutputPin : TOWArduinoDigitalSourcePin
+
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoAnalogRangeElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Snapshot.h' )]
+  [ArduinoClass( 'Mitov::Snapshot' )]
+  TArduinoSnapshot_Extender : Extender
+
+    [OWPrimaryPin]
+    SnapshotInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [ArduinoContructorParameter( '0.0f' )]
+  [CreateName( 'AnalogSnapshot' )]
+  [Name( 'Analog Snapshot' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogSnapshot : TArduinoCommonAnalogFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GenericValueLimit' )]
+  [ArduinoProcessChildParentVariables]
+  TArduinoAnalogBasicLimit : TArduinoCodePersistent
+
+    Value : Single
+    RollOver : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAnalogMinLimit : TArduinoAnalogBasicLimit
+  
+    Value = 0.0
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAnalogMaxLimit : TArduinoAnalogBasicLimit
+  
+    Value = 1.0
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAnalogIteratorSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoAddValueElement' )]
+  [Name( 'Add Value' )]
+  [ParentImage( TArduinoAdd )]
+  [PersistentCollection( TArduinoAnalogIteratorSetValueElements )]
+  +TArduinoAnalogAddValueElement : TArduinoAnalogBasicSetterValueElement
+
+    Value = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AnalogIntegrator.h' )]
+  [ArduinoClass( 'Mitov::AnalogIntegrator' )]
+  [CreateName( 'Integrator' )]
+  [Name( 'Analog Integrator(Integral)' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoOptionalVariable( Single, 'FCurrentValue', 0.0 )]
+  [ArduinoOptionalVariable( Single, 'FLastInput', 0.0 )]
+  +ArduinoAnalogIntegrator : TArduinoCommonAnalogFilter
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoVariableIfPinConnected( 'FCurrentValue' )]
+    OutputPin
+
+    [ArduinoVariableIfPinConnected( 'FLastInput' )]
+    InputPin
+
+    InitialValie : Single = 0.0
+  
+    Min : TArduinoAnalogMinLimit
+    Max : TArduinoAnalogMaxLimit
+
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoAnalogIteratorSetValueElements
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AnalogDifferentiator.h' )]
+  [ArduinoClass( 'Mitov::AnalogDifferentiator' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [CreateName( 'Differentiator' )]
+  [Name( 'Analog Differentiator(Delta Change)' )]
+  [ArduinoStart]
+  [ArduinoOptionalVariable( Single, 'FCurrentValue', 0.0 )]
+  [ArduinoOptionalVariable( Single, 'FLastInput', 0.0 )]
+  [ArduinoOptionalVariable( Boolean, 'FPopulated', True )]
+  +ArduinoAnalogDifferentiator : TArduinoCommonAnalogFilter
+
+    [ArduinoVariableIfPinConnected( 'FCurrentValue' )]
+    [ArduinoVariableIfPinConnected( 'FPopulated' )]
+    InputPin
+
+    [ArduinoVariableIfPinConnected( 'FLastInput' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

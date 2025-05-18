@@ -1,0 +1,389 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoGeneratorWhenDisabled' )]
+  TArduinoGeneratorWhenDisabled : TArduinoCodePersistent
+
+    Reset : Boolean = False
+
+    [ArduinoVariableIfNotDefault( Boolean, 'FCycleCompleted', True )]
+    CompleteCycle : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicGenerator_Extender : Extender
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [DesignRange( 0.0001, 1000 )]
+    [MinValue( 0 )]
+    [NamePostfix( ' (Hz)' )]
+    Frequency : Single = 1.0
+
+    [ValueRange( 0, 1 )]
+    Phase : Single = 0.0
+
+    WhenDisabled : TArduinoGeneratorWhenDisabled
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoLoopBegin( 'SystemLoopBeginPhase( AElapsedMicros )' )]
+  [ArduinoElapsedMicros]
+  TArduinoBasicFrequencyAnalogGenerator : TArduinoCommonClockedAnalogEnableSource, TArduinoBasicGenerator_Extender
+
+    [DesignRange( -10000, 10000 )]
+    Amplitude : Single = 0.5
+
+    [DesignRange( -10000, 10000 )]
+    Offset : Single = 0.5
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAsymmetricGenerator_Extender : Extender
+
+    [ValueRange( -1.0, 1.0 )]
+    Asymmetry : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAsymmetricAnalogGenerator : TArduinoBasicFrequencyAnalogGenerator, TArduinoAsymmetricGenerator_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoLoopBegin( 'SystemLoopBeginPhase( AElapsedMicros )' )]
+  [ArduinoElapsedMicros]
+  TArduinoBasicFrequencyIntegerGenerator : TArduinoCommonClockedIntegerEnableSource, TArduinoBasicGenerator_Extender
+
+    [DesignRange( -10000, 10000 )]
+    Amplitude : Integer = 1000
+
+    [DesignRange( -10000, 10000 )]
+    Offset : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAsymmetricIntegerGenerator : TArduinoBasicFrequencyIntegerGenerator, TArduinoAsymmetricGenerator_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoLoopBegin( 'SystemLoopBeginPhase( AElapsedMicros )' )]
+  [ArduinoElapsedMicros]
+  TArduinoBasicFrequencyUnsignedGenerator : TArduinoCommonClockedUnsignedEnableSource, TArduinoBasicGenerator_Extender
+
+    [DesignRange( 0, 10000 )]
+    Amplitude : Unsigned = 1000
+
+    [DesignRange( 0, 10000 )]
+    Offset : Unsigned = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAsymmetricUnsignedGenerator : TArduinoBasicFrequencyUnsignedGenerator, TArduinoAsymmetricGenerator_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TriangleGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::TriangleAnalogGenerator' )]
+  [CreateName( 'TriangleAnalogGenerator' )]
+  [Name( 'Triangle Analog Generator' )]
+  [Category( TArduinoAnalogGeneratorsToolbarCategory )]
+  +TArduinoTriangleAnalogGenerator : TArduinoAsymmetricAnalogGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TriangleGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::TriangleIntegerGenerator' )]
+  [CreateName( 'TriangleIntegerGenerator' )]
+  [Name( 'Triangle Integer Generator' )]
+  [Category( TArduinoIntegerGeneratorsToolbarCategory )]
+  +TArduinoTriangleIntegerGenerator : TArduinoAsymmetricIntegerGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TriangleGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::TriangleIntegerGenerator' )]
+  [CreateName( 'TriangleUnsignedGenerator' )]
+  [Name( 'Triangle Unsigned Generator' )]
+  [Category( TArduinoUnsignedGeneratorsToolbarCategory )]
+  +TArduinoTriangleUnsignedGenerator : TArduinoAsymmetricUnsignedGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GaussGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonGaussGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [CreateName( 'GaussAnalogGenerator' )]
+  [Name( 'Gauss Analog Generator' )]
+  [Category( TArduinoAnalogGeneratorsToolbarCategory )]
+  [ArduinoVariable( Unsigned, 1, 'FIndex' )]
+  +TArduinoGaussAnalogGenerator : TArduinoCommonClockedAnalogEnableSource
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [DesignRange( -10000, 10000 )]
+    Mean : Single = 0.0
+
+    [DesignRange( -10000, 10000 )]
+    StandardDeviation : Single = 1.0
+
+    Seed : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GaussGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonGaussGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'int32_t' )]
+  [CreateName( 'GaussIntegerGenerator' )]
+  [Name( 'Gauss Integer Generator' )]
+  [Category( TArduinoIntegerGeneratorsToolbarCategory )]
+  [ArduinoVariable( Unsigned, 1, 'FIndex' )]
+  +TArduinoGaussIntegerGenerator : TArduinoCommonClockedIntegerEnableSource
+
+    Mean : Integer = 0
+    StandardDeviation : Integer = 1000
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GaussGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonGaussGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'uint32_t' )]
+  [CreateName( 'GaussUnsignedGenerator' )]
+  [Name( 'Gauss Unsigned Generator' )]
+  [Category( TArduinoUnsignedGeneratorsToolbarCategory )]
+  [ArduinoVariable( Unsigned, 1, 'FIndex' )]
+  +TArduinoGaussUnsignedGenerator : TArduinoCommonClockedUnsignedEnableSource
+
+    Mean : Unsigned = 10000
+    StandardDeviation : Unsigned = 1000
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RandomGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomAnalogGenerator' )]
+  [CreateName( 'RandomAnalogGenerator' )]
+  [Name( 'Random Analog Generator' )]
+  [Category( TArduinoAnalogGeneratorsToolbarCategory )]
+  +TArduinoRandomAnalogGenerator : TArduinoCommonClockedAnalogEnableSource
+
+    [DesignRange( -10000, 10000 )]
+    Min : Single = 0.0
+
+    [DesignRange( -10000, 10000 )]
+    Max : Single = 1.0
+
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RandomGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomIntegerGenerator<int32_t>' )]
+  [CreateName( 'RandomIntegerGenerator' )]
+  [Name( 'Random Integer Generator' )]
+  [Category( TArduinoIntegerGeneratorsToolbarCategory )]
+  +TArduinoRandomIntegerGenerator : TArduinoCommonClockedIntegerEnableSource
+
+    Min : Integer = -1000
+    Max : Integer = 1000
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RandomGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomIntegerGenerator<int32_t>' )]
+  [CreateName( 'RandomUnsignedGenerator' )]
+  [Name( 'Random Unsigned Generator' )]
+  [Category( TArduinoUnsignedGeneratorsToolbarCategory )]
+  +TArduinoRandomUnsignedGenerator : TArduinoCommonClockedUnsignedEnableSource
+
+    Min : Unsigned = 0
+    Max : Unsigned = 1000
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMaxComplex : TArduinoComplex
+
+    Real = 1.0
+    Imaginary = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RandomGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TComplex' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomComplexImplementation' )]
+  [Category( TArduinoComplexGeneratorsToolbarCategory )]
+  [CreateName( 'RandomComplex' )]
+  [Name( 'Random Complex' )]
+  +TArduinoRandomComplexGenerator : TArduinoCommonClockedComplexEnabledSource
+
+    Min : TArduinoComplex
+    Max : TArduinoMaxComplex
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RandomGenerator.h' )]
+  [ArduinoClass( 'Mitov::RandomDigitalGenerator' )]
+  [CreateName( 'RandomDigitalGenerator' )]
+  [Name( 'Random Digital Generator' )]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  [Category( TArduinoDigitalGeneratorsToolbarCategory )]
+  +TArduinoRandomDigitalGenerator : TArduinoCommonClockedBooleanEnableSource
+
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SineGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SineAnalogGenerator' )]
+  [ArduinoTemplateParameter( 'Asymmetry', 'Mitov::EmptyProperty<22>' )]
+  [CreateName( 'SineAnalogGenerator' )]
+  [Name( 'Sine Analog Generator' )]
+  [Category( TArduinoAnalogGeneratorsToolbarCategory )]
+  +TArduinoSineGenerator : TArduinoBasicFrequencyAnalogGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SineGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SineIntegerGenerator' )]
+  [ArduinoTemplateParameter( 'Asymmetry', 'Mitov::EmptyProperty<22>' )]
+  [CreateName( 'SineIntegerGenerator' )]
+  [Name( 'Sine Integer Generator' )]
+  [Category( TArduinoIntegerGeneratorsToolbarCategory )]
+  +TArduinoSineIntegerGenerator : TArduinoBasicFrequencyIntegerGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SineGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SineIntegerGenerator' )]
+  [ArduinoTemplateParameter( 'Asymmetry', 'Mitov::EmptyProperty<22>' )]
+  [CreateName( 'SineUnsignedGenerator' )]
+  [Name( 'Sine Unsigned Generator' )]
+  [Category( TArduinoUnsignedGeneratorsToolbarCategory )]
+  +TArduinoSineUnsignedGenerator : TArduinoBasicFrequencyUnsignedGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SquareGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::TypedSquareGenerator' )]
+//  [ArduinoContructorParameter( '0.5f, 0.5f' )]
+  [CreateName( 'SquareAnalogGenerator' )]
+  [Name( 'Square Analog Generator' )]
+  [Category( TArduinoAnalogGeneratorsToolbarCategory )]
+//  [ArduinoStart]
+  +TArduinoSquareGenerator : TArduinoAsymmetricAnalogGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SquareGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::TypedSquareGenerator' )]
+  [CreateName( 'SquareIntegerGenerator' )]
+  [Name( 'Square Integer Generator' )]
+  [Category( TArduinoIntegerGeneratorsToolbarCategory )]
+  +TArduinoSquareIntegerGenerator : TArduinoAsymmetricIntegerGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SquareGenerator.h' )]
+  [ArduinoClass( 'Mitov::TypedFrequencyGenerator' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::TypedSquareGenerator' )]
+  [CreateName( 'SquareUnsignedGenerator' )]
+  [Name( 'Square Unsigned Generator' )]
+  [Category( TArduinoUnsignedGeneratorsToolbarCategory )]
+  +TArduinoSquareUnsignedGenerator : TArduinoAsymmetricUnsignedGenerator;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BinaryGenerators.h' )]
+  [Category( TArduinoDigitalGeneratorsToolbarCategory )]
+  TArduinoBasicBooleanGenerator : TArduinoCommonEnableBooleanSource
+
+    [OldName( 'StartValue' )]
+//    [ArduinoFlexibleVariable]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BinaryGenerators.h' )]
+  [ArduinoClass( 'Mitov::PulseGenerator' )]
+  [CreateName( 'PulseGenerator' )]
+  [Name( 'Pulse Generator' )]
+//  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOptionalVariable( Single, 'FPhase', 0.0 )]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  +TArduinoPulseGenerator : TArduinoBasicBooleanGenerator
+  
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [DesignRange( 0.0001, 1000 )]
+    [MinValue( 0 )]
+//    [ArduinoUseBindingSetter]
+    [NamePostfix( ' (Hz)' )]
+    Frequency : Single = 1.0
+
+    [ValueRange( -1.0, 1.0 )]
+    [ArduinoVariableIfNotDefault( 'FPhase' )]
+    Asymmetry : Single = 0.0
+
+    [ValueRange( 0, 1 )]
+    [ArduinoVariableIfNotDefault( 'FPhase' )]
+    [ArduinoUseBindingCheckSetter( 'UpdatePhase' )]
+    Phase : Single = 0.0
+    
+    WhenDisabled : TArduinoGeneratorWhenDisabled
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

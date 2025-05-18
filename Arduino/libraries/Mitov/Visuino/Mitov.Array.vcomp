@@ -1,0 +1,322 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AnalogArray.h' )]
+  [ArduinoClass( 'Mitov::SlidingWindowAnalogArray' )]
+  [CreateName( 'SlidingWindow' )]
+  [Name( 'Sliding Window Analog Array' )]
+  [Category( TArduinoAnalogFiltersToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoSlidingWindowAnalogArray : TArduinoCommonClockedAnalogArraySource
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [ValueRange( 1, 8192 )]
+    Count : Unsigned = 128
+
+    [MaxValue( 8192 )]
+    Step : Unsigned = 1
+
+    Normalize : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAnalogArrayIndexBasic : TArduinoCommonAnalogArrayFilter
+
+    [ValueRange( 0, 255 )]
+    Index : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayDeleteItems' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Array Delete Items' )]
+  [CreateName( 'ArrayDeleteItems' )]
+  [Category( TArduinoAnalogFiltersToolbarCategory )]
+  +TArduinoAnalogArrayDeleteItems : TArduinoAnalogArrayIndexBasic
+
+    [ValueRange( 0, 255 )]
+    Count : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAnalogArrayItemsAtIndexBasic : TArduinoAnalogArrayIndexBasic
+
+    [ComponentEditorEntryDesign( 'Edit Value Elements ...', True )]
+    ValueElements : TArduinoAnalogArrayValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayInsertItems' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Array Insert Items' )]
+  [CreateName( 'ArrayInsertItems' )]
+  [Category( TArduinoAnalogFiltersToolbarCategory )]
+  +TArduinoAnalogArrayInsertItems : TArduinoAnalogArrayItemsAtIndexBasic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayReplaceItemsAtIndex' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Array Replace Items At Index' )]
+  [CreateName( 'ArrayReplaceItemsAtIndex' )]
+  [Category( TArduinoAnalogFiltersToolbarCategory )]
+  +TArduinoAnalogArrayReplaceItemsAtIndex : TArduinoAnalogArrayItemsAtIndexBasic;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoAnalogArraySetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoAnalogArraySetValueElements )]
+  [ArduinoHelpPostfix( '(Analog Array Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicAnalogArraySetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoAnalogArrayBasicValueElement : TArduinoBasicAnalogArraySetValueElement
+
+    [ComponentEditorEntryDesign( 'Edit &Value Elements ...', True )]
+    ValueElements : TArduinoAnalogArrayValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoSetValueArrayElement' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Set Value' )]
+  [ParentImage( TArduinoAnalogArrayValue )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoAnalogArraySetValueElement : TArduinoAnalogArrayBasicValueElement
+
+    [OWPinGroup( TArduinoAnalogArraySetValueElement]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetArrayValueElement' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoAnalogArrayStateSetValueElement : TArduinoAnalogArrayBasicValueElement
+
+    [OWPinGroup( TArduinoAnalogArrayStateSetValueElement]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoComplexArraySetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoComplexArraySetValueElements )]
+  [ArduinoHelpPostfix( '(Complex Array Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicComplexArraySetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoComplexArrayBasicValueElement : TArduinoBasicComplexArraySetValueElement
+
+    [ComponentEditorEntryDesign( 'Edit &Value Elements ...', True )]
+    ValueElements : TArduinoComplexValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoSetValueArrayElement' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [Name( 'Set Value' )]
+  [ParentImage( TArduinoComplexArrayValue )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoComplexArraySetValueElement : TArduinoComplexArrayBasicValueElement
+
+    [OWPinGroup( TArduinoComplexArraySetValueElement]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetArrayValueElement' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoComplexArrayStateSetValueElement : TArduinoComplexArrayBasicValueElement
+
+    [OWPinGroup( TArduinoComplexArrayStateSetValueElement]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Snapshot.h' )]
+  [ArduinoClass( 'Mitov::SnapshotArray' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'float' )]
+  [CreateName( 'AnalogArraySnapshot' )]
+  [Name( 'Analog Array Snapshot' )]
+  [Category( TArduinoAnalogFiltersToolbarCategory )]
+  +TArduinoAnalogArraySnapshot : TArduinoCommonAnalogArrayFilter
+
+    [OWPrimaryPin]
+    SnapshotInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Snapshot.h' )]
+  [ArduinoClass( 'Mitov::SnapshotArray' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TComplex' )]
+  [CreateName( 'ComplexArraySnapshot' )]
+  [Name( 'Complex Array Snapshot' )]
+  [Category( TArduinoComplexFiltersToolbarCategory )]
+  +TArduinoComplexArraySnapshot : TArduinoCommonComplexArrayFilter
+
+    [OWPrimaryPin]
+    SnapshotInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAnalogArrayBasicInitialValueFilter : TArduinoCommonAnalogArrayFilter
+
+    [ComponentEditorEntryDesign( 'Edit &Initial Value Elements ...', True )]
+    InitialValueElements : TArduinoAnalogArrayValueNoBindingElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::RememberArray' )]
+  TArduinoRememberArray_Extender : TArduinoRemember_Basic_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'DATA', 'float' )]
+  [CreateName( 'RememberAnalogArray' )]
+  [Name( 'Remember Analog Array' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoRememberAnalogArray : TArduinoAnalogArrayBasicInitialValueFilter, TArduinoRememberArray_Extender;
+//---------------------------------------------------------------------------
+  TArduinoComplexArrayBasicInitialValueFilter : TArduinoCommonComplexArrayFilter
+
+    [ComponentEditorEntryDesign( 'Edit &Initial Value Elements ...', True )]
+    InitialValueElements : TArduinoArrayComplexValueNoBindingElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TComplex' )]
+  [CreateName( 'RememberComplexArray' )]
+  [Name( 'Remember Complex Array' )]
+  [Category( TArduinoComplexToolbarCategory )]
+  +TArduinoRememberComplexArray : TArduinoComplexArrayBasicInitialValueFilter, TArduinoRememberArray_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ValueArraySource' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [CreateName( 'AnalogArrayValue' )]
+  [Name( 'Analog Array Value' )]
+  [Category( TArduinoAnalogDataSourcesToolbarCategory )]
+  [ArduinoStart]
+//  [ArrayValueSourceComponent]
+  +TArduinoAnalogArrayValue : TArduinoCommonClockedAnalogArraySource, TArduinoValue_BasicExtender
+
+    [ComponentEditorEntryDesign( 'Edit &Value Elements ...', True )]
+    ValueElements : TArduinoAnalogArrayValueElements
+
+    Elements : TArduinoAnalogArraySetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ValueArraySource' )]
+//  [ArduinoTemplateParameter( 'Mitov::TComplex' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [CreateName( 'ComplexArrayValue' )]
+  [Name( 'Complex Array Value' )]
+  [Category( TArduinoComplexDataSourcesToolbarCategory )]
+  [ArduinoStart]
+//  [ArrayValueSourceComponent]
+  +TArduinoComplexArrayValue : TArduinoCommonClockedComplexArraySource, TArduinoValue_BasicExtender
+
+    [ComponentEditorEntryDesign( 'Edit &Value Elements ...', True )]
+    ValueElements : TArduinoComplexValueElements
+
+    Elements : TArduinoComplexArraySetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayReplace' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Array Replace' )]
+  [CreateName( 'ArrayReplace' )]
+  [Category( TArduinoAnalogFiltersToolbarCategory )]
+  +TArduinoAnalogArrayReplace : TArduinoCommonAnalogArrayFilter
+
+    [ComponentEditorEntryDesign( 'Edit &From Value Elements ...', True )]
+    FromValueElements : TArduinoAnalogArrayValueElements
+
+    [ComponentEditorEntryDesign( 'Edit &To Value Elements ...', True )]
+    ToValueElements : TArduinoAnalogArrayValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayReplace' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [Name( 'Complex Array Replace' )]
+  [CreateName( 'ArrayReplace' )]
+  [Category( TArduinoComplexFiltersToolbarCategory )]
+  +TArduinoComplexArrayReplace : TArduinoCommonComplexArrayFilter
+
+    [ComponentEditorEntryDesign( 'Edit &From Value Elements ...', True )]
+    FromValueElements : TArduinoComplexValueElements
+
+    [ComponentEditorEntryDesign( 'Edit &To Value Elements ...', True )]
+    ToValueElements : TArduinoComplexValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoComplexArrayIndexBasic : TArduinoCommonComplexArrayFilter
+
+    [ValueRange( 0, 255 )]
+    Index : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayDeleteItems' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [Name( 'Complex Array Delete Items' )]
+  [CreateName( 'ArrayDeleteItems' )]
+  [Category( TArduinoComplexFiltersToolbarCategory )]
+  +TArduinoComplexArrayDeleteItems : TArduinoComplexArrayIndexBasic
+
+    [ValueRange( 0, 255 )]
+    Count : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoComplexArrayItemsAtIndexBasic : TArduinoComplexArrayIndexBasic
+
+    [ComponentEditorEntryDesign( 'Edit Value Elements ...', True )]
+    ValueElements : TArduinoComplexValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayInsertItems' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [Name( 'Complex Array Insert Items' )]
+  [CreateName( 'ArrayInsertItems' )]
+  [Category( TArduinoComplexFiltersToolbarCategory )]
+  +TArduinoComplexArrayInsertItems : TArduinoComplexArrayItemsAtIndexBasic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayReplaceItemsAtIndex' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [Name( 'Complex Array Replace Items At Index' )]
+  [CreateName( 'ArrayReplaceItemsAtIndex' )]
+  [Category( TArduinoComplexFiltersToolbarCategory )]
+  +TArduinoComplexArrayReplaceItemsAtIndex : TArduinoComplexArrayItemsAtIndexBasic;
+//---------------------------------------------------------------------------
+; // Mitov

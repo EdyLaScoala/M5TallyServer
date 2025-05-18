@@ -1,0 +1,339 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoRGBWColorSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRGBWColorSetValueElements )]
+  [ArduinoHelpPostfix( '(RGBW Color Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicRGBWColorSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [CreateName( 'RGBWColorValue' )]
+  [Name( 'RGBW Color Value' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoRGBWColorValue : TArduinoCommonClockedRGBWColorSource, TArduinoValue_Extender
+
+    Value : TRGBWColor = 0
+    Elements : TArduinoRGBWColorSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [ArduinoContructorParameter( 'Mitov::TRGBWColor()' )]
+  [Name( 'Compare RGBW Color Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoRGBWColorCompareValue : TArduinoCommonRGBWColorSink
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingSetter]
+    [ArduinoBindingPostfix( '_Binding' )]
+    Value : TRGBWColor = 0
+
+    [ArduinoTransformImplementation( 'CompareType' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TRGBWColor' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomRGBWColorImplementation' )]
+  [CreateName( 'RandomRGBWColor' )]
+  [Name( 'Random RGBW Color' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+  +TArduinoRandomRGBWColor : TArduinoCommonClockedEnableRGBWColorSource
+
+    [ArduinoFullColor]
+    Min : TRGBWColor = 0
+
+    [ArduinoFullColor]
+    Max : TRGBWColor = $FFFFFFFF
+
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicRGBWColorSource : TArduinoCommonRGBWColorSource
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    [ArduinoFullColor]
+    InitialValue : TRGBWColor = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::AnalogToRGBWColor' )]
+  [CreateName( 'AnalogToRGBWColor' )]
+  [Name( 'Analog To RGBW Color' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoAnalogToRGBWColor : TArduinoBasicRGBWColorSource
+
+    [OWPrimaryPin]
+    RedInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    GreenInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    BlueInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    WhiteInputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::RGBWColorToAnalog' )]
+  [CreateName( 'RGBWColorToAnalog' )]
+  [Name( 'RGBW Color To Analog' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  +TArduinoRGBWColorToAnalog : TArduinoCommonRGBWColorSink
+
+    [OWPrimaryPin]
+    RedOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    GreenOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    BlueOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    WhiteOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnly' )]
+  [ArduinoContructorParameter( '''\0''' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'RGBW Color Change Only' )]
+  [Category( TColorToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TRGBWColor' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoRGBWColorChangeOnly : TArduinoCommonRGBWColorFilter;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [Name( 'RGBW Color Mux(Multi channel Switch)' )]
+  [CreateName( 'RGBWColorMux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWColorMux : TArduinoRGBWColorMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [Name( 'RGBW Color Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'RGBWColorDemux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWColorDemux : TArduinoCommonRGBWColorSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoRGBWColorSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoRGBWColorSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [Name( 'RGBW Color On/Off Switch' )]
+  [CreateName( 'RGBWColorSwitch' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWColorSwitch : TArduinoCommonRGBWColorSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoRGBWColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [ArduinoContructorParameter( 'Mitov::TRGBWColor()' )]
+  [Name( 'RGBW Color Toggle Switch' )]
+  [CreateName( 'RGBWColorToggleSwitch' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWColorToggleSwitch : TArduinoCommonRGBWColorSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoRGBWColorSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoRGBWColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color Toggle Demux' )]
+  [CreateName( 'ColorToggleDemux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWColorToggleDemux : TArduinoCommonRGBWColorSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoRGBWColorSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoRGBWColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RGBWColorMultiSource' )]
+  [Name( 'RGBW Color Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWColorMultiSource : TArduinoCommonRGBWColorSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoRGBWColorSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoRGBWColorSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatRGBWColor' )]
+  [Name( 'Repeat RGBW Color' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatRGBWColor : TArduinoCommonRGBWColorFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RampToValue.h' )]
+  [ArduinoClass( 'Mitov::RampToRGBWColorValue' )]
+  [CreateName( 'RampToValue' )]
+  [Name( 'Ramp To RGBW Color Value' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoRampToRGBWColorValue : TArduinoCommonRGBWColorFilter
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInitialValue' )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    [ArduinoFullColor]
+    InitialValue : TRGBWColor = Null
+
+    [MinValue( 0 )]
+    [ReplaceValue(0.0, 0.00001)]
+    Slope : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGBW Color Multi-Source Merger' )]
+  [CreateName( 'RGBWColorMultiMerger' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWColorMultiMerger : TArduinoRGBWColorMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'Mitov::TRGBWColor' )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TRGBWColor' )]
+  [CreateName( 'RememberRGBWColor' )]
+  [Name( 'Remember RGBW Color Value' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRememberRGBWColor : TArduinoCommonRGBWColorFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( TRGBWColor, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TRGBWColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TRGBWColor' )]
+  [CreateName( 'RGBWColorSnapshot' )]
+  [Name( 'RGBW Color Snapshot' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWColorSnapshot : TArduinoCommonColorFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+  TArduinoRGBWColorBasicValueElement : TArduinoBasicRGBWColorSetValueElement
+
+    Value : TRGBWColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  [ParentImage( TArduinoRGBWColorValue )]
+  +TArduinoRGBWColorSetValueElement : TArduinoRGBWColorBasicValueElement
+
+    [OWPinGroup( TArduinoRGBWColorSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoRGBWColorStateSetValueElement : TArduinoRGBWColorBasicValueElement
+
+    [OWPinGroup( TArduinoRGBWColorStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::TRGBWColor &', 'AValue' )]
+  [Name( 'GetValue' )]
+  [ArduinoCallChainIndex]
+  ArduinoRGBWColorValueArrayGetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::TRGBWColor *', 'AValue' )]
+  [Name( 'ApplyValues' )]
+  ArduinoRGBWColorValueArrayApplyValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoRGBWColorValueArrayGetValueCallChain]
+  [ArduinoRGBWColorValueArrayApplyValueCallChain]
+  TArduinoRGBWColorValueElements : TArduinoRGBWColorValueBasicElements;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [Name( 'RGBW Color Array' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+  +TArduinoRGBWColorValueArray : TArduinoCommonClockedRGBWColorSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoRGBWColorValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::ColorToRGBWColor' )]
+  [CreateName( 'ColorToRGBWColor' )]
+  [Name( 'Color To RGBW Color' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoColorToRGBWColor : TArduinoBasicRGBWColorSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoColorSinkPin
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateWhite' )]
+    [ValueRange( 0.0, 1.0 )]
+    White : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

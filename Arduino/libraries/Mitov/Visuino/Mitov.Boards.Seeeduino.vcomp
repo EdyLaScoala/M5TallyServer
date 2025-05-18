@@ -1,0 +1,567 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Seeeduino' )]
+  TSeeeduinoCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( 'A4', 'A5' )]
+  +TArduinoSeeeduinoNanoGroveModule : TArduinoGroveModule;
+//---------------------------------------------------------------------------
+  [Name( 'Seeeduino Nano' )]
+  [Category( TSeeeduinoCategory )]
+  [ParentImage( TSeeeduinoCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_NANO' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:nano' )]
+  +TArduino_Seeeduino_Nano_Board : TArduino_AVR328_BasicBoard
+  
+    [AddItem( TArduinoSeeeduinoNanoGroveModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 18 )]
+    [ArduinoBoard_Add_ReservedChannel( 18, 'Grove' )]
+    [ArduinoBoard_Add_ReservedChannel( 19, 'Grove' )]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoNanoShields
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoTemplateParameter( 'C_PIN', '16' )]
+  [ArduinoTemplateParameter( 'C_PIN', '13' )]
+  +TArduinoSeeeduinoXIAO_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+//  [Name( 'LED' )]
+//  [CreateName( 'LED' )]
+//  [ArduinoExcludeUnconnectedAndDefault]
+//  [ParentImage( TArduinoLED )]
+//  +TArduinoSeeeduinoXIAO_LEDModule : TArduinoShield
+
+//    [AddItem( TArduinoSeeeduinoXIAO_LED_User )]
+//    [AddItem( TArduinoSeeeduinoXIAO_LED_RX )]
+//    [AddItem( TArduinoSeeeduinoXIAO_LED_TX )]
+//    Leds : TArduinoMacchinaLEDs
+
+//  ;
+//---------------------------------------------------------------------------
+  
+  [Name( 'Seeeduino XIAO SAMD21' )]
+  [OldName( 'Seeeduino XIAO' )]
+  [ArduinoDefine( 'VISUINO_FEATHER_M0_BASIC' )]
+  [ArduinoBoardCompileParams( 'Seeeduino:samd:seeed_XIAO_m0:usbstack=arduino,debug=off' )]
+  [Category( TSeeeduinoCategory )]
+  [Category( TCortexM0Category )]
+  [ArduinoInclude( 'Mitov_DirectMap_Pins.h' )]
+  +TArduinoSeeeduinoXIAO_M0_Board : TArduinoSamdBasicBoard, TArduinoAdafruitQT_PyShieldsExtender
+
+    [AddItem( TArduinoSeeeduinoXIAO_LEDModule )]
+    Modules
+    
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 0, 0, 11, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(RX)' )]
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(TX)' )]
+
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  2, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3, 23, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 22, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Digital(5V)' )]
+
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9, 25, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 2, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital(LED)' )]
+
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 0 ]/Digital' )]
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 5, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  0, TArduinoCombinedAnalogTouchDigitalPullUpDownAnalogOutputChannel, 'Digital/Touch/Analog In/Out[ 0 ]', 'D0' )] // 2
+
+    [ArduinoBoard_Add_DigitalAnalogChannel(  1, TArduinoCombinedTouchPullUpPullDownAnalogDigitalInterruptChannel, 'Digital/Touch/Analog[ 1 ]', 'D1' )] // 3 // No PWM
+    [ArduinoBoard_Add_DigitalAnalogChannel(  2, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'Digital/Touch/Analog[ 2 ]', 'D2' )] // 4
+    [ArduinoBoard_Add_DigitalAnalogChannel(  3, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'Digital/Touch/Analog[ 3 ]', 'D3' )] // 5
+
+    [ArduinoBoard_Add_DigitalAnalogChannel(  4, TArduinoAdditionalDigitalPullUpDownPWMI2C0InterruptChannel, 'Digital[ 4 ](I2C-SDA)', 'D4' )] // 16(0) ?
+    [ArduinoBoard_Add_DigitalAnalogChannel(  5, TArduinoAdditionalDigitalPullUpDownPWMI2C0InterruptChannel, 'Digital[ 5 ](I2C-SDA)', 'D5' )] // 17(1) ?
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  6, TArduinoCombinedTouchPullDownAnalogDigitalSerial1InterruptChannel, 'Digital/Analog[ 6 ](TX1)', 'D6' )] // 6
+    [ArduinoBoard_Add_DigitalAnalogChannel(  7, TArduinoCombinedTouchPullDownAnalogDigitalSerial1InterruptChannel, 'Digital/Analog[ 7 ](RX1)', 'D7' )] // 7
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  8, TArduinoDigitalPullDownOpenDrainPWMSPI0InterruptChannel, 'Digital[ 8 ](SPI-SCK)', 'D8' )] // 16(0) ? Analog In
+    [ArduinoBoard_Add_DigitalAnalogChannel(  9, TArduinoDigitalPullDownOpenDrainPWMSPI0InterruptChannel, 'Digital[ 9 ](SPI-MISO)', 'D9' )] // 16(0) ? Analog In
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoDigitalPullDownOpenDrainPWMSPI0InterruptChannel, 'Digital[ 10 ](SPI-MOSI)', 'D10' )] // 16(0) ? Analog In
+    
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------  
+  [ArduinoGrove( 0, 0 )]
+  +TArduinoAdditionalDigitalSerial0Grove0_0Channel : TArduinoAdditionalDigitalSerial0Channel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 0, 1 )]
+  +TArduinoAdditionalDigitalSerial0Grove0_1Channel : TArduinoAdditionalDigitalSerial0Channel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 1, 0 )]
+  +TArduinoAdditionalDigitalGrove1_0InterruptChannel : TArduinoAdditionalDigitalInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 1, 1 )]
+  [ArduinoGrove( 2, 0 )]
+  +TArduinoBasicDigitalPWMGrove1_1Grove2_0InterruptChannel : TArduinoAdditionalDigitalInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 2, 1 )]
+  [ArduinoGrove( 3, 0 )]
+  +TArduinoAdditionalDigitalGrove2_1Grove3_0InterruptChannel : TArduinoAdditionalDigitalInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 3, 1 )]
+  [ArduinoGrove( 4, 0 )]
+  +TArduinoBasicDigitalPWMGrove3_1Grove4_0Channel : TArduinoBasicDigitalPWMChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 4, 1 )]
+  [ArduinoGrove( 5, 0 )]
+  +TArduinoBasicDigitalPWMGrove4_1Grove5_0Channel : TArduinoBasicDigitalPWMChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 5, 1 )]
+  [ArduinoGrove( 6, 0 )]
+  +TArduinoAdditionalDigitalGrove5_1Grove6_0Channel : TArduinoAdditionalDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 2, 1 )]
+  [ArduinoGrove( 3, 0 )]
+  TArduinoAdditionalDigitalGrove2_1Grove3_0Channel : TArduinoAdditionalDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 6, 1 )]
+  +TArduinoAdditionalDigitalGrove6_1Channel : TArduinoAdditionalDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 3, 1 )]
+  +TArduinoAdditionalDigitalGrove3_1Channel : TArduinoAdditionalDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 10, 0 )]
+  +TArduinoCombinedAnalogDigitalGrove10_0Channel : TArduinoCombinedAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 10, 1 )]
+  +TArduinoCombinedAnalogDigitalGrove10_1Channel : TArduinoCombinedAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 7, 0 )]
+  TArduinoCombinedAnalogDigitalGrove7_0Channel : TArduinoCombinedAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 7, 1 )]
+  TArduinoCombinedAnalogDigitalGrove7_1Channel : TArduinoCombinedAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 11, 0 )]
+  +TArduinoCombinedAnalogDigitalGrove11_0Channel : TArduinoCombinedAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 11, 1 )]
+  +TArduinoCombinedAnalogDigitalGrove11_1Channel : TArduinoCombinedAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 8, 0 )]
+  +TArduinoCombinedAnalogDigitalGrove8_0Channel : TArduinoCombinedAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 8, 1 )]
+  +TArduinoCombinedAnalogDigitalGrove8_1Channel : TArduinoCombinedAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 8, 0 )]
+  [ArduinoGrove( 9, 0 )]
+  +TArduinoCombinedAnalogDigitalI2C0GroveI2C_0Channel : TArduinoCombinedAnalogDigitalI2C0Channel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 8, 1 )]
+  [ArduinoGrove( 9, 1 )]
+  +TArduinoCombinedAnalogDigitalI2C0GroveI2C_1Channel : TArduinoCombinedAnalogDigitalI2C0Channel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 5, 0 )]
+  [ArduinoGrove( 6, 0 )]
+  +TArduinoCombinedAnalogDigitalI2C0GroveI2C_0KITChannel : TArduinoCombinedAnalogDigitalI2C0Channel;
+//---------------------------------------------------------------------------
+  [ArduinoGrove( 5, 1 )]
+  [ArduinoGrove( 6, 1 )]
+  +TArduinoCombinedAnalogDigitalI2C0GroveI2C_1KITChannel : TArduinoCombinedAnalogDigitalI2C0Channel;
+//---------------------------------------------------------------------------
+  +TArduinoSerial0Grove : TArduinoSerialGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '2', True, '3', True )]
+  +TArduinoDigital_2_3_Grove : TArduinoDigitalGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '3', True, '4', True )]
+  +TArduinoDigital_3_4_Grove : TArduinoDigitalGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '4', True, '5', False )]
+  +TArduinoDigital_4_5_Grove : TArduinoDigitalGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '5', '6' )]
+  +TArduinoDigital_5_6_Grove : TArduinoDigitalGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '6', '7' )]
+  +TArduinoDigital_6_7_Grove : TArduinoDigitalGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '7', '8' )]
+  +TArduinoDigital_7_8_Grove : TArduinoDigitalGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '6', '7' )]
+  +TArduinoAnalog_6_7_Grove : TArduinoAnalogGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( 'A4', 'A5' )]
+  +TArduino_I2C_Grove : TArduinoGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '0', '1' )]
+  +TArduinoAnalog_0_1_Grove : TArduinoAnalogDigitalGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '2', '3' )]
+  +TArduinoAnalog_2_3_Grove : TArduinoAnalogDigitalGrove;
+//---------------------------------------------------------------------------
+  [Name( 'Seeeduino Lotus' )]
+  [Category( TSeeeduinoCategory )]
+  +TArduino_SeeeduinoLotus_Board : TArduino_AVR328_Basic_UNO_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial0Grove0_0Channel, 'Digital(RX)(Grove0[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0Grove0_1Channel, 'Digital(TX)(Grove0[1])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalGrove1_0InterruptChannel, 'Digital(Grove1[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMGrove1_1Grove2_0InterruptChannel, 'Digital(Grove1[1]/Grove2[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoAdditionalDigitalGrove2_1Grove3_0InterruptChannel, 'Digital(Grove2[1]/Grove3[0])' )]    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMGrove3_1Grove4_0Channel, 'Digital(Grove3[1]/Grove4[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,  1, TArduinoBasicDigitalPWMGrove4_1Grove5_0Channel, 'Digital(Grove4[1]/Grove5[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalGrove5_1Grove6_0Channel, 'Digital(Grove5[1]/Grove6[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoAdditionalDigitalGrove6_1Channel, 'Digital(Grove6[1])' )]
+    [ArduinoBoard_Add_ReservedChannels( 9,  5 )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalGrove10_0Channel, 'Digital(Grove10[0])' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 1, TArduinoCombinedAnalogDigitalGrove10_1Channel, 'Digital(Grove10[1])' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2, 1, TArduinoCombinedAnalogDigitalGrove11_0Channel, 'Digital(Grove11[0])' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 17, 3, 1, TArduinoCombinedAnalogDigitalGrove11_1Channel, 'Digital(Grove11[1])' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogDigitalI2C0GroveI2C_0Channel, 'Digital(I2C-SDA)(GroveI2C[0])' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogDigitalI2C0GroveI2C_1Channel, 'Digital(I2C-SCL)(GroveI2C[1])' )]
+    Digital
+    
+    [AddNamedItem( TArduinoSerial0Grove, 'UART' )]
+    [AddNamedItem( TArduinoDigital_2_3_Grove, 'D2' )]
+    [AddNamedItem( TArduinoDigital_3_4_Grove, 'D3' )]
+    [AddNamedItem( TArduinoDigital_4_5_Grove, 'D4' )]
+    [AddNamedItem( TArduinoDigital_5_6_Grove, 'D5' )]
+    [AddNamedItem( TArduinoDigital_6_7_Grove, 'D6' )]
+    [AddNamedItem( TArduinoDigital_7_8_Grove, 'D7' )]
+    [AddNamedItem( TArduinoAnalog_6_7_Grove, 'A6' )]
+    [AddNamedItem( TArduino_I2C_Grove, 'I2C' )]
+    [AddNamedItem( TArduino_I2C_Grove, 'I2C' )]
+    [AddNamedItem( TArduinoAnalog_0_1_Grove, 'A0' )]
+    [AddNamedItem( TArduinoAnalog_2_3_Grove, 'A2' )]
+    Grove : TArduinoGroveChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'INTERRUPT', 'Interrupts::Handler3' )]
+  [ArduinoAddInterruptHandler( 'SensorOutputPin', '3', True, False )]
+  [ArduinoClass( 'Mitov::DHTSensor_Interrupt' )]
+  TArduino_SeeeduinoLotus_KIT_DHT11_Element : TArduinoBasicDHTModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '4' )]
+  TArduino_SeeeduinoLotus_KIT_LED_Element : TArduinoBasicDigitalLED;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '6' )]
+  TArduino_SeeeduinoLotus_KIT_LightSensor_Element : TArduinoBasicLightSensorPersistent;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '2' )]
+  TArduino_SeeeduinoLotus_KIT_Microphone_Element : TArduinoBasicAnalogMicrophone;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InvertedAnalogInputPinSensor' )]
+  [ArduinoTemplateParameter( 'PIN', '0' )]
+  TArduino_SeeeduinoLotus_KIT_Potentiometer_Element : TArduinoBasicPotentiometerPersistent;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '6' )]
+  TArduino_SeeeduinoLotus_KIT_Button_Element : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '5' )]
+  TArduino_SeeeduinoLotus_KIT_Buzzer_Element : TArduinoBasicBuzzerModule;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<88, uint8_t, 60 >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationDown' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_BUFFER' , 'Mitov::DisplaySSD1306Buffered<64, 128>' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DisplaySSD1306NoReset<Mitov::DigitalPin_NoImplementation<55 > >' )]
+//  [ArduinoShieldPin( '16', 'OLED Reset' )]
+  TArduino_SeeeduinoLotus_KIT_Display_Element : TArduinoDisplaySSD1306BasicShieldDisplayModuleI2C;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 119 >' )]
+  TArduino_SeeeduinoLotus_KIT_BMP280_Element : TArduinoPressureTemperatureBMP280Basic_Shield;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2C<TwoWire, Wire, Mitov::ConstantProperty<43, uint8_t, 25 > >' )]
+  TArduino_SeeeduinoLotus_KIT_Accelerometer_Element : TArduinoAccelerometerLIS3DH_BasicModule;
+//---------------------------------------------------------------------------
+  [Name( 'Seeeduino Lotus Grove KIT' )]
+  [Category( TSeeeduinoCategory )]
+  +TArduino_SeeeduinoLotus_KIT_Board : TArduino_AVR328_Basic_UNO_Board
+  
+    [Name( 'Temperature/Humidity' )]
+    TemperatureHumidity : TArduino_SeeeduinoLotus_KIT_DHT11_Element
+
+    [Name( 'Pressure/Temperature' )]
+    PressureTemperature : TArduino_SeeeduinoLotus_KIT_BMP280_Element
+
+    LED : TArduino_SeeeduinoLotus_KIT_LED_Element
+    LightSensor : TArduino_SeeeduinoLotus_KIT_LightSensor_Element
+    Microphone : TArduino_SeeeduinoLotus_KIT_Microphone_Element
+    Potentiometer : TArduino_SeeeduinoLotus_KIT_Potentiometer_Element
+    Button : TArduino_SeeeduinoLotus_KIT_Button_Element
+    Buzzer : TArduino_SeeeduinoLotus_KIT_Buzzer_Element
+    Display : TArduino_SeeeduinoLotus_KIT_Display_Element
+    Accelerometer : TArduino_SeeeduinoLotus_KIT_Accelerometer_Element
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial0Grove0_0Channel, 'Digital(RX)(Grove0[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0Grove0_1Channel, 'Digital(TX)(Grove0[1])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalGrove1_0InterruptChannel, 'Digital(Grove1[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalGrove2_1Grove3_0Channel, 'Digital(Grove2[1]/Grove3[0])' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoAdditionalDigitalGrove3_1Channel, 'Digital(Grove3[1])' )]
+    [ArduinoBoard_Add_ReservedChannels( 9,  5 )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalGrove7_0Channel, 'Digital(Grove7[0])' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 1, TArduinoCombinedAnalogDigitalGrove7_1Channel, 'Digital(Grove7[1])' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2, 1, TArduinoCombinedAnalogDigitalGrove8_0Channel, 'Digital(Grove8[0])' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 17, 3, 1, TArduinoCombinedAnalogDigitalGrove8_1Channel, 'Digital(Grove8[1])' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogDigitalI2C0GroveI2C_0KITChannel, 'Digital(I2C-SDA)(GroveI2C[0])' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogDigitalI2C0GroveI2C_1KITChannel, 'Digital(I2C-SCL)(GroveI2C[1])' )]
+    Digital
+    
+    [AddNamedItem( TArduinoSerial0Grove, 'UART' )] // 0
+    [AddNamedItem( TArduinoDigital_2_3_Grove, 'D2' )] // 1
+//    [AddNamedItem( TArduinoDigital_3_4_Grove, 'D3' )] // 2
+//    [AddNamedItem( TArduinoDigital_4_5_Grove, 'D4' )] // 3
+//    [AddNamedItem( TArduinoDigital_5_6_Grove, 'D5' )] // 4
+    [AddNamedItem( TArduinoDigital_6_7_Grove, 'D6' )] // 5 -> 2
+    [AddNamedItem( TArduinoDigital_7_8_Grove, 'D7' )] // 6 -> 3
+    [AddNamedItem( TArduinoAnalog_6_7_Grove, 'A6' )] // 7 -> 4
+    [AddNamedItem( TArduino_I2C_Grove, 'I2C' )] // 8
+    [AddNamedItem( TArduino_I2C_Grove, 'I2C' )] // 9
+    [AddNamedItem( TArduinoAnalog_0_1_Grove, 'A0' )] // 10 -> 7
+    [AddNamedItem( TArduinoAnalog_2_3_Grove, 'A2' )] // 11 -> 8
+    Grove : TArduinoGroveChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '13' )]
+  +TArduino_Seeeduino_Wio_Terminal_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', 'WIO_BUZZER' )]
+  +TArduino_Seeeduino_Wio_Terminal_BuzzerModule : TArduinoBasicBuzzerModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorOutputPin', '14' )]
+  +TArduino_Seeeduino_Wio_Terminal_InfraredRemoteTransmitterModule : TArduinoInfraredRemoteTransmitterModule;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ParentImage( TArduinoBasicLightSensorPersistent )]
+  TArduino_Seeeduino_Wio_Terminal_BasicAnalogSensor : TArduinoBasicAnalogSensorModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', 'WIO_LIGHT' )]
+  [Name( 'Light' )]
+  +TArduino_Seeeduino_Wio_Terminal_LightSensor : TArduino_Seeeduino_Wio_Terminal_BasicAnalogSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', 'WIO_MIC' )]
+  [Name( 'Microphone' )]
+  [ParentImage( TArduinoBasicAnalogMicrophone )]
+  +TArduino_Seeeduino_Wio_Terminal_MicrophoneSensor : TArduino_Seeeduino_Wio_Terminal_BasicAnalogSensor;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::InvertedDigitalPullUpInput' )]
+//  TArduino_Seeeduino_Wio_Terminal_ButtonBasicModule : TArduinoBasicInterruptButtonModule;
+//---------------------------------------------------------------------------
+//  [ArduinoTemplateParameter( 'C_PIN', '28' )]
+//  +TArduino_Seeeduino_Wio_Terminal_ButtonModule1 : TArduino_Seeeduino_Wio_Terminal_ButtonBasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::SimpleDigitalPullUpInput' )]
+  TArduino_Seeeduino_Wio_Terminal_ButtonBasicSensor : TArduinoBasicInterruptButtonSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '30' )]
+  [Name( 'A' )]
+  +TArduino_Seeeduino_Wio_Terminal_ButtonSensor1 : TArduino_Seeeduino_Wio_Terminal_ButtonBasicSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '29' )]
+  [Name( 'B' )]
+  +TArduino_Seeeduino_Wio_Terminal_ButtonSensor2 : TArduino_Seeeduino_Wio_Terminal_ButtonBasicSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '28' )]
+  [Name( 'C' )]
+  +TArduino_Seeeduino_Wio_Terminal_ButtonSensor3 : TArduino_Seeeduino_Wio_Terminal_ButtonBasicSensor;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [ParentImage( TArduinoBasicInterruptButtonModule )]
+  +TArduino_Seeeduino_Wio_Terminal_Buttons : TArduinoShield
+
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_ButtonSensor1 )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_ButtonSensor2 )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_ButtonSensor3 )]
+    Buttons : TArduinoFixedPersistentCollection
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Navigation' )]
+  [CreateName( 'Navigation' )]
+  [ArduinoInclude( 'Mitov_Seeeduino_Wio_Terminal.h' )]
+  [ArduinoClass( 'Mitov::TArduino_Seeeduino_Wio_Terminal_NavigationModule' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoEVIVENavigationModule )]
+  +TArduino_Seeeduino_Wio_Terminal_NavigationModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Up', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Down', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalChangeOnlySourcePin )]
+    DirectionOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    PressOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 1 )]
+  [ArduinoTemplateParameter( '0_INTERFACE', 'Mitov::InterfaceI2C< TwoWire, Wire1, Mitov::ConstantProperty<3, uint8_t, 24 > >' )]
+  +TArduino_Seeeduino_Wio_Terminal_AccelerometerModule : TArduinoAccelerometerLIS3DH_BasicModule;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::MicroSDCardCustom' )]  
+  [ArduinoInclude( 'Seeed_Arduino_FS.h', 'Seeed Arduino FS', 'https://github.com/Seeed-Studio/Seeed_Arduino_FS' )]
+//  [ArduinoTemplateParameter( '0_TYPE', 'SPIClass' )]
+//  [ArduinoTemplateParameter( '1_NAME', 'SPI1' )]
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', 'PIN_SPI2_SS' )]
+//  [ArduinoSPI( 1 )]
+  +TArduino_Seeeduino_Wio_Terminal_MicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoEVIVEDisplayModule )]
+//  [ArduinoInclude( 'Mitov_Display_ILI9341.h' )]
+//  [ArduinoClass( 'Mitov::DisplayILI9341' )]
+  [ArduinoInclude( 'Mitov_Seeeduino_Wio_Terminal_DisplayILI9341.h' )]
+  [ArduinoClass( 'Mitov::TArduino_Seeeduino_Wio_Terminal_DisplayModule' )]
+  
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::DisplayILI9341_SPI' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI3' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI3' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<LCD_SS_PIN>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.DataCommandOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<LCD_DC>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ResetOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<LCD_RESET>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ResetOutputPin_RESET', 'Mitov::ResetPinImplementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.SPISpeed', 'Mitov::ConstantProperty<5, uint32_t, 8000000 >' )]
+  
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoSPI( 3 )]
+  [ArduinoTemplateParameter( '0_ORIENTATION_IMPLEMENTATION', 'Mitov::DisplayILI9341_Otientation_Left' )]
+  [ArduinoTemplateParameter( 'C_WIDTH', '240' )]
+  [ArduinoTemplateParameter( 'C_HEIGHT', '320' )]
+  [ArduinoOptionalVariable( Unsigned, 9, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 9, 'FCursorY', 0 )]
+  +TArduino_Seeeduino_Wio_Terminal_DisplayModule : TArduinoDisplayILI9341BasicSPIShield
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBrightness' )]
+    [ValueRange( 0.0, 1.0 )]
+    Brightness : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+//  [Name( 'WiFi' )]
+//  [CreateName( 'WiFi' )]
+  [ArduinoLibrary( 'Seeed_Arduino_mbedtls', 'The https://github.com/Seeed-Studio/Seeed_Arduino_mbedtls' )]
+  [ArduinoLibrary( 'Seeed Arduino rpcUnified', 'https://github.com/Seeed-Studio/Seeed_Arduino_rpcUnified' )]
+  [ArduinoLibrary( 'Seeed Arduino FS', 'https://github.com/Seeed-Studio/Seeed_Arduino_FS' )]
+  [ArduinoInclude( 'rpcWiFi.h', 'Seeed Arduino rpcWiFi', 'https://github.com/Seeed-Studio/Seeed_Arduino_rpcWiFi' )]
+//  [ArduinoInclude( 'Mitov_Seeeduino_Wio_Terminal_WiFi.h' )]
+//  [ArduinoClass( 'Mitov::TArduino_Seeeduino_Wio_Terminal_WiFiModule' )]
+  [ArduinoTemplateParameter( 'LowPower', 'Mitov::ConstantProperty<240, bool, false >' )]
+  +TArduino_Seeeduino_Wio_Terminal_WiFiModule : TArduinoESP32BasicWiFiModule;
+//---------------------------------------------------------------------------
+  TArduino_Seeeduino_Wio_Terminal_BluetoothLEModuleOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduino_Seeeduino_Wio_Terminal_BluetoothLEModuleOperations )]
+  [ArduinoHelpPostfix( '(ESP32 BLE Operations)' )]
+  [ArduinoDeclaredClass]
+  TArduino_Seeeduino_Wio_Terminal_BluetoothLEModuleOperation : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+   [ParentImage( TArduinoESP32BluetoothLEModuleScanOperation )]
+  +TArduino_Seeeduino_Wio_Terminal_BluetoothLEModuleScanOperation : TArduino_Seeeduino_Wio_Terminal_BluetoothLEModuleOperation, TArduinoESP32BluetoothLEModuleScanOperation_Extender;
+//---------------------------------------------------------------------------
+  +TArduino_Seeeduino_Wio_Terminal_BluetoothLEModule : TArduinoESP32BluetoothLEBasicModule
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add BLE Operations ...' )]
+    Operations : TArduino_Seeeduino_Wio_Terminal_BluetoothLEModuleOperations
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '46', '45' )]
+  +TArduino_Seeeduino_Wio_Terminal_I2C_Grove : TArduinoGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '0', '1' )]
+  +TArduino_Seeeduino_Wio_Terminal_AnalogDigital_Grove : TArduinoAnalogDigitalGrove;
+//---------------------------------------------------------------------------
+  [Name( 'Wio Terminal' )]
+  [ArduinoDefine( 'SEEEDUINO_WIO_TERMINAL' )]
+  [ArduinoBoardCompileParams( 'Seeeduino:samd:seeed_wio_terminal:role=master,cache=on,speed=120,opt=small,maxqspi=50,usbstack=arduino,debug=off,txrxled=on' )]
+  [Category( TSeeeduinoCategory )]
+  [Category( TAdafruitCortexM0Category )]
+//  [AtduinoCountSPIChannels( 1 )]
+  +TArduino_Seeeduino_Wio_Terminal_Board : TArduinoSamd51BasicBoard //, TArduinoAdafruitFeather_ItsyBitsyShieldsExtender
+  
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_LEDModule )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_BuzzerModule )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_Buttons )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_NavigationModule )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_LightSensor )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_MicrophoneSensor )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_AccelerometerModule )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_MicroSDModule )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_DisplayModule )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_WiFiModule )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_BluetoothLEModule )]
+    [AddItem( TArduino_Seeeduino_Wio_Terminal_InfraredRemoteTransmitterModule )]
+    Modules
+
+    [AddItem( TArduinoI2C )] // Add second I2C
+    I2CChannels
+        
+    [AddItem( TArduinoHiddenSPI, 3 )]
+    SPIChannels
+    
+    [ComponentEditorEntryDesign( 'Add &Hats ...' )]
+    [Name( 'Hats' )]
+    Shields : TArduinoRaspberryPiHats
+    
+    [AddNamedItem( TArduino_Seeeduino_Wio_Terminal_I2C_Grove, 'Grove I2C' )]
+    [AddNamedItem( TArduino_Seeeduino_Wio_Terminal_AnalogDigital_Grove, 'Grove 1' )]
+    Grove : TArduinoGroveChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoAdditionalDigitalPullUpDownI2C0InterruptChannel, 'Digital(SDA)[ 2 ]', '46' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoAdditionalDigitalPullUpDownI2C0InterruptChannel, 'Digital(SCL)[ 3 ]', '45' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital[ 4 ]', '36' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital[ 5 ]', '37' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital[ 6 ]', '38' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoCombinedAnalogDigitalPullUpDownOpenDrainAnalogOutChannel, 'Digital/Analog(In/Out)[ 7 ]', '10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital[ 8 ]', '50' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoAdditionalDigitalPullUpDownPWMSPI0InterruptChannel, 'Digital(SPI-MISO)[ 9 ]', '47' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoAdditionalDigitalPullUpDownPWMSPI0InterruptChannel, 'Digital(SPI-MOSI)[ 10 ]', '48' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoAdditionalDigitalPullUpDownPWMSPI0InterruptChannel, 'Digital(SPI-SCK)[ 11 ]', '49' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoCombinedAnalogDigitalPullDownInterruptChannel, 'Digital/Analog[ 12 ]', '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoCombinedAnalogDigitalPullDownInterruptChannel, 'Digital/Analog[ 13 ]', '6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(TX1)[ 14 ]', '40' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(RX1)[ 15 ]', '41' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoCombinedAnalogDigitalPullDownInterruptChannel, 'Digital/Analog[ 16 ]', '7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoCombinedAnalogDigitalPullUpDownOpenDrainAnalogOutChannel, 'Digital/Analog(In/Out)[ 17 ]', '9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital[ 18 ]', '52' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital[ 19 ]', '15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital[ 20 ]', '54' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital[ 21 ]', '53' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoCombinedAnalogDigitalPullDownPWMInterruptChannel, 'Digital/Analog[ 22 ]', '1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownPWMInterruptChannel, 'Digital/Analog[ 23 ]', '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownInterruptChannel, 'Digital/Analog[ 24 ]', '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownInterruptChannel, 'Digital/Analog[ 25 ]', '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoCombinedAnalogDigitalPullDownPWMInterruptChannel, 'Digital/Analog[ 26 ]', '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoCombinedAnalogDigitalPullDownPWMInterruptChannel, 'Digital/Analog[ 27 ]', '0' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,745 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'NEC Arrows/Digits Remote' )]
+  TArduinoArrrowsDigitsInfraredRemoteToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Remotes' )]
+  TArduinoInfraredRemoteRemotesToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::TDecodeResults &', 'AResult' )]
+  [ArduinoPopulatedCallChainParameter( 'uint32_t', 'ALastCode' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'ASuccess' )]
+  [Name( 'TryDecode' )]
+  TArduinoInfraredRemoteReceiverElementTryDecideCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoInfraredRemoteReceiverElementTryDecideCallChain]
+  TArduinoInfraredRemoteReceiverElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoIfDefineInclude( 'VISUINO_CIRCUIT_PLAYGROUND_EXPRESS', 'Adafruit_Circuit_Playground.h' )]
+  [ArduinoIfPlatformInclude( 'esp8266', 'IRremoteESP8266.h', 'IRremoteESP8266', 'https://github.com/crankyoldgit/IRremoteESP8266' )]
+  [ArduinoIfDefineInclude( 'SEEEDUINO_WIO_TERMINAL', 'IRLibAll.h', 'Seeed_Arduino_IR', 'https://github.com/Seeed-Studio/Seeed_Arduino_IR' )]
+//  [ArduinoIfPlatformInclude( 'samd', 'IRLibCombo.h', 'Seeed_Arduino_IR', 'https://github.com/Seeed-Studio/Seeed_Arduino_IR' )]
+  ArduinoDefaultInfraredRemoteIncludeAttribute : ArduinoIncludeAttribute;
+//---------------------------------------------------------------------------
+//  [ArduinoInclude( 'Mitov_InfraredRemoteDefines.h' )]
+  [ArduinoDefaultInfraredRemoteInclude( 'IRremote.h', 'IRremote', 'https://github.com/z3t0/Arduino-IRremote' )]
+  [ArduinoInclude( 'Mitov_InfraredRemote.h' )]
+  ArduinoInfraredRemoteIncludeAttribute : TAttributeCollectionAttribute;
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteTransmitterElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoInfraredRemoteTransmitterElements )]
+  [ArduinoHelpPostfix( '(Infrared Remote Transmitter)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoInfraredRemoteTransmitterBasicElement : TArduinoBasicNamedExludePersistent
+
+    [OWPinGroup( TArduinoInfraredRemoteTransmitterBasicElement )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteTransmitterBasicValueElement : TArduinoInfraredRemoteTransmitterBasicElement
+
+    Value : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteTransmitterBasicBitsElement : TArduinoInfraredRemoteTransmitterBasicValueElement
+
+    [ValueRange( 1, 32 )]
+    NumberBits : Unsigned = 32
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendRC5CommandElement' )]
+  [CreateName( 'Send RC-5 Command' )]
+  [Name( 'Send RC-5 Command' )]
+  +TArduinoInfraredRemoteTransmitterSendRC5CommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement
+  
+    NumberBits = 14
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendRC6CommandElement' )]
+  [CreateName( 'Send RC-6 Command' )]
+  [Name( 'Send RC-6 Command' )]
+  +TArduinoInfraredRemoteTransmitterSendRC6CommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendNECCommandElement' )]
+  [CreateName( 'Send NEC Command' )]
+  [Name( 'Send NEC Command' )]
+  +TArduinoInfraredRemoteTransmitterSendNECCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendSonyCommandElement' )]
+  [CreateName( 'Send Sony Command' )]
+  [Name( 'Send Sony Command' )]
+  +TArduinoInfraredRemoteTransmitterSendSonyCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement
+
+    NumberBits = 12
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendPanasonicCommandElement' )]
+  [CreateName( 'Send Panasonic Command' )]
+  [Name( 'Send Panasonic Command' )]
+  +TArduinoInfraredRemoteTransmitterSendPanasonicCommandElement : TArduinoInfraredRemoteTransmitterBasicValueElement
+
+    Address : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendJVCCommandElement' )]
+  [CreateName( 'Send JVC Command' )]
+  [Name( 'Send JVC Command' )]
+  +TArduinoInfraredRemoteTransmitterSendJVCCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement
+
+    NumberBits = 16
+
+    UseRepeat : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendSAMSUNGCommandElement' )]
+  [CreateName( 'Send SAMSUNG Command' )]
+  [Name( 'Send SAMSUNG Command' )]
+  +TArduinoInfraredRemoteTransmitterSendSAMSUNGCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendWhynterCommandElement' )]
+  [CreateName( 'Send Whynter Command' )]
+  [Name( 'Send Whynter Command' )]
+  +TArduinoInfraredRemoteTransmitterSendWhynterCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendAiwaRCT501CommandElement' )]
+  [CreateName( 'Send Aiwa RCT501 Command' )]
+  [Name( 'Send Aiwa RCT501 Command' )]
+  +TArduinoInfraredRemoteTransmitterSendAiwaRCT501CommandElement : TArduinoInfraredRemoteTransmitterBasicElement
+
+    [ValueRange( -32768, 32767 )]
+    [ArduinoUseBindingCheck]
+    Code : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendLGCommandElement' )]
+  [CreateName( 'Send LG Command' )]
+  [Name( 'Send LG Command' )]
+  +TArduinoInfraredRemoteTransmitterSendLGCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement
+  
+    NumberBits = 28
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendDISHCommandElement' )]
+  [CreateName( 'Send DISH Command' )]
+  [Name( 'Send DISH Command' )]
+  +TArduinoInfraredRemoteTransmitterSendDISHCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendSharpRawCommandElement' )]
+  [CreateName( 'Send Sharp Raw Command' )]
+  [Name( 'Send Sharp Raw Command' )]
+  +TArduinoInfraredRemoteTransmitterSendSharpRawCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendSharpCommandElement' )]
+  [CreateName( 'Send Sharp Command' )]
+  [Name( 'Send Sharp Command' )]
+  +TArduinoInfraredRemoteTransmitterSendSharpCommandElement : TArduinoInfraredRemoteTransmitterBasicElement
+
+    Address : Unsigned = 0
+    Command : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendDenonCommandElement' )]
+  [CreateName( 'Send Denon Command' )]
+  [Name( 'Send Denon Command' )]
+  +TArduinoInfraredRemoteTransmitterSendDenonCommandElement : TArduinoInfraredRemoteTransmitterBasicBitsElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendProntoCommandElement' )]
+  [CreateName( 'Send Pronto Command' )]
+  [Name( 'Send Pronto Command' )]
+  +TArduinoInfraredRemoteTransmitterSendProntoCommandElement : TArduinoInfraredRemoteTransmitterBasicElement
+
+    Code : String = ''
+    Repeat : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitterSendRawCommandElement' )]
+  [CreateName( 'Send Raw Command' )]
+  [Name( 'Send Raw Command' )]
+  +TArduinoInfraredRemoteTransmitterSendRawCommandElement : TArduinoInfraredRemoteTransmitterBasicElement
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Data : TArduinoUnsigned16ValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoInfraredRemoteReceiverElements )]
+  [ArduinoHelpPostfix( '(Infrared Remote Receiver)' )]
+  [ArduinoDeclaredClass]
+  TArduinoInfraredRemoteReceiverBasicElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteReceiverBasicValueElement : TArduinoInfraredRemoteReceiverBasicElement
+
+    Value : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteReceiverBasicClockValueElement : TArduinoInfraredRemoteReceiverBasicValueElement
+
+    [OWPinGroup( TArduinoInfraredRemoteReceiverBasicClockValueElement]
+    OutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteReceiverBasicDigitalValueElement : TArduinoInfraredRemoteReceiverBasicValueElement
+
+    [OWPinGroup( TArduinoInfraredRemoteReceiverBasicDigitalValueElement]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'RC5' )]
+  [CreateName( 'Decode RC-5 Command' )]
+  [Name( 'Decode RC-5 Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendRC5CommandElement )]
+  +TArduinoInfraredRemoteReceiverRC5CommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'RC6' )]
+  [CreateName( 'Decode RC-6 Command' )]
+  [Name( 'Decode RC-6 Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendRC6CommandElement )]
+  +TArduinoInfraredRemoteReceiverRC6CommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECCommandElement' )]
+  [CreateName( 'Decode NEC Command' )]
+  [Name( 'Decode NEC Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendNECCommandElement )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FLastValue' )]
+  +TArduinoInfraredRemoteReceiverNECCommandElement : TArduinoInfraredRemoteReceiverBasicDigitalValueElement
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+    [OWPinGroup( TArduinoInfraredRemoteReceiverNECCommandElement]
+    RepeatOutputPin : TOWArduinoClockSourcePin
+
+    [ NamePostfix( '(mS)' ) ]
+    RepeatInterval : Unsigned = 300
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  TArduinoInfraredRemoteReceiverBasicNECElement : TArduinoInfraredRemoteReceiverBasicElement
+
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoTemplatePinListSize]
+    OutputPins : TOWArduinoChainCallPinList
+
+    [ NamePostfix( '(mS)' ) ]
+    RepeatInterval : Unsigned = 300
+
+    RepeatOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoInfraredRemoteRemotesToolbarCategory )]
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_YK_001.h' )]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECButtonsOtputCommandsElement' )]
+  [CreateName( 'YK-001' )]
+  [Name( 'YK-001' )]
+  [ArduinoVariable( Unsigned, 5, 'FIndex' )]
+  [ArduinoTemplateParameter( '0_T_Values_Array', 'Mitov::IR_Button' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_C_YK_001' )]  
+  +TArduinoInfraredRemoteReceiverYK_001Element : TArduinoInfraredRemoteReceiverBasicNECElement
+
+    [OWAddPin( 'Power', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Mode', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Mute', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Previous', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Next', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Play/Pause', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '-', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '+', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'EQ', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Enter', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '100+', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '0', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '1', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '2', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '3', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '4', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '5', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '6', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '7', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '8', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '9', TOWArduinoDigitalSourcePin )]
+    OutputPins
+
+    [OWPrimaryPin]
+    OutputPin  : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoInfraredRemoteRemotesToolbarCategory )]
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_YahBoom.h' )]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECButtonsOtputCommandsElement' )]
+  [CreateName( 'YahBoom' )]
+  [Name( 'YahBoom' )]
+  [ArduinoVariable( Unsigned, 5, 'FIndex' )]
+  [ArduinoTemplateParameter( '0_T_Values_Array', 'Mitov::IR_Button' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_YahBoom' )]  
+  +TArduinoInfraredRemoteReceiverYahBoomElement : TArduinoInfraredRemoteReceiverBasicNECElement
+
+    [OWAddPin( 'Power', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Forward(Up)', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Light', TOWArduinoDigitalSourcePin )]
+    
+    [OWAddPin( 'Left', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Speaker', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( 'Rotate Left', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Back(Down)', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Rotate Right', TOWArduinoDigitalSourcePin )]
+    
+    [OWAddPin( '+', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '0', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '-', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '1', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '2', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '3', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '4', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '5', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '6', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '7', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '8', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '9', TOWArduinoDigitalSourcePin )]
+    OutputPins
+
+    [OWPrimaryPin]
+    OutputPin  : TOWArduinoCharSourcePin
+
+  ;
+  
+//---------------------------------------------------------------------------
+  [Category( TArduinoInfraredRemoteRemotesToolbarCategory )]
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_Taidacent_20_Key.h' )]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECButtonsOtputCommandsElement' )]
+  [CreateName( 'Taidacent' )]
+  [Name( 'Taidacent NEC 20 Key' )]
+  [ArduinoVariable( Unsigned, 5, 'FIndex' )]
+  [ArduinoTemplateParameter( '0_T_Values_Array', 'Mitov::IR_Button' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_Taidacent_20_Key' )]  
+  +TArduinoInfraredRemoteReceiver_Taidacent_NEC_20Key_Element : TArduinoInfraredRemoteReceiverBasicNECElement
+
+    [OWAddPin( 'Power', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Menu', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( 'Test', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '+', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Enter', TOWArduinoDigitalSourcePin )]
+    
+    [OWAddPin( 'Previous', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Play', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Next', TOWArduinoDigitalSourcePin )]
+    
+    [OWAddPin( '0', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '-', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'C', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '1', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '2', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '3', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '4', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '5', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '6', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '7', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '8', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '9', TOWArduinoDigitalSourcePin )]
+    OutputPins
+
+    [OWPrimaryPin]
+    OutputPin  : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoInfraredRemoteRemotesToolbarCategory )]
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_CarMP3.h' )]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECButtonsOtputCommandsElement' )]
+  [CreateName( 'Car MP3' )]
+  [Name( 'Car MP3 Remote' )]
+  [ArduinoVariable( Unsigned, 5, 'FIndex' )]
+  [ArduinoTemplateParameter( '0_T_Values_Array', 'Mitov::IR_Button' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_Taidacent_CarMP3' )]  
+  +TArduinoInfraredRemoteReceiver_CarMP3_Element : TArduinoInfraredRemoteReceiverBasicNECElement
+
+    [OWAddPin( 'CH-', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'CH', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'CH+', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( 'Previous', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Next', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Play/Pause', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '-', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '+', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'EQ', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '0', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '100+', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '200+', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '1', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '2', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '3', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '4', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '5', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '6', TOWArduinoDigitalSourcePin )]
+
+    [OWAddPin( '7', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '8', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '9', TOWArduinoDigitalSourcePin )]
+    OutputPins
+
+    [OWPrimaryPin]
+    OutputPin  : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ELEGOO Penguin Bot' )]
+  [CreateName( 'Penguin Bot' )]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECButtonsCommandsElement' )]
+  [Category( TArduinoInfraredRemoteRemotesToolbarCategory )]
+  [ParentImage( TElegooPenguinBotBoard )]
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_ElegooPenguinBot.h' )]
+  [ArduinoVariable( Unsigned, 4, 'FIndex' )]
+  [ArduinoTemplateParameter( '0_T_Values_Array', 'uint32_t' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_NEC_ElegooPenguinBot' )]
+  +TArduinoInfraredRemoteReceiverElegooPenguinBotElement : TArduinoInfraredRemoteReceiverBasicNECElement
+
+    [OWAddPin( 'Forward(Up)', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Back(Down)', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '*', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Music', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Dance', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Talk', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Volume Up', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Volume Down', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Change', TOWArduinoDigitalSourcePin )]
+    OutputPins
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteReceiverArrows_Extender : Extender
+
+    [OWAddPin( 'Forward(Up)', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Back(Down)', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'OK', TOWArduinoDigitalSourcePin )]
+    OutputPins
+
+  ;  
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteReceiverDigits_Extender : Extender
+
+    [OWAddPin( '0', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '1', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '2', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '3', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '4', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '5', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '6', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '7', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '8', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '9', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '*', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '#', TOWArduinoDigitalSourcePin )]
+    OutputPins
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_Top_Arrows.h' )]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECButtonsCommandsElement' )]
+  [Name( 'Decode NEC Top Arrows Remote' )]
+  [CreateName( 'Arrows' )]
+  [Category( TArduinoArrrowsDigitsInfraredRemoteToolbarCategory )]
+  [ArduinoVariable( Unsigned, 3, 'FIndex' )]
+  [ArduinoTemplateParameter( '0_T_Values_Array', 'uint32_t' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_NEC_TopArrows' )]
+  [OldName( 'TArduinoInfraredRemoteReceiverArrowsElement' )]
+  +TArduinoInfraredRemoteReceiverArrowsTopElement : TArduinoInfraredRemoteReceiverBasicNECElement, TArduinoInfraredRemoteReceiverArrows_Extender
+
+    [OWPrimaryPin]
+    OutputPins
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_Bottom_Arrows.h' )]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECButtonsCommandsElement' )]
+  [CreateName( 'Arrows' )]
+  [Name( 'Decode NEC Bottom Arrows Remote' )]
+  [Category( TArduinoArrrowsDigitsInfraredRemoteToolbarCategory )]
+  [ArduinoVariable( Unsigned, 3, 'FIndex' )]
+  [ArduinoTemplateParameter( '0_T_Values_Array', 'uint32_t' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_NEC_BottomArrows' )]
+  +TArduinoInfraredRemoteReceiverArrowsBottomElement : TArduinoInfraredRemoteReceiverBasicNECElement, TArduinoInfraredRemoteReceiverArrows_Extender
+
+    [OWPrimaryPin]
+    OutputPins
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoArrrowsDigitsInfraredRemoteToolbarCategory )]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverNECButtonsOtputCommandsElement' )]
+  [ArduinoTemplateParameter( '0_T_Values_Array', 'Mitov::IR_Button' )]
+  TArduinoInfraredRemoteReceiverBasicDigitsElement : TArduinoInfraredRemoteReceiverBasicNECElement
+
+    [OWPrimaryPin]
+    OutputPin  : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_Digits_Top.h' )]
+  [CreateName( 'Digits' )]
+  [Name( 'Decode NEC Digits Top Remote' )]
+  [ArduinoVariable( Unsigned, 4, 'FIndex' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_NEC_Digits_Top' )]
+  +TArduinoInfraredRemoteReceiverDigitsTopElement : TArduinoInfraredRemoteReceiverBasicDigitsElement, TArduinoInfraredRemoteReceiverDigits_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_Digits_Bottom.h' )]
+  [CreateName( 'Digits' )]
+  [Name( 'Decode NEC Digits Bottom Remote' )]
+  [ArduinoVariable( Unsigned, 4, 'FIndex' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_NEC_Digits_Bottom' )]
+  +TArduinoInfraredRemoteReceiverDigitsBottomElement : TArduinoInfraredRemoteReceiverBasicDigitsElement, TArduinoInfraredRemoteReceiverDigits_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_Arrows_Digits.h' )]
+  [CreateName( 'Arrows and Digits' )]
+  [Name( 'NEC Arrows and Digits' )]
+  [Category( TArduinoInfraredRemoteRemotesToolbarCategory )]
+  [ParentImage( TArduinoArrrowsDigitsInfraredRemoteToolbarCategory )]
+  [ArduinoVariable( Unsigned, 5, 'FIndex' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_NEC_Arrows_Digits' )]
+  +TArduinoInfraredRemoteReceiverArrowsAndDigitsElement : TArduinoInfraredRemoteReceiverBasicDigitsElement, TArduinoInfraredRemoteReceiverArrows_Extender, TArduinoInfraredRemoteReceiverDigits_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredRemote_C_Digits_Arrows.h' )]
+  [CreateName( 'Arrows and Digits' )]
+  [Name( 'NEC Digits and Arrows' )]
+  [Category( TArduinoInfraredRemoteRemotesToolbarCategory )]
+  [ArduinoVariable( Unsigned, 5, 'FIndex' )]
+  [ArduinoTemplateParameter( '1_C_Values_Array', 'Mitov::C_InfraredRemote_NEC_Digits_Arrows' )]
+  +TArduinoInfraredRemoteReceiverDigitsAndArrowsElement : TArduinoInfraredRemoteReceiverBasicDigitsElement, TArduinoInfraredRemoteReceiverDigits_Extender, TArduinoInfraredRemoteReceiverArrows_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'SONY' )]
+  [CreateName( 'Decode Sony Command' )]
+  [Name( 'Decode Sony Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendSonyCommandElement )]
+  TArduinoInfraredRemoteReceiverSonyCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverPanasonicCommandElement' )]
+  [CreateName( 'Decode Panasonic Command' )]
+  [Name( 'Decode Panasonic Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendPanasonicCommandElement )]
+  +TArduinoInfraredRemoteReceiverPanasonicCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement
+
+    Address : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'JVC' )]
+  [CreateName( 'Decode JVC Command' )]
+  [Name( 'Decode JVC Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendJVCCommandElement )]
+  +TArduinoInfraredRemoteReceiverJVCCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'SAMSUNG' )]
+  [CreateName( 'Decode SAMSUNG Command' )]
+  [Name( 'Decode SAMSUNG Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendSAMSUNGCommandElement )]
+  +TArduinoInfraredRemoteReceiverSAMSUNGCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'WHYNTER' )]
+  [CreateName( 'Decode Whynter Command' )]
+  [Name( 'Decode Whynter Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendWhynterCommandElement )]
+  +TArduinoInfraredRemoteReceiverWhynterCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverAiwaRCT501CommandElement' )]
+  [CreateName( 'Decode Aiwa RCT501 Command' )]
+  [Name( 'Decode Aiwa RCT501 Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendAiwaRCT501CommandElement )]
+  +TArduinoInfraredRemoteReceiverAiwaRCT501CommandElement : TArduinoInfraredRemoteReceiverBasicElement
+
+    OutputPin : TOWArduinoClockSourcePin
+
+    [ValueRange( -32768, 32767 )]
+    [ArduinoUseBindingCheck]
+    Code : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'LG' )]
+  [CreateName( 'Decode LG Command' )]
+  [Name( 'Decode LG Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendLGCommandElement )]
+  +TArduinoInfraredRemoteReceiverLGCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'SANYO' )]
+  [CreateName( 'Decode Sanyo Command' )]
+  [Name( 'Decode Sanyo Command' )]
+  +TArduinoInfraredRemoteReceiverSanyoCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'MITSUBISHI' )]
+  [CreateName( 'Decode Mitsubishi Command' )]
+  [Name( 'Decode Mitsubishi Command' )]
+  +TArduinoInfraredRemoteReceiverMitsubishiCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'DISH' )]
+  [CreateName( 'Decode DISH Command' )]
+  [Name( 'Decode DISH Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendDISHCommandElement )]
+  +TArduinoInfraredRemoteReceiverDISHCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'SHARP' )]
+  [CreateName( 'Decode Sharp Command' )]
+  [Name( 'Decode Sharp Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendSharpCommandElement )]
+  +TArduinoInfraredRemoteReceiverSharpCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiverTypedCommandElement' )]
+  [ArduinoTemplateParameter( 'CODE', 'DENON' )]
+  [CreateName( 'Decode Denon Command' )]
+  [Name( 'Decode Denon Command' )]
+  [ParentImage( TArduinoInfraredRemoteTransmitterSendDenonCommandElement )]
+  +TArduinoInfraredRemoteReceiverDenonCommandElement : TArduinoInfraredRemoteReceiverBasicClockValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInfraredRemoteInclude]
+  [ArduinoClass( 'Mitov::InfraredRemoteReceiver' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoGlobalVariable( Boolean, 'G_Infrared_Resume' )]
+  TArduinoInfraredRemoteReceiver_Extender : Extender
+  
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    AddressOutputPin : TOWArduinoUnsignedSourcePin
+    DataTypeOutputPin : TOWArduinoIntegerSourcePin
+
+    [OWPrimaryPin]
+    RawOutputPin : TOWArduinoUnsignedArraySourcePin
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoInfraredRemoteReceiverElements
+
+    ReplaceNECRepeatCode : Boolean = True
+
+    [ NamePostfix( '(mS)' ) ]
+    ClearInterval : Unsigned = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Infrared Remote Receiver' )]
+  [CreateName( 'InfraredReceiver' )]
+  [ArduinoWebKeywords( 'Infrared Receiver Module Arduino' )]
+  [ArduinoWebKeywords( 'IR Receiver Module Arduino' )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoInfraredRemoteReceiver : TArduinoCommonUnsignedEnableSource, TArduinoInfraredRemoteReceiver_Extender
+
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    SensorInputPin : TOWArduinoDigitalInputSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoInfraredRemoteReceiver )]
+  TArduinoInfraredRemoteReceiver_Module_Extender : TArduinoInfraredRemoteReceiver_Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoInfraredRemoteReceiverShieldElement : TArduinoCodePersistent, TArduinoInfraredRemoteReceiver_Module_Extender;
+//---------------------------------------------------------------------------
+  [CreateName( 'Infrared Receiver' )]
+  TArduinoInfraredRemoteReceiverModule : TArduinoShield, TArduinoInfraredRemoteReceiver_Module_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInfraredRemoteInclude]
+  [ArduinoClass( 'Mitov::InfraredRemoteTransmitter' )]
+  [ArduinoWebKeywords( 'Infrared Transmitter Module Arduino' )]
+  [ArduinoWebKeywords( 'IR Transmitter Module Arduino' )]
+  [ArduinoVariable( Boolean, 'FSentOneJVC' )]
+  [ArduinoGlobalVariable( Boolean, 'G_Infrared_Resume' )]
+  [ArduinoInit]
+  TArduinoInfraredRemoteTransmitter_Extender : Extender
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoInfraredRemoteTransmitterElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Infrared Transmitter' )]
+  [CreateName( 'InfraredTransmitter' )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoInfraredRemoteTransmitter : TArduinoCommonUnsignedEnableArraySink, TArduinoInfraredRemoteTransmitter_Extender
+
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    SensorOutputPin : TOWArduinoDigitalOutputSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Infrared Remote Transmitter' )]
+  [Category( TCommunicationToolbarCategory )]
+  [ParentImage( TArduinoInfraredRemoteTransmitter )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoInfraredRemoteTransmitterPersistent : TArduinoCodeEnabledPersistent, TArduinoInfraredRemoteTransmitter_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUnsignedArraySinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Infrared Transmitter' )]
+  [CreateName( 'InfraredTransmitter' )]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoInfraredRemoteTransmitter )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoInfraredRemoteTransmitterModule : TArduinoEnabledShield, TArduinoInfraredRemoteTransmitter_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUnsignedArraySinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

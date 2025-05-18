@@ -1,0 +1,131 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoCounterElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+//  [PersistentCollection( TArduinoCounterElements )]
+//  [ArduinoHelpPostfix( '(Counter)' )]
+//  [ArduinoDeclaredClass]
+//  [ArduinoOwnerTemplateTypeAndReference]
+//  TArduinoCounterBasicElement : TArduinoBasicNamedExludePersistent
+
+//    [OWPrimaryPin]
+//    InputPin : TOWArduinoClockSinkPin
+
+//    [ExtendDisplayName( ' (', ')' )]
+//    Value : Integer = 0
+
+//  ;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::ArduinoCounterSetValueElement' )]
+//  [Name( 'Set Value' )]
+//  [ParentImage( TArduinoIntegerValue )]
+//  +TArduinoCounterSetValueElement : TArduinoCounterBasicElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoAddValueElement' )]
+  [Name( 'Add Value' )]
+  [ParentImage( TArduinoIntegerAdd )]
+  [PersistentCollection( TArduinoCounterElements )]
+  +TArduinoIntegerAddValueElement : TArduinoIntegerBasicClockedValueElement
+
+    Value = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GenericValueLimit' )]
+  [ArduinoProcessChildParentVariables]
+  TArduinoCounterBasicLimit : TArduinoCodePersistent
+
+    Value : Integer
+    RollOver : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCounterMinLimit : TArduinoCounterBasicLimit
+
+//    [Default( Low(Integer) )] // Use Default attribute for Low(Integer) due to Delphi Bug!
+    [ArduinoConstrainMinVariable_Parent( 'FCount' )]
+    Value = -2147483648
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCounterMaxLimit : TArduinoCounterBasicLimit
+
+//    [Default( High(Integer) )] // Use Default attribute for Low(Integer) due to Delphi Bug!
+    [ArduinoConstrainMaxVariable_Parent( 'FCount' )]
+    Value = 2147483647
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Counter.h' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoOptionalVariable( Integer, True, 32, 'FCount', 0 )]
+  TArduinoCommonBasicCounter_Extender : Extender
+
+    [ArduinoVariableIfPinConnected( 'FCount' )]
+    OutputPin
+
+    [OWPrimaryPin]
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [DesignRange( 0, 1000 )]
+    InitialValue : Integer
+
+    Min : TArduinoCounterMinLimit
+    Max : TArduinoCounterMaxLimit
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoCounterElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoIntegerMeasurementToolbarCategory )]
+  [RemovedProperty( Integer, 'MinValue', 'Min.Value' )]
+  [RemovedProperty( Integer, 'MaxValue', 'Max.Value' )]
+  TArduinoCommonBasicCounter : TArduinoCommonIntegerEnableSource, TArduinoCommonBasicCounter_Extender;
+//---------------------------------------------------------------------------
+  TArduinoCommonBasicCounterModule : TArduinoEnabledShield, TArduinoCommonBasicCounter_Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoVariable( Boolean, 'NeedsUpdate' )]
+  TArduinoBasicCounter : TArduinoCommonBasicCounter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Counter.h' )]
+  [ArduinoClass( 'Mitov::Counter' )]
+  [CreateName( 'Counter' )]
+  [Name( 'Counter' )]
+  +TArduinoCounter : TArduinoBasicCounter
+
+    [OWPrimaryPin]
+    [ArduinoInterruptRaising( '', False, 'InterruptHandler' )]
+    [ArduinoInterruptAddCodeEntry( ceLoopBegin )]
+    InputPin : TOWArduinoClockOptionalInterruptSinkPin
+
+    Reversed : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Counter.h' )]
+  [ArduinoClass( 'Mitov::UpDownCounter' )]
+  [CreateName( 'UpDownCounter' )]
+  [Name( 'Up/Down Counter' )]
+  +TArduinoUpDownCounter : TArduinoBasicCounter
+
+    [OWPrimaryPin]
+    [ArduinoInterruptRaising( '', False, 'InterruptHandler_Up' )]
+    [ArduinoInterruptAddCodeEntry( ceLoopBegin )]
+    UpInputPin : TOWArduinoClockOptionalInterruptSinkPin
+
+    [OWPrimaryPin]
+    [ArduinoInterruptRaising( '', False, 'InterruptHandler_Down' )]
+    [ArduinoInterruptAddCodeEntry( ceLoopBegin )]
+    DownInputPin : TOWArduinoClockOptionalInterruptSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

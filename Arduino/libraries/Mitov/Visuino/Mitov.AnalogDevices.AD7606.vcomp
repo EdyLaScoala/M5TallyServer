@@ -1,0 +1,72 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoAD7606Oversampling : Enum
+
+    aosNone
+    aos2
+    aos4
+    aos8
+    aos16
+    aos32
+    aos64
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AnalogDevices_AD7606.h' )]
+  [ArduinoWebKeywords( 'AD7606' )]
+  [CreateName( 'AD7606ADC' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  TArduinoAD7606Basic : TArduinoEnableComponent
+
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPins( '', 0, 8, TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPins( '', 0, 3, TOWArduinoDigitalSourcePin )]
+    OversamplingOutputPins : TOWArduinoPinList
+
+    [OWRequiredPin]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWRequiredPin]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWRequiredPin]
+    ReadOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWRequiredPin]
+    StartOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    BusyInputPin : TOWArduinoDigitalInputSinkPin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    Oversampling : TArduinoAD7606Oversampling = aosNone
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoPinConnectedClassName( 'Mitov::AD7606Parallel16bit' )]
+//  TOWArduinoAD7606DigitalInputSinkPin : TOWArduinoDigitalInputSinkPin;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Devices AD7606 8 Channel ADC Parallel' )]
+  [ArduinoClass( 'Mitov::AD7606Parallel8bit' )]
+  [ArduinoStart]
+  +TArduinoAD7606Parallel : TArduinoAD7606Basic
+
+    [OWPinListPrimaryPinType( TOWArduinoDigitalInputSinkPin )]
+    [ArduinoDirectPinTemplate( '-1' )]
+    [OWAddPins( 'Data', 0, 8, TOWArduinoDigitalInputSinkPin_Required )]
+    [OWAddPins( 'Data', 8, 8, TOWArduinoAD7606DigitalInputSinkPin )]
+    DataInputPins : TOWArduinoPinList
+
+    MostSignificantFirst : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

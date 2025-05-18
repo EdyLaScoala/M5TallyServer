@@ -1,0 +1,35 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'DIY More' )]
+  TDIYMoreCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TDIYMoreCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TDIYMoreAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TDIYMoreCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TDIYMoreESP8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TDIYMoreCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TDIYMoreESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:nodemcu:generic,baud=921600' )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:nodemcuv2:generic,baud=921600' )]
+  [Category( TDIYMoreESP8266Category )]
+  [Name( 'DIY More ESP8266 Strong' )]
+  +TArduinoESP8266_DIY_More_Strong_Board : TArduinoESP8266_NodeMCU_Basic_Board;
+//---------------------------------------------------------------------------
+  [Name( 'DIY More NANO Strong' )]
+  [Category( TDIYMoreAVRCategory )]
+  [ArduinoBoardCompileParams( 'arduino:avr:nano:cpu=atmega328old' )]
+  +TArduino_AVR328_DIY_More_Strong_Board : TArduino_AVR328_Basic_Nano_Board;
+//---------------------------------------------------------------------------
+; // Mitov

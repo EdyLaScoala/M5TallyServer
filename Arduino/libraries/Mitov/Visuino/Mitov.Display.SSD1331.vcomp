@@ -1,0 +1,60 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DisplaySSD1331' )]
+  [CreateName( 'DisplayOLED' )]
+  [ArduinoInclude( 'Mitov_Display_SSD1331.h' )]
+  [Name( 'SSD1331 OLED Display (SPI)' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [ArduinoWebKeywords( 'SSD1331' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [Supports565Color]
+  [ArduinoOptionalVariable( Unsigned, 7, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 7, 'FCursorY', 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+  TArduinoDisplaySSD1331 : TArduinoComponent
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+//    [ArduinoUsePinGettter]
+    [ArduinoAddPinWrapper( 'Mitov::DisplaySSD1306ResetPin', 'Mitov::DisplaySSD1306NoReset' )]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoColorGraphicsElements
+
+    [OWExcludeBindings]
+    IsBGR : Boolean = False
+
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoNeedsRGBColor]
+    BackgroundColor : TColor = Black
+
+    Text : TArduinoColorGraphicsTextSettings
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePowerOn' )]
+    PowerOn : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION' , 'Mitov::Display_SPI' )]
+  +TArduinoDisplaySSD1331SPI : TArduinoDisplaySSD1331
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+//    [ArduinoUsePinGettter]
+    [OWRequiredPin]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    DataCommandOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

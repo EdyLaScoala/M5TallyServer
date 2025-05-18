@@ -1,0 +1,76 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_TCN75A.h' )] // Also Used by other components!
+  [ArduinoClass( 'Mitov::TArduinoMicrochipTCN75AAlert' )]
+  TArduinoMicrochipTCN75AAlert : TArduinoCodePersistent
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '6' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    QueueSize : Unsigned = 1
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    InterruptMode : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    ActiveLow : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateLimits' )]
+    [ValueRange( -273.15, 50000 )]
+    Temperature : Single = 80.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateHysteresis' )]
+    [ValueRange( 0, 50000 )]
+    Hysteresis : Single = 5.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_TCN75A.h' )]
+  [ArduinoClass( 'Mitov::MicrochipTCN75A' )]
+  [Name( 'Microchip Thermometer TCN75A(I2C)' )]
+  [CreateName( 'Thermometer' )]
+  [ArduinoStart]
+  TArduinoMicrochipTCN75A_Extender : Extender
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [ValueRange( 9, 12 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    Resolution : Unsigned = 12
+
+    [ArduinoUseBindingCheckSetter( 'ReadData' )]
+    InFahrenheit : Boolean = False
+
+    Alert : TArduinoMicrochipTCN75AAlert
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    ShutDown : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoWebKeywords( 'TCN75A' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoMicrochipTCN75A : TArduinoClockedEnableFlexibleI2CComponent, TArduinoMicrochipTCN75A_Extender
+
+    [DesignRange( $48, $4F )]
+    Address = $48
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_NAME', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x48 >' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoI2C( 0 )]
+  *TArduinoMicrochipTCN75APersistent : TArduinoCodeEnabledClockedPersistent, TArduinoMicrochipTCN75A_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

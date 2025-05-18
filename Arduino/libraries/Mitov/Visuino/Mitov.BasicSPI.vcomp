@@ -1,0 +1,51 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoBasicSpeedSPI : TArduinoBasicSPI
+
+    SPISpeed : Unsigned = 8000000
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicImplementationSpeedSPI : TArduinoBasicSpeedSPI
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicEnableSpeedSPI : TArduinoBasicEnableSPI
+
+    SPISpeed : Unsigned = 8000000
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonBasicSPI : TArduinoComponent
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+//    [ArduinoSPIInstanceTemplate]
+    SPIOutputPin : TOWArduinoSPISourcePin
+
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonSpeedSPI : TArduinoCommonBasicSPI
+
+    SPISpeed : Unsigned = 8000000
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonSpeedEnabledSPI : TArduinoCommonSpeedSPI
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

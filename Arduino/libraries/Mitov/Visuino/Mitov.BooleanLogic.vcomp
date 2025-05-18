@@ -1,0 +1,86 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoDigitalSetValueElements )]
+  [ArduinoHelpPostfix( '(Digital Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicDigitalSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LogicGates.h' )]
+  [Category( TArduinoBooleanGatesFilterToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  [ArduinoClass( 'Mitov::BooleanOperation' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  TArduinoCommonLogicBooleanMultiInput : TArduinoBooleanMultiInputSource
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital (Boolean) And' )]
+  [CreateName( 'And' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::BooleanAnd' )]
+  +TArduinoBooleanAnd : TArduinoCommonLogicBooleanMultiInput;
+//---------------------------------------------------------------------------
+  [Name( 'Boolean (Digital) Or' )]
+  [CreateName( 'Or' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::BooleanOr' )]
+  +TArduinoBooleanOr : TArduinoCommonLogicBooleanMultiInput;
+//---------------------------------------------------------------------------
+  [Name( 'Digital (Boolean) Xor' )]
+  [CreateName( 'Xor' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::BooleanXor' )]
+  +TArduinoBooleanXor : TArduinoCommonLogicBooleanMultiInput;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LogicGates.h' )]
+  [ArduinoClass( 'Mitov::BooleanInverter' )]
+  [CreateName( 'Inverter' )]
+  [Name( 'Digital (Boolean) Inverter (Not)' )]
+  [Category( TArduinoBooleanGatesFilterToolbarCategory )]
+  +TArduinoBooleanInverter : TArduinoCommonBooleanFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnlyDigital' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'Digital (Boolean) Change Only' )]
+  [Category( TArduinoBooleanGatesFilterToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [ArduinoVariable( Boolean, 'FData' )]
+  +TArduinoDigitalChangeOnly : TArduinoCommonBooleanFilter;
+//---------------------------------------------------------------------------
+  TArduinoDigitalBasicValueElement : TArduinoBasicDigitalSetValueElement
+
+    [ExtendDisplayName( ' (', ')' )]
+    Value : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [ParentImage( TArduinoBooleanValue )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoDigitalSetValueElement : TArduinoDigitalBasicValueElement
+
+    [OWPinGroup( TArduinoDigitalSetValueElement]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoDigitalStateSetValueElement : TArduinoDigitalBasicValueElement
+
+    [OWPinGroup( TArduinoDigitalStateSetValueElement]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

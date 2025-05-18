@@ -1,0 +1,81 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoBasicESP32DigitalChannelsBoard : TArduinoBasicESP32Board
+
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    SPIChannels : TArduinoSPIChannels
+
+    [Name( 'Channels' )]
+    [ArduinoBoardDefaultChannelName( 'GPIO' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 0,   1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 1,   1, TArduinoCombinedPullDownAnalogDigitalSerial0Channel, 'GPIO(TX0)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 2,   1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 3,   1, TArduinoCombinedPullDownAnalogDigitalSerial0Channel, 'GPIO(RX0)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 4,   1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 5,   7, TArduinoCombinedPullDownAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 12,  4, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 16,  2, TArduinoCombinedPullDownAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 18,  2, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 21,  2, TArduinoCombinedPullDownAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 23,  1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 25,  2, TArduinoESP32CombinedPullDownAnalogDigitalDACChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 27,  1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 32,  2, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 34,  6, TArduinoPullDownTouchAnalogInputOnlyChannel )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicESP32Digital_Serial_ChannelsBoard : TArduinoBasicESP32DigitalChannelsBoard
+
+    [AddItem( TArduinoHardwareSerial )]
+    [AddItem( TArduinoESP32DefinedPinsSerial1 )]
+    [AddItem( TArduinoESP32DefinedPinsSerial2 )]
+    Serial
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard : TArduinoBasicESP32Digital_Serial_ChannelsBoard
+
+    [AddItem( TArduinoESP32_Generic_I2C )]
+    [AddItem( TArduinoESP32_Generic_I2C_2 )]
+    I2CChannels
+
+    [AddItem( TArduinoESP32_Generic_SPI )]
+    [AddItem( TArduinoESP32_Generic_SPI1 )]
+    SPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TESP32Category )]
+  [Category( TESP32Category )]
+  [Name( 'Generic ESP32' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduinoESP32_Generic_Board : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard
+  
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TESP32Category )]
+  [Category( TESP32Category )]
+  [Name( 'ESP32 Development Board' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduinoESP32_Development_Board : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard
+  
+    [ArduinoBoard_Add_ReservedChannels( 0, 20 )]
+    [ArduinoBoard_Add_ReservedChannels( 21, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 25, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 32, 5 )]
+    [ArduinoBoard_Add_ReservedChannel( 39 )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

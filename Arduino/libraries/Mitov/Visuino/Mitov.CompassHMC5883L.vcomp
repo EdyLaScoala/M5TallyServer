@@ -1,0 +1,138 @@
+Mitov
+//---------------------------------------------------------------------------
+  TCompassHMC5883LAveragedSamples : Enum
+  
+    cas1
+    cas2
+    cas4
+    cas8 
+    
+  ;
+//---------------------------------------------------------------------------
+  TCompassHMC5883LBias : Enum
+  
+    cbNone
+    cbPositive
+    cbNegative 
+    
+  ;
+//---------------------------------------------------------------------------
+  TCompassHMC5883LGain : Enum
+  
+    cg1370
+    cg1090
+    cg820
+    cg660
+    cg440
+    cg390
+    cg330
+    cg230 
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_HMC5883_Compass.h' )]
+  [ArduinoClass( 'Mitov::HMC5883L_Compass' )]
+  [Name( 'Compass HMC5883/GY-273' )]
+  [CreateName( 'Compass' )]
+  [ArduinoWebKeywords( 'HMC5883L' )]
+  [ArduinoWebKeywords( 'GY-273' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', True )]
+//  [ArduinoVariable( Boolean, 'FChangeOnly' )]
+  +TCompassHMC5883L : TArduinoI2CClockedEnableComponent
+
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    XOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    YOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    ZOutputPin : TOWArduinoAnalogSourcePin
+
+    [DesignRange( $1E, $1E )]
+    Address : TArduinoUInt8 = $1E
+
+    AveragedSamples : TCompassHMC5883LAveragedSamples = cas1
+    Bias : TCompassHMC5883LBias = cbNone
+    Gain : TCompassHMC5883LGain = cg1090
+
+    [ArduinoUseBindingCheckSetter( 'UpdateIdle' )]
+    Idle : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TCompassQMC5883LThermometer' )]
+  TCompassQMC5883LThermometer : TArduinoBasicEnabledThermometer
+  
+	Offset : Single = 37
+	
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_QMC5883_Compass.h' )]
+  [ArduinoClass( 'Mitov::QMC5883L_Compass' )]
+  [Name( 'Compass QMC5883/GY-271' )]
+  [CreateName( 'Compass' )]
+  [ArduinoWebKeywords( 'QMC5883L' )]
+  [ArduinoWebKeywords( 'GY-271' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', True )]
+//  [ArduinoVariable( Boolean, 'FChangeOnly' )]
+  +TCompassQMC5883L : TArduinoI2CClockedEnableComponent
+
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartTemperature' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemBeginLoopTemperature' )]
+    ClockInputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [OWAddPin( 'X(mG)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y(mG)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Z(mG)', TOWArduinoAnalogSourcePin )]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+    
+    OverflowOutputPin : TOWArduinoDigitalSourcePin
+    
+    [DesignRange( $0D, $0D )]
+    Address : TArduinoUInt8 = $0D
+    
+    [ValueRange( 10, 200 )]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '100' )]
+    [PropertyListDesignValue( '200' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateControlRegister1' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Unsigned = 200
+
+    [ValueRange( 2, 8 )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '8' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateControlRegister1' )]
+    [NamePostfix( ' (Gauss)' )]
+    FullScaleRange : Unsigned = 2
+    
+    [ValueRange( 64, 512 )]
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '128' )]
+    [PropertyListDesignValue( '256' )]
+    [PropertyListDesignValue( '512' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateControlRegister1' )]
+    OverSampleRatio : Unsigned = 64
+    
+    Thermometer : TCompassQMC5883LThermometer
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

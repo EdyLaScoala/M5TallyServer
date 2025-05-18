@@ -1,0 +1,34 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM1637_7SegmentElements )]
+  [PersistentCollection( TArduinoTM1637_7SegmentElements_NoDecimals )]
+  +TArduinoTM1637_IntegerDisplay7Segments : TArduinoTM163X_IntegerDisplay7Segments
+
+    CountDigits = 4
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM1637_7SegmentElements )]
+  [PersistentCollection( TArduinoTM1637_7SegmentElements_NoDecimals )]
+  +TArduinoTM1637_AnalogDisplay7Segments : TArduinoTM163X_AnalogDisplay7Segments
+
+    CountDigits = 4
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM1637_7SegmentElements )]
+  [PersistentCollection( TArduinoTM1637_7SegmentElements_NoDecimals )]
+  +TArduinoTM1637_TextDisplay7Segments : TArduinoTM163X_TextDisplay7Segments
+
+    CountDigits = 4
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM1637_7SegmentElements_NoDecimals )]
+  +TArduinoTM1637_Section7Segments_NoDecimal : TArduinoTM163X_AnyPoints_Section7Segments;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM1637_7SegmentElements_NoDecimals )]
+  [ArduinoTemplateParameter( 'InitialDecmalPointValue', 'Mitov::ConstantProperty<2, bool, false >' )]
+  +TArduinoTM1637_ValueSection7Segments_NoDecimal : TArduinoTM163X_AnyPoints_ValueSection7Segments;
+//---------------------------------------------------------------------------
+; // Mitov

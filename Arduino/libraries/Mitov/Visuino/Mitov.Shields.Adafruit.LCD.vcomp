@@ -1,0 +1,101 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_Adafruit_LCD_Shield.h' )]
+  [ArduinoClass( 'Mitov::ArduinoAdafruitLCDKeypadKeys' )]
+  [ParentImage( TArduinoBasicButtonModule )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoAdafruitShieldLCDKeypadKeys : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Up', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Down', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalSourcePin )]
+    DirectionOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    SelectOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'Columns', 'Mitov::ConstantProperty<115, uint32_t, 16 >' )]
+  [ArduinoTemplateParameter( 'Rows', 'Mitov::ConstantProperty<116, uint32_t, 2 >' )]
+  [ArduinoVariable( Unsigned, 5, 'FCursorPos' )]
+  [ArduinoVariable( Unsigned, 2, 'FCursorLine' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoAdafruitShieldLCDKeypadDisplay_Basic : TArduinoBasicLiquidCrystalDisplayBasicPersistent
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBacklight' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    BacklightPositive : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoAdafruitLCDKeypadShieldDisplay' )]
+  TArduinoAdafruitShieldLCDKeypadDisplay : TArduinoAdafruitShieldLCDKeypadDisplay_Basic
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBacklight' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Backlight : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAdafruitShieldLCDKeypadRGBDisplayBacklight' )]
+  TArduinoAdafruitShieldLCDKeypadRGBDisplayBacklight : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateBacklight' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Red : Boolean = True
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateBacklight' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Green : Boolean = True
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateBacklight' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Blue : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoAdafruitRGBLCDKeypadShieldDisplay' )]
+  TArduinoAdafruitShieldLCDKeypadRGBDisplay : TArduinoAdafruitShieldLCDKeypadDisplay_Basic
+
+    Backlight : TArduinoAdafruitShieldLCDKeypadRGBDisplayBacklight
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Adafruit_LCD_Shield.h' )]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::ArduinoAdafruitLCDKeypadShield' )]
+  [CreateName( 'Adafruit LCD Keypad' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoI2C( 0 )]
+  [ArduinoInit]
+  TArduinoAdafruitLCDKeypadShield_Basic : TArduinoShield, IStandardShield
+
+    Keys : TArduinoAdafruitShieldLCDKeypadKeys
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit LCD 5 Button Keypad I2C Shield' )]
+  +TArduinoAdafruitLCDKeypadShield : TArduinoAdafruitLCDKeypadShield_Basic
+
+    Display : TArduinoAdafruitShieldLCDKeypadDisplay
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit RGB Light LCD 5 Button Keypad I2C Shield' )]
+  +TArduinoAdafruitRGB_LCDKeypadShield : TArduinoAdafruitLCDKeypadShield_Basic
+
+    Display : TArduinoAdafruitShieldLCDKeypadRGBDisplay
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

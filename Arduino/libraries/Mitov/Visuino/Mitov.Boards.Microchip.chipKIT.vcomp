@@ -1,0 +1,279 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Microchip PIC32' )]
+  TPIC32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Digilent' )]
+  TDigilentCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'chipKIT PIC32' )]
+  [Category( TDigilentCategory )]
+  [AlternateCategory( TPIC32Category )]
+  [ParentImage( TPIC32Category )]
+  TDigilentPIC32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Majenko Technologies' )]
+  TMajenkoCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'chipKIT PIC32' )]
+  [Category( TMajenkoCategory )]
+  [AlternateCategory( TPIC32Category )]
+  [ParentImage( TPIC32Category )]
+  TMajenkoPIC32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  ['{448EC582-F037-4CBC-9671-2B9653B8801F}']
+  IchipKITStandardShield : IStandardShield;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IchipKITStandardShield )]
+  TchipKITStandardShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_StandardSerial.h' )]
+  [ArduinoSerialType( 'CDCACM' )]
+  +TArduinoCDCACMSerial : TArduinoBasicSpeedSerial;
+//---------------------------------------------------------------------------
+  [CreateName( 'LED' )]
+  [ArduinoClass( 'Mitov::DirectOuputPin<PIN_LED2>' )]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoMacchinaLED_DS6 )]
+  +TChipKITMAX32LEDModule : TArduinoShield
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardArchitecture( 'pic32' )]
+  [ArduinoBoardCanReset]
+  TArduino_chipKIT_Basic_Board : TArduinoBoardExtendableImplementation
+
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+    
+    [AddItem( TArduinoEEPROMModule )]
+    Modules : TArduinoModules
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'chipKIT uC32' )]
+  [ArduinoBoardCompileParams( 'chipKIT:pic32:chipkit_uc32' )]
+  [Category( TDigilentPIC32Category )]
+  [ArduinoDefine( 'VISUINO_CHIPKIT_UC32' )]
+  +TArduino_chipKIT_uC32_Board : TArduino_chipKIT_Basic_Board
+
+    [AddItem( TArduinoHardwareSerial, 2 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoBasicNoPullDigitalSerial0Channel, 'Digital(RX)(SPI1-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoBasicNoPullDigitalSerial0Channel, 'Digital(TX)(SPI1-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoBasicNoPullDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicNoPullDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoBasicNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoBasicNoPullDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  2, TArduinoBasicNoPullDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  2, TArduinoBasicNoPullDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoBasicNoPullDigitalPWMSPI0Channel, 'Digital(SPI2-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoBasicNoPullDigitalSPI0Channel, 'Digital(SPI2-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicNoPullDigitalSPI0Channel, 'Digital(LED1)(SPI2-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 4, TArduinoCombinedAnalogNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogNoPullDigitalI2C0Channel, 'Digital(I2C1-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogNoPullDigitalI2C0Channel, 'Digital(I2C1-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 6, TArduinoCombinedAnalogNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26, 9, TArduinoBasicNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 35, 1, TArduinoBasicNoPullDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 36, 2, TArduinoBasicNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 38, 1, TArduinoBasicNoPullDigitalInterruptChannel, 'Digital(SPI1-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 39, 1, TArduinoBasicNoPullDigitalI2C1Channel, 'Digital(I2C2-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 40, 1, TArduinoBasicNoPullDigitalI2C1Channel, 'Digital(I2C2-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 41, 2, TArduinoBasicNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 43, 1, TArduinoBasicDigitalInputChannel, 'LED2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 44, 1, TArduinoBasicNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 45, 1, TArduinoBasicNoPullDigitalChannel, 'Digital(I2C1-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 46, 1, TArduinoBasicNoPullDigitalChannel, 'Digital(I2C1-SCL)' )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TchipKITStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'chipKIT Max32' )]
+  [ArduinoBoardCompileParams( 'chipKIT:pic32:mega_pic32' )]
+  [Category( TDigilentPIC32Category )]
+  [ArduinoDefine( 'VISUINO_CHIPKIT_MAX32' )]
+  +TArduino_chipKIT_Max32_Board : TArduino_chipKIT_Basic_Board
+
+    [AddItem( TChipKITMAX32LEDModule )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial, 4 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C, 5 )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI, 4 )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoBasicNoPullDigitalSerial0SPI2Channel, 'Digital(RX0)(SPI2-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoBasicNoPullDigitalSerial0SPI2Channel, 'Digital(TX0)(SPI2-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoBasicNoPullDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicNoPullDigitalPWMInterruptChannel, 'Digital(SPI1-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoBasicNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoBasicNoPullDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoBasicNoPullDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoBasicNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  2, TArduinoBasicNoPullDigitalPWMChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoBasicNoPullDigitalPWMSPI1Channel, 'Digital(SPI1-MISO)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoBasicNoPullDigitalI2C1Channel, 'Digital(I2C1-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicNoPullDigitalI2C1Channel, 'Digital(LED)(I2C1-SDA)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14, 1, TArduinoBasicNoPullDigitalSerial4SPI3Channel, 'Digital(TX4)(CAN0-TX)(SPI3-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15, 1, TArduinoBasicNoPullDigitalSerial4CAN0Channel, 'Digital(RX4)(CAN0-RX)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16, 1, TArduinoBasicNoPullDigitalSerial1I2C4SPI3Channel, 'Digital(TX1)(I2C4-SCL)(SPI3-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17, 1, TArduinoBasicNoPullDigitalSerial1I2C4SPI3Channel, 'Digital(RX1)(I2C4-SDA)(SPI3-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18, 1, TArduinoBasicNoPullDigitalSerial3SPI2Channel, 'Digital(TX3)(SPI2-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19, 1, TArduinoBasicNoPullDigitalSerial3Channel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20, 1, TArduinoBasicNoPullDigitalI2C0InterruptChannel, 'Digital(I2C0-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 21, 1, TArduinoBasicNoPullDigitalI2C0InterruptChannel, 'Digital(I2C0-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22, 1, TArduinoBasicNoPullDigitalCAN1Channel, 'Digital(CAN1-TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 23, 1, TArduinoBasicNoPullDigitalCAN1Channel, 'Digital(CAN1-RX)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25, 1, TArduinoBasicNoPullDigitalChannel, 'Digital(USBID)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26, 1, TArduinoBasicNoPullDigitalChannel, 'Digital(USB D-)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 27, 1, TArduinoBasicNoPullDigitalChannel, 'Digital(USB D+)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 28, 1, TArduinoBasicNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 29, 1, TArduinoBasicNoPullDigitalSerial2I2C0Channel, 'Digital(RX2)(I2C3-SDA)[29/50]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 30, 8, TArduinoBasicNoPullDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 38, 1, TArduinoBasicNoPullDigitalSPI0Channel, 'Digital(SPI0-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 39, 1, TArduinoBasicNoPullDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 43, 1, TArduinoBasicNoPullDigitalI2C3SPI0Channel, 'Digital(TX2)(I2C3-SCL)(SPI0-MOSI)[43/51]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 44, 1, TArduinoBasicNoPullDigitalChannel )] // AREF ???
+    [ArduinoBoard_Add_DigitalAnalogChannels( 45, 5, TArduinoBasicNoPullDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 52, 1, TArduinoBasicNoPullDigitalSerial5SPI1Channel, 'Digital(TX5)(SPI1-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 53, 1, TArduinoBasicNoPullDigitalSerial5Channel, 'Digital(RX5)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 54, 0, 11, TArduinoCombinedAnalogNoPullDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 65, TArduinoCombinedAnalogNoPullDigitalChannel, 'Digital/Analog[ 65/40/A11 ]', '65', 'A11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 66, TArduinoCombinedAnalogNoPullDigitalChannel, 'Digital/Analog[ 66/42/A12 ]', '66', 'A12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 67, TArduinoCombinedAnalogNoPullDigitalChannel, 'Digital/Analog[ 67/41/A13 ]', '67', 'A13' )]
+
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 68, 14, 2, TArduinoCombinedAnalogNoPullDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 70, 16, TArduinoBasicNoPullDigitalChannel )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TchipKITStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'chipKIT DP32' )]
+  [ArduinoBoardCompileParams( 'chipKIT:pic32:chipkit_DP32' )]
+  [Category( TDigilentPIC32Category )]
+  [ParentImage( TDigilentCategory )]
+  [ArduinoDefine( 'VISUINO_CHIPKIT_DP32' )]
+  +TArduino_chipKIT_DP32_Board : TArduino_chipKIT_Basic_Board
+
+    [AddItem( TArduinoCDCACMSerial )]
+    [AddItem( TArduinoHardwareSerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoBasicNoPullDigitalChannel, 'RB5 Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoBasicNoPullDigitalChannel, 'RB7 Digital 5V (BTN2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoBasicNoPullDigital2C0SPI1InterruptChannel, 'RB8 Digital 5V (SPI2-MOSI)(I2C1-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicNoPullDigital2C0InterruptChannel, 'RB9 Digital 5V (I2C1-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoBasicNoPullDigitalChannel, 'RB10 Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicNoPullDigitalChannel, 'RB11 Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 6,  0, 1, TArduinoCombinedAnalogNoPullDigitalPWMChannel, 'RB13 Digital 3.3V', 'AnalogIn', 'A' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 7,  1, 1, TArduinoCombinedAnalogNoPullDigitalSPI0Serial1Channel, 'RB14 Digital 3.3V (SPI1-SCK)(TX2)', 'AnalogIn', 'A' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 8,  2, 1, TArduinoCombinedAnalogNoPullDigitalPWMSPI1Channel, 'RB15 Digital 3.3V (SPI2-SCK)', 'AnalogIn (Potentiometer)', 'A' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9,  3, 1, TArduinoCombinedAnalogNoPullDigitalChannel, 'RA0 Digital 3.3V', 'AnalogIn', 'A' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 10, 4, 1, TArduinoCombinedAnalogNoPullDigitalSPI0Serial1Channel, 'RA1 Digital 3.3V (SPI1-MISO)(RX2)', 'AnalogIn', 'A' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 11, 5, 1, TArduinoCombinedAnalogNoPullDigitalChannel, 'RB0 Digital 3.3V (LED4)', 'AnalogIn', 'A' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 12, 6, 1, TArduinoCombinedAnalogNoPullDigitalChannel, 'RB1 Digital 3.3V (LED3)', 'AnalogIn', 'A' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 13, 7, 1, TArduinoCombinedAnalogNoPullDigitall2C1SPI1PWMInterruptChannel, 'RB2 Digital 3.3V (SPI2-MISO)(I2C2-SDA)(LED2)', 'AnalogIn', 'A' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 8, 1, TArduinoCombinedAnalogNoPullDigitall2C1SPI1Serial0InterruptChannel, 'RB2 Digital 3.3V (SPI2-MISO)(I2C2-SDA)(TX1)(LED1)', 'AnalogIn', 'A' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15,  1, TArduinoBasicNoPullDigitalChannel, 'RA2 Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,  1, TArduinoBasicNoPullDigitalChannel, 'RA3 Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17,  1, TArduinoBasicNoPullDigitalInterruptChannel, 'RB4 Digital 3.3V (BTN2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18,  1, TArduinoBasicNoPullDigitalSPI0InterruptChannel, 'RA4 Digital 3.3V (SPI1-MOSI)' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'chipKIT Lenny' )]
+  [ArduinoBoardCompileParams( 'chipKIT:pic32:lenny' )]
+  [Category( TMajenkoPIC32Category )]
+  [ParentImage( TMajenkoCategory )]
+  [ArduinoDefine( 'VISUINO_CHIPKIT_LENNY' )]
+  +TArduino_chipKIT_Lenny_Board : TArduino_chipKIT_Basic_Board
+
+    [AddItem( TArduinoCDCACMSerial )]
+    [AddItem( TArduinoHardwareSerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoBasicNoPullDigitalSerial0Channel, 'Digital 5V (RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoBasicNoPullDigitalSerial0Channel, 'Digital 5V (TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoBasicNoPullDigitalSerial1InterruptChannel, 'Digital 5V (TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicNoPullDigitalPWMInterruptChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoBasicNoPullDigitalSerial1InterruptChannel, 'Digital 5V (RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoBasicNoPullDigitalPWMInterruptChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoBasicNoPullDigitalChannel, 'Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoBasicNoPullDigitalChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  2, TArduinoBasicNoPullDigitalPWMChannel, 'Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoBasicNoPullDigitalPWMSPI0Channel, 'Digital 3.3V(SPI1-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoBasicNoPullDigitalSPI0Channel, 'Digital 3.3V(SPI1-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicNoPullDigitalSPI0Channel, 'Digital 3.3V(LED)(SPI1-SCK)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 4, TArduinoCombinedAnalogNoPullDigitalChannel, 'Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogNoPullDigitalI2C1Channel, 'Digital 3.3V (I2C2-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogNoPullDigitalI2C1Channel, 'Digital 3.3V (I2C2-SCL)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25, 1, TArduinoBasicNoPullDigitalSPI1Channel, 'Digital 3.3V (SPI2-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26, 1, TArduinoBasicNoPullDigitalSPI1Channel, 'Digital 3.3V (SPI2-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 27, 1, TArduinoBasicNoPullDigitalSPI1Channel, 'Digital 5V (SPI2-MOSI)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 28, 1, TArduinoBasicNoPullDigitalI2C0Channel, 'Digital 5V (I2C1-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 29, 1, TArduinoBasicNoPullDigitalI2C0Channel, 'Digital 5V (I2C1-SCL)' )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

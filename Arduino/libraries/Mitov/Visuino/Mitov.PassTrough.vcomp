@@ -1,0 +1,28 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Buzzer' )]
+  [CreateName( 'Buzzer' )]
+  [Category( TArduinoAudioOutputToolbarCategory )]
+  +TArduinoBuzzer : TArduinoCommonBooleanPassTroughFilter;
+//---------------------------------------------------------------------------
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  [Category( TArduinoDigitalDisplaysToolbarCategory )]
+  +TArduinoLED : TArduinoCommonBooleanPassTroughFilter;
+//---------------------------------------------------------------------------
+  [Name( 'Potentiometer' )]
+  [CreateName( 'Potentiometer' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoPotentiometer : TArduinoCommonAnalogPassTroughFilter;
+//---------------------------------------------------------------------------
+  [CreateName( 'Relay' )]
+  [Name( 'Relay' )]
+  [Category( TArduinoRelayDigitalInputOutputToolbarCategory )]
+  +TArduinoRelay : TArduinoCommonBooleanPassTroughFilter;
+//---------------------------------------------------------------------------
+  [CreateName( 'Laser' )]
+  [Name( 'Laser' )]
+  [Category( TArduinoRelayDigitalInputOutputToolbarCategory )]
+  +TArduinoLaser : TArduinoCommonBooleanPassTroughFilter;
+//---------------------------------------------------------------------------
+; // Mitov

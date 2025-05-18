@@ -1,0 +1,173 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ValueArray.h' )]
+  [CreateName( 'Array' )]
+  TArduinoValueArray_BasicExtender : Extender
+
+    [ArduinoPinIsConnectedFlag]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    IndexInputPin : TOWArduinoUnsignedSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialIndex : Unsigned = 0
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ValueArray' )]
+  TArduinoValueArray_Extender : TArduinoValueArray_BasicExtender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Array' )]
+  [Category( TArduinoAnalogDataSourcesToolbarCategory )]
+  +TArduinoAnalogValueArray : TArduinoCommonClockedAnalogSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoAnalogArrayValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [Name( 'Complex Array' )]
+  [Category( TArduinoComplexDataSourcesToolbarCategory )]
+  +TArduinoComplexValueArray : TArduinoCommonClockedComplexSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoComplexValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  [Name( 'Quaternion Array' )]
+  [Category( TArduinoQuaternionDataSourcesToolbarCategory )]
+  +TArduinoQuaternionValueArray : TArduinoCommonClockedQuaternionSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoQuaternionValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ValueArrayDigital' )]
+  [Name( 'Digital Array' )]
+  [Category( TArduinoDigitalDataSourcesToolbarCategory )]
+  +TArduinoDigitalValueArray : TArduinoCommonClockedBooleanSource, TArduinoValueArray_BasicExtender
+
+    Elements : TArduinoDigitalValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Integer Array' )]
+  [Category( TArduinoIntegerDataSourcesToolbarCategory )]
+  +TArduinoIntegerValueArray : TArduinoCommonClockedIntegerSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoIntegerValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Unsigned Array' )]
+  [Category( TArduinoUnsignedDataSourcesToolbarCategory )]
+  +TArduinoUnsignedValueArray : TArduinoCommonClockedUnsignedSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoUnsignedValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [Name( 'Date/Time Array' )]
+  [Category( TArduinoDateTimeDataSourcesToolbarCategory )]
+  +TArduinoDateTimeValueArray : TArduinoCommonClockedDateTimeSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoDateTimeValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'const char * &', 'AValue' )]
+  [Name( 'GetValue' )]
+  [ArduinoCallChainIndex]
+  ArduinoTextValueArrayGetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoTextValueArrayGetValueCallChain]
+  TArduinoTextValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTextValueElements )]
+  [ArduinoHelpPostfix( '(Text Value Array)' )]
+  [Name( 'Value' )]
+  [ArduinoDisplayParentName( 'Item' )]
+  [ParentImage( TArduinoMemoryPROMTextElement )]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoTextValueElement' )]
+  [ArduinoTextValueArrayGetValueCallChain]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoTextValueElement : TArduinoNamedPersistentAbstract
+
+    [MultiLine]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateArrayValue' )]
+    [ExtendDisplayName( '=', '' )]
+    Value : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ValueArray.h' )]
+  [ArduinoClass( 'Mitov::TextValueArray' )]
+  [Name( 'Text Array' )]
+  [CreateName( 'Array' )]
+  [Category( TArduinoTextDataSourcesToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoTextValueArray : TArduinoCommonClockedTextSource, TArduinoValueArray_Extender
+
+    [ArduinoTemplateParameterCollectionCount]
+    Elements : TArduinoTextValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'const uint8_t * &', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'uint32_t &', 'ASize' )]
+  [Name( 'GetValue' )]
+  [ArduinoCallChainIndex]
+  ArduinoBinaryElementsValueArrayGetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'const uint8_t *', 'AValue' )]
+  [Name( 'ReleaseValue' )]
+  [ArduinoCallChainIndex]
+  ArduinoBinaryElementsValueArrayReleaseValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoBinaryElementsValueArrayGetValueCallChain]
+  [ArduinoBinaryElementsValueArrayReleaseValueCallChain]
+  TArduinoBinaryValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBinaryValueElements )]
+  [ArduinoHelpPostfix( '(Binary Value Array)' )]
+  [Name( 'Value' )]
+  [ArduinoDisplayParentName( 'Item' )]
+  [ParentImage( TArduinoMemoryPROMBinaryElement )]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoBinaryValueElement' )]
+  [ArduinoBinaryElementsValueArrayGetValueCallChain]
+  [ArduinoBinaryElementsValueArrayReleaseValueCallChain]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoBinaryValueElement : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateArrayValue' )]
+    Value : TArduinoBinaryPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ValueArray.h' )]
+  [ArduinoClass( 'Mitov::BinaryValueArray' )]
+  [Name( 'Binary Array' )]
+  [CreateName( 'Array' )]
+  [Category( TArduinoTextDataSourcesToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoBinaryValueArray : TArduinoCommonClockedByteSource, TArduinoValueArray_Extender
+
+    [ArduinoTemplateParameterCollectionCount]
+    Elements : TArduinoBinaryValueElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,208 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLinkItRemoteAccessPoints )]
+  [Name( 'WiFi Access Point' )]
+  [CreateName( 'Access Point' )]
+  [ArduinoInclude( 'Mitov_LinkIt_WiFi.h' )]
+  [ArduinoClass( 'Mitov::LinkItRemoteAccessPoint' )]
+  [ArduinoDeclaredClass]
+  [ParentImage( TArduinoESP8266BasicModule )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoLinkItRemoteAccessPoint : TArduinoBasicPasswordRemoteWiFiAccessPoint
+
+    [OldName( 'Encription' )]
+    Encryption : TArduinoLinkItWiFiEncryption = liweAuto
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoESP8266WiFiAccessPointElementTryConnectCallChain]
+  TArduinoLinkItRemoteAccessPoints : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoLinkItWiFiEncryption : Enum
+
+    liweAuto
+    liweWEP 
+    liweWPA
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'EEPROM' )]
+  [CreateName( 'EEPROM' )]
+  [ArduinoInclude( 'Mitov_EEPROM.h' )]
+  [ArduinoInclude( 'LEEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoEEPROM' )]
+  [ArduinoInit]
+  [ArduinoLoopUpdateHardware]
+  +TArduinoLinkItEEPROMModule : TArduinoBasicEEPROMSizeModule;
+//---------------------------------------------------------------------------
+  [ArduinoBasicSocketElementTryStartSocketCallChain]
+  TArduinoLinkItWiFiSockets : TArduinoBasicSockets;
+//---------------------------------------------------------------------------
+//  [PersistentCollection( TArduinoLinkItWiFiSockets )]
+//  TArduinoLinkItWiFiBasicSocket : TArduinoBasicInputOutputSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLinkItWiFiSockets )]
+  [ArduinoInclude( 'LWiFiClient.h' )]
+  [ArduinoClass( 'Mitov::TCPClientSocket' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicTCPClientSocket_Implementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_CLIENT', 'LWiFiClient' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoLinkItWiFiTCPClientSocket : TArduinoBasicTCPClientSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLinkItWiFiSockets )]
+  [ArduinoInclude( 'LWiFiServer.h' )]
+  [ArduinoInclude( 'LWiFiClient.h' )]
+  [ArduinoClass( 'Mitov::TCPServerSocket' )]
+  [ArduinoTemplateParameter( 'CLIENT', 'LWiFiClient' )]
+  [ArduinoTemplateParameter( 'SERVER', 'LWiFiServer' )]
+  [ParentImage( TArduinoEthernetTCPServerSocket )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoLinkItWiFiTCPServerSocket : TArduinoBasicTCPServerSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLinkItWiFiSockets )]
+  [ArduinoInclude( 'LWiFiUdp.h' )]
+  [ArduinoClass( 'Mitov::UDPSocket' )]
+  [ArduinoTemplateParameter( 'CLIENT', 'LWiFiUDP' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoLinkItWiFiUDPSocket : TArduinoBasicUDPSocket;
+//---------------------------------------------------------------------------
+  [Name( 'WiFi' )]
+  [CreateName( 'WiFi' )]
+  [ArduinoInclude( 'LWiFi.h' )]
+  [ArduinoInclude( 'Mitov_LinkIt_WiFi.h' )]
+  [ArduinoClass( 'Mitov::LinkItWiFiModule' )]
+  [ParentImage( TArduinoESP8266BasicModule )]
+  [ArduinoInit]
+  [ArduinoVariable( Boolean, 'IsStarted' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoLinkItWiFiModule : TArduinoEnabledShield
+
+    ScanNetworksInputPin : TOWArduinoClockSinkPin
+    FoundSignalStrengthOutputPin : TOWArduinoIntegerSourcePin
+    FoundSSIDOutputPin : TOWArduinoStringSourcePin
+    AddressOutputPin : TOWArduinoStringSourcePin
+    MACOutputPin : TOWArduinoStringSourcePin
+    SignalStrengthOutputPin : TOWArduinoIntegerSourcePin
+    BSSIDOutputPin : TOWArduinoStringSourcePin
+    GatewayIPOutputPin : TOWArduinoStringSourcePin
+    SubnetMaskIPOutputPin : TOWArduinoStringSourcePin
+    CheckSignalStrengthInputPin  : TOWArduinoClockSinkPin
+
+    [ArduinoTemplateParameterCollectionCount]
+    AccessPoints : TArduinoLinkItRemoteAccessPoints
+
+    [ArduinoTemplateParameterCollectionCount]
+//    [ComponentEditorEntryDesign( 'Add Sockets ...' )]
+    Sockets : TArduinoLinkItWiFiSockets
+
+    Operations : TArduinoNetworkShieldOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBasicSocketElementTryStartSocketCallChain]
+  TArduinoLinkItGPRSSockets : TArduinoBasicSockets;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLinkItGPRSSockets )]
+  [ArduinoInclude( 'LGPRSClient.h' )]
+  [ArduinoClass( 'Mitov::TCPClientSocket' )] //<Mitov::LinkItGPRSModule,LGPRSClient>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicTCPClientSocket_Implementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_CLIENT', 'LGPRSClient' )]
+  +TArduinoLinkItGPRSTCPClientSocket : TArduinoBasicTCPClientSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLinkItGPRSSockets )]
+  [ArduinoInclude( 'LGPRSClient.h' )]
+  [ArduinoInclude( 'LGPRSServer.h' )]
+  [ArduinoClass( 'Mitov::TCPServerSocket' )] //<Mitov::LinkItGPRSModule,LGPRSServer,LGPRSClient>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'SERVER', 'LGPRSServer' )]
+  [ArduinoTemplateParameter( 'CLIENT', 'LGPRSClient' )]
+  +TArduinoLinkItGPRSTCPServerSocket : TArduinoBasicTCPServerSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLinkItGPRSSockets )]
+  [ArduinoInclude( 'LGPRSUdp.h' )]
+  [ArduinoClass( 'Mitov::UDPSocket' )] //<Mitov::LinkItGPRSModule,LGPRSUDP>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'CLIENT', 'LGPRSUDP' )]
+  +TArduinoLinkItGPRSUDPSocket : TArduinoBasicUDPSocket;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'LGPRS.h' )]
+  [ArduinoInclude( 'Mitov_LinkIt_GPRS.h' )]
+  [ArduinoClass( 'Mitov::LinkItGPRSModule' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoVariable( Boolean, 'FConnected' )]
+  TArduinoLinkItGPRS : TArduinoCodeEnabledSetterPersistent
+
+    AccessPoints : TArduinoGPRSAccessPoints
+
+    [ArduinoExcludeCollectionItems]
+    [ArduinoTemplateParameterCollectionCount]
+//    [ComponentEditorEntryDesign( 'Add Sockets ...' )]
+    Sockets      : TArduinoLinkItGPRSSockets
+
+    Operations : TArduinoNetworkShieldOperations
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'GSM' )]
+  [CreateName( 'GSM' )]
+  +TArduinoLinkItGSMModule : TArduinoEnabledShield
+
+    PacketService : TArduinoLinkItGPRS
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'UARTClass' )]
+  +TArduinoLinkItUARTSerial : TArduinoBasicSpeedSerial;
+//---------------------------------------------------------------------------
+  [Name( 'Linkit ONE' )]
+  [ArduinoDefine( 'VISUINO_LINKIT_ONE' )]
+  [ArduinoBoardArchitecture( 'arm' )]
+  [ArduinoBoardCompileParams( 'LinkIt:arm:linkit_one' )]
+  [ArduinoBoardCanReset]
+  +TArduinoLinkitONEBoard : TArduinoBoardExtendableImplementation
+  
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+
+    [AddItem( TArduinoLinkItWiFiModule )]
+    [AddItem( TArduinoLinkItGSMModule )]
+    [AddItem( TArduinoLinkItEEPROMModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoLinkItUARTSerial, 2 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  5, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18, 1, TArduinoAdditionalDigitalI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19, 1, TArduinoAdditionalDigitalI2C0Channel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 3, TArduinoCombinedAnalogDigitalChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,30 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoLoopBegin( 'SystemLoopBeginElapsed( AElapsedMicros )' )]
+  [ArduinoElapsedMicros]
+  TArduinoBasicMotorShieldChannel : TArduinoBasicMotorChannel;
+//---------------------------------------------------------------------------
+  TArduinoBasicNamedMotorShieldChannel : TArduinoBasicMotorShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_L9110SDualMotorDriver.h' )]
+  [ArduinoClass( 'Mitov::L9110SDualMotorDriverPWMChannel' )]
+//  L298NDualMotorDriverChannel
+  [ArduinoStart]
+  TArduinoBasicNamedL9110SNMotorShieldChannel : TArduinoBasicNamedMotorShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_L298NDualMotorDriver.h' )]
+  [ArduinoClass( 'Mitov::L298NDualMotorDriverChannel' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  TArduinoBasicNamedL298NMotorShieldChannel : TArduinoBasicNamedMotorShieldChannel;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoDCMottorsToolbarCategory )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInclude( 'Mitov_L298NDualMotorDriver.h' )]
+  [ArduinoClass( 'Mitov::MotorShieldChannel' )]
+  [ArduinoStart]
+  *TArduinoBasicDualMotorLeftRightShieldChannel : TArduinoBasicNamedMotorShieldChannel;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,188 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoTVOutRCAElementColored : TArduinoTVOutRCAElementClocked
+
+    Color : TArduinoTVOutRCAElementColor = tvcWhite
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTVOutRCAElementFillColored : TArduinoTVOutRCAElementClocked
+
+    BorderColor : TArduinoTVOutRCAElementColor = tvcWhite
+    FillColor : TArduinoTVOutRCAElementColorFill = tvcBlack
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTVOutRCAElementDrawPositioned : TArduinoTVOutRCAElementFillColored
+
+    X : Integer = 0
+    Y : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Fill Screen' )]
+  [CreateName( 'Fill Screen' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementFillScreen' )]
+  +TArduinoTVOutRCAElementFill : TArduinoTVOutRCAElementColored
+
+    Color = tvcBlack
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Rectangle' )]
+  [CreateName( 'Draw Rectangle' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementDrawRectangle' )]
+  +TArduinoTVOutRCAElementDrawRectangle : TArduinoTVOutRCAElementDrawPositioned
+
+    Width : Integer = 10
+    Height : Integer = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Circle' )]
+  [CreateName( 'Draw Circle' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementDrawCircle' )]
+  +TArduinoTVOutRCAElementDrawCircle : TArduinoTVOutRCAElementDrawPositioned
+
+    X = 10
+    Y = 10
+
+    Radius : Integer = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Pixel' )]
+  [CreateName( 'Draw Pixel' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementDrawPixel' )]
+  +TArduinoTVOutRCAElementDrawPixel : TArduinoTVOutRCAElementColored
+
+    X : Integer = 0
+    Y : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Scene' )]
+  [CreateName( 'Draw Scene' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementDrawScene' )]
+  +TArduinoTVOutRCAElementScene : TArduinoTVOutRCAElementClockedPosition
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoTVOutRCAElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Check Pixel' )]
+  [CreateName( 'Check Pixel' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementCheckPixel' )]
+  +TArduinoTVOutRCAElementCheckPixel : TArduinoTVOutRCAElementClockedPosition
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Cursor' )]
+  [CreateName( 'Set Cursor' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementSetCursor' )]
+  +TArduinoTVOutRCAElementSetCursor : TArduinoTVOutRCAElementClockedPosition;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Line' )]
+  [CreateName( 'Draw Line' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementDrawLine' )]
+  +TArduinoTVOutRCAElementDrawLine : TArduinoTVOutRCAElementColored
+
+    X1 : Integer = 0
+    Y1 : Integer = 0
+    X2 : Integer = 10
+    Y2 : Integer = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Shift Screen' )]
+  [CreateName( 'Shift Screen' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementShiftScreen' )]
+  +TArduinoTVOutRCAElementShiftScreen : TArduinoTVOutRCAElementClocked
+
+    Distance : Integer = 1
+    InVertical : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Print Text' )]
+  [CreateName( 'Print Text' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementPrintText' )]
+  +TArduinoTVOutRCAElementPrintText : TArduinoTVOutRCAElementFontBasic
+
+    NewLine : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text At' )]
+  [CreateName( 'Text At' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementTextAt' )]
+  [ParentImage( TArduinoDisplayNextionElementDrawText )]
+  +TArduinoTVOutRCAElementTextAt : TArduinoTVOutRCAElementFontBasic
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    X : Integer = 0
+    Y : Integer = 0
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Play Tone' )]
+  [CreateName( 'Play Tone' )]
+  [ArduinoClass( 'Mitov::TVOutRCAElementPlayTone' )]
+  +TArduinoTVOutRCAElementTone : TArduinoTVOutRCAElementClocked
+
+    [ValueRange( 0, $FFFF )]
+    Frequency : Unsigned = 1760
+
+    Duration : Unsigned = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TVOut_RCA.h' )]
+  [ArduinoInclude( 'TVout.h', 'TVout', 'https://code.google.com/p/arduino-tvout/' )]
+  [ArduinoClass( 'Mitov::TVOut_RCA' )]
+  [CreateName( 'TVOut' )]
+  [Name( 'TV Output Composite/RCA' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoStart]
+  +TArduinoTVOutRCA : TArduinoEnableComponent
+  
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [ArduinoExclude]
+    SyncOutputPin : TOWArduinoDigitalOutputSourcePin
+
+    [ArduinoExclude]
+    VideoOutputPin : TOWArduinoDigitalOutputSourcePin
+
+    [ArduinoExclude]
+    AudioOutputPin : TOWArduinoDigitalOutputSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoTVOutRCAElements
+
+    [ArduinoUseBindingCheckSetter( 'UpdateSize' )]
+    Width : Integer = 128
+
+    [ArduinoUseBindingCheckSetter( 'UpdateSize' )]
+    Height : Integer = 96
+
+    [ArduinoUseBindingCheckSetter( 'UpdateSize' )]
+    IsPAL : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

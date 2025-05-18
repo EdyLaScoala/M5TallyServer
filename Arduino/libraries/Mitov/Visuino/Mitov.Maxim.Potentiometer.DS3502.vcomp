@@ -1,0 +1,25 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Maxim_Potentiometer_DS3502.h' )]
+  [ArduinoClass( 'Mitov::TArduinoMaximPotentiometerDS3502_I2C' )]
+  [Name( 'Maxim Potentiometer DS3502 (I2C)' )]
+  [CreateName( 'Potentiometer' )]
+  [Category( TArduinoAnalogOutputToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoMaximPotentiometerDS3502_I2C : TArduinoEnableFlexibleI2CComponent
+  
+    InputPin : TOWArduinoAnalogSinkPin
+    
+    [DesignRange( $28, $2B )]
+    Address  : TArduinoUInt8 = $28
+
+    [OWExcludeBindings]
+    [ValueRange( 0.0, 1.0 )]
+    InitialValue : Single = 0.0
+  
+    [ArduinoUseBindingCheckSetter( 'UpdateNonVolatile' )]
+    NonVolatile : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

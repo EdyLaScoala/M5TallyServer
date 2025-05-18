@@ -1,0 +1,226 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoDFRobotMP3PlayerElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoDFRobotMP3PlayerElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(DFRobot MP3 Player)' )]
+  TArduinoDFRobotMP3PlayerElementBasic : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoDFRobotMP3PlayerElementClocked : TArduinoDFRobotMP3PlayerElementBasic
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDFRobotMP3PlayerElementPlayFileBasic : TArduinoDFRobotMP3PlayerElementClocked
+
+    [ValueRange( 0, 2999 )]
+    File : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDFRobotMP3PlayerElementPlayFileFolderBasic : TArduinoDFRobotMP3PlayerElementPlayFileBasic
+
+    Folder : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDFRobotMP3PlayerElementGetFilesCountBasic : TArduinoDFRobotMP3PlayerElementClocked
+
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Get Files Count' )]
+  [CreateName( 'Get Files Count' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementGetFilesCount' )]
+  +TArduinoDFRobotMP3PlayerElementGetFilesCount : TArduinoDFRobotMP3PlayerElementGetFilesCountBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Get Files Count in Folder' )]
+  [CreateName( 'Get Files Count in Folder' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementGetFilesCountInFolder' )]
+  +TArduinoDFRobotMP3PlayerElementGetFilesCountInFolder : TArduinoDFRobotMP3PlayerElementGetFilesCountBasic
+
+    [ValueRange( 1, 99 )]
+    Folder : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Loop Folder' )]
+  [CreateName( 'Loop Folder' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementLoopFolder' )]
+  +TArduinoDFRobotMP3PlayerElementLoopFolder : TArduinoDFRobotMP3PlayerElementClocked
+
+    [ValueRange( 1, 99 )]
+    Folder : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Sleep' )]
+  [CreateName( 'Sleep' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementTypedCommand' )]
+  [ArduinoTemplateParameter( 'VALUE', '0x0A' )]
+  +TArduinoDFRobotMP3PlayerElementSleep : TArduinoDFRobotMP3PlayerElementClocked;
+//---------------------------------------------------------------------------
+  [Name( 'Pause' )]
+  [CreateName( 'Pause' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementTypedCommand' )]
+  [ArduinoTemplateParameter( 'VALUE', '0x0E' )]
+  +TArduinoDFRobotMP3PlayerElementPause : TArduinoDFRobotMP3PlayerElementClocked;
+//---------------------------------------------------------------------------
+  [Name( 'Stop' )]
+  [CreateName( 'Stop' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementTypedCommand' )]
+  [ArduinoTemplateParameter( 'VALUE', '0x16' )]
+  +TArduinoDFRobotMP3PlayerElementStop : TArduinoDFRobotMP3PlayerElementClocked;
+//---------------------------------------------------------------------------
+  [Name( 'Stop Advertisement' )]
+  [CreateName( 'Stop Advertisement' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementTypedCommand' )]
+  [ArduinoTemplateParameter( 'VALUE', '0x15' )]
+  +TArduinoDFRobotMP3PlayerElementStopAdvertisement : TArduinoDFRobotMP3PlayerElementClocked;
+//---------------------------------------------------------------------------
+  [Name( 'Start' )]
+  [CreateName( 'Start' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementTypedCommand' )]
+  [ArduinoTemplateParameter( 'VALUE', '0x0D' )]
+  +TArduinoDFRobotMP3PlayerElementStart : TArduinoDFRobotMP3PlayerElementClocked;
+//---------------------------------------------------------------------------
+  [Name( 'Random All' )]
+  [CreateName( 'Random All' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementTypedCommand' )]
+  [ArduinoTemplateParameter( 'VALUE', '0x18' )]
+  +TArduinoDFRobotMP3PlayerElementRandomAll : TArduinoDFRobotMP3PlayerElementClocked;
+//---------------------------------------------------------------------------
+  [Name( 'Play Folder/File' )]
+  [CreateName( 'Play Folder/File' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementPlayFolderFile' )]
+  +TArduinoDFRobotMP3PlayerElementPlayFolderFile : TArduinoDFRobotMP3PlayerElementPlayFileFolderBasic
+
+    [ValueRange( 0, 255 )]
+    File
+
+    [ValueRange( 1, 99 )]
+    Folder
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Play Large Folder/File' )]
+  [CreateName( 'Play Large Folder/File' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementPlayLargeFolderFile' )]
+  +TArduinoDFRobotMP3PlayerElementPlayLargeFolderFile : TArduinoDFRobotMP3PlayerElementPlayFileFolderBasic
+
+    [ValueRange( 0, 1000 )]
+    File
+
+    [ValueRange( 1, 10 )]
+    Folder
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Play File' )]
+  [CreateName( 'Play File' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementPlayFileLoop' )]
+  +TArduinoDFRobotMP3PlayerElementPlayFile : TArduinoDFRobotMP3PlayerElementPlayFileBasic
+
+    Loop : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Play MP3 Folder File' )]
+  [CreateName( 'Play MP3 Folder File' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementPlayFile' )]
+  [ArduinoTemplateParameter( 'VALUE', '0x12' )]
+  +TArduinoDFRobotMP3PlayerElementPlayMP3FolderFile : TArduinoDFRobotMP3PlayerElementPlayFileBasic
+
+    [ValueRange( 0, 65535 )]
+    File
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Play Advertisement Folder File' )]
+  [CreateName( 'Play Advertisement Folder File' )]
+  [ArduinoClass( 'Mitov::DFRobotMP3PlayerElementPlayFile' )]
+  [ArduinoTemplateParameter( 'VALUE', '0x13' )]
+  +TArduinoDFRobotMP3PlayerElementPlayAdvertisementFolderFile : TArduinoDFRobotMP3PlayerElementPlayFileBasic
+
+    [ValueRange( 0, 65535 )]
+    File
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDFRobotMP3PlayerOutputDevice : Enum 
+  
+    odUDisk
+    odSD
+    odAux
+    odSleep
+    odFlash
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDFRobotMP3PlayerGain' )]
+  TArduinoDFRobotMP3PlayerGain : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter( 'UpdateGain' )]
+    Enabled
+
+    [ValueRange( 0, 31 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateGain' )]
+    Value : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DFRobot_Serial_MP3.h' )]
+  [ArduinoClass( 'Mitov::MitovDFRobotSerialMP3' )]
+  [Name( 'DFRobot Serial MP3 Player' )]
+  [CreateName( 'MP3Player' )]
+  [Category( TArduinoAudioOutputToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FIsSending' )]
+  [ArduinoVariable( Boolean, 'FProcessed' )]
+  +TArduinoDFRobotMP3Player : TArduinoSerialEnableComponent
+
+    [ArduinoSerialInstanceTemplate]
+    OutputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+    NextInputPin : TOWArduinoClockSinkPin
+    PreviousInputPin : TOWArduinoClockSinkPin
+    CardInsertedOutputPin : TOWArduinoClockSourcePin
+    CardOnlineOutputPin : TOWArduinoClockSourcePin
+    CardRemovedOutputPin : TOWArduinoClockSourcePin
+    TimeoutErrorOutputPin : TOWArduinoClockSourcePin
+    ErrorOutputPin : TOWArduinoUnsignedSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateVolume' )]
+    [ValueRange( 0.0, 1.0 )]
+    Volume : Single = 0.5
+
+    [ArduinoUseBindingCheckSetter( 'UpdateLoop' )]
+    Loop : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnableDAC' )]
+    EnableDAC : Boolean = True
+
+    Gain : TArduinoDFRobotMP3PlayerGain
+
+    TimeOutPeriod : Unsigned = 500
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEqualizerMode' )]
+    EqualizerMode : TArduinoDFRobotMP3PlayerEqualizerMode = emNormal
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOutputDevice' )]
+    OutputDevice : TArduinoDFRobotMP3PlayerOutputDevice = odSD
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    [Name( 'Operations' )]
+    Elements : TArduinoDFRobotMP3PlayerElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

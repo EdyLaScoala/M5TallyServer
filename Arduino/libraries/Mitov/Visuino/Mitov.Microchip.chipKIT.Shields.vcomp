@@ -1,0 +1,134 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'chipKIT' )]
+  TArduinoChipKITToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_ChipKIT_Basic_Shield.h' )]
+//  [ArduinoClass( 'Mitov::Microchip_ChipKITBasicShieldButtons<4,34,36,37>' )]
+  [ArduinoClass( 'Mitov::InvertedDigtitalInputPins4' )]
+  [ArduinoTemplateParameter( '0_PIN', '4' )]
+  [ArduinoTemplateParameter( '1_PIN', '34' )]
+  [ArduinoTemplateParameter( '2_PIN', '36' )]
+  [ArduinoTemplateParameter( '3_PIN', '37' )]
+  [ArduinoDeclaredClass]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoButton )]
+  TArduinoMicrochipChipKITBasicShieldButtons : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Button 1', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Button 2', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Button 3', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Button 4', TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_ChipKIT_Basic_Shield.h' )]
+  [ArduinoClass( 'Mitov::InvertedDigtitalInputPins4' )]
+  [ArduinoTemplateParameter( '0_PIN', '2' )]
+  [ArduinoTemplateParameter( '1_PIN', '7' )]
+  [ArduinoTemplateParameter( '2_PIN', '8' )]
+  [ArduinoTemplateParameter( '3_PIN', '35' )]
+  [ArduinoDeclaredClass]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoMicrochipChipKITBasicShieldSlideSwitches : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Switch 1', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Switch 2', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Switch 3', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Switch 4', TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_ChipKIT_Basic_Shield.h' )]
+  [ArduinoClass( 'Mitov::Microchip_ChipKITBasicShieldLeds' )]
+  [ArduinoDeclaredClass]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoLED )]
+  TArduinoMicrochipChipKITBasicShieldSlideLeds : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'LED 1', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'LED 2', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'LED 3', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'LED 4', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'LED 5', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'LED 6', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'LED 7', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'LED 8', TOWArduinoDigitalSinkPin )]
+    InputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Generic_I2C_EEPROM.h' )]
+  [ArduinoInclude( 'EEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericEEPROM_I2C' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x50 >' )]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoI2C( 0 )]
+  TArduinoMicrochipChipKITBasicShieldEEPROM : TArduinoBasicEEPROMModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_ChipKIT_Basic_Shield_Display.h' )]
+  [ArduinoClass( 'Mitov::Microchip_ChipKITBasicShieldDisplay' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ChipSelectOutputPin', 'Mitov::DigitalPin_NoImplementation<2>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.DataCommandOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<Mitov::DisplayChipKIT_odtSSD1306_SPI::DATA_COMMAND_PIN>' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DisplaySSD1306NoReset<Mitov::DigitalPin_NoImplementation<6>>' )]
+  [ArduinoSPI( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_BUFFER' , 'Mitov::DisplaySSD1306Buffered<32, 128>' )]
+  [ArduinoTemplateParameter( 'Type', 'Mitov::ConstantProperty<127, Mitov::TArduinoDisplayOLEDType, Mitov::odtSSD1306>' )]
+  TArduinoMicrochipChipKITShieldDisplay : TArduinoDisplaySSD1306BasicShieldDisplayElementSPI;
+//---------------------------------------------------------------------------
+  [Name( 'Digilent chipKIT Basic I/O Shield' )]
+  [CreateName( 'Digilent chipKIT Basic I/O Shield' )]
+  [ArduinoWebKeywords( 'Digilent chipKIT Basic I/O Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TArduinoChipKITToolbarCategory )]
+  [ArduinoShieldPin( '2', 'Switch 1' )]
+  [ArduinoShieldPin( '7', 'Switch 2' )]
+  [ArduinoShieldPin( '8', 'Switch 3' )]
+  [ArduinoShieldPin( '35', 'Switch 4' )]
+  [ArduinoShieldPin( '4', 'Button 1' )]
+  [ArduinoShieldPin( '34', 'Button 2' )]
+  [ArduinoShieldPin( '36', 'Button 3' )]
+  [ArduinoShieldPin( '37', 'Button 4' )]
+  [ArduinoShieldPin( '33', 'LED 1' )]
+  [ArduinoShieldPin( '32', 'LED 2' )]
+  [ArduinoShieldPin( '31', 'LED 3' )]
+  [ArduinoShieldPin( '30', 'LED 4' )]
+  [ArduinoShieldPin( '29', 'LED 5' )]
+  [ArduinoShieldPin( '28', 'LED 6' )]
+  [ArduinoShieldPin( '27', 'LED 7' )]
+  [ArduinoShieldPin( '26', 'LED 8' )]
+  [ArduinoShieldPin( '3', 'Open Drain 1' )]
+  [ArduinoShieldPin( '5', 'Open Drain 2' )]
+  [ArduinoShieldPin( '6', 'Open Drain 3' )]
+  [ArduinoShieldPin( '9', 'Open Drain 4' )]
+  [ArduinoShieldPin( '14', 'Potentiometer' )]
+  [AtduinoHasBoardInfo]
+  +TArduinoMicrochipChipKITBasicShield : TArduinoShield, IchipKITStandardShield
+
+    Thermometer : TArduinoMicrochipTCN75APersistent
+    Buttons : TArduinoMicrochipChipKITBasicShieldButtons
+    SlideSwitches : TArduinoMicrochipChipKITBasicShieldSlideSwitches
+    Leds : TArduinoMicrochipChipKITBasicShieldSlideLeds
+    EEPROM : TArduinoMicrochipChipKITBasicShieldEEPROM
+    Display : TArduinoMicrochipChipKITShieldDisplay
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

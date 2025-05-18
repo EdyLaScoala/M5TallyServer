@@ -1,0 +1,36 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoEMHMeteringElectricityMeterConsumtion' )]
+  TArduinoEMHMeteringElectricityMeterConsumtion : TArduinoCodePersistent
+
+    [NamePostfix( '(Wa)' )]
+    TotalOutputPin : TOWArduinoAnalogSourcePin
+
+    [NamePostfix( '(Wa)' )]
+    Rate1OutputPin : TOWArduinoAnalogSourcePin
+
+    [NamePostfix( '(Wa)' )]
+    Rate2OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ElectricityMeter_EMH_Metering.h' )]
+  [ArduinoClass( 'Mitov::ElectricityMeter_EMH_Metering' )]
+  [Name( 'Electricity Meter EMH Metering ED300L (Serial)' )]
+  [CreateName( 'ElectricityMeter' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoEMHMeteringElectricityMeter : TArduinoComponent
+
+    [ArduinoExclude]
+    SerialOutputPin : TOWArduinoSharedSerialBasicSourcePin
+
+    SerialNumberOutputPin : TOWArduinoByteSourcePin
+    TotalDeliveryOutputPin : TOWArduinoAnalogSourcePin
+    CurrentPowerOutputPin : TOWArduinoAnalogSourcePin
+    ErrorOutputPin : TOWArduinoClockSourcePin
+
+    Consumtion : TArduinoEMHMeteringElectricityMeterConsumtion
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

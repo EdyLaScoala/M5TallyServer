@@ -1,0 +1,122 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN_PING', '11' )]
+  [ArduinoTemplateParameter( 'PIN_ECHO', '17' )]
+  TArduinoElegooBalancingRobotUltrasonicRanger : TArduinoUltrasonicRangerShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorInputPin', '9' )]
+  TArduinoElegooBalancingRobotInfraredRemoteReceiver : TArduinoInfraredRemoteReceiverShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'Left', 'Mitov::TDefinedAnalogInputPin<0>' )]
+  [ArduinoTemplateParameter( 'Right', 'Mitov::TDefinedAnalogInputPin<1>' )]
+  [ParentImage( TArduinoKumanRobotSM11ObstacleAvoidanceSensors )]
+  TArduinoElegooBalancingRobotInfraredDistanceSensors : TArduinoLeftRightAnalogSensors;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '2' )]
+  [ParentImage( TArduinoBasicBatteryAnalogSensorModule )]
+  TArduinoElegooBalancingRobotBatterySensor : TArduinoBasicAnalogSensor;
+//---------------------------------------------------------------------------
+  [Name( 'Front Left RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '2' )]
+  TArduinoElegooBalancingRobotBreakoutFrontLeftRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [Name( 'Front Right RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '3' )]
+  TArduinoElegooBalancingRobotBreakoutFrontRightRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [Name( 'Back Left RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '1' )]
+  TArduinoElegooBalancingRobotBreakoutBackLeftRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [Name( 'Back Right RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '0' )]
+  TArduinoElegooBalancingRobotBreakoutBackRightRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::NeoPixels' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'ElegooBalancingRobot::NeoPixel_Declarations::NeoPixelType::NeoPixels1' )]
+  [ArduinoTemplateParameter( '1_NAME', 'ElegooBalancingRobot::NeoPixel_Declarations::NeoPixels1' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoNeoPixelRGBLedsInfo( 'ElegooBalancingRobot', '3', 4 )]
+  TArduinoElegooBalancingRobotRGBLeds : TArduinoNeoPixelRGBLedsElementBasic
+
+    [Name( 'LEDs' )]
+    [AddItem( TArduinoElegooBalancingRobotBreakoutFrontLeftRGBLed )]
+    [AddItem( TArduinoElegooBalancingRobotBreakoutFrontRightRGBLed )]
+    [AddItem( TArduinoElegooBalancingRobotBreakoutBackLeftRGBLed )]
+    [AddItem( TArduinoElegooBalancingRobotBreakoutBackRightRGBLed )]
+    Leds : TArduinoNeoPixelRGBLeds
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Left Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '5' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '7' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '10' )]
+  TArduinoElegooBalancingRobotShieldLeftMotorChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Right Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '6' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '12' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '13' )]
+  TArduinoElegooBalancingRobotShieldRightMotorChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArduinoElegooBalancingRobotShield.h' )]
+  [ArduinoClass( 'Mitov::ArduinoElegooBalancingRobotShieldMotorsStandby' )]
+  [ArduinoDeclaredClass]
+  [ArduinoStart]
+  TArduinoElegooBalancingRobotShieldMotors : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [AddItem( TArduinoElegooBalancingRobotShieldLeftMotorChannel )]
+    [AddItem( TArduinoElegooBalancingRobotShieldRightMotorChannel )]
+    Motors : TArduinoElegooRobotMotorShieldChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Elegoo Balancing Robot Shield' )]
+  [CreateName( 'Elegoo Balancing Robot Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TArduinoElegooToolbarCategory )]
+  [Category( TArduinoRobotsToolbarCategory )]
+  [ArduinoShieldPin( '2', 'Rotation Left', True )]
+  [ArduinoShieldPin( '3', 'RGB LEDs' )]
+  [ArduinoShieldPin( '4', 'Rotation Right', True )]
+  [ArduinoShieldPin( '5', 'Left Speed' )]
+  [ArduinoShieldPin( '6', 'Right Speed' )]
+  [ArduinoShieldPin( '7', 'Left Forward' )]
+  [ArduinoShieldPin( '8', 'Motors Standby' )]
+  [ArduinoShieldPin( '9', 'IR Receiver' )]
+  [ArduinoShieldPin( '10', 'Left Back' )]
+  [ArduinoShieldPin( '11', 'Trig' )]
+  [ArduinoShieldPin( '12', 'Right Forward' )]
+  [ArduinoShieldPin( '13', 'Right Back' )]
+  [ArduinoShieldPin( '14', 'Left Obstacle Sensor' )]
+  [ArduinoShieldPin( '15', 'Right Obstacle Sensor' )]
+  [ArduinoShieldPin( '16', 'Battery' )]
+  [ArduinoShieldPin( '17', 'Echo' )]
+  +TArduinoElegooBalancingRobotShield : TArduinoShield, IStandardShield
+
+    Motors : TArduinoElegooBalancingRobotShieldMotors
+
+    [Name( 'Ultrasonic Ranger' )]
+    UltrasonicRanger : TArduinoElegooBalancingRobotUltrasonicRanger
+
+    [Name( 'Infrared Remote' )]
+    InfraredRemote : TArduinoElegooBalancingRobotInfraredRemoteReceiver
+
+    [Name( 'IR Distance Senosrs' )]
+    IRDistanceSenosrs : TArduinoElegooBalancingRobotInfraredDistanceSensors
+
+    Battery : TArduinoElegooBalancingRobotBatterySensor
+
+    [Name( 'RGB LEDs' )]
+    RGBLeds : TArduinoElegooBalancingRobotRGBLeds
+
+    [Name( 'Accelerometer & Gyroscope' )]
+    Orientation : TArduinoMPU6050I2CPersistent
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

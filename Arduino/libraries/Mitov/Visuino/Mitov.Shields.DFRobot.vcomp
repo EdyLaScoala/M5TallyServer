@@ -1,0 +1,63 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_DFRobot_LCD_Shield.h' )]
+  [ArduinoClass( 'Mitov::ArduinoDFRobotLCDKeypadKeys' )]
+  [ParentImage( TArduinoBasicButtonModule )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoDFRobotLCDKeypadKeys : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Up', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Down', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalSourcePin )]
+    DirectionOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    SelectOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::LiquidCrystalDisplay' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_PINS', 'Mitov::LiquidCrystalDisplayParallel4DataPins<Mitov::DigitalPin_DirectBoardPinImplementation<4>, Mitov::DigitalPin_DirectBoardPinImplementation<5>, Mitov::DigitalPin_DirectBoardPinImplementation<6>, Mitov::DigitalPin_DirectBoardPinImplementation<7>>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_PINS_0', 'Mitov::DigitalPin_DirectBoardPinImplementation<8>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_PINS_1', 'Mitov::DigitalPin_NoImplementation<23>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_PINS_2', 'Mitov::DigitalPin_DirectBoardPinImplementation<9>' )]
+  [ArduinoTemplateParameter( 'Columns', 'Mitov::ConstantProperty<115, uint32_t, 16 >' )]
+  [ArduinoTemplateParameter( 'Rows', 'Mitov::ConstantProperty<116, uint32_t, 2 >' )]
+  [ArduinoVariable( Unsigned, 5, 'FCursorPos' )]
+  [ArduinoVariable( Unsigned, 2, 'FCursorLine' )]
+  [ArduinoExcludeUnconnected]
+  TArduinoDFRobotLCDKeypadDisplay : TArduinoBasicLiquidCrystalDisplayPersistent;
+//---------------------------------------------------------------------------
+  [CreateName( 'DFRobot LCD Keypad' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [Name( 'DFRobot LCD 5 Button Keypad Shield' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_DFRobot_LCD_Shield.h' )]
+  [ArduinoClass( 'Mitov::ArduinoDFRobotLCDKeypadShield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '4',  'LCD' )]
+  [ArduinoShieldPin( '5',  'LCD' )]
+  [ArduinoShieldPin( '6',  'LCD' )]
+  [ArduinoShieldPin( '7',  'LCD' )]
+  [ArduinoShieldPin( '8',  'LCD' )]
+  [ArduinoShieldPin( '9',  'LCD' )]
+  [ArduinoShieldPin( 'A0', 'Buttons' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoDFRobotLCDKeypadShield : TArduinoShield, IStandardShield
+
+    Keys : TArduinoDFRobotLCDKeypadKeys
+    Display : TArduinoDFRobotLCDKeypadDisplay
+
+    [Name( 'Is Ver. 1.0' )]
+    IsVersion_1_0 : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

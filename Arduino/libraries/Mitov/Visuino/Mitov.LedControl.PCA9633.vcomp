@@ -1,0 +1,73 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'GetValue' )]
+//  [ArduinoCallChainIndex]
+  [ArduinoPopulatedCallChainParameter( 'uint32_t &', 'AValue' )]
+  TArduinoRGBLedControl_PCA9633_GetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoRGBLedControl_PCA9633_Blink' )]
+  TArduinoRGBLedControl_PCA9633_Blink : TArduinoCodeDisabledPersistent
+  
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMODE2_Brightness' )]
+    Enabled
+
+    [ValueRange( 0.0932, 24.0 )]
+    [Name( 'Frequency (Hz)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateFrequency' )]
+    Frequency : Single = 24.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoRGBLedControl_PCA9633_Channel' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [TArduinoRGBLedControl_PCA9633_GetValueCallChain]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FValue', 0 )]
+//  [ArduinoInit]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoRGBLedControl_PCA9633_Channel : TArduinoCodePersistent
+
+    [OWPinGroup( TArduinoRGBLedControl_PCA9633_Channel )]
+    [OWPrimaryPin]
+//    [ArduinoPinIsConnectedFlag]
+    [ArduinoVariableIfPinConnected( 'FValue' )]
+    [ArduinoPinConnectedAddCodeEntry( ceInit )]
+    InputPin : TOWArduinoAnalogSinkPin
+  
+    InitialValue : Single = 0
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RGBLedControl_PCA9633.h' )]
+  [ArduinoClass( 'Mitov::TArduinoRGBLedControl_PCA9633_I2C' )]
+  [Name( 'RGB Led Control PCA9633 (I2C)' )]
+  [CreateName( 'RGBLed' )]
+  [Category( TArduinoDigitalDisplaysToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  +TArduinoRGBLedControl_PCA9633_I2C : TArduinoEnableFlexibleI2CComponent
+  
+    Address = $C0
+    
+    Blink : TArduinoRGBLedControl_PCA9633_Blink
+    
+    [AddItem( TArduinoRGBLedControl_PCA9633_Channel, 4 )]
+    [TArduinoRGBLedControl_PCA9633_GetValueCallChain]
+    Channels : TArduinoFixedPersistentCollection
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateMODE1' )]
+    Sleep : Boolean = False
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateMODE2' )]
+    OpenDrain : Boolean = False
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateBrightness' )]
+    [ValueRange( 0.0, 1.0 )]
+    Brightness : Single = 1.0
+    
+  ;  
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,63 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoCPUTimeClockElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoCPUTimeClockElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoHelpPostfix( '(CPU Time)' )]
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::CPUClockElement' )]
+  [Name( 'CPU Software Clock' )]
+  [CreateName( 'CPU Clock' )]
+  [ArduinoLoopBegin( 'SystemLoopBeginElapsed( AElapsedMillis )' )]
+  [ArduinoElapsedMillis]
+  [ParentImage( TArduinoMemoryDateTimeElement )]
+  +TArduinoCPUTimeClockElement : TArduinoBasicNamedExludePersistent
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    SetInputPin : TOWArduinoDateTimeSinkPin
+
+    Enabled : Boolean = True
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoRTCElements
+
+    [ArduinoFlexibleVariable]
+    InitialValue : TDateTime = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::CPUTime' )]
+  [Name( 'CPU Time' )]
+  [CreateName( 'CPUTime' )]
+  [Category( TArduinoDateTimeMeasurementToolbarCategory )]
+  [ArduinoExcludeUnconnected]
+  +TArduinoCPUTime : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    MicroSecondsOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    MilliSecondsOutputPin : TOWArduinoUnsignedSourcePin
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    [ArduinoIgnoreConnectedAndDefault]
+    Elements : TArduinoCPUTimeClockElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

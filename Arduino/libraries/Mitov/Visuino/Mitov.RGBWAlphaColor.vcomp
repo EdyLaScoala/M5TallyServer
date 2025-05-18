@@ -1,0 +1,345 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoRGBWAlphaColorSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRGBWAlphaColorSetValueElements )]
+  [ArduinoHelpPostfix( '(RGBW Alpha Color Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicRGBWAlphaColorSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [CreateName( 'RGBWAlphaColorValue' )]
+  [Name( 'RGBW Alpha Color Value' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoRGBWAlphaColorValue : TArduinoCommonClockedRGBWAlphaColorSource, TArduinoValue_Extender
+
+    Value : TRGBWAlphaColor = Transparent
+    Elements : TArduinoRGBWAlphaColorSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [ArduinoContructorParameter( 'Mitov::TRGBWAlphaColor()' )]
+  [Name( 'Compare RGBW Alpha Color Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoRGBWAlphaColorCompareValue : TArduinoCommonRGBWAlphaColorSink
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingSetter]
+    [ArduinoBindingPostfix( '_Binding' )]
+    Value : TRGBWAlphaColor = Transparent
+
+    [ArduinoTransformImplementation( 'CompareType' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomRGBWAlphaColorImplementation' )]
+  [CreateName( 'RandomRGBWAlphaColor' )]
+  [Name( 'Random RGBW Alpha Color' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+  +TArduinoRandomRGBWAlphaColor : TArduinoCommonClockedEnableRGBWAlphaColorSource
+
+    [ArduinoFullColor]
+    Min : TRGBWAlphaColor = Transparent
+
+    [ArduinoFullColor]
+    Max : TRGBWAlphaColor = $FFFFFFFFFF
+
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicRGBWAlphaColorSource : TArduinoCommonRGBWAlphaColorSource
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    [ArduinoFullColor]
+    InitialValue : TRGBWAlphaColor = Transparent
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::AnalogToRGBWAlphaColor' )]
+  [CreateName( 'AnalogToRGBWAlphaColor' )]
+  [Name( 'Analog To RGBW Alpha Color' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoAnalogToRGBWAlphaColor : TArduinoBasicRGBWAlphaColorSource
+
+    [OWPrimaryPin]
+    RedInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    GreenInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    BlueInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    WhiteInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    AlphaInputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::RGBWAlphaColorToAnalog' )]
+  [CreateName( 'RGBWAlphaColorToAnalog' )]
+  [Name( 'RGBW Alpha Color To Analog' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  +TArduinoRGBWAlphaColorToAnalog : TArduinoCommonRGBWAlphaColorSink
+
+    [OWPrimaryPin]
+    RedOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    GreenOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    BlueOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    WhiteOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    AlphaOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnly' )]
+  [ArduinoContructorParameter( '''\0''' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'RGBW Alpha Color Change Only' )]
+  [Category( TColorToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TRGBWAlphaColor' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoRGBWAlphaColorChangeOnly : TArduinoCommonRGBWAlphaColorFilter;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [Name( 'RGBW Alpha Color Mux(Multi channel Switch)' )]
+  [CreateName( 'RGBWAlphaColorMux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWAlphaColorMux : TArduinoRGBWAlphaColorMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [Name( 'RGBW Alpha Color Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'RGBWAlphaColorDemux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWAlphaColorDemux : TArduinoCommonRGBWAlphaColorSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoRGBWAlphaColorSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoRGBWAlphaColorSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [Name( 'RGBW Alpha Color On/Off Switch' )]
+  [CreateName( 'RGBWAlphaColorSwitch' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWAlphaColorSwitch : TArduinoCommonRGBWAlphaColorSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoRGBWAlphaColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [ArduinoContructorParameter( 'Mitov::TRGBWAlphaColor()' )]
+  [Name( 'RGBW Alpha Color Toggle Switch' )]
+  [CreateName( 'RGBWAlphaColorToggleSwitch' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWAlphaColorToggleSwitch : TArduinoCommonRGBWAlphaColorSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoRGBWAlphaColorSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoRGBWAlphaColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color Toggle Demux' )]
+  [CreateName( 'ColorToggleDemux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWAlphaColorToggleDemux : TArduinoCommonRGBWAlphaColorSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoRGBWAlphaColorSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoRGBWAlphaColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RGBWAlphaColorMultiSource' )]
+  [Name( 'RGBW Alpha Color Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWAlphaColorMultiSource : TArduinoCommonRGBWAlphaColorSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoRGBWAlphaColorSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoRGBWAlphaColorSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatRGBWAlphaColor' )]
+  [Name( 'Repeat RGBW Alpha Color' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatRGBWAlphaColor : TArduinoCommonRGBWAlphaColorFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RampToValue.h' )]
+  [ArduinoClass( 'Mitov::RampToRGBWAlphaColorValue' )]
+  [CreateName( 'RampToValue' )]
+  [Name( 'Ramp To RGBW Alpha Color Value' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoRampToRGBWAlphaColorValue : TArduinoCommonRGBWAlphaColorFilter
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInitialValue' )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    [ArduinoFullColor]
+    InitialValue : TRGBWAlphaColor = Transparent
+
+    [MinValue( 0 )]
+    [ReplaceValue(0.0, 0.00001)]
+    Slope : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGBW Alpha Color Multi-Source Merger' )]
+  [CreateName( 'RGBWAlphaColorMultiMerger' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWAlphaColorMultiMerger : TArduinoRGBWAlphaColorMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'Mitov::TRGBWAlphaColor' )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TRGBWAlphaColor' )]
+  [CreateName( 'RememberRGBWAlphaColor' )]
+  [Name( 'Remember RGBW Alpha Color Value' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRememberRGBWAlphaColor : TArduinoCommonRGBWAlphaColorFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( TRGBWAlphaColor, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TRGBWAlphaColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [CreateName( 'RGBWAlphaColorSnapshot' )]
+  [Name( 'RGBW Alpha Color Snapshot' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRGBWAlphaColorSnapshot : TArduinoCommonColorFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+  TArduinoRGBWAlphaColorBasicValueElement : TArduinoBasicRGBWAlphaColorSetValueElement
+
+    Value : TRGBWAlphaColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  [ParentImage( TArduinoRGBWAlphaColorValue )]
+  +TArduinoRGBWAlphaColorSetValueElement : TArduinoRGBWAlphaColorBasicValueElement
+
+    [OWPinGroup( TArduinoRGBWAlphaColorSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoRGBWAlphaColorStateSetValueElement : TArduinoRGBWAlphaColorBasicValueElement
+
+    [OWPinGroup( TArduinoRGBWAlphaColorStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::TRGBWAlphaColor &', 'AValue' )]
+  [Name( 'GetValue' )]
+  [ArduinoCallChainIndex]
+  ArduinoRGBWAlphaColorValueArrayGetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::TRGBWAlphaColor *', 'AValue' )]
+  [Name( 'ApplyValues' )]
+  ArduinoRGBWAlphaColorValueArrayApplyValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoRGBWAlphaColorValueArrayGetValueCallChain]
+  [ArduinoRGBWAlphaColorValueArrayApplyValueCallChain]
+  TArduinoRGBWAlphaColorValueElements : TArduinoRGBWAlphaColorValueBasicElements;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  [Name( 'RGBW Alpha Color Array' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+  +TArduinoRGBWAlphaColorValueArray : TArduinoCommonClockedRGBWAlphaColorSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoRGBWAlphaColorValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::RGBWColorToRGBWAlphaColor' )]
+  [CreateName( 'RGBWColorToRGBWAlphaColor' )]
+  [Name( 'Color To RGBW Alpha Color' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoRGBWColorToRGBWAlphaColor : TArduinoBasicRGBWAlphaColorSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoColorSinkPin
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateAlpha' )]
+    [ValueRange( 0.0, 1.0 )]
+    Alpha : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

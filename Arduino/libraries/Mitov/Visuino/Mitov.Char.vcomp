@@ -1,0 +1,231 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [ArduinoTemplateParameter( 'TYPE', 'char' )]
+  [CreateName( 'CharValue' )]
+  [Name( 'Char Value' )]
+  [Category( TArduinoTextDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoCharValue : TArduinoCommonCharSource, TArduinoValue_Extender
+
+    ClockInputPin  : TOWArduinoClockSinkPin
+
+    Value : AnsiChar = ' '
+    Elements : TArduinoCharSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'CharMultiSource' )]
+  [Name( 'Char Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoCharMultiSource : TArduinoCommonCharSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoCharSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoCharSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatChar' )]
+  [Name( 'Repeat Char' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatChar : TArduinoCommonCharFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'char' )]
+  [Name( 'Char Mux(Multi channel Switch)' )]
+  [CreateName( 'CharMux' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoCharMux : TArduinoCharMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'char' )]
+  [Name( 'Char Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'CharDemux' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoCharDemux : TArduinoCommonCharSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoCharSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoCharSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnly' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'Char Change Only' )]
+  [Category( TTextToolbarCategory )]
+  [ArduinoContructorParameter( '''\0''' )]
+  [ArduinoTemplateParameter( 'DATA', 'char' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoCharChangeOnly : TArduinoCommonCharFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareTextValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'char' )]
+  [Name( 'Compare Char Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TTextToolbarCategory )]
+  [ArduinoContructorParameter( '''\0''' )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoCharCompareValue : TArduinoCommonCharEnableSink
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingSetter]
+    [ArduinoBindingPostfix( '_Binding' )]
+    Value : AnsiChar = #0
+
+    [ArduinoTransformImplementation( 'CompareTypeChar' )]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+    IgnoreCase : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'char' )]
+  [ArduinoContructorParameter( '''\0''' )]
+  [Name( 'Char Toggle Switch' )]
+  [CreateName( 'CharToggleSwitch' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoCharToggleSwitch : TArduinoCommonCharSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoCharSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoCharSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Char Toggle Demux' )]
+  [CreateName( 'CharToggleDemux' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoCharToggleDemux : TArduinoCommonCharSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoCharSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin  : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'char' )]
+  [ArduinoContructorParameter( '''\0''' )]
+  [Name( 'Char On/Off Switch' )]
+  [CreateName( 'CharSwitch' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoCharSwitch : TArduinoCommonCharSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoCharSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ValueRange' )]
+  TArduinoCharValueRange : TArduinoCodePersistent
+
+    Min : AnsiChar = 'a'
+    Max : AnsiChar = 'z'
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareRangeChar' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [Name( 'Compare Char Range' )]
+  [CreateName( 'CompareRange' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TTextToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoCharCompareRange : TArduinoCommonCharEnableSink
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Range : TArduinoCharValueRange
+
+    IsOutsideRange : Boolean = False
+    IncludeLimits : Boolean = False
+    OnlyChanged : Boolean = True
+    IgnoreCase : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Char Multi-Source Merger' )]
+  [CreateName( 'CharMultiMerger' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoCharMultiMerger : TArduinoCharMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreValuesChar' )]
+  [Name( 'Ignore Char Values' )]
+  [CreateName( 'IgnoreCharValues' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoIgnoreCharValues : TArduinoCommonCharFilter
+
+    Value : AnsiChar = #0
+    IgnoreCase : Boolean = False
+    PassValuesBellow : Boolean = False
+    PassEqualValues : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'char &', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AExclude' )]
+  [Name( 'Exclude' )]
+  TArduinoIgnoreCharValuesExcludeCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoIgnoreCharValuesExcludeCallChain]
+  TArduinoCharRangeElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Ranges)' )]
+  [ArduinoClass( 'Mitov::IgnoreRangeElementChar' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'char' )]
+  [Name( 'Range' )]
+  [CreateName( 'Range' )]
+  [PersistentCollection( TArduinoCharRangeElements )]
+  +TArduinoCharRangeElement : TArduinoBasicRangeElement
+
+    Min : AnsiChar = #0
+    Max : AnsiChar = ' '
+    IgnoreCase : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreRanges' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'char' )]
+  [Name( 'Ignore Char Ranges' )]
+  [CreateName( 'IgnoreCharRanges' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoIgnoreCharRanges : TArduinoCommonCharFilter
+
+    IgnoredOutputPin : TOWArduinoDigitalSourcePin
+
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoCharRangeElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'char' )]
+  [ArduinoContructorParameter( '''\0''' )]
+  [CreateName( 'CharSnapshot' )]
+  [Name( 'Char Snapshot' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoCharSnapshot : TArduinoCommonCharFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

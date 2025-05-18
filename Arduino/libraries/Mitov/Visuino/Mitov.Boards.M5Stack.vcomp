@@ -1,0 +1,552 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TM5StackESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IM5StackStickHat )]
+  TArduinoM5StackStickCHats : TArduinoShields;
+//---------------------------------------------------------------------------
+  ['{8C6FF9E1-310A-4155-9FD3-BD63073DF99A}']
+  IM5StackStickHat : Interface;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoClass( 'Mitov::TypedInputPins3' )]
+  [ArduinoTemplateParameter( 'C_A', 'Mitov::TDefinedDigitalInputPinInverted<39>' )]
+  [ArduinoTemplateParameter( 'C_B', 'Mitov::TDefinedDigitalInputPinInverted<38>' )]
+  [ArduinoTemplateParameter( 'C_C', 'Mitov::TDefinedDigitalInputPinInverted<37>' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoBasicButtonModule )]
+  TM5StackCoreESP32ButtonsModule : TArduinoShield
+  
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalInputInterruptChangeOnlySourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( 'A', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '39' )]
+    [OWAddArduinoBoardDigitalPin( 'B', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '38' )]
+    [OWAddArduinoBoardDigitalPin( 'C', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '37' )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire1' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 104 >' )]
+  [ArduinoI2C( 1 )]
+  +TArduinoESP32_M5Stack_StickC_AccelerometerGyroscope : TArduinoBasicMPU6886GyroscopeAccelerometerModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire1' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x51 >' )]
+  [ArduinoI2C( 1 )]
+  +TArduinoESP32_M5Stack_StickC_RTCPCF8563Module : TArduinoRTCPCF8563BasicModule;
+//---------------------------------------------------------------------------
+  [Name( 'Microphone' )]
+  [CreateName( 'Microphone' )]
+  [ArduinoInclude( 'Mitov_Microphone_SPM1423HM4H_B.h' )]
+  [ArduinoClass( 'Mitov::MicrophoneSPM1423HM4H_B' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicAnalogMicrophone )]
+  +TArduinoESP32_M5Stack_StickC_MicrophoneModule : TArduinoShield
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogArraySourcePin
+
+    [ValueRange( 1, 192000 )]
+    [PropertyListDesignValue( '8000' )]
+    [PropertyListDesignValue( '11025' )]
+    [PropertyListDesignValue( '16000' )]
+    [PropertyListDesignValue( '22050' )]
+    [PropertyListDesignValue( '32000' )]
+    [PropertyListDesignValue( '44100' )]
+    [PropertyListDesignValue( '48000' )]
+    [PropertyListDesignValue( '96000' )]
+    [PropertyListDesignValue( '192000' )]
+    SampleRate : Unsigned = 44100
+
+    [ValueRange( 2, 16 )]
+    [OWExcludeBindings]
+    CountBuffers : Unsigned = 2
+
+    [ValueRange( 1, 4096 )]
+    [OWExcludeBindings]
+    BufferSize : Unsigned = 128
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '39' )]
+  [ArduinoClass( 'Mitov::InvertedDigitalPullUpInput' )]
+  +TM5StackAtomESP32ButtonModule : TArduinoBasicInterruptButtonModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '25' )]
+  +TM5StackCoreESP32BuzzerModule : TArduinoBasicBuzzerModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorOutputPin', '9' )]
+  [OldName( 'TArduinoInfraredRemoteTransmitterModule' )]
+  +TArduinoESP32_M5Stack_StickC_InfraredRemoteTransmitterModule : TArduinoInfraredRemoteTransmitterModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorOutputPin', '12' )]
+  +TArduinoESP32_M5Stack_Atom_InfraredRemoteTransmitterModule : TArduinoInfraredRemoteTransmitterModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '4' )]
+  +TM5StackCoreESP32MicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [ArduinoNeoPixelsPinName( '27' )]
+  [ParentImage( TArduinoLEDRGB )]
+  +TArduinoESP32_M5Stack_Atom_RGBLedModule : TArduinoSingleNeoPixelGraphicsBasicModule;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_Generic_I2C_1_Atom : TArduinoPinMapI2C
+
+    [ValueRange( 0, 39 )]
+    SDA = 25
+
+    [ValueRange( 0, 39 )]
+    SCL = 21
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_M5Stack_StickC_SPI1 : TArduinoESP32_Generic_SPI
+
+    [ValueRange( 0, 39 )]
+    MOSI = 15
+
+    [ValueRange( 0, 39 )]
+    MISO = 2
+
+    [ValueRange( 0, 39 )]
+    SCK  = 13
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_M5Stack_Core_Serial2 : TArduinoESP32_M5Stack_Basic_Serial2
+
+    RXPin = 22
+    TXPin = 21
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_M5Stack_StickC_Serial2 : TArduinoESP32_M5Stack_Basic_Serial2
+
+    RXPin = 33
+    TXPin = 32
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_M5Stack_Atom_Serial2 : TArduinoESP32_M5Stack_Basic_Serial2
+
+    RXPin = 25
+    TXPin = 21
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_StickC_AXP192.h' )]
+  [ArduinoClass( 'Mitov::ArduinoAXP192_Button' )]
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoI2C( 1 )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire1' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoLoopBegin]
+  TM5StackStickCESP32PowerButtonProperty : TArduinoCodePersistent
+
+    ShortPressOutputPin : TOWArduinoClockSourcePin
+    LongPressOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoClass( 'Mitov::TypedInputPins2' )]
+  [ArduinoTemplateParameter( 'C_A', 'Mitov::TDefinedDigitalInputPinInverted<37>' )]
+  [ArduinoTemplateParameter( 'C_B', 'Mitov::TDefinedDigitalInputPinInverted<39>' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoBasicButtonModule )]
+  TM5StackStickCESP32ButtonsModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalInputInterruptChangeOnlySourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( 'A(M5)', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '37' )]
+    [OWAddArduinoBoardDigitalPin( 'B', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '39' )]
+    OutputPins : TOWArduinoPinList
+
+    Power : TM5StackStickCESP32PowerButtonProperty
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '10' )]
+  TArduinoESP32_M5Stack_StickC_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire1' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 108 >' )]
+  [ArduinoI2C( 1 )]
+  TArduinoESP32_M5Stack_StickC_SH200Q_AccelerometerGyroscope : TArduinoSenodiaSH200QI2CBasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::AXP192_Battery' )]
+  [ParentImage( TArduinoBasicBatteryAnalogSensorModule )]
+  TArduinoESP32_M5Stack_StickC_PowerModule_Battery : TArduinoCodeEnabledClockedPersistent
+
+    [OWPrimaryPin]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartBatteryVoltage' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginBatteryVoltage' )]
+    VoltageOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartBatteryPower' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginBatteryPower' )]
+    [Name( 'Power (W)' )]
+    PowerOutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::AXP192_Charge' )]
+  [ArduinoInit]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  *TArduinoESP32_M5Stack_StickC_PowerModule_Charge : TArduinoCodeEnabledClockedPersistent
+
+    [OWPrimaryPin]
+    [NamePostfix( '(Ah)' )]
+    ChargingOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [NamePostfix( '(Ah)' )]
+    DischargingOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [NamePostfix( '(Ah)' )]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    ClearInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoESP32_M5Stack_StickC_PowerModule_Power : TArduinoCodeEnabledClockedPersistent
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartVoltage' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginVoltage' )]
+    VoltageOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartCurrent' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginCurrent' )]
+    [Name( 'Current (A)' )]
+    CurrentOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::AXP192_ACPower' )]
+  *TArduinoESP32_M5Stack_StickC_PowerModule_ACPower : TArduinoESP32_M5Stack_StickC_PowerModule_Power;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::AXP192_USBPower' )]
+  *TArduinoESP32_M5Stack_StickC_PowerModule_USBPower : TArduinoESP32_M5Stack_StickC_PowerModule_Power;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::AXP192_Thermometer' )]
+  TArduinoESP32_M5Stack_StickC_PowerModule_Thermometer : TArduinoBasicEnabledThermometer
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartThermometer' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginThermometer' )]
+    OutputPin
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Power' )]
+  [CreateName( 'Power' )]
+  [ArduinoInclude( 'Mitov_StickC_AXP192.h' )]
+  [ArduinoClass( 'Mitov::Arduino_StickC_AXP192' )]
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoI2C( 1 )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire1' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInit]
+  [ArduinoInitializationCode( 'Wire1.begin( 21, 22 );' )]
+  +TArduinoESP32_M5Stack_StickC_PowerModule : TArduinoShield
+
+    Battery : TArduinoESP32_M5Stack_StickC_PowerModule_Battery
+    Charge : TArduinoESP32_M5Stack_StickC_PowerModule_Charge
+    Thermometer : TArduinoESP32_M5Stack_StickC_PowerModule_Thermometer
+    
+    [Name( 'AC Power' )]
+    ACPower : TArduinoESP32_M5Stack_StickC_PowerModule_ACPower
+
+    [Name( 'USB Power' )]
+    USBPower : TArduinoESP32_M5Stack_StickC_PowerModule_USBPower
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGB LED' )]
+  [ArduinoInclude( 'Mitov_NeoPixel.h' )]
+  [ArduinoClass( 'Mitov::ArduinoNeoPixels2DGraphicsModule' )]
+  [ArduinoTemplateParameter( 'HEIGHT', '5' )]
+  [ArduinoTemplateParameter( 'WIDTH', '5' )]
+  [ArduinoTemplateParameter( 'C_COUNT_PIXELS', '25' )]
+  [ArduinoTemplateParameter( 'MATRIX_MAP', 'Mitov::TSequentialMatrixMap' )]
+  [ArduinoTemplateParameter( 'TRANSFORM', 'Mitov::TRGBColorTransfrom' )]
+  [ArduinoTemplateParameter( '0_TYPR', 'NeoPixel_Declarations::T_NeoPixelsMatrix' )]
+  [ArduinoTemplateParameter( '1_NAME', 'NeoPixel_Declarations::_NeoPixelsMatrix' )]
+  [ArduinoNeoPixelsPinName( '27' )]
+  [ArduinoNeoPixelsCountPixels( 25 )]
+  [ArduinoOptionalVariable( Unsigned, 6, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 6, 'FCursorY', 0 )]
+  TArduinoESP32_M5Stack_Atom_RGBMatrixLedModule : TArduinoPixels2DGraphicsBasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoGroveSerialPort( 2 )]
+  TArduinoESP32_M5Stack_Basic_GroveModule : TArduinoGroveSerialModule;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '21', '22' )]
+  +TArduinoESP32_M5Stack_Core_GroveModule : TArduinoESP32_M5Stack_Basic_GroveModule;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '32', '33' )]
+  +TArduinoESP32_M5Stack_StickC_GroveModule : TArduinoESP32_M5Stack_Basic_GroveModule;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( '26', '32' )]
+  +TArduinoESP32_M5Stack_Atom_GroveModule : TArduinoESP32_M5Stack_Basic_GroveModule;
+//---------------------------------------------------------------------------
+  [Category( TM5StackESP32Category )]
+  TArduinoM5StackCoreBasic : TArduinoBasicESP32Board;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoEVIVEDisplayModule )]
+  [ArduinoInclude( 'Mitov_M5_Stack_Display_ILI9341.h' )]
+  [ArduinoClass( 'Mitov::DisplayILI9341_M5Stack' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::DisplayILI9341_SPI' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<14>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.DataCommandOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<27>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ResetOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<33>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ResetOutputPin_RESET', 'Mitov::ResetPinImplementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.SPISpeed', 'Mitov::ConstantProperty<5, uint32_t, 8000000 >' )]
+  [ArduinoTemplateParameter( 'C_BRIGHNESS_PIN', '32' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoSPI( 0 )]
+  [ArduinoOptionalVariable( Unsigned, 9, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 9, 'FCursorY', 0 )]
+  +TM5StackCoreESP32DisplayModule : TArduinoDisplayILI9341BasicSPIShield
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBrightness' )]
+    [ValueRange( 0, 1.0 )]
+    Brightness : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Display ST7735' )]
+  [CreateName( 'Display ST7735' )]
+  [ArduinoInclude( 'Mitov_Display_ST7735R_GreenTab_160_80.h' )]
+  [ArduinoInclude( 'Mitov_DisplayST7735_M5Stack_StickC.h' )]
+  [ArduinoClass( 'Mitov::DisplayST7735Basic_M5Stack_StickC' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.SPISpeed', 'Mitov::ConstantProperty<20, uint32_t, 8000000 >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<5>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.RegisterSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<23>' )]
+
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+
+  [ArduinoTemplateParameter( 'OverridePixelOffset', 'Mitov::NestedProperty<325, Mitov::TArduinoDisplayST7735PixelOffset< Mitov::ConstantProperty<322, bool, false >, Mitov::ConstantProperty<323, uint8_t, 0 >, Mitov::ConstantProperty<324, uint8_t, 0> > >' )]
+
+  [ArduinoInclude( 'Mitov_Display_ST7735R_GreenTab_160_80.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_TYPE', 'Mitov::Display_ST7735R_GreenTab_Inverted_160_80' )]
+
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<18>' )]
+  [ArduinoStart]
+  [ArduinoSPI( 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorY', 0 )]
+  +TArduinoESP32_M5Stack_StickCDisplayST7735Module : TArduinoBasicDisplayST7735BasicModule
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBrightness' )]
+    [ValueRange( 0, 1.0 )]
+    Brightness : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M5 Stack Core' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:m5stack-core-esp32' )]
+  +TArduinoM5StackCore : TArduinoM5StackCoreBasic
+
+    [AddItem( TM5StackCoreESP32ButtonsModule )]
+    [AddItem( TM5StackCoreESP32BuzzerModule )]
+    [AddItem( TM5StackCoreESP32DisplayModule )]
+    [AddItem( TM5StackCoreESP32MicroSDModule )]
+    [AddItem( TArduinoESP32_M5Stack_Core_GroveModule )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial )]
+    [AddItem( TArduinoESP32DefinedPinsSerial1 )]
+    [AddItem( TArduinoESP32_M5Stack_Core_Serial2 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoESP32_Generic_I2C )]
+    [AddItem( TArduinoESP32_Generic_I2C_2 )]
+    I2CChannels : TArduinoI2CChannels
+    
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoESP32_Generic_SPI )]
+    [AddItem( TArduinoESP32_Generic_SPI1 )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [Name( 'Channels' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,   1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,   1, TArduinoCombinedPullDownAnalogDigitalSerial0Channel, 'GPIO(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,   1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,   1, TArduinoCombinedPullDownAnalogDigitalSerial0Channel, 'GPIO(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,   1, TArduinoCombinedPullDownAnalogDigitalChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12,  1, TArduinoCombinedTouchPullDownAnalogDigitalSPI1InterruptChannel, 'GPIO(MISO1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13,  1, TArduinoCombinedTouchPullDownAnalogDigitalSPI1InterruptChannel, 'GPIO(MOSI1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15,  1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,  1, TArduinoCombinedPullDownAnalogDigitalSerial2Channel, 'GPIO(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17,  1, TArduinoCombinedPullDownAnalogDigitalSerial2Channel, 'GPIO(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18,  1, TArduinoCombinedTouchPullDownAnalogDigitalSPI0InterruptChannel, 'GPIO(SCK0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19,  1, TArduinoCombinedTouchPullDownAnalogDigitalSPI0InterruptChannel, 'GPIO(MISO0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 21,  1, TArduinoCombinedPullDownAnalogDigitalI2C0Channel, 'GPIO(SDA)(Grove)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22,  1, TArduinoCombinedPullDownAnalogDigitalI2C0Channel, 'GPIO(SCL)(Grove)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 23,  1, TArduinoCombinedTouchPullDownAnalogDigitalSPI0InterruptChannel, 'GPIO(MOSI0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25,  1, TArduinoESP32CombinedPullDownAnalogDigitalDACChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26,  1, TArduinoESP32CombinedPullDownAnalogDigitalDACChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 34,  3, TArduinoCombinedPullDownAnalogDigitalChannel, 'GPIO' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'esp32:esp32:m5stick-c' )]
+  TArduinoM5StackBasic : TArduinoM5StackCoreBasic;
+//---------------------------------------------------------------------------
+  TArduinoM5StackStickCBasic : TArduinoM5StackBasic
+
+    [AddItem( TArduinoESP32_M5Stack_StickC_PowerModule )]  // Power module has to be before others
+    [AddItem( TM5StackStickCESP32ButtonsModule )]
+    [AddItem( TArduinoESP32_M5Stack_StickC_LEDModule )]
+    [AddItem( TArduinoESP32_M5Stack_StickC_RTCPCF8563Module )]
+    [AddItem( TArduinoESP32_M5Stack_StickCDisplayST7735Module )]
+    [AddItem( TArduinoESP32_M5Stack_StickC_InfraredRemoteTransmitterModule )]
+    [AddItem( TArduinoESP32_M5Stack_StickC_MicrophoneModule )]
+    [AddItem( TArduinoESP32_M5Stack_StickC_GroveModule )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial )]
+    [AddItem( TArduinoESP32DefinedPinsSerial1 )]
+    [AddItem( TArduinoESP32_M5Stack_StickC_Serial2 )]
+    Serial : TArduinoSerials
+    
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoESP32_Generic_I2C_StickC )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoESP32_M5Stack_StickC_SPI1 )]
+    [AddItem( TArduinoESP32_Generic_SPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [Name( 'Channels' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,   1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,   1, TArduinoCombinedPullDownAnalogDigitalSerial0Channel, 'GPIO(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26,  1, TArduinoESP32CombinedPullDownAnalogDigitalDACChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 32,  2, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'GPIO(Grove)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 36,  1, TArduinoCombinedPullDownAnalogDigitalChannel, 'GPIO' )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add &Hats ...' )]
+    [Name( 'Hats' )]
+    Shields : TArduinoM5StackStickCHats
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M5 Stack Stick C' )]
+  +TArduinoM5StackStickC : TArduinoM5StackStickCBasic
+  
+    [AddItem( TArduinoESP32_M5Stack_StickC_AccelerometerGyroscope )]
+    Modules
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M5 Stack Stick C (SH200Q)' )]
+  [ParentImage( TArduinoM5StackStickC )]
+  +TArduinoM5StackStickCSH200Q : TArduinoM5StackStickCBasic
+  
+    [AddItem( TArduinoESP32_M5Stack_StickC_SH200Q_AccelerometerGyroscope )]
+    Modules
+    
+    [AddItem( TArduinoHardwareSerial )]
+    [AddItem( TArduinoESP32DefinedPinsSerial1 )]
+    [AddItem( TArduinoESP32_M5Stack_Atom_Serial2 )]
+    Serial : TArduinoSerials
+    
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoESP32_Generic_I2C_Atom )]
+    [AddItem( TArduinoESP32_Generic_I2C_1_Atom )]
+    I2CChannels : TArduinoI2CChannels
+    
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoESP32_M5Stack_StickC_SPI1 )]
+    [AddItem( TArduinoESP32_Generic_SPI )]
+    SPIChannels : TArduinoSPIChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoM5StackAtomBasic : TArduinoM5StackBasic
+
+    [AddItem( TM5StackAtomESP32ButtonModule )]
+    [AddItem( TArduinoESP32_M5Stack_Atom_InfraredRemoteTransmitterModule )]
+    [AddItem( TArduinoESP32_M5Stack_Atom_GroveModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19,  1, TArduinoCombinedTouchPullDownAnalogDigitalSPI0InterruptChannel, 'GPIO(MISO0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 21,  1, TArduinoCombinedPullDownAnalogDigitalI2C0Channel, 'GPIO(SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22,  1, TArduinoCombinedPullDownAnalogDigitalI2C0Channel, 'GPIO(SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 23,  1, TArduinoCombinedTouchPullDownAnalogDigitalSPI0InterruptChannel, 'GPIO(MOSI0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25,  1, TArduinoESP32CombinedPullDownAnalogDigitalDACChannel, 'GPIO' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 33,  1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'GPIO(Grove)' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M5 Stack ATOM Lite' )]
+  +TArduinoM5StackAtomLite : TArduinoM5StackAtomBasic
+  
+    [AddItem( TArduinoESP32_M5Stack_Atom_RGBLedModule )]
+    Modules
+  
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M5 Stack ATOM Matrix' )]
+  +TArduinoM5StackAtomMatrix : TArduinoM5StackAtomBasic
+
+    [AddItem( TArduinoESP32_M5Stack_Atom_RGBMatrixLedModule )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,382 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoGroveDigitalOutputChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::GroveDigitalOutputChannel' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoStart]
+  TArduinoGroveDigitalOutputChannel : TArduinoBasicDigitalInitialValueInputPinNamedChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Primary' )]
+  TArduinoGroveDigitalOutputChannelPrimary : TArduinoGroveDigitalOutputChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Secondary' )]
+  TArduinoGroveDigitalOutputChannelSecondary : TArduinoGroveDigitalOutputChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveDigitalInput' )]
+  [Name( 'Grove Digital Input' )]
+  [CreateName( 'GroveDigitalInput' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoGroveDigitalInput : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  	[OldName( 'Grove' )]
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Primary',   TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Secondary', TOWArduinoDigitalSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveAnalogInput' )]
+  [Name( 'Grove Analog Input' )]
+  [CreateName( 'GroveAnalogInput' )]
+  [Category( TArduinoGroveToolbarCategory )]
+  [Category( TArduinoAnalogInputOutputToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoGroveAnalogInput : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  	[OldName( 'Grove' )]
+    GroveOutputPin : TOWArduinoAnalogGroveSourcePin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Primary',   TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Secondary', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoGroveBasicDigitalComponent : TArduinoComponent
+
+  	[OldName( 'Grove' )]
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveDigitalOutput' )]
+  [Name( 'Grove Digital Output' )]
+  [CreateName( 'GroveDigitalOutput' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  +TArduinoGroveDigitalOutput : TArduinoGroveBasicDigitalComponent
+
+    [AddItem( TArduinoGroveDigitalOutputChannelPrimary )]
+    [AddItem( TArduinoGroveDigitalOutputChannelSecondary )]
+    Channels : TArduinoGroveDigitalOutputChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoGroveDigitalInitialValueSink : TArduinoDigitalInitialValueSink
+
+  	[OldName( 'Grove' )]
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveDigitalSingleOutput' )]
+  [Name( 'Grove Relay' )]
+  [CreateName( 'Relay' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoRelayDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoGroveRelay : TArduinoGroveDigitalInitialValueSink;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveSecondaryDigitalSingleOutput' )]
+  [Name( 'M5Stack Mini Relay Unit' )]
+  [CreateName( 'Relay' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoRelayDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoM5StackMiniRelayUnit : TArduinoGroveDigitalInitialValueSink;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveSecondaryDigitalSingleOutput' )]
+  [Name( 'M5Stack Laser Transmitter(Tx) Unit' )]
+  [CreateName( 'LaserTransmitter' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoM5StackLaserTransmitterUnit : TArduinoGroveDigitalInitialValueSink;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoInit]
+  TArduinoGroveDigitalBasic : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  	[OldName( 'Grove' )]
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoInit]
+  TArduinoGroveAnalogBasic : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    GroveOutputPin : TOWArduinoAnalogGroveSourcePin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoInit]
+  TArduinoGroveDigitalAndAnalogBasic : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    GroveOutputPin : TOWArduinoDigitalAnalogGroveSourcePin
+
+    [OWPrimaryPin]
+    AnalogOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    DigitalOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveDigitalSingleInput' )]
+  [Name( 'Grove Button' )]
+  [CreateName( 'Button' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  +TArduinoGroveButton : TArduinoGroveDigitalBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveDigitalSingleSecondInputInverted' )]
+  [Name( 'M5Stack Mini Button Unit' )]
+  [CreateName( 'Button' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  +TArduinoM5StackMiniButtonUnit : TArduinoGroveDigitalBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveDigitalSingleSecondInput' )]
+  [Name( 'M5Stack Infrared Refletive (Optocoupler) Unit' )]
+  [CreateName( 'Optocoupler' )]
+  [Category( TArduinoGroveAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoAnalogInputOutputToolbarCategory )]
+  +TArduinoM5StackOptocouplerUnit : TArduinoGroveDigitalBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveAnalogSingleSecondInputInverted' )]
+  [Name( 'M5Stack Mini Angle Unit with Potentiometer' )]
+  [CreateName( 'Potentiometer' )]
+  [Category( TArduinoGroveAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoAnalogInputOutputToolbarCategory )]
+  +TArduinoM5StackMiniPotentiometerUnit : TArduinoGroveAnalogBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveDigitalAndAnalogInputInverted' )]
+  [Name( 'M5Stack Light Unit with Photo-resistance' )]
+  [CreateName( 'LightSensor' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoGroveAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  +TArduinoM5StackPhotoresistorUnit : TArduinoGroveDigitalAndAnalogBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveDigitalAndAnalogInputInverted' )]
+  [Name( 'M5Stack Earth Moisture Unit' )]
+  [CreateName( 'EarthMoisture' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoGroveAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  +TArduinoM5StackEarthMoistureUnit : TArduinoGroveDigitalAndAnalogBasic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveAnalogSingleOutput' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [Category( TArduinoGroveAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoAnalogInputOutputToolbarCategory )]
+  TArduinoM5StackBasicMotorUnit : TArduinoCommonAnalogEnableSink
+
+    GroveOutputPin : TOWArduinoAnalogGroveSourcePin
+
+    [OWExcludeBindings]
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M5Stack Vibration Motor Unit' )]
+  [CreateName( 'VibrationMotor' )]
+  +TArduinoM5StackVibrationMotorUnit : TArduinoM5StackBasicMotorUnit;
+//---------------------------------------------------------------------------
+  [Name( 'M5Stack Mini Fan Unit' )]
+  [CreateName( 'MiniFan' )]
+  +TArduinoM5StackMiniFanUnit : TArduinoM5StackBasicMotorUnit;
+//---------------------------------------------------------------------------
+  TArduinoM5StackITRemoteUnit : TArduinoGroveBasicDigitalComponent
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveDigitalSingleInput' )]
+  [Name( 'Grove Touch Sensor' )]
+  [CreateName( 'TouchSensor' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  +TArduinoGroveTouch : TArduinoGroveDigitalBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveDigitalSingleInputInverted' )]
+  [Name( 'Grove Tilt Sensor' )]
+  [CreateName( 'TiltSensor' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  +TArduinoGroveTilt : TArduinoGroveDigitalBasic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveDigitalSingleInput' )]
+  [Name( 'M5Stack PIR Motion Sensor' )]
+  [CreateName( 'MotionSensor' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoM5StackPIRMotionSensorUnit : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  	[OldName( 'Grove' )]
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SoftwareSerial.h' )]
+  [ArduinoInclude( 'Mitov_SoftwareSerial.h' )]
+  [ArduinoClass( 'Mitov::VisuinoSoftwareSerial' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [Category( TArduinoGroveToolbarCategory )]
+  TArduinoBasicGroveSoftwareSerial : TArduinoBasicSoftwareSerial
+
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+    [ArduinoPinConnectDefine( '_MITOV_SOFTWARE_SERIAL_SENDING_PIN_' )]
+    SendingOutputPin
+
+    [ArduinoExclude]
+    OutputPin // Manually populated!
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Grove Software Serial Port' )]
+  [CreateName( 'SoftwareSerial' )]
+  +TArduinoGroveSoftwareSerial : TArduinoBasicGroveSoftwareSerial;
+//---------------------------------------------------------------------------
+  [Name( '3-Axis Accelerometer LIS3DH(Grove)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<43, uint8_t, 25>' )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoGroveAccelerometerLIS3DH : TArduinoAccelerometerLIS3DH_I2C_Basic;
+//---------------------------------------------------------------------------
+  [Name( '3-Axis Accelerometer/Gyroscope LSM6DS3(Grove)' )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoGroveAccelerometerGyroscopeLSM6DS3_I2C : TArduinoAccelerometerGyroscopeLSM6DS3_I2C;
+//---------------------------------------------------------------------------
+  [Category( TArduinoGroveToolbarCategory )]
+  [Name( 'OLED Display 0.96" SSD1315(Grove)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<88, uint8_t, 0x3C >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationDown' )]
+  [ArduinoTemplateParameter( 'Type', 'Mitov::ConstantProperty<127, Mitov::TArduinoDisplayOLEDType, Mitov::odtSSD1306 >' )]
+  +TArduinoGrove_OLED_SSD1315_96Display : TArduinoDisplaySSD1306I2C_Basic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_BME280_TemperatureHumidity_I2C.h' )]
+  [ArduinoClass( 'Mitov::BMP280_TemperaturePressure_I2C' )]
+  [Name( 'Air Pressure Sensor BMP280(Grove)' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 119 >' )]
+  +TArduinoGrove_PressureTemperatureBMP280 : TArduinoPressureTemperatureBMP280Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveSecondaryDigitalSingleOutput' )]
+  [Name( 'Grove LED' )]
+  [CreateName( 'LED' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoGroveLED : TArduinoGroveDigitalInitialValueSink;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveAnalogSingleInputInverted' )]
+  [Name( 'Grove Rotary Angle Sensor/Potentiometer' )]
+  [CreateName( 'Potentiometer' )]
+  [Category( TArduinoGroveAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoAnalogInputOutputToolbarCategory )]
+  +TArduinoGrovePotentiometer : TArduinoGroveAnalogBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveAnalogSingleInput' )]
+  [Name( 'Grove Light Sensor)]
+  [CreateName( 'Light' )]
+  [Category( TArduinoGroveAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoAnalogInputOutputToolbarCategory )]
+  +TArduinoGroveLightSensor : TArduinoGroveAnalogBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GroveAnalogSingleInput' )]
+  [Name( 'Grove Sound Sensor/Microphone)]
+  [CreateName( 'Microphone' )]
+  [Category( TArduinoGroveAnalogInputOutputToolbarCategory )]
+  [Category( TArduinoAnalogInputOutputToolbarCategory )]
+  +TArduinoGroveMicrophone : TArduinoGroveAnalogBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DirectGroveOuputPin0' )]
+  [Name( 'Grove Passive Buzzer)]
+  [CreateName( 'Buzzer' )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoGroveBuzzer : TArduinoComponent
+
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+    InputPin : TOWArduinoGroveDigitalOutputSinkPin_0
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

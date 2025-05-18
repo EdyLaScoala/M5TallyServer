@@ -1,0 +1,444 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  [Name( 'ScanResultCountChannels' )]
+  TArduinoAdafruitAirLiftScanElementScanResultCountChannelsAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+//  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'String &', 'AValue' )]
+  [Name( 'ScanResultSSID' )]
+//  [ArduinoCallChainIndex]
+  TArduinoAdafruitAirLiftScanElementScanResultSSIDAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  [Name( 'ScanResultChannel' )]
+  TArduinoAdafruitAirLiftScanElementScanResultChannelAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  [Name( 'ScanResultEncription' )]
+  TArduinoAdafruitAirLiftScanElementScanResultEncriptionAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'int32_t', 'AValue' )]
+  [Name( 'ScanResultSignalStrength' )]
+  TArduinoAdafruitAirLiftScanElementScanResultSignalStrengthAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t *', 'AValue' )]
+  [Name( 'ScanResultMACAddress' )]
+  TArduinoAdafruitAirLiftScanElementScanResultMACAddressAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ScanResulFound' )]
+  TArduinoAdafruitAirLiftScanElementScanResultFoundAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ScanResulCompleted' )]
+  TArduinoAdafruitAirLiftScanElementScanResultCompletedAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'unsigned long', 'APeriod' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  [Name( 'ScanDurationCompleted' )]
+  TArduinoAdafruitAirLiftScanElementScanDurationCompletedAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoAdafruitAirLiftScanElementScanResultCountChannels]
+  [TArduinoAdafruitAirLiftScanElementScanResultSSID]
+  [TArduinoAdafruitAirLiftScanElementScanResultChannel]
+  [TArduinoAdafruitAirLiftScanElementScanResultEncription]
+  [TArduinoAdafruitAirLiftScanElementScanResultSignalStrength]
+  [TArduinoAdafruitAirLiftScanElementScanResultMACAddress]
+  [TArduinoAdafruitAirLiftScanElementScanResultFound]
+  [TArduinoAdafruitAirLiftScanElementScanResultCompleted]
+  [TArduinoAdafruitAirLiftScanElementScanDurationCompleted]
+  ArduinoAdafruitAirLiftScanElementScanResultsAttribute : TAttributeCollectionAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoAdafruitAirLiftScanElementScanResults]
+  TArduinoAdafruitAirLiftOperations : TArduinoBasicNetworkOperations;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoAdafruitAirLiftOperations )]
+  [ArduinoHelpPostfix( '(Nina WiFi Operations)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoAdafruitAirLiftOperation : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Scan WiFi Networks' )]
+  [CreateName( 'ScanNetworks' )]
+  [ArduinoClass( 'Mitov::AdafruitAirLiftScanNetworksOperation' )]
+  [ParentImage( TArduinoESP32WiFiModuleScanNetworksOperation )]
+//  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnected]
+  [ArduinoAdafruitAirLiftScanElementScanResults]
+  [ArduinoVariable( Boolean, 'FScanning' )]
+  +TArduinoAdafruitAirLiftScanNetworksOperation : TArduinoAdafruitAirLiftOperation
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ScanInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoChangeOnlyPin]
+    ScanningOutputPin : TOWArduinoDigitalSourcePin
+
+    CountOutputPin : TOWArduinoUnsignedSourcePin
+    SignalStrengthOutputPin : TOWArduinoIntegerSourcePin
+    SSIDOutputPin : TOWArduinoStringSourcePin
+
+    [Name( 'MAC Address (BSSID)' )]
+    MACAddressOutputPin : TOWArduinoStringSourcePin
+
+    EncryptionOutputPin : TOWArduinoUnsignedSourcePin
+    ChannelOutputPin : TOWArduinoIntegerSourcePin
+    FoundNetworkOutputPin : TOWArduinoClockSourcePin
+    
+    [NamePostfix( '(mS)' )]
+    Duration : Unsigned = 10000
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoCallChainExcludeOwnerComplete]
+  TArduinoAdafruitAirLiftBasicClockedOperation : TArduinoAdafruitAirLiftOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitAirLiftBasicOptionalClockedOperation : TArduinoAdafruitAirLiftBasicClockedOperation
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Date/Time' )]
+  [CreateName( 'Date/Time' )]
+  [ParentImage( TArduinoMemoryDateTimeElement )]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftTimeOperation' )]
+  +TArduinoAdafruitAirLiftTimeOperation : TArduinoAdafruitAirLiftBasicOptionalClockedOperation
+
+    [ArduinoVariableIfPinUnconnected( Unsigned, 32, 'FLastTime', 0 )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+    [ValueRange( -12.0, 12.0 )]
+    [ NamePostfix( '(H)' ) ]
+    TimeZoneOffset : Single = 0.0
+    
+   ;
+//---------------------------------------------------------------------------
+  [Name( 'Ping' )]
+  [CreateName( 'Ping' )]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftPingOperation' )]
+  +TArduinoAdafruitAirLiftPingOperation : TArduinoAdafruitAirLiftBasicClockedOperation
+
+    [OWPrimaryPin]
+    SuccessOutputPin : TOWArduinoDigitalSourcePin
+    
+    [OWPrimaryPin]
+    UnreachableOutputPin : TOWArduinoDigitalSourcePin
+    
+    [OWPrimaryPin]
+    TimeoutOutputPin : TOWArduinoDigitalSourcePin
+    
+    [OWPrimaryPin]
+    UnknownHostOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    ErrorOutputPin : TOWArduinoDigitalSourcePin
+
+    Host : String = ''
+
+    IPAddress : TArduinoIPV4Address
+    
+    [MaxValue( 255 )]
+    TimeOfLive : Unsigned = 128
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftWiFiModuleAccessPoint' )]
+  TArduinoAdafruitAirLiftWiFiModuleAccessPoint : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccessPoint' )]
+    Enabled
+
+    SSID : String = ''
+    Password : String = ''
+
+    [DesignRange( 1, 13 )]
+    Channel : Unsigned = 1
+
+//    IsHidden : Boolean = False
+    Config : TArduinoESP8266WiFiModuleConfig
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitAirLiftWiFiSockets : TArduinoBasicSockets;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoAdafruitAirLiftWiFiSockets )]
+  [ArduinoHelpPostfix( '(AirLift Socket)' )]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftWiFiTCPClientSocket' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( '2_IMPLEMENTATION', 'Mitov::TArduinoAdafruitAirLiftWiFi_TCP_Impl' )]
+  [ArduinoVariable( Boolean, 'FConnecting' )]
+  [ArduinoVariable( Boolean, 'FIsClosing' )]
+  +TArduinoAdafruitAirLiftWiFiTCPClientSocket : TArduinoBasicTCPClientSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoAdafruitAirLiftWiFiSockets )]
+//  [ArduinoInclude( 'WiFiClientSecure.h' )]
+  [ArduinoHelpPostfix( '(AirLift Socket)' )]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftWiFiTCPClientSocket' )]
+  [ParentImage( TArduinoBasicTCPSecureClientCACertSocket )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoVariable( Boolean, 'FConnecting' )]
+  [ArduinoVariable( Boolean, 'FIsClosing' )]
+//  [ArduinoVariable( Unsigned, 4, 'FSocketNo' )]
+  [ArduinoTemplateParameter( '2_IMPLEMENTATION', 'Mitov::TArduinoAdafruitAirLiftWiFi_SSL_Impl' )]
+  +TArduinoAdafruitAirLiftWiFiTCPSecureClientSocket : TArduinoBasicTCPClientSocket //TArduinoBasicTCPSecureClientCACertSocket
+
+//    [ArduinoAddToTemplate( '2_IMPLEMENTATION' )]
+//    Certificate
+
+//    [ArduinoAddToTemplate( '2_IMPLEMENTATION' )]
+//    PrivateKey
+
+//    [ArduinoAddToTemplate( '2_IMPLEMENTATION' )]
+//    CACert
+
+    Port = 443
+    
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoAdafruitAirLiftWiFiSockets )]
+  [ArduinoHelpPostfix( '(AirLift Socket)' )]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftWiFiTCPServerSocket' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoVariable( Boolean, 'FConnecting' )]
+//  [ArduinoVariable( Boolean, 'FIsClosing' )]
+  [ArduinoVariable( Boolean, 'FClientConnecting' )]
+  [ArduinoVariable( Boolean, 'FClientIsConnected' )]
+  [ArduinoVariable( Boolean, 'FClientIsClosing' )]
+  +TArduinoAdafruitAirLiftWiFiTCPServerSocket : TArduinoBasicTCPServerSocket
+
+    [ NamePostfix( '(mS)' ) ]
+    RetryOpenDelay : Unsigned = 60000
+    
+//    [ArduinoUseBindingCheckSetter( 'UpdateNoDelay' )]
+//    NoDelay : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoAdafruitAirLiftWiFiSockets )]
+  [ArduinoHelpPostfix( '(AirLift Socket)' )]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftWiFiUDPSocket' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoAdafruitAirLiftWiFiUDPSocket : TArduinoBasicUDPSocket;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoEVIVEADCTemperature )]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftThermometer' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoAdafruitAirLiftThermometer : TArduinoBasicEnabledClockedThermometer;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Nina_WiFi.h' )]
+  [ArduinoClass( 'Mitov::Nina_WiFi' )]
+//  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+//  [ArduinoVariable( Unsigned, 4, 'FScanIndex' )]
+  [ArduinoVariable( Boolean, 'FScanning' )]
+  [ArduinoVariable( Boolean, 'FGetChannel' )]
+  [ArduinoVariable( Boolean, 'FGetEncriptions' )]
+  [ArduinoVariable( Boolean, 'FGetMACAddress' )]
+  [ArduinoVariable( Boolean, 'FGetSignalStrengths' )]
+  [ArduinoVariable( Boolean, 'FConnected' )]
+  [ArduinoVariable( Boolean, 'FRemoteConnected' )]
+  [ArduinoVariable( Boolean, 'FIsStarted' )]
+  [ArduinoVariable( Boolean, 'FRemoteStarted' )]
+  [ArduinoVariable( Boolean, 'FDNSUpdated' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoAdafruitAirLiftWiFi : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+    
+    FirmwareVersionOutputPin : TOWArduinoStringSourcePin
+    
+    AddressOutputPin : TOWArduinoStringSourcePin
+
+    [Name( 'MAC Address' )]
+    MACOutputPin : TOWArduinoStringSourcePin
+    BSSIDOutputPin : TOWArduinoStringSourcePin
+    GatewayIPOutputPin : TOWArduinoStringSourcePin
+    SubnetMaskIPOutputPin : TOWArduinoStringSourcePin
+
+    [ArduinoChangeOnlyPin]
+    RemoteConnectedOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateLowPower' )]
+    LowPower : Boolean = False
+
+    [Name( 'Module As Access Point'  )]
+    AccessPoint : TArduinoAdafruitAirLiftWiFiModuleAccessPoint
+
+    [Name( 'Connect To Access Points'  )]
+    AccessPoints : TArduinoESP32WiFiModuleRemoteAccessPoints
+
+    [ComponentEditorEntryDesign( 'Edit Op&tions ...', True )]
+    Operations : TArduinoAdafruitAirLiftOperations
+
+    [ArduinoExcludeCollectionItems]
+    [ArduinoTemplateParameterCollectionCount]
+    Sockets : TArduinoAdafruitAirLiftWiFiSockets
+
+    HostName : String = ''
+
+    ChipTemperature : TArduinoAdafruitAirLiftThermometer
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitAirLiftBluetooth : TArduinoCodePersistent, TArduinoNano33BluetoothExtender;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitAirLiftBLE_Extender : Extender
+  
+    Bluetooth : TArduinoAdafruitAirLiftBluetooth
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Nina_WiFi.h' )]
+  [ArduinoClass( 'Mitov::Nina_Module' )]
+  [ArduinoInit]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoAdafruitAirLift_Extender : Extender
+  
+    WiFi : TArduinoAdafruitAirLiftWiFi
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftRGBLed' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  TArduinoAdafruitAirLiftBasicLED : TArduinoBasicPWM_LEDElement
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '26' )]
+  [ParentImage(TArduinoMacchinaLED_DS2)]
+  *TArduinoAdafruitAirLiftLEDRed : TArduinoAdafruitAirLiftBasicLED;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '25' )]
+  [ParentImage(TArduinoMacchinaLED_DS6)]
+  *TArduinoAdafruitAirLiftLEDGreen : TArduinoAdafruitAirLiftBasicLED;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '27' )]
+  *TArduinoAdafruitAirLiftLEDBlue : TArduinoAdafruitAirLiftBasicLED;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftLeds' )]
+  TArduinoAdafruitAirLiftRGBLeds : TArduinoCodePersistent
+  
+    Red : TArduinoAdafruitAirLiftLEDRed
+    Green : TArduinoAdafruitAirLiftLEDGreen
+    Blue : TArduinoAdafruitAirLiftLEDBlue
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::TArduinoAdafruitAirLiftLed' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoAdafruitAirLiftRGBLed : TArduinoSingleRGBLed_Basic_Element;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitAirLift_LEDs_Extender : TArduinoAdafruitAirLift_Extender
+
+    LEDs : TArduinoAdafruitAirLiftRGBLeds
+        
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitAirLift_LED_Shield_Extender : TArduinoAdafruitAirLift_Extender
+
+    LED : TArduinoAdafruitAirLiftRGBLed
+        
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitAirLift_LED_UseGPIO0_Shield_Extender : TArduinoAdafruitAirLift_LED_Shield_Extender
+
+    [Name( 'Use GPIO0' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    UseGPIO0 : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit AirLift WiFi (SPI)' )]
+  [CreateName( 'WiFi' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AirLiftSPIInterface' )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoAdafruitAirLift : TArduinoCommonSpeedSPI, TArduinoAdafruitAirLift_LEDs_Extender
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPIOutputPin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin
+    
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    BusyInputPin : TOWArduinoDigitalInputSinkPin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoExclude]
+    [ArduinoDirectPinTemplate( '-1' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    GPIO0OutputPin : TOWArduinoDigitalOutputSourcePin
+        
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ResetValue : Boolean = False
+    
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Communication' )]
+  [CreateName( 'Communication' )]
+  [ArduinoSPI( 0 )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoAdafruitAirLift_Basic_Module : TArduinoShield, TArduinoAdafruitAirLift_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit AirLift WiFi' )]
+  [CreateName( 'AirLift WiFi' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AirLiftShieldInterface' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_INTERFACE', 'SPI' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_CHIP_SELECT', '10' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_RESET', '5' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_GPIO0', '6' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_BUSY', '7' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.2_INVERT_RESET', 'false' )]
+  [ArduinoShieldPinIndex( 7,  'WiFi Busy' )]
+  [ArduinoShieldPinIndex( 5,  'WiFi Reset' )]
+  [ArduinoShieldPinIndex( 10,  'WiFi (CS)' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ParentImage( TArduinoAdafruitAirLift_Basic_Module )]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoSPI( 0 )]
+  +TArduinoAdafruitAirLift_Shield : TArduinoShield, IStandardShield, TArduinoAdafruitAirLift_LED_UseGPIO0_Shield_Extender
+
+    MicroSD : TArduinoEthernetShieldMicroSDModule
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

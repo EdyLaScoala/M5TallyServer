@@ -1,0 +1,138 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoMouseElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoMouseElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(HID Mouse)' )]
+  TArduinoBasicMouseElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Move' )]
+  [ArduinoClass( 'Mitov::MitovHIDMouseElementMove' )]
+  [ArduinoVariable( Boolean, 'FPressed' )]
+  +TArduinoMouseMoveElement : TArduinoBasicMouseElement
+
+    [OWPrimaryPin]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ValueRange( -32768, 32767 )]
+    X : Integer = 0
+
+    [ValueRange( -32768, 32767 )]
+    Y : Integer = 0
+
+    [ValueRange( -32768, 32767 )]
+    Wheel : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::MitovHIDMousePosition' )]
+  [ArduinoExcludeUnconnected]
+  *TArduinoMousePosition : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    XInputPin : TOWArduinoIntegerSinkPin
+
+    [OWPrimaryPin]
+    YInputPin : TOWArduinoIntegerSinkPin
+
+    ZeroInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::MitovHIDMouseWheelPosition' )]
+  [ArduinoExcludeUnconnected]
+  *TArduinoMouseWheelPosition : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    ZeroInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Mouse' )]
+  [CreateName( 'Mouse' )]
+  [ArduinoInclude( 'Mitov_HID_Mouse.h' )]
+  [ArduinoClass( 'Mitov::MitovHIDMouse' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoInit]
+  [ArduinoVariable( Boolean, 'FButton1' )]
+  [ArduinoVariable( Boolean, 'FButton2' )]
+  [ArduinoVariable( Boolean, 'FButton3' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoBasicMouseModule : TArduinoEnabledShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'Middle', TOWArduinoDigitalSinkPin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalSinkPin )]
+    ButtonsInputPins : TOWArduinoPinList
+
+    [Name( 'Cursor Position' )]
+    Position : TArduinoMousePosition
+
+    [Name( 'Wheel Position' )]
+    Wheel : TArduinoMouseWheelPosition
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMouseElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mouse.h' )]
+  +TArduinoMouseModule : TArduinoBasicMouseModule;
+//---------------------------------------------------------------------------
+  [Name( 'Keyboard' )]
+  [CreateName( 'Keyboard' )]
+  [ArduinoInclude( 'Mitov_HID_Keyboard.h' )]
+  [ArduinoClass( 'Mitov::MitovHIDKeyboard' )]
+  [ArduinoInit]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoBasicKeyboardModule : TArduinoEnabledShield
+
+    [OWPrimaryPin]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoAnyDataMultiSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoKeyboardElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Keyboard.h' )]
+  +TArduinoKeyboardModule : TArduinoBasicKeyboardModule;
+//---------------------------------------------------------------------------
+  TArduinoKeyboardElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoKeyboardElements )]
+  [ArduinoDeclaredClass]
+//  [ArduinoOwnerReference]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(HID Keyboard)' )]
+  TArduinoBasicKeyboardElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Key' )]
+  [ArduinoClass( 'Mitov::MitovHIDKeyboardElementKey' )]
+  [ArduinoVariable( Boolean, 'FPressed' )]
+  +TArduinoKeyboardKeyElement : TArduinoBasicKeyboardElement
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+    
+    Character : AnsiChar = #0
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,128 @@
+Mitov
+//---------------------------------------------------------------------------
+  TRFM9XGainControl : Enum
+
+    gcAuto
+    gcG1
+    gcG2
+    gcG3
+    gcG4
+    gcG5
+    gcG6
+
+  ;
+//---------------------------------------------------------------------------
+  TRFM9XCodingRate : Enum
+
+    cr4_5
+    cr4_6
+    cr4_7
+    cr4_8
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FReady' )]
+  [ArduinoVariable( Boolean, 'FModeChange' )]
+  [ArduinoVariable( Unsigned, 3, 'FMode' )]
+  TArduinoLoRaRFM9X_Extender : Extender
+
+    [OWPrimaryPin]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+
+    [PropertyListDesignValue( '433.0' )]
+    [PropertyListDesignValue( '470.0' )]
+    [PropertyListDesignValue( '868.0' )]
+    [PropertyListDesignValue( '915.0' )]
+    Frequency
+
+    [ValueRange( 5, 20 )]
+    [Name( 'Power(dB)' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateTransmitPower' )]
+    Power : Integer = 13
+
+    [ArduinoUseBindingCheckSetter( 'UpdateModemRegisters' )]
+    Gain : TRFM9XGainControl = gcAuto
+
+    [ValueRange( 0, $FFFF )]
+    [ArduinoUseBindingCheckSetter( 'UpdatePreambleLength' )]
+    PreambleLength : Unsigned = 8
+
+    [PropertyListDesignValue( '7.8' )]
+    [PropertyListDesignValue( '10.4' )]
+    [PropertyListDesignValue( '15.6' )]
+    [PropertyListDesignValue( '20.8' )]
+    [PropertyListDesignValue( '31.25' )]
+    [PropertyListDesignValue( '41.7' )]
+    [PropertyListDesignValue( '62.5' )]
+    [PropertyListDesignValue( '125.0' )]
+    [PropertyListDesignValue( '250.0' )]
+    [PropertyListDesignValue( '500.0' )]
+    [ NamePostfix( '(kHz)' ) ]
+    [ArduinoUseBindingCheckSetter( 'UpdateModemRegisters' )]
+    SignalBandwidth : Single = 125.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateModemRegisters' )]
+    MobileNode : Boolean = False
+
+    LoRaTMMode : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateModemRegisters' )]
+    LowNoiseAmplifierHighFrequencyBoost : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateModemRegisters' )]
+    CodingRate : TRFM9XCodingRate = cr4_5
+
+    [ValueRange( 6, 12 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateModemRegisters' )]
+    SpreadingFactorOrder : Unsigned = 7
+
+    [ValueRange( 4, 1023 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateModemRegisters' )]
+    SymbolTimeout : Unsigned = $64
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LoRa_RFM9X.h' )]
+  [ArduinoClass( 'Mitov::MitovLoRaRFM9X' )]
+  [Name( 'RFM95/96/97/98 (SX1276/77/78/79) LoRa' )]
+  [CreateName( 'RFM9X' )]
+  [ArduinoWebKeywords( 'RFM95' )]
+  [ArduinoWebKeywords( 'RFM96' )]
+  [ArduinoWebKeywords( 'RFM97' )]
+  [ArduinoWebKeywords( 'RFM98' )]
+  [ArduinoWebKeywords( 'SX1276' )]
+  [ArduinoWebKeywords( 'SX1278' )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoLoRaRFM9X : TArduinoLoRaBasicRFM, TArduinoLoRaRFM9X_Extender;
+//---------------------------------------------------------------------------
+  TArduinoLoRaRFM9XBasicShield : TArduinoLoRaBasicRFMShield, TArduinoLoRaRFM9X_Extender;
+//---------------------------------------------------------------------------
+  [CreateName( 'RFM9X LoRa' )]
+  [ArduinoClass( 'Mitov::MitovLoRaRFM9XShield_Interrupt' )]
+  [ArduinoInclude( 'Mitov_LoRa_RFM9X.h' )]
+  [Category( TCommunicationToolbarCategory )]
+  [Name( 'Makerfabs RFM95/96/97/98 LoRa Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoWebKeywords( 'RFM95' )]
+  [ArduinoWebKeywords( 'RFM96' )]
+  [ArduinoWebKeywords( 'RFM97' )]
+  [ArduinoWebKeywords( 'RFM98' )]
+  [ArduinoTemplateParameter( '0_PIN_CS', '10' )]
+  [ArduinoTemplateParameter( '1_PIN_RST', '9' )]
+  [ArduinoTemplateParameter( '2_PIN_INT', '2' )]
+  [ArduinoShieldPin( '2', 'IRQ' )]
+  [ArduinoShieldPin( '9', 'Reset' )]
+  [ArduinoShieldPin( '10', 'Chip Select' )]
+  +TArduinoMakerfabsLoRaRFM9XShield : TArduinoLoRaRFM9XBasicShield;
+//---------------------------------------------------------------------------
+  [Name( 'LoRa' )]
+  [CreateName( 'LoRa' )]
+  [ArduinoClass( 'Mitov::MitovLoRaRFM9XShield_Interrupt' )]
+  [ArduinoInclude( 'Mitov_LoRa_RFM9X.h' )]
+  [ArduinoExcludeUnconnected]
+  TArduinoBasicM0RFM9XModule : TArduinoLoRaRFM9XBasicShield;
+//---------------------------------------------------------------------------
+; // Mitov

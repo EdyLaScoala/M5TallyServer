@@ -1,0 +1,126 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoRangerUnits : Enum
+
+    rdTime
+    rdCm
+    rdInch
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicUltrasonicRanger_Basic_Extender : Extender
+
+    TimeoutOutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+    Units : TArduinoRangerUnits = rdCm
+
+    [DesignRange( 0, 10000 )]
+    [ValueRange( 0, $FFFF )]
+    [MinValue( 0 )]
+    [ NamePostfix( '(mS)' ) ]
+    Timeout : Unsigned = 1000
+
+    [DesignRange( -10000, 10000 )]
+    TimeoutValue : Single = 10000
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_UltrasonicRanger.h' )]
+  [ArduinoLoopBegin]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoVariable( Unsigned, 3, 'FState' )]
+  TArduinoBasicUltrasonicRanger_Extender : TArduinoBasicUltrasonicRanger_Basic_Extender
+
+    [DesignRange( 1, 100 )]
+    [ValueRange( 0, $FFFF )]
+    [MinValue( 1 )]
+    [ NamePostfix( '(uS)' ) ]
+    PingTime : Unsigned = 2
+
+    [DesignRange( 0, 10000 )]
+    [ValueRange( 0, $FFFF )]
+    [MinValue( 0 )]
+    [ NamePostfix( '(mS)' ) ]
+    PauseTime : Unsigned = 100
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicUltrasonicRanger_Outputs_Extender : Extender
+
+    [Name( 'Ping(Trigger)' )]
+    PingOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoInterruptChange( '_Interrupt', True, 'InterruptHandler' )]
+    EchoInputPin : TOWArduinoDigitalOptionalInterruptSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UltrasonicRanger' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [Name( 'Ultrasonic Ranger(Ping)' )]
+  [CreateName( 'UltrasonicRanger' )]
+  [ArduinoWebKeywords( 'ultrasonic module' )]
+  TArduinoBasicUltrasonicRanger : TArduinoCommonClockedAnalogSource, TArduinoBasicUltrasonicRanger_Extender
+
+    [ArduinoPinConnectDefine( '_MITOV_ULTRASONIC_RANGE_CLOCK_PIN_' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UltrasonicRanger' )]
+  +TArduinoUltrasonicRanger : TArduinoBasicUltrasonicRanger, TArduinoBasicUltrasonicRanger_Outputs_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoUltrasonicRanger )]
+  [ArduinoInclude( 'Mitov_UltrasonicRanger.h' )]
+  [ArduinoClass( 'Mitov::UltrasonicRangerElement' )]
+  [Name( 'Ultrasonic Ranger(Ping)' )]
+  [ArduinoWebKeywords( 'ultrasonic module' )]
+  [ArduinoLoopBegin]
+  [ArduinoStart]
+//  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoVariable( Unsigned, 3, 'FState' )]
+  +TArduinoMultiSensorStartUltrasonicRangerElement : TArduinoMultiSensorStartBasicElement, TArduinoBasicUltrasonicRanger_Basic_Extender
+
+    [OWPrimaryPin]
+    OutputPin  : TOWArduinoAnalogSourcePin
+
+    [ArduinoInterruptChange( '_Interrupt', True, 'InterruptHandler' )]
+    EchoInputPin : TOWArduinoDigitalOptionalInterruptSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UltrasonicRangerShieldElement' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoUltrasonicRanger )]
+  TArduinoUltrasonicRangerShieldElement : TArduinoCodePersistent, TArduinoBasicUltrasonicRanger_Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinConnectDefine( '_MITOV_SHIELD_ELEMENT_ULTRASONIC_RANGE_CLOCK_PIN_' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UltrasonicRangerShieldElement' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoUltrasonicRanger )]
+  [CreateName( 'Ultrasonic Ranger' )]
+  TArduinoUltrasonicRangerModule : TArduinoShield,  TArduinoBasicUltrasonicRanger_Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinConnectDefine( '_MITOV_SHIELD_ELEMENT_ULTRASONIC_RANGE_CLOCK_PIN_' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

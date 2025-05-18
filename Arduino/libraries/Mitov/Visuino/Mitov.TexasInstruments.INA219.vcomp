@@ -1,0 +1,73 @@
+Mitov
+//---------------------------------------------------------------------------
+  TINA219ResolutionAveragingMode : Enum
+
+      ram9_Bit
+      ram10_Bit
+      ram11_Bit
+      ram12_Bit
+      ram2_Samples
+      ram4_Samples
+      ram8_Samples
+      ram16_Samples
+      ram32_Samples
+      ram64_Samples
+      ram128_Samples
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TexasInstruments_INA219.h' )]
+  [ArduinoWebKeywords( 'INA219' )]
+  [ArduinoWebKeywords( 'INA220' )]
+  [Name( 'Texas Instruments INA219/INA220 Voltage/Current/Power (I2C)' )]
+  [CreateName( 'VoltageCurrentPower' )]
+  [ArduinoClass( 'Mitov::TexasInstrumentsINA219' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoTexasInstrumentsINA219 : TArduinoClockedEnableFlexibleI2CComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Power (mW)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Bus Voltage (V)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Current (mA)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Shunt Voltage (mV)', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    OverflowOutputPin : TOWArduinoDigitalSourcePin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [DesignRange( $40, $4F )]
+    Address = $40
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    Bus32VoltsRange : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    SingleShot : Boolean = False
+
+    [ValueRange( 0, 3 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    ShuntVoltageGainOrder : Unsigned = 3
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    BusVoltageMode : TINA219ResolutionAveragingMode = ram12_Bit
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    ShuntVoltageMode : TINA219ResolutionAveragingMode = ram12_Bit
+
+    [Name( 'Shunt Resistor (Ohms)' )]
+    [MinValue( 0.000001 )]
+    ShuntResistor : Single = 0.1
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    PowerDown : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

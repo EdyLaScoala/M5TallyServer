@@ -1,0 +1,164 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Digital Loggers' )]
+  TArduinoDigitalLoggersCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TArduinoDigitalLoggersCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TArduinoDigitalLoggersAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [CreateName( 'Real Time Clock' )]
+  [ArduinoInclude( 'Mitov_RTC_DS3231.h' )]
+  [ArduinoClass( 'Mitov::RTC_DS3231' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_TYPE', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 104 >' )]
+  [ArduinoPinDefinePrefix( '_MITOV_DS3231' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoI2C( 0 )]
+  +TArduinoPLDuinoRTCModule : TArduinoBasicRTCModule
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoPinConnectDefine( '_RTC_TEMPERATURE_PIN_' )]
+//    [ArduinoChangeOnlyPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateHalt' )]
+    Halt : Boolean = False
+
+    [Name( 'Alarm[ 1 ]' )]
+    AlarmOne : TArduinoRTCDS3231AlarmOne
+
+    [Name( 'Alarm[ 2 ]' )]
+    AlarmTwo : TArduinoRTCDS3231AlarmTwo
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'EEPROM I2C' )]
+  [CreateName( 'EEPROM I2C' )]
+  [ArduinoInclude( 'Mitov_Generic_I2C_EEPROM.h' )]
+  [ArduinoInclude( 'EEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericEEPROM_I2C' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x52 >' )]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoI2C( 0 )]
+  +TArduinoPLDuinoEEPROMModule : TArduinoBasicEEPROMModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '53' )]
+  [ArduinoInitializationCode( 'Mitov::PLDiono::EnableMicroSD();' )]
+  +TArduinoPLDuinoMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::ArduinoPLDuinoTouch' )]
+  *TArduinoPLDuinoTouch : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+     XOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    YOutputPin : TOWArduinoUnsignedSourcePin
+
+    TouchedOutputPin : TOWArduinoClockSourcePin
+
+    [MaxValue( $FFFF )]
+    Precision : Unsigned = 100
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Display' )]
+  [CreateName( 'Display' )]
+  [ArduinoInclude( 'Mitov_PLDuino_Display.h' )]
+  [ArduinoClass( 'Mitov::ArduinoPLDuinoDisplay' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoSPI( 0 )]
+  [ArduinoOptionalVariable( Unsigned, 9, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 9, 'FCursorY', 0 )]
+  +TArduinoPLDuinoDisplayModule : TArduinoDisplayILI9341BasicShield
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBacklight' )]
+    [ValueRange( 0.0, 1.0 )]
+    Backlight : Single = 1.0
+
+    Touch : TArduinoPLDuinoTouch
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital Loggers PLDuino' )]
+  [Category( TArduinoDigitalLoggersAVRCategory )]
+  [ParentImage( TArduinoDigitalLoggersCategory )]
+  [ArduinoInclude( 'Mitov_PLDuino.h' )]
+  [ArduinoDefine( 'VISUINO_PLDUINO_MEGA' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:mega' )]
+  [ArduinoInitializationCode( 'Mitov::PLDiono::Init();' )]
+  [AtduinoCountI2CChannels( 1 )]
+  +TArduino_Digital_Loggers_PLDuino_Board : TArduino_AVR2560_Basic_Modules_Board
+  
+    [AddItem( TArduinoPLDuinoMicroSDModule )]
+    [AddItem( TArduinoPLDuinoDisplayModule )]
+    [AddItem( TArduinoPLDuinoRTCModule )]
+    [AddItem( TArduinoPLDuinoEEPROMModule )]
+    [AddItem( TArduinoPLDuinoWiFiModule )]
+    Modules
+    
+    [AddItem( TArduinoHardwareSerial, 2 )]
+    Serial : TArduinoSerials
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoBasicDigitalInputChannel, 'Relay 1', '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoBasicDigitalInputChannel, 'Relay 2', '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoBasicDigitalInputChannel, 'Relay 3', '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoBasicDigitalInputChannel, 'Relay 4', '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoBasicDigitalInputChannel, 'Relay 5', '6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoBasicDigitalInputChannel, 'Relay 6', '7' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoBasicDigitalInputChannel, 'Output 1', '38' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoBasicDigitalInputChannel, 'Output 2', '39' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoBasicDigitalInputChannel, 'Output 3', '40' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoBasicDigitalInputChannel, 'Output 4', '41' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoBasicDigitalInputChannel, 'Output 5', '42' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoBasicDigitalInputChannel, 'Output 6', '43' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoBasicDigitalPWMInputChannel, 'Output 7', '44' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoBasicDigitalPWMInputChannel, 'Output 8', '45' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoBasicDigitalPWMInputChannel, 'Beep', '9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoBasicDigitalPWMInputChannel, 'LED', '13' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoPLDuinoDigitalInputOnlyChannel, 'Input 1(D30)', '30' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoPLDuinoDigitalInputOnlyChannel, 'Input 2(D31)', '31' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoPLDuinoDigitalInputOnlyChannel, 'Input 3(D32)', '32' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoPLDuinoDigitalInputOnlyChannel, 'Input 4(D33)', '33' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoPLDuinoDigitalInputOnlyChannel, 'Input 5(D34)', '34' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoPLDuinoDigitalInputOnlyChannel, 'Input 6(D35)', '35' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoPLDuinoDigitalInputOnlyChannel, 'Input 7(D36)', '36' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoPLDuinoDigitalInputOnlyChannel, 'Input 8(D37)', '37' )]
+    Digital : TArduinoDigitalChannels    
+
+    [ArduinoBoard_Add_AnalogInputChannel( 0, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog 1', '0' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 1, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog 2', '1' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 2, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog 3', '2' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 3, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog 4', '3' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 4, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog 5', '4' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 5, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog 6', '5' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 6, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog 7', '6' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 7, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog 8', '7' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

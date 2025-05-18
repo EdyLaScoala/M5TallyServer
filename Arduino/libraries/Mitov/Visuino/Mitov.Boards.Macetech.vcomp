@@ -1,0 +1,66 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Macetech' )]
+  TMacetechCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TMacetechCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TMacetechAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoClass( 'Mitov::TypedInputPins2' )]
+  [ArduinoTemplateParameter( 'Effect', 'Mitov::TDefinedDigitalInputPinInverted<4>' )]
+  [ArduinoTemplateParameter( 'Brightness', 'Mitov::TDefinedDigitalInputPinInverted<3>' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoBasicButtonModule )]
+  +TMacetechRGBShadesButtonsModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalInputChangeOnlySourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( '1 (Effect)', TOWArduinoDigitalInputChangeOnlySourcePin, '4' )]
+    [OWAddArduinoBoardDigitalPin( '2 (Brightness)', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '3' )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_NeoPixel.h' )]
+  [ArduinoInclude( 'Mitov_Macetech_RGBShades_Matrix.h' )]
+  [ArduinoClass( 'Mitov::ArduinoMacetechRGBShadesNeoPixelsModule' )]
+  [ArduinoTemplateParameter( '0_TYPR', 'NeoPixel_Declarations::T_NeoPixelsMatrix' )]
+  [ArduinoTemplateParameter( '1_NAME', 'NeoPixel_Declarations::_NeoPixelsMatrix' )]
+  [ArduinoNeoPixelsPinName( '5' )]
+  [ArduinoNeoPixelsCountPixels( 80 )]
+  [Name( 'RGB Matrix' )]
+  [ParentImage( TArduinoBpiBitNeoPixels2DGraphicsModule )]
+  [ArduinoOptionalVariable( Unsigned, 6, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 6, 'FCursorY', 0 )]
+  +TMacetechRGBShadesNeoPixels2DGraphicsModule : TArduinoPixels2DGraphicsBasicModule;
+//---------------------------------------------------------------------------
+  [Name( 'RGB Shades' )]
+  [Category( TMacetechAVRCategory )]
+  [ParentImage( TMacetechCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_MINI' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:mini' )]
+  +TArduino_Macetech_RGB_Shades_Board : TArduino_AVR328_Basic_NoSPI_DigitalChannels_Board
+
+    [AddItem( TMacetechRGBShadesButtonsModule )]
+    [AddItem( TMacetechRGBShadesNeoPixels2DGraphicsModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 6, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 17, 3 )]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoMiniShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

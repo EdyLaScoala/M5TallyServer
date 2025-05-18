@@ -1,0 +1,27 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Esplora' )]
+  [Category( TArduinoATmega32U4Category )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:esplora' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_ESPLORA' )]
+  +TArduino_Esplora_Board : TArduino_32u4_Serial_BasicBoard
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 8, 8,  1, TArduinoCombinedAnalogDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11,  1, TArduinoBasicDigitalPWMChannel )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 1, TArduinoCombinedAnalogDigitalChannel, 'Digital(SPI-SCK) )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2, 1, TArduinoCombinedAnalogDigitalChannel, 'Digital(SPI-MOSI)' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,159 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoYahboomMicrobitRobotBreakoutLeds : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoYahboomMicrobitRobotBreakoutServos : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [Name( 'Left LED 8' )]
+  [ArduinoTemplateParameter( 'INDEX', '6' )]
+  TArduinoYahboomMicrobitRobotBreakoutLeftLed : TArduinoYahboomMicrobitRobotBreakoutBasicLed;
+//---------------------------------------------------------------------------
+  [Name( 'Center LED 10' )]
+  [ArduinoTemplateParameter( 'INDEX', '8' )]
+  TArduinoYahboomMicrobitRobotBreakoutCenterLed : TArduinoYahboomMicrobitRobotBreakoutBasicLed;
+//---------------------------------------------------------------------------
+  [Name( 'Right LED 9' )]
+  [ArduinoTemplateParameter( 'INDEX', '7' )]
+  TArduinoYahboomMicrobitRobotBreakoutRightLed : TArduinoYahboomMicrobitRobotBreakoutBasicLed;
+//---------------------------------------------------------------------------
+  [Name( 'Servo 1 (J2)' )]
+  [ArduinoTemplateParameter( 'INDEX', '3' )]
+  TArduinoYahboomMicrobitRobotBreakoutServo1 : TArduinoYahboomMicrobitRobotBreakoutBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Servo 2 (J3)' )]
+  [ArduinoTemplateParameter( 'INDEX', '4' )]
+  TArduinoYahboomMicrobitRobotBreakoutServo2 : TArduinoYahboomMicrobitRobotBreakoutBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Servo 3 (J4)' )]
+  [ArduinoTemplateParameter( 'INDEX', '5' )]
+  TArduinoYahboomMicrobitRobotBreakoutServo3 : TArduinoYahboomMicrobitRobotBreakoutBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Left RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '0' )]
+  TArduinoYahboomMicrobitRobotBreakoutLeftRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [Name( 'Center RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '1' )]
+  TArduinoYahboomMicrobitRobotBreakoutCenterRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [Name( 'Right RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '2' )]
+  TArduinoYahboomMicrobitRobotBreakoutRightRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorInputPin', 'Mitov::YahboomMicrobitRobotIRReceiverPin' )]
+  TArduinoYahboomMicrobitRobotBreakoutInfraredRemoteReceiver : TArduinoInfraredRemoteReceiverShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::NeoPixels' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'YahboomMicrobit::NeoPixel_Declarations::NeoPixelType::NeoPixels1' )]
+  [ArduinoTemplateParameter( '1_NAME', 'YahboomMicrobit::NeoPixel_Declarations::NeoPixels1' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoNeoPixelRGBLedsInfo( 'YahboomMicrobit', 'Mitov::YahboomMicrobitRobotNeoPixelPin', 3 )]
+  TArduinoYahboomMicrobitRobotRGBLeds : TArduinoNeoPixelRGBLedsElementBasic
+
+    [Name( 'LEDs' )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutLeftRGBLed )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutCenterRGBLed )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutRightRGBLed )]
+    Leds : TArduinoNeoPixelRGBLeds
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_Yahboom_Microbit_Robot_Breakout.h' )]
+  TArduinoYahboomMicrobitRobotBreakoutMotorChannel : TArduinoBasicNamedL9110SNMotorShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'ForwardOutputPin', 'Mitov::PCA9685PWMChannelAccess<12, ::Declarations::YahboomMicrobit::T_PWMModule, ::Declarations::YahboomMicrobit::PWMModule>' )]
+  [ArduinoTemplateParameter( 'ReverseOutputPin', 'Mitov::PCA9685PWMChannelAccess<13, ::Declarations::YahboomMicrobit::T_PWMModule, ::Declarations::YahboomMicrobit::PWMModule>' )]
+  [Name( 'Left Motor' )]
+  TArduinoYahboomMicrobitRobotBreakoutLeftMotorChannel : TArduinoYahboomMicrobitRobotBreakoutMotorChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'ForwardOutputPin', 'Mitov::PCA9685PWMChannelAccess<15, ::Declarations::YahboomMicrobit::T_PWMModule, ::Declarations::YahboomMicrobit::PWMModule>' )]
+  [ArduinoTemplateParameter( 'ReverseOutputPin', 'Mitov::PCA9685PWMChannelAccess<14, ::Declarations::YahboomMicrobit::T_PWMModule, ::Declarations::YahboomMicrobit::PWMModule>' )]
+  [Name( 'Right Motor' )]
+  TArduinoYahboomMicrobitRobotBreakoutRightMotorChannel : TArduinoYahboomMicrobitRobotBreakoutMotorChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PARAMS', 'Mitov::YahboomMicrobitRobotSonicPingPin, Mitov::YahboomMicrobitRobotSonicEchoPin' )]
+  TArduinoYahboomMicrobitRobotBreakoutUltrasonicRangerElement : TArduinoUltrasonicRangerShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', 'Mitov::YahboomMicrobitRobotBuzzerPin' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoYahboomMicrobitRobotBreakoutBuzzer : TArduinoBasicBuzzerShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN0', 'Mitov::TDefinedAnalogInputPin<Mitov::YahboomMicrobitRobotLeftLineFollowingSensorPin>' )]
+  [ArduinoTemplateParameter( 'C_PIN1', 'Mitov::TDefinedAnalogInputPin<Mitov::YahboomMicrobitRobotRightLineFollowingSensorPin>' )]
+  *TArduinoYahboomMicrobitRobotBreakoutLineFollowingSensors : TArduinoLeftRightAnalogSensors;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::YahboomMicrobitRobotObstacleAvoidanceSensor' )]
+  [ParentImage( TPeguinoBasicProximityChannel )]
+  TArduinoYahboomMicrobitRobotBreakoutObstacleAvoidanceSensor : TArduinoDirectInputPinNoInterruptShieldElement
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Yahboom_Microbit_Robot_Breakout.h' )]
+  [ArduinoClass( 'Mitov::YahboomMicrobitRobotLEDLights' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Declarations::YahboomMicrobit::T_PWMModule' )]
+  [ArduinoTemplateParameter( '1_NAME', '::Declarations::YahboomMicrobit::PWMModule' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  TArduinoYahboomMicrobitRobotLEDLights : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+     InputPin  : TOWArduinoColorSinkPin
+
+    [OWExcludeBindings]
+    [ExcludeSystemColors]
+    [ArduinoFlexibleVariable]
+    [ArduinoFullColor]
+    InitialValue : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Yahboom Robot Breakout' )]
+  [CreateName( 'Robot Breakout' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoInclude( 'Mitov_Yahboom_Microbit_Robot_Breakout.h' )]
+  [ArduinoI2C( 0 )]
+  +TArduinoYahboomMicrobitRobotBreakoutCarrier : TArduinoYahboomMicrobitRobotBreakout_BasicPWM_Carrier, IMicroBitCarrier
+
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutLeftMotorChannel )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutRightMotorChannel )]
+    Motors : TArduinoFixedPersistentCollection
+
+    [Name( 'Ultrasonic Ranger' )]
+    UltrasonicRanger : TArduinoYahboomMicrobitRobotBreakoutUltrasonicRangerElement
+
+    Buzzer : TArduinoYahboomMicrobitRobotBreakoutBuzzer
+
+    [Name( 'Line Following' )]
+    LineFollowing : TArduinoYahboomMicrobitRobotBreakoutLineFollowingSensors
+
+    [Name( 'Obstacle Avoidance' )]
+    ObstacleAvoidance : TArduinoYahboomMicrobitRobotBreakoutObstacleAvoidanceSensor
+
+    Lights : TArduinoYahboomMicrobitRobotLEDLights
+
+    [Name( 'LEDs' )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutLeftLed )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutCenterLed )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutRightLed )]
+    Leds : TArduinoYahboomMicrobitRobotBreakoutLeds
+
+    [Name( 'RGB LEDs' )]
+    RGBLeds : TArduinoYahboomMicrobitRobotRGBLeds
+
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutServo1 )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutServo2 )]
+    [AddItem( TArduinoYahboomMicrobitRobotBreakoutServo3 )]
+    Servos : TArduinoYahboomMicrobitRobotBreakoutServos
+
+    InfraredRemote : TArduinoYahboomMicrobitRobotBreakoutInfraredRemoteReceiver
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,140 @@
+Mitov
+  [Name( 'DF Robot' )]
+  TDFRobotCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TDFRobotCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TDFRobotAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TDFRobotCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TDFRobotESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoInclude( 'Mitov_RoMeo_BLE.h' )]
+  [ArduinoClass( 'Mitov::ArduinoRoMeoBLEButtons' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoShieldPin( 'A7',  'Buttons' )]
+  [ParentImage( TArduinoButton )]
+  +TArduinoRoMeoBLEButtonsModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'S1', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'S2', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'S3', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'S4', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'S5', TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TDFRobotESP32Category )]
+  [Name( 'Beetle ESP32' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduinoESP32_DFRobot_Beetle_Board : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard
+  
+    [ArduinoBoard_Add_ReservedChannel(  36, 'A0' )]
+    [ArduinoBoard_Add_ReservedChannel(  39, 'A1' )]
+    [ArduinoBoard_Add_ReservedChannel(  34, 'A2' )]
+    [ArduinoBoard_Add_ReservedChannel(  35, 'A3' )]
+    
+    [ArduinoBoard_Add_ReservedChannel(  6,  'D0' )]
+    [ArduinoBoard_Add_ReservedChannel(  18, 'D1' )]
+    [ArduinoBoard_Add_ReservedChannel(  25, 'D2)(DAC' )]
+    [ArduinoBoard_Add_ReservedChannel(  26, 'D3)(DAC' )]
+    [ArduinoBoard_Add_ReservedChannel(  27, 'D4' )]
+    [ArduinoBoard_Add_ReservedChannel(  13, 'D7' )]
+    
+    [ArduinoBoard_Add_ReservedChannels(  21, 2 )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::L9110SDualMotorDriverChannel' )]
+  [ArduinoStart]
+  TArduinoRoMeoBasicBLEMotorChannel : TArduinoL9110SDualMotorDriverBasicChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'DirectionOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<4>' )]
+  [ArduinoTemplateParameter( 'SpeedOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<5>' )]
+  [ArduinoShieldPin( '4' )]
+  [ArduinoShieldPin( '5' )]
+  [Name( 'Left Motor' )]
+  +TArduinoRoMeoBLEMotor1 : TArduinoRoMeoBasicBLEMotorChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'DirectionOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<7>' )]
+  [ArduinoTemplateParameter( 'SpeedOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<6>' )]
+  [ArduinoShieldPin( '7' )]
+  [ArduinoShieldPin( '6' )]
+  [Name( 'Right Motor' )]
+  +TArduinoRoMeoBLEMotor2 : TArduinoRoMeoBasicBLEMotorChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Motors' )]
+  [CreateName( 'Motors' )]
+  [ParentImage( TArduinoL9110SDualMotorDriverBasicChannel )]
+  +TArduinoRoMeoBLEMotorsModule : TArduinoShield
+
+    [AddItem( TArduinoRoMeoBLEMotor1 )]
+    [AddItem( TArduinoRoMeoBLEMotor2 )]
+    Motors : TArduinoL9110SDualMotorDriverChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RoMeo BLE' )]
+  [Category( TDFRobotAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ROMEO_BLE' )]
+  [ParentImage( TDFRobotCategory )]
+  +TArduino_DFRobot_RoMeo_BLE_Board : TArduino_AVR328_Basic_UNO_Board
+  
+    [AddItem( TArduinoRoMeoBLEButtonsModule )]
+    [AddItem( TArduinoRoMeoBLEMotorsModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 4 )]
+    [ArduinoBoard_Add_ReservedChannel( 4, 'Left Motor' )]
+    [ArduinoBoard_Add_ReservedChannel( 5, 'Left Motor' )]
+    [ArduinoBoard_Add_ReservedChannel( 6, 'Right Motor' )]
+    [ArduinoBoard_Add_ReservedChannel( 7, 'Right Motor' )]
+    [ArduinoBoard_Add_AllChannelsFrom( 8 )]
+    Digital
+
+    [ArduinoBoard_Add_AnalogInputChannel( 6, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog Input', '6', 'A6' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 7, TArduinoAnalogOptionalAsDigitalInputChannel, 'Analog Input(Buttons)', '7', 'A7' )]
+    AnalogInput : TArduinoAnalogInputChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Bluno Beetle' )]
+  [Category( TDFRobotAVRCategory )]
+  [ArduinoBoardCompileParams( 'arduino:avr:leonardo' )]
+  [ArduinoDefine( 'VISUINO_BLUNO_BEETLE' )]
+  +TArduino_DFRobot_Bluno_Beetle_Board : TArduino_32u4_BasicBoard
+  
+    [AddItem( TArduinoHardwareSerial )]
+    Serial
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial0InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0InterruptChannel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 4, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogDigitalI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogDigitalI2C0Channel, 'Digital(I2C-SCL)' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+  
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

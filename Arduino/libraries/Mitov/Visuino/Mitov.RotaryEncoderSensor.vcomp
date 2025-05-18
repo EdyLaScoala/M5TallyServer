@@ -1,0 +1,64 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoClockMode : Enum
+
+    Falling
+    Rising
+    Change
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RotaryEncoderSensor.h' )]
+  [ArduinoClass( 'Mitov::RotaryEncoderSensor' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariableIfClassIsName( 'Mitov::RotaryEncoderSensor_Debounce', Boolean, 'FALastValue' )]
+  TArduinoRotaryEncoderSensor_Extender : Extender
+
+    [OWPrimaryPin]
+    UpOutputPin : TOWArduinoClockSourcePin
+
+    [OWPrimaryPin]
+    DownOutputPin : TOWArduinoClockSourcePin
+
+    ClockMode : TArduinoClockMode = Falling
+
+    [ NamePostfix( '(mS)' ) ]
+    [ArduinoNotDefaultPostfix( '_Debounce' )]
+    DebounceInterval : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RotaryEncoderSensor' )]
+  [Name( 'Rotary Encoder Sensor' )]
+  [Category( TArduinoDigitalMeasurementToolbarCategory )]
+//  [ArduinoVariable( System.TypeInfo(Boolean), 'FAValue' )]
+  +TArduinoRotaryEncoderSensor : TArduinoCommonBasicCounter, TArduinoRotaryEncoderSensor_Extender
+
+    [OWPrimaryPin]
+    [Name( 'Clock(A)' )]
+    [ArduinoInterruptChange( '_Interrupt', True, 'InterruptHandlerA' )]
+    [ArduinoAddVariableIfPinInterruptUnconnected( True, Unsigned, 7, 'FAValue' )]
+    AInputPin : TOWArduinoDigitalInterruptSinkPin
+
+    [OWPrimaryPin]
+    [Name( 'Direction(B)' )]
+    [ArduinoExclude]
+    [ArduinoDirectPinReferenceTemplate( '0_B_' )]
+    [ArduinoNeedsChannelInstance]
+    [OWRequiredPin]
+    BInputPin : TOWArduinoDigitalInputSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Rotary Encoder' )]
+  [ParentImage( TArduinoRotaryEncoderSensor )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoRotaryEncoderSensor_BasicModule : TArduinoCommonBasicCounterModule, TArduinoRotaryEncoderSensor_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::RotaryEncoderSensor_Interrupt' )]
+  TArduinoRotaryEncoderSensorInterrupt_BasicModule : TArduinoRotaryEncoderSensor_BasicModule;
+//---------------------------------------------------------------------------
+; // Mitov

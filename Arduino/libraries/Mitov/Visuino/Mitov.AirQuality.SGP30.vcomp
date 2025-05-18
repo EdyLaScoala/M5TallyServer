@@ -1,0 +1,139 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Start' )]
+  TArduinoAirQualitySensorSGP30_Start_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetInProcessing' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  TArduinoAirQualitySensorSGP30_GetInProcessing_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAirQualitySensorSGP30Reference' )]
+  TArduinoAirQualitySensorSGP30Reference : TArduinoCodePersistent
+	
+	[NamePostfix( '(ppm)' )]
+    [MinValue( 0.0 )]
+	Hydrogen : Single = 67130189276.0
+
+	[NamePostfix( '(ppm)' )]
+    [MinValue( 0.0 )]
+	Ethanol : Single = 2330776385019453.0
+	
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoAirQualitySensorSGP30_Start_CallChain]
+  [TArduinoAirQualitySensorSGP30_GetInProcessing_CallChain]
+  TArduinoAirQualitySensorSGP30Elements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoAirQualitySensorSGP30Elements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoLoopBegin]
+  TArduinoAirQualitySensorSGP30BasicElement : TArduinoBasicNamedExludePersistent
+
+//    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAirQualitySensorSGP30Element_SelfTest' )]
+  [Name( 'Self Test' )]
+  [CreateName( 'Self Test' )]
+  [ArduinoVariable( Boolean, 'FRunning' )]
+  +TArduinoAirQualitySensorSGP30Element_SelfTest : TArduinoAirQualitySensorSGP30BasicElement
+  
+    [ArduinoPinIsConnectedFlag]
+	ClockInputPin
+  
+	TestingOutputPin : TOWArduinoDigitalSourcePin
+    SuccessOutputPin : TOWArduinoClockSourcePin
+    FailedOutputPin : TOWArduinoClockSourcePin
+	
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAirQualitySensorSGP30Element_SetBaseline' )]
+  [Name( 'Set Baseline' )]
+  [CreateName( 'Set Baseline' )]
+  +TArduinoAirQualitySensorSGP30Element_SetBaseline : TArduinoAirQualitySensorSGP30BasicElement
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+	[NamePostfix( '(ppb)' )]
+	TVOC : Single = 0.0
+	
+	[NamePostfix( '(ppm)' )]
+	CO2 : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAirQualitySensorSGP30Element_GetBaseline' )]
+  [Name( 'Get Baseline' )]
+  [CreateName( 'Get Baseline' )]
+  +TArduinoAirQualitySensorSGP30Element_GetBaseline : TArduinoAirQualitySensorSGP30BasicElement
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+	
+	[NamePostfix( '(ppb)' )]
+	TVOCOutputPin : TOWArduinoAnalogSourcePin
+	
+	[NamePostfix( '(ppm)' )]
+	CO2OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_SGP30_AirQuality.h' )]
+  [ArduinoClass( 'Mitov::TArduinoAirQualitySensorSGP30' )]
+  [Name( 'Air Quality SGP30' )]
+  [CreateName( 'AirQuality' )]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', True )]
+  [ArduinoVariable( Boolean, 'FInRawMeasure' )]
+  [ArduinoVariable( Boolean, 'FAllStarted' )]
+  [ArduinoVariable( Boolean, 'FInitialized' )]
+  [ArduinoVariable( Boolean, 'FInProcessing' )]
+//  [ArduinoVariable( Unsigned, 2, 'FState' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoLoopBegin]
+  [ArduinoStart]
+  +TArduinoAirQualitySensorSGP30 : TArduinoI2CClockedEnableComponent
+
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+//    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+	
+	[NamePostfix( '(ppb)' )]
+	TVOCOutputPin : TOWArduinoAnalogSourcePin
+	
+	[NamePostfix( '(ppm)' )]
+	CO2OutputPin : TOWArduinoAnalogSourcePin
+	
+	[NamePostfix( '(ppm)' )]
+	HydrogenOutputPin : TOWArduinoAnalogSourcePin
+	
+	[NamePostfix( '(ppm)' )]
+	EthanolOutputPin : TOWArduinoAnalogSourcePin
+
+//	RawHydrogenOutputPin : TOWArduinoUnsignedSourcePin
+	
+//	RawEthanolOutputPin : TOWArduinoUnsignedSourcePin
+
+    [DesignRange( $58, $58 )]
+    Address : TArduinoUInt8 = $58
+	
+	[NamePostfix( '(g/m3)' )]
+	[ArduinoUseBindingCheckSetter( 'Update_Humidity' )]
+	AbsoluteHumidity : Single = 11.57
+	
+	Reference : TArduinoAirQualitySensorSGP30Reference
+
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoAirQualitySensorSGP30Elements
+	
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

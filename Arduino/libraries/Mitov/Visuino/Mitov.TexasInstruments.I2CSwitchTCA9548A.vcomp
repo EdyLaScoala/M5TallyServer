@@ -1,0 +1,37 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TexasInstruments_TCA9548A.h' )]
+  [ArduinoClass( 'Mitov::TexasInstrumentsTCA9548A' )]
+  [ArduinoVariable( Unsigned, 4, 'FCurrentIndex' )]
+  [CreateName( 'I2CSwitch' )]
+  [Category(TCommunicationToolbarCategory)]
+  TArduinoTexasInstrumentsI2CSwitchTCA9548ABasic : TArduinoSimpleFlexibleI2CComponent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDelegatedI2CMultiSinkPin )]
+    OutputPins : TOWArduinoPinList
+
+    [DesignRange( $70, $77 )]
+    Address = $70
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( '8-Channel I2C Switch TCA9548A' )]
+  +TArduinoTexasInstrumentsI2CSwitchTCA9548A : TArduinoTexasInstrumentsI2CSwitchTCA9548ABasic
+
+    [OWAddPins( 'I2C ', 0, 8, TOWArduinoDelegatedI2CMultiSinkPin )]
+    OutputPins
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'I2C Hub 1 to 6 Expansion Unit (TCA9548A)' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoM5StackI2CExpansionUnitTCA9548A : TArduinoTexasInstrumentsI2CSwitchTCA9548ABasic
+
+    [OWAddPins( 'Grove ', 0, 6, TOWArduinoDelegatedI2CMultiSinkPin )]
+    OutputPins
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

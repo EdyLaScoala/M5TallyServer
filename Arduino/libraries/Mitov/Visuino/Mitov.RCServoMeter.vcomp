@@ -1,0 +1,18 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RCServoMeter.h' )]
+  [ArduinoClass( 'Mitov::RCServoMeter' )]
+  [Name( 'R/C Servo Meter' )]
+  [CreateName( 'RCServoMeter' )]
+  [ArduinoVariable( Boolean, 'FOldValue_FSignaled' )]
+  [Category( TArduinoDigitalRemoteControllersToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoRCServoMeter : TArduinoCommonAnalogEnableSource
+
+    [OWPrimaryPin]
+    [ArduinoInterruptChange( '_Interrupt', True, 'InterruptHandler' )]
+    InputPin : TOWArduinoDigitalInterruptSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

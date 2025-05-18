@@ -1,0 +1,114 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', 'Mitov::MicroBitPin_0' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoYahboomPianoBreakoutBuzzer : TArduinoBasicBuzzerShieldElement;
+//---------------------------------------------------------------------------
+  [Name( 'Left RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '0' )]
+  +TArduinoYahboomPianoBreakoutLeftRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [Name( 'Center RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '1' )]
+  +TArduinoYahboomPianoBreakoutCenterRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [Name( 'Right RGB LED' )]
+  [ArduinoTemplateParameter( 'C_PIN', '2' )]
+  +TArduinoYahboomPianoBreakoutRightRGBLed : TArduinoNeoPixelRGBLedBasicRGBLed;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::NeoPixels' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'YahboomPiano::NeoPixel_Declarations::NeoPixelType::NeoPixels1' )]
+  [ArduinoTemplateParameter( '1_NAME', 'YahboomPiano::NeoPixel_Declarations::NeoPixels1' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoNeoPixelRGBLedsInfo( 'YahboomPiano', 'Mitov::MicroBitPin_1', 3 )]
+  TArduinoYahboomPianoBreakoutRGBLeds : TArduinoNeoPixelRGBLedsElementBasic
+
+    [Name( 'LEDs' )]
+    [AddItem( TArduinoYahboomPianoBreakoutLeftRGBLed )]
+    [AddItem( TArduinoYahboomPianoBreakoutCenterRGBLed )]
+    [AddItem( TArduinoYahboomPianoBreakoutRightRGBLed )]
+    Leds : TArduinoNeoPixelRGBLeds
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoBasicButtonModule )]
+  TArduinoHoltekTouchSensor_BS811XAButtons : TArduinoHoltekTouchSensor_BS811XAChannels;
+//---------------------------------------------------------------------------
+  *TArduinoHoltekTouchSensor_BS811XAKeys : TArduinoHoltekTouchSensor_BS811XAChannels;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoBasicButtonModule )]
+  [ArduinoClass( 'Mitov::TArduinoHoltekTouchSensor_BS811XAChannel' )]
+  *TArduinoYahboomPianoBreakout_ButtonChannel : TArduinoHoltekTouchSensor_BS811XABasicChannel;
+//---------------------------------------------------------------------------
+  [Name( 'L' )]
+  [ArduinoTemplateParameter( 'INDEX', '1' )]
+  TArduinoYahboomPianoBreakout_Button_L_Channel : TArduinoYahboomPianoBreakout_ButtonChannel;
+//---------------------------------------------------------------------------
+  [Name( 'M' )]
+  [ArduinoTemplateParameter( 'INDEX', '0' )]
+  TArduinoYahboomPianoBreakout_Button_M_Channel : TArduinoYahboomPianoBreakout_ButtonChannel;
+//---------------------------------------------------------------------------
+  [Name( 'H' )]
+  [ArduinoTemplateParameter( 'INDEX', '14' )]
+  TArduinoYahboomPianoBreakout_Button_H_Channel : TArduinoYahboomPianoBreakout_ButtonChannel;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoHoltekTouchSensor_BS811XAChannel' )]
+  [ArduinoTemplateParameterCollectionItemIndex( 2 )]
+  +TArduinoYahboomPianoBreakout_KeyChannel : TArduinoHoltekTouchSensor_BS811XABasicChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_YahboomPianoBreakoutKeyboard.h' )]
+  [ArduinoInclude( 'Mitov_HoltekTouchSensor_I2C.h' )]
+  [ArduinoClass( 'Mitov::YahboomPianoBreakoutKeyboard' )]
+  [Name( 'Touch' )]
+  [CreateName( 'Touch' )]
+  [ArduinoVariable( Boolean, 'FNeedsUpdate' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoDeclaredClass]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoI2C( 0 )]
+  *TArduinoYahboomPianoBreakoutKeyboard : TArduinoCodeEnabledPersistent
+
+    [AddItem( TArduinoYahboomPianoBreakout_Button_L_Channel )]
+    [AddItem( TArduinoYahboomPianoBreakout_Button_M_Channel )]
+    [AddItem( TArduinoYahboomPianoBreakout_Button_H_Channel )]
+    Buttons : TArduinoHoltekTouchSensor_BS811XAButtons
+
+//    [AddItem( TArduinoYahboomPianoBreakout_KeyChannel, 12 )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'C' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'C#' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'D' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'D#' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'E' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'F' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'F#' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'G' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'G#' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'A' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'A#' )]
+    [AddNamedItem( TArduinoYahboomPianoBreakout_KeyChannel, 'B' )]
+    Keys : TArduinoHoltekTouchSensor_BS811XAKeys
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Yahboom Piano Breakout' )]
+  [CreateName( 'Piano Breakout' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoShieldPinIndex( 0,  'Buzzer' )]
+  [ArduinoShieldPinIndex( 1,  'LEDs' )]
+  [ArduinoShieldPinIndex( 2,  'Keys' )]
+  +TArduinoYahboomPianoBreakoutCarrier : TArduinoShield, IMicroBitCarrier
+
+    Buzzer : TArduinoYahboomPianoBreakoutBuzzer
+
+    [Name( 'RGB LEDs' )]
+    RGBLeds : TArduinoYahboomPianoBreakoutRGBLeds
+
+    Keyboard : TArduinoYahboomPianoBreakoutKeyboard
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

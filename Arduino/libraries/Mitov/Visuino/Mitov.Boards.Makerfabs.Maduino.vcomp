@@ -1,0 +1,39 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Makerfabs' )]
+  TMakerfabsCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TMakerfabsCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TMakerfabsAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN_CS', '10' )]
+  [ArduinoTemplateParameter( 'C_PIN_RST', '9' )]
+  [ArduinoClass( 'Mitov::MitovLoRaRFM9XShield' )]
+  [ArduinoShieldPin( '9' )]
+  [ArduinoShieldPin( '10' )]
+  [ArduinoShieldPin( '11' )]
+  [ArduinoShieldPin( '12' )]
+  [ArduinoShieldPin( '13' )]
+  +TArduinoMaduinoRFM9XModule : TArduinoBasicM0RFM9XModule;
+//---------------------------------------------------------------------------
+  [Name( 'Maduino LoRa RFM9X' )]
+  [Category( TMakerfabsAVRCategory )]
+  [OldName( 'Arduino Pro 168' )]
+  [OldName( 'Arduino Pro 328' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:pro:cpu=8MHzatmega328' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_PRO_MINI' )]
+  [ParentImage( TMakerfabsCategory )]
+  +TArduino_Maduino_LoRa_RFM9X_Board : TArduino_AVR328_BasicBoard
+  
+    [AddItem( TArduinoMaduinoRFM9XModule )]
+    Modules
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

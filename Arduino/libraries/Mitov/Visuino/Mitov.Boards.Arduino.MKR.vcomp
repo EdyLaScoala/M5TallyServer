@@ -1,0 +1,103 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M0' )]
+  [Category( TArduinoCategory )]
+  [AlternateCategory( TCortexM0Category )]
+  [ParentImage( TCortexM0Category )]
+  TArduinoM0CategoryCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  ['{2AF0A898-B6C2-4505-A420-55E1674D7F1B}']
+  IArduinoMKRShield : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IArduinoMKRShield )]
+  TArduinoMKRShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', 'SDCARD_SS_PIN' )]
+  +TArduino_MKR_Zero_MicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+//  +TArduino_Samd_I2SModule : TArduinoShield
+  *TArduinoBasicI2S : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  +TArduinoI2S : TArduinoBasicI2S
+
+    OutputPin : TOWArduinoI2SSourcePin
+    InputPin : TOWArduinoI2SMultiSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoI2SChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoBasicSPI' )]
+  [ArduinoTemplateParameter( '0A_SPI_TYPE', 'SPIClassSAMD' )]
+  +TArduino_MKR_Zero_M0_SPI : TArduinoSPI;
+//---------------------------------------------------------------------------
+  TArduino_MKR_Zero_M0_Basic_Board : TArduinoSamdBasic_I2C_Only_Board
+
+    [Name( 'SPI Channels' )]
+//    [AddItem( TArduinoSPI, 2 )]
+    [AddItem( TArduino_MKR_Zero_M0_SPI, 2 )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [Name( 'I2S Channels' )]
+    [AddItem( TArduinoI2S )]
+    I2SChannels : TArduinoI2SChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  6, TArduinoDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,  1, TArduinoDigitalPWMInterruptChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoDigitalPWMSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoBasicDigitalSPI0InterruptChannel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoDigitalPWMSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoBasicDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalSerial1InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14, 1, TArduinoBasicDigitalSerial1InterruptChannel, 'Digital(TX)' )]
+    
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 0, 7, TArduinoCombinedAnalogDigitalAnalogInterruptChannel )]
+    
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'MKR ZERO' )]
+  [ArduinoBoardCompileParams( 'arduino:samd:mkrzero')]
+  [ArduinoDefine( 'VISUINO_MKR_ZERO' )]
+  [Category( TArduinoM0CategoryCategory )]
+  +TArduino_MKR_Zero_M0_Board : TArduino_MKR_Zero_M0_Basic_Board
+  
+//    [AddItem( TArduino_Samd_I2SModule )]
+    [AddItem( TArduino_MKR_Zero_MicroSDModule )]
+    Modules
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoMKRShields
+  
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 1 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AirLiftShieldInterface' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_INTERFACE', 'SPI1' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_CHIP_SELECT', '28' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_RESET', '31' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_GPIO0', '30' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_BUSY', '35' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.2_INVERT_RESET', 'true' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.UseGPIO0', 'Mitov::ConstantProperty<43, bool, true >' )]
+  [ParentImage( TArduinoAdafruitAirLift_Basic_Module )]
+  [Name( 'Communication' )]
+  [CreateName( 'Communication' )]
+  +TArduino_MKR_WiFi_1010_AirLiftModule : TArduinoShield, TArduinoAdafruitAirLift_LED_Shield_Extender, TArduinoAdafruitAirLiftBLE_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'MKR WiFi 1010' )]
+  [ArduinoBoardCompileParams( 'arduino:samd:mkrwifi1010')]
+  [ArduinoDefine( 'VISUINO_MKR_ZERO' )]
+  [Category( TArduinoM0CategoryCategory )]
+  +TArduino_MKR_WiFi_1010_Board : TArduino_MKR_Zero_M0_Basic_Board
+  
+//    [AddItem( TArduino_Samd_I2SModule )]
+    [AddItem( TArduino_MKR_WiFi_1010_AirLiftModule )]
+    Modules
+  
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

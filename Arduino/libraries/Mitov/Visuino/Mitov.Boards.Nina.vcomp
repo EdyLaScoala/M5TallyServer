@@ -1,0 +1,75 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'U-Blox' )]
+  TUBloxCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'NINA-B1' )]
+  [Category( TUBloxCategory )]
+  [ParentImage( TUBloxCategory )]
+  TUBloxNinaB1Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'MicroE' )]
+  TMicroECategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'NINA-B1' )]
+  [Category( TMicroECategory )]
+  [AlternateCategory( TUBloxNinaB1Category )]
+  [ParentImage( TUBloxNinaB1Category )]
+  TMicroEUBloxNinaB1Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'sandeepmistry:nRF5:Generic_nRF52832' )]
+  [ParentImage( TUBloxCategory )]
+  TArduino_Basic_NINA_B1_Board : TArduino_Basic_nRF5_Board;
+//---------------------------------------------------------------------------
+  [Name( 'MicroE NINA-B1' )]
+  [Category( TMicroEUBloxNinaB1Category )]
+  +TArduino_MicroE_NINA_B1_Board : TArduino_Basic_NINA_B1_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,    1, TArduinoBasicDigitalPWMI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,    1, TArduinoBasicDigitalPWMI2C0Channel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,    1, TArduinoBasicDigitalPWMChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,    1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,    1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,    1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(CTS)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,    1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_28)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10,   1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_29)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12,   1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MISO)(SDO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13,   1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MOSI)(SDI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14,   1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,   1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_7)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 28,   1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(DTR)(IO_16)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 29,   1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(DSR)(IO_17)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 30,   1, TArduinoCombinedAnalogNoPullDigitalChannel, 'Digital/Analog[ 30 ]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 31,   1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(RTS)(CS)' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'EVK-NINA-B1' )]
+  [Category( TUBloxNinaB1Category )]
+  +TArduino_EVK_NINA_B1_Board : TArduino_Basic_NINA_B1_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,   1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_23)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,   1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_22)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,   1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_21)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 31,  1, TArduinoCombinedAnalogNoPullDigitalChannel, 'Digital/Analog(IO_20)[ 3 ]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18,  1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_8)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,   1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_28)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10,  1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_29)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,   1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11,  1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13,  1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_4)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12,  1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14,  1, TArduinoBasicDigitalPWMChannel, 'Digital(IO_5)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,   1, TArduinoCombinedAnalogNoPullDigitalI2C0Channel, 'Analog(IO_25)(I2C-SCL)[ 0 ]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,   1, TArduinoCombinedAnalogNoPullDigitalI2C0Channel, 'Analog(IO_24)(I2C-SDA)[ 1 ]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,   1, TArduinoCombinedAnalogNoPullDigitalChannel, 'Analog(IO_27)[ 2 ]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 30,  1, TArduinoCombinedAnalogNoPullDigitalChannel, 'Analog(IO_18)[ 3 ]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 29,  1, TArduinoCombinedAnalogNoPullDigitalChannel, 'Analog(IO_17)[ 4 ]' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 28,  1, TArduinoCombinedAnalogNoPullDigitalChannel, 'Analog(IO_16)[ 5 ]' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

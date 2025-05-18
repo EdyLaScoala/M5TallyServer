@@ -1,0 +1,1167 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Atiny85' )]
+  TAtiny85Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Atiny167' )]
+  TAtiny167Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ATmega32U4' )]
+  TATmega32U4Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ATmega32U4' )]
+  [Category( TArduinoCategory )]
+  [AlternateCategory( TATmega32U4Category )]
+  [ParentImage( TATmega32U4Category )]
+  TArduinoATmega32U4Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M0' )]
+  TCortexM0Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M3' )]
+  TCortexM3Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M3' )]
+  [Category( TArduinoCategory )]
+  [AlternateCategory( TCortexM3Category )]
+  [ParentImage( TCortexM3Category )]
+  TArduinoCortexM3Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M4' )]
+  TCortexM4Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoRGBLEDInvertedModule' )]
+  TArduinoBasicInvertedRGBLEDModule : TArduinoBasicRGBLEDModule;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoProcessor328ModuleOperations )]
+  [ArduinoHelpPostfix( '(Arduino Processor 328 Operations)' )]
+  TArduinoProcessor328ModuleOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  TArduinoProcessor328ModuleBasicClockedOperation : TArduinoProcessorModuleBasicCommonClockedOperation, TArduinoProcessor328ModuleOperation_Extender;
+//---------------------------------------------------------------------------
+  +TArduinoProcessor328ModuleGetIDOperation : TArduinoProcessorModuleBasicGetIDOperation, TArduinoProcessor328ModuleOperation_Extender;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoProcessor2560ModuleOperations )]
+  [ArduinoHelpPostfix( '(Arduino Processor 2560 Operations)' )]
+  TArduinoProcessor2560ModuleOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  TArduinoProcessor2560ModuleBasicClockedOperation : TArduinoProcessorModuleBasicCommonClockedOperation, TArduinoProcessor2560ModuleOperation_Extender;
+//---------------------------------------------------------------------------
+  +TArduinoProcessor2560ModuleGetIDOperation : TArduinoProcessorModuleBasicGetIDOperation, TArduinoProcessor2560ModuleOperation_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Arduino_Processor.h' )]
+  [Category( TArduinoPowerToolbarCategory )]
+  TArduinoProcessorModuleBasicLowPowerOperation : TArduinoProcessorModuleBasicCommonClockedOperation
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0' )]
+    [PropertyListDesignValue( '15' )]
+    [PropertyListDesignValue( '30' )]
+    [PropertyListDesignValue( '60' )]
+    [PropertyListDesignValue( '120' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    [PropertyListDesignValue( '2000' )]
+    [PropertyListDesignValue( '4000' )]
+    [PropertyListDesignValue( '8000' )]
+    [Name( 'Interval (mS)' )]
+    Interval : Unsigned = 1000
+
+    DisableADC : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoProcessorModuleOperations )]
+  [ArduinoHelpPostfix( '(Arduino Processor Operations)' )]
+  TArduinoProcessorModuleBasicCommonLowPowerOperation : TArduinoProcessorModuleBasicLowPowerOperation;
+//---------------------------------------------------------------------------
+  TArduinoProcessorModuleDisableTimer2BasicOperation : TArduinoProcessorModuleBasicCommonLowPowerOperation
+
+    DisableTimer2 : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoProcessorModuleBrownOutDetectionBasicOperation : TArduinoProcessorModuleBasicCommonLowPowerOperation
+
+    DisableBrownOutDetection : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoProcessorModuleTimer2BrownOutDetectionBasicOperation : TArduinoProcessorModuleDisableTimer2BasicOperation
+
+    DisableBrownOutDetection : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Noise Reduction' )]
+  [CreateName( 'Noise Reduction' )]
+  [ArduinoClass( 'Mitov::ArduinoProcessorNoiseReduction' )]
+  [PersistentCollection( TArduinoBasicProcessorModuleOperations )]
+  +TArduinoProcessorModuleNoiseReductionOperation : TArduinoProcessorModuleDisableTimer2BasicOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Power Down' )]
+  [CreateName( 'Power Down' )]
+  [ArduinoClass( 'Mitov::ArduinoProcessorPowerDown' )]
+  +TArduinoProcessorModulePowerDownOperation : TArduinoProcessorModuleBrownOutDetectionBasicOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Power Save' )]
+  [CreateName( 'Power Save' )]
+  [ArduinoClass( 'Mitov::ArduinoProcessorPowerSave' )]
+  [PersistentCollection( TArduinoBasicProcessorModuleOperations )]
+  +TArduinoProcessorModulePowerSaveOperation : TArduinoProcessorModuleTimer2BrownOutDetectionBasicOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Standby' )]
+  [CreateName( 'Standby' )]
+  [ArduinoClass( 'Mitov::ArduinoProcessorStandby' )]
+  +TArduinoProcessorModuleStandbyOperation : TArduinoProcessorModuleBrownOutDetectionBasicOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Extended Standby' )]
+  [CreateName( 'Extended Standby' )]
+  [ArduinoClass( 'Mitov::ArduinoProcessorExtendedStandby' )]
+  [PersistentCollection( TArduinoBasicProcessorModuleOperations )]
+  +TArduinoProcessorModuleExtendedStandbyOperation : TArduinoProcessorModuleTimer2BrownOutDetectionBasicOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Idle' )]
+  [CreateName( 'Idle' )]
+  *TArduinoProcessorModuleIdleBasicOperation : TArduinoProcessorModuleBasicLowPowerOperation
+
+    DisableSPI : Boolean = True
+    DisableI2C : Boolean = True
+    DisableTimer0 : Boolean = True
+    DisableTimer1 : Boolean = True
+    DisableTimer2 : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoProcessorIdle328' )]
+  +TArduinoProcessorModuleIdle328Operation : TArduinoProcessorModuleIdleBasicOperation, TArduinoProcessor328ModuleOperation_Extender
+
+    DisableSerial : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoProcessorIdle2560' )]
+  [PersistentCollection( TArduinoProcessor2560ModuleOperations )]
+  [ArduinoHelpPostfix( '(Arduino Processor 2560 Operations)' )]
+  +TArduinoProcessorModuleIdle2560Operation : TArduinoProcessorModuleIdleBasicOperation
+
+    DisableTimer3 : Boolean = True
+    DisableTimer4 : Boolean = True
+    DisableTimer5 : Boolean = True
+    DisableSerial0 : Boolean = True
+    DisableSerial1 : Boolean = True
+    DisableSerial2 : Boolean = True
+    DisableSerial3 : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_ARDUINO_NANO' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:nano' )]
+  TArduino_AVR328_Basic_Nano_Board : TArduino_AVR328_BasicBoard
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Nano' )]
+  [Category( TArduinoAVRCategory )]
+  +TArduino_AVR328_Nano_Board : TArduino_AVR328_Basic_Nano_Board
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoNanoShields
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoProcessor2560ModuleOperations : TArduinoProcessorModuleOperations;
+//---------------------------------------------------------------------------
+  +TArduinoProcessor2560Module : TArduinoProcessorModule
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    Operations : TArduinoProcessor2560ModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_AVR2560_Basic_Modules_Board : TArduino_AVR_Basic_Modules_Board
+
+    [AddItem( TArduinoProcessor2560Module )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_AVR2560_Basic_Modules_Serial_Board : TArduino_AVR2560_Basic_Modules_Board
+
+    [AddItem( TArduinoHardwareSerial, 4 )]
+    Serial
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_AVR2560_BasicBoard : TArduino_AVR2560_Basic_Modules_Serial_Board
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 0,   1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(RX0)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 1,   1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(TX0)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 2,   2, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 4,   9, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 13,  1, TArduinoBasicDigitalPWMChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 14,  1, TArduinoAdditionalDigitalSerial3Channel, 'Digital(TX3)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 15,  1, TArduinoAdditionalDigitalSerial3Channel, 'Digital(RX3)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 16,  1, TArduinoAdditionalDigitalSerial2Channel, 'Digital(TX2)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 17,  1, TArduinoAdditionalDigitalSerial2Channel, 'Digital(RX2)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 18,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 19,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 20,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 21,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 22, 22, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 44,  3, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 47,  3, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 50,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 51,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 52,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 53,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 54, 0, 16, TArduinoCombinedAnalogDigitalChannel )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_ARDUINO_MEGA' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:mega' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:megaADK' )]
+  TArduino_AVR2560_Basic_Mega_Board : TArduino_AVR2560_BasicBoard
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_AVR2560_MegaShield_Board : TArduino_AVR2560_Basic_Mega_Board
+  
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoMegaShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Mega 2560' )]
+  [Category( TArduinoAVRCategory )]
+  +TArduino_AVR2560_Mega_Board : TArduino_AVR2560_MegaShield_Board;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'Uart' )]
+  +TArduino_Samd_UART_Serial : TArduinoHardwareSerial;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduino_Samd_RTC_AlarmMode : Enum
+
+    OncePerMinute
+    OncePerHour
+    OncePerDay
+    OncePerMonth
+    OncePerYear
+    ExactTime
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduino_Samd_RTC_Alarm' )]
+  TArduino_Samd_RTC_Alarm : TArduinoBasicAlarm
+
+    [ArduinoPinCall( 'Alarm_SleepInputPin' )]
+    SleepInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmMode' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmMode' )]
+    Mode : TArduino_Samd_RTC_AlarmMode = ExactTime
+
+    [ValueRange( 0, 59 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmSecond' )]
+    Second : Unsigned = 0
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmMinute' )]
+    Minute
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmHour' )]
+    Hour
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmDate' )]
+    Date
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoIncludeDefine( '#ifndef VISUINO_SAMD51' )]
+  [ArduinoInclude( 'RTCZero.h', 'RTCZero', 'https://github.com/arduino-libraries/RTCZero' )]
+  [ArduinoIncludeDefine( '#endif' )]
+  [ArduinoInclude( 'Mitov_Samd_RTC.h' )]
+  [ArduinoClass( 'Mitov::Samd_RTC' )]
+  [ArduinoInit]
+  +TArduino_Samd_RTCModule : TArduinoBasicRTCModule
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+    
+    Alarm : TArduino_Samd_RTC_Alarm
+   
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SamdUSBSerial.h' )]
+  [ArduinoClass( 'Mitov::SamdUSBPort' )]
+  TArduinoSamdUSBSerial : TArduinoBasicHardwareParitySerial
+  
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin )]
+    ConnectedOutputPin : TOWArduinoDigitalSourcePin
+    
+    WaitForConnection : Boolean = False
+    
+    SendingDelay : Unsigned = 15
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoSamdProcessorModuleOperations : TArduinoProcessorModuleOperations;
+//---------------------------------------------------------------------------
+  +TArduinoProcessorSamdModule : TArduinoProcessorModule
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    Operations : TArduinoSamdProcessorModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoSamdProcessorModuleOperations )]
+  [ArduinoHelpPostfix( '(Samd Processor Operations)' )]
+  TArduinoSamdProcessorModuleBasicOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  +TArduinoSamdProcessorModuleGetIDOperation : TArduinoProcessorModuleBasicGetIDOperation, TArduinoSamdProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoBoardArchitecture( 'samd' )]
+  [ArduinoBoardCanReset]
+  [ArduinoDefine( 'VISUINO_Mx' )]
+  TArduinoSamdBasic_I2C_Only_Board : TArduinoBoardExtendableImplementation
+
+    [AddItem( TArduinoProcessorSamdModule )]
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduinoKeyboardModule )]
+    [AddItem( TArduinoMouseModule )]
+    [AddItem( TArduino_Samd_RTCModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoSamdUSBSerial )]
+    [AddItem( TArduino_Samd_UART_Serial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoSamdBasicBoard : TArduinoSamdBasic_I2C_Only_Board
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoSamdUSBHostDevices : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoSamdUSBHostDevices )]
+  [ArduinoHelpPostfix( '(Samd USB Host)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoSamdUSBHostBasicDevice : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'MOUSEINFO *', 'AMouseInfo' )]
+  [Name( 'Move' )]
+  TArduinoSamdUSBHostMouseMoveCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoSamdUSBHostMouseMoveCallChain]
+  TArduinoSamdUSBHostMouseElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoSamdUSBHostMouseElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoHelpPostfix( '(USB Host Mouse)' )]
+  TArduinoSamdUSBHostMouseBasicElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostMousePositionProperty' )]
+  [ArduinoOptionalVariable( Integer, 32, 'FCount', 0 )]
+  TArduinoSamdUSBHostMousePositionProperty : TArduinoCodePersistent
+  
+    [OWPrimaryPin]
+    [ArduinoVariableIfPinConnected( 'FCount' )]
+    OutputPin : TOWArduinoIntegerSourcePin
+    
+    Enabled : Boolean = True
+    InitialValue : Integer = 0
+
+    Min : TArduinoCounterMinLimit
+    Max : TArduinoCounterMaxLimit
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoSamdUSBHostMousePositionSetElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoSamdUSBHostMousePositionSetElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(USB Host Mouse Change)' )]
+  TArduinoSamdUSBHostMousePositionSetBasicElement : TArduinoBasicNamedExludePersistent
+
+    [OWPinGroup( TArduinoSamdUSBHostMousePositionSetBasicElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+    [ExtendDisplayName( ' (', ',' )]
+    X : Integer = 0
+
+    [ExtendDisplayName( '', ')' )]
+    Y : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostMousePositionSetElement' )]
+  [Name( 'Set Value' )]
+  +TArduinoSamdUSBHostMousePositionSetElement : TArduinoSamdUSBHostMousePositionSetBasicElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostMousePositionAddValueElement' )]
+  [Name( 'Add Value' )]
+  +TArduinoSamdUSBHostMousePositionAddValueElement : TArduinoSamdUSBHostMousePositionSetBasicElement;
+//---------------------------------------------------------------------------
+  [Name( 'Position' )]
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostMousePositionElement' )]
+//  [ArduinoVariable( Boolean, 'FPressed' )]
+  [ParentImage( TArduinoMouseMoveElement )]
+  [TArduinoSamdUSBHostMouseMoveCallChain]
+  [ArduinoInit]
+  +TArduinoSamdUSBHostMousePositionElement : TArduinoSamdUSBHostMouseBasicElement
+
+    [OWPrimaryPin]
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    X : TArduinoSamdUSBHostMousePositionProperty
+    Y : TArduinoSamdUSBHostMousePositionProperty
+//    Wheel : TArduinoSamdUSBHostMousePositionProperty
+
+    Elements : TArduinoSamdUSBHostMousePositionSetElements
+    
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoBasicMouseModule )]
+  [Name( 'Mouse' )]
+  [CreateName( 'Mouse' )]
+//  [ArduinoInclude( 'MouseController.h' )]
+  [ArduinoIncludeDefine( '#define Notify(...) ((void)0)' )]
+  [ArduinoInclude( 'hidboot.h' )]
+  [ArduinoInclude( 'Mitov_Samd_USB_Host_Mouse.h' )]
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostMouse' )]
+  [ArduinoStart]
+  +TArduinoSamdUSBHostMouse : TArduinoSamdUSBHostBasicDevice
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Middle', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalSourcePin )]
+    ButtonsOutputPins : TOWArduinoPinList
+
+    [OWAddPin( 'X', TOWArduinoIntegerSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoIntegerSourcePin )]
+    CursorPositionOutputPins : TOWArduinoPinList
+
+//    [OWPrimaryPin]
+//    WheelOutputPin : TOWArduinoIntegerSourcePin
+
+    Elements : TArduinoSamdUSBHostMouseElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AKey' )]
+  [ArduinoPopulatedCallChainParameter( 'bool', 'ADown' )]
+  [Name( 'KeyPress' )]
+  TArduinoSamdUSBHostKeyboardKeyPressCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AKey' )]
+  [ArduinoPopulatedCallChainParameter( 'bool', 'ADown' )]
+  [Name( 'OemKeyPress' )]
+  TArduinoSamdUSBHostKeyboardOemKeyPressCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoSamdUSBHostKeyboardKeyPressCallChain]
+  [TArduinoSamdUSBHostKeyboardOemKeyPressCallChain]
+  [ArduinoProcessChildParentFlags]
+  TArduinoSamdUSBHostKeyboardElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoSamdUSBHostKeyboardElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(USB Host Keyboard Change)' )]
+  TArduinoSamdUSBHostKeyboardBasicElement : TArduinoBasicNamedExludePersistent
+  
+    OutputPin : TOWArduinoDigitalSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostKeyboardKeyElement' )]
+  [Name( 'Key' )]
+  [CreateName( 'Key' )]
+  [TArduinoSamdUSBHostKeyboardKeyPressCallChain]
+  [ParentImage( TArduinoKeyboardKeyElement )]
+  [ArduinoProcessChildParentFlags]
+  +TArduinoSamdUSBHostKeyboardKeyElement : TArduinoSamdUSBHostKeyboardBasicElement
+  
+    [ArduinoSetFlagIfPinConnected_Parent( 'FNeedsAscii' )]
+    OutputPin
+  
+    Value : AnsiChar = ' '
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostKeyboardOemKeyElement' )]
+  [Name( 'Oem Key' )]
+  [CreateName( 'Oem Key' )]
+  [TArduinoSamdUSBHostKeyboardOemKeyPressCallChain]
+  +TArduinoSamdUSBHostKeyboardOemKeyElement : TArduinoSamdUSBHostKeyboardBasicElement
+  
+    [MaxValue( 255 )]
+    Value : Unsigned = 0
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostKeyboardSpecialKeysGroup' )]
+  TArduinoSamdUSBHostKeyboardSpecialKeysGroup : TArduinoCodePersistent
+
+    ShiftOutputPin : TOWArduinoDigitalSourcePin
+    ControlOutputPin : TOWArduinoDigitalSourcePin
+    AltOutputPin : TOWArduinoDigitalSourcePin
+    CommandOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostKeyboardSpecialKeys' )]
+  TArduinoSamdUSBHostKeyboardSpecialKeys : TArduinoCodePersistent
+
+    Left : TArduinoSamdUSBHostKeyboardSpecialKeysGroup
+    Right : TArduinoSamdUSBHostKeyboardSpecialKeysGroup
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostKeyboardOutputItem' )]
+  TArduinoSamdUSBHostKeyboardOutputItem : TArduinoCodePersistent
+
+    OemOutputPin : TOWArduinoUnsignedSourcePin
+    OutputPin : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostKeyboardOutput' )]
+  TArduinoSamdUSBHostKeyboardOutput : TArduinoCodePersistent
+
+    Down : TArduinoSamdUSBHostKeyboardOutputItem
+    Up : TArduinoSamdUSBHostKeyboardOutputItem
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostKeyboardRepeat' )]
+  [ArduinoProcessChildParentVariables]
+  TArduinoSamdUSBHostKeyboardRepeat : TArduinoCodeEnabledPersistent
+
+    [NamePostfix( '(mS)' )]
+    [ArduinoVariableIfNotEquals_Parent( 'FLastTime', 0 )]
+    [ArduinoVariableIfNotEquals_Parent( 'FCharacter', 0 )]
+    [ArduinoVariableIfNotEquals_Parent( 'FPressed', 0 )]
+//    [ArduinoVariableIfNotEquals_Parent( 'FCurrentValue', 0 )]
+    [ArduinoVariableIfNotEquals_Parent( 'FAfterInitialDelay', 0 )]
+    InitialDelay : Unsigned = 500
+
+    [NamePostfix( '(Hz)' )]
+    [ArduinoVariableIfNotEquals_Parent( 'FLastTime', 0 )]
+    [ArduinoVariableIfNotEquals_Parent( 'FCharacter', 0 )]
+    [ArduinoVariableIfNotEquals_Parent( 'FPressed', 0 )]
+//    [ArduinoVariableIfNotEquals_Parent( 'FCurrentValue', 0 )]
+    [ArduinoVariableIfNotEquals_Parent( 'FAfterInitialDelay', 0 )]
+    Frequency : Single = 5.0
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Keyboard' )]
+  [CreateName( 'Keyboard' )]
+  [ParentImage( TArduinoBasicKeyboardModule )]
+  [ArduinoIncludeDefine( '#define Notify(...) ((void)0)' )]
+  [ArduinoInclude( 'hidboot.h' )]
+  [ArduinoInclude( 'Mitov_Samd_USB_Host_Keyboard.h' )]
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostKeyboard' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoFlag( 'FNeedsAscii' )]
+  [ArduinoOptionalVariable( Unsigned, 32, 'FLastTime', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCharacter', 0 )]
+  [ArduinoOptionalVariable( Boolean, 'FPressed', False )]
+//  [ArduinoOptionalVariable( Boolean, 'FCurrentValue', False )]
+  [ArduinoOptionalVariable( Boolean, 'FAfterInitialDelay', False )]
+  +TArduinoSamdUSBHostKeyboard : TArduinoSamdUSBHostBasicDevice
+
+    [ArduinoConstantIfPinUnconnected( 'FLastTime' )]
+    [ArduinoConstantIfPinUnconnected( 'FCharacter' )]
+    [ArduinoConstantIfPinUnconnected( 'FPressed' )]
+//    [ArduinoConstantIfPinUnconnected( 'FCurrentValue' )]
+    [ArduinoConstantIfPinUnconnected( 'FAfterInitialDelay' )]
+    OutputPin : TOWArduinoCharSourcePin
+
+    SpecialKeys : TArduinoSamdUSBHostKeyboardSpecialKeys
+    KeyPressed : TArduinoSamdUSBHostKeyboardOutput
+    
+    Repeat : TArduinoSamdUSBHostKeyboardRepeat
+
+    Elements : TArduinoSamdUSBHostKeyboardElements   
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Usb.h' )]
+  [ArduinoInclude( 'Mitov_Samd_USB_Host.h' )]
+  [Name( 'USB Host' )]
+  [CreateName( 'USB Host' )]
+  [ArduinoClass( 'Mitov::TArduinoSamdUSBHostModule' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  +TArduinoSamdUSBHostModule : TArduinoShield
+  
+    Devices : TArduinoSamdUSBHostDevices
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_SAMD51' )]
+  TArduinoSamd51BasicBoard : TArduinoSamdBasicBoard
+  
+    [AddItem( TArduinoSamdUSBHostModule )]
+    Modules
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoProcessor4809ModuleOperations : TArduinoBasicProcessorModuleOperations;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoProcessor4809ModuleOperations )]
+  [ArduinoHelpPostfix( '(Arduino Processor 4809 Operations)' )]
+  TArduinoProcessor4809ModuleOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  +TArduinoProcessor4809Module : TArduinoProcessorModule
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    Operations : TArduinoProcessor4809ModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCanReset]
+  [ArduinoDefine( 'VISUINO_ARDUINO_AVR4809' )]
+  TArduino_AVR4809_Basic_Modules_Board : TArduino_AVR_Basic_Modules_Board
+
+    [AddItem( TArduinoProcessor4809Module )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial )]
+    Serial
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_AVR4809_BasicBoard : TArduino_AVR4809_Basic_Modules_Board
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(RX)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(TX)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 4,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 5,  2, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 7,  2, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 9,  2, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 11, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalAnalogChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 15, 1, 3, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogDigitalI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogDigitalI2C0Channel, 'Digital(I2C-SCL)' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Nano Every' )]
+  [Category( TArduinoAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_NANO_EVERY' )]
+  [ArduinoBoardCompileParams( 'arduino:megaavr:nona4809' )]
+  +TArduino_Nano_Every_Board : TArduino_AVR4809_BasicBoard
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+    [Name( 'Analog Input' )]
+    [ArduinoBoard_Add_AnalogInputChannels( 6, 2, TArduinoAnalogOptionalAsDigitalInputChannel )]
+    AnalogInput : TArduinoAnalogInputChannels
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoNanoShields
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', 'LED_BUILTIN' )]
+  +TArduino_Uno_WiFi_Rev2_LEDModule : TArduinoBasicLEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AirLiftShieldInterface' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_INTERFACE', 'SPI' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_CHIP_SELECT', 'SPIWIFI_SS' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_RESET', 'NINA_RESETN' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_GPIO0', 'NINA_GPIO0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_BUSY', 'NINA_ACK' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.2_INVERT_RESET', 'true' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.UseGPIO0', 'Mitov::ConstantProperty<43, bool, true >' )]
+  [ParentImage( TArduinoAdafruitAirLift_Basic_Module )]
+  [Name( 'Communication' )]
+  [CreateName( 'Communication' )]
+  +TArduino_Uno_WiFi_Rev2_AirLiftModule : TArduinoShield, TArduinoAdafruitAirLift_LED_Shield_Extender, TArduinoAdafruitAirLiftBLE_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 0 )]
+    [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPISpeed<BoardDeclarations::Types::BoardSPI0, BoardDeclarations::Instances::BoardSPI0, Mitov::DigitalPin_DirectBoardPinImplementation<SPIIMU_SS>, Mitov::ConstantProperty<103, uint32_t, 8000000> >' )]
+//  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2CNoSetHighBit<TwoWire, Wire, Mitov::ConstantProperty<200, uint8_t, 106 > >' )]
+  +TArduino_Uno_WiFi_Rev2_OrientationModule : TArduinoAccelerometerGyroscopeLSM6DS3_I2C_Basic_Module;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Uno WiFi Rev2' )]
+  [Category( TArduinoAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_UNO_WIFI_REV2' )]
+  [ArduinoBoardCompileParams( 'arduino:megaavr:uno2018:mode=on' )]
+  +TArduino_Uno_WiFi_Rev2_Board : TArduino_AVR4809_BasicBoard
+
+    [AddItem( TArduino_Uno_WiFi_Rev2_LEDModule )]
+    [AddItem( TArduino_Uno_WiFi_Rev2_AirLiftModule )]
+    [AddItem( TArduino_Uno_WiFi_Rev2_OrientationModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 13 )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_AllChannelsFrom( 14 )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20, 1, TArduinoAdditionalDigitalI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 21,  1, TArduinoAdditionalDigitalI2C0Channel, 'Digital(I2C-SCL)' )]
+    Digital
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardArchitecture( 'avr' )]
+  TArduino_Basic_ATtiny_Board : TArduinoBoardExtendableImplementation
+  
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+
+    [AddItem( TArduinoEEPROMModule )]
+    Modules : TArduinoModules
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+//    [Name( 'SPI Channels' )]
+//    [AddItem( TArduinoSPI )]
+//    SPIChannels : TArduinoSPIChannels
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCanReset]
+  [ArduinoBoardArchitecture( 'avr' )]
+  TArduino_32u4_BasicNoHID_Board : TArduinoBoardExtendableImplementation
+
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+
+    [AddItem( TArduinoEEPROMModule )]
+    Modules : TArduinoModules
+
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_32u4_BasicBoard : TArduino_32u4_BasicNoHID_Board
+
+    [AddItem( TArduinoKeyboardModule )]
+    [AddItem( TArduinoMouseModule )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_32u4_BasicHIDBasicBoard : TArduino_32u4_BasicNoHID_Board
+
+    [AddItem( TArduinoBasicKeyboardModule )]
+    [AddItem( TArduinoBasicMouseModule )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial )]
+    [AddItem( TArduinoDirectHardwareSerial )]
+    Serial
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_32u4_Serial_BasicBoard : TArduino_32u4_BasicBoard
+
+    [AddItem( TArduinoHardwareSerial )]
+    [AddItem( TArduinoDirectHardwareSerial )]
+    Serial
+
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduino_Basic_32u4_ReservedDigitalPins_Shield_Board : TArduino_32u4_Serial_BasicBoard
+
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 4, 6,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 6, 7,  1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 8, 8,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 9, 9,  2, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 11,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 12, 11,  1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalPWMChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 14, 0, 6, TArduinoCombinedAnalogDigitalChannel )]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_Basic_32u4_AllDigitalPins_Shield_Board : TArduino_Basic_32u4_ReservedDigitalPins_Shield_Board
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Leonardo' )]
+  [Category( TArduinoATmega32U4Category )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:leonardo' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_LEONARDO' )]
+  +TArduino_Leonardo_Board : TArduino_Basic_32u4_AllDigitalPins_Shield_Board;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Yun' )]
+  [Category( TArduinoATmega32U4Category )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:yun' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_YUN' )]
+  +TArduino_Yun_Board : TArduino_Basic_32u4_AllDigitalPins_Shield_Board;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Fio' )]
+  [Category( TArduinoAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_FIO' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:fio' )]
+  +TArduino_Fio_Board : TArduino_AVR328_BasicBoard
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Micro' )]
+  [Category( TArduinoATmega32U4Category )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:micro' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_MICRO' )]
+  +TArduino_Micro_Board : TArduino_32u4_Serial_BasicBoard
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 6,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 6, 7,  1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 8, 8,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9, 9,  2, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 12, 11,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalPWMChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 6, TArduinoCombinedAnalogDigitalChannel )]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoMicroShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Pro Micro' )]
+  [OldName( 'Arduino Micro Pro' )]
+  [Category( TArduinoATmega32U4Category )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:micro' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_MICRO' )]
+  +TArduino_Pro_Micro_Board : TArduino_32u4_Serial_BasicBoard
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 6,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 6, 7,  1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 8, 8,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9, 9,  2, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17,  1, TArduinoBasicDigitalInputChannel, 'Digital(RX LED)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 0, 4, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 30,  1, TArduinoBasicDigitalInputChannel, 'Digital(TX LED)' )]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoMicroShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Duemilanove' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:diecimila' )]
+  [Category( TArduinoAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_DUEMILANOVE' )]
+  +TArduino_Duemilanove_Board : TArduino_AVR328_Basic_DigitalChannels_Board
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;  
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Mini' )]
+  [Category( TArduinoAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_MINI' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:mini' )]
+  +TArduino_AVR328_Mini_Board : TArduino_AVR328_Basic_DigitalChannels_Board
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+    [Name( 'Analog Input' )]
+    [ArduinoBoard_Add_AnalogInputChannels( 6, 2, TArduinoAnalogOptionalAsDigitalInputChannel )]
+    AnalogInput : TArduinoAnalogInputChannels
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoMiniShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Pro Mini' )]
+  [Category( TArduinoAVRCategory )]
+  [OldName( 'Arduino Pro 168' )]
+  [OldName( 'Arduino Pro 328' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_PRO_MINI' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:pro' )]
+  +TArduino_AVR328_Pro_Mini_Board : TArduino_AVR328_BasicBoard
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoProMiniShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino LilyPad' )]
+  [Category( TArduinoAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_LILYPAD' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:lilypad' )]
+  +TArduino_LilyPad_Board : TArduino_AVR328_Basic_DigitalChannels_Board
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino LilyPad Simple' )]
+  [Category( TArduinoAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_LILYPAD_SIMPLE' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:lilypad' )]
+  +TArduino_LilyPad_Simple_Board : TArduino_AVR328_Basic_DigitalChannels_Board
+
+    [ArduinoBoard_Add_ReservedChannels( 0,  2 )]
+    [ArduinoBoard_Add_ReservedChannels( 5,  2 )]
+    [ArduinoBoard_Add_ReservedChannels( 9,  5 )]
+    [ArduinoBoard_Add_AllChannelsFrom( 16 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino LilyPad USB' )]
+  [Category( TArduinoATmega32U4Category )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:LilyPadUSB' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_LILYPAD_USB' )]
+  +TArduino_LilyPad_USB_Board : TArduino_32u4_Serial_BasicBoard
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9, 9,  2, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalPWMChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 0, 4, TArduinoCombinedAnalogDigitalChannel )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_StandardSerial.h' )]
+  [ArduinoSerialType( 'Serial_' )]
+  [ArduinoSerialOutputType( 'SerialUSB' )]
+  [Name( 'USB' )]
+  +TArduinoSeparatedUSBSerial : TArduinoBasicSpeedSerial;
+//---------------------------------------------------------------------------
+  +TArduinoUARTSerial : TArduinoSimpleUARTSerial
+
+    [ArduinoUseBindingCheckSetter( 'RestartPort' )]
+    Parity : TArduinoSerialParity = spNone
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_USARTSerial.h' )]
+  [ArduinoClass( 'Mitov::USARTSerialPort' )]
+  [ArduinoSerialType( 'USARTClass' )]
+  +TArduinoUSARTSerial : TArduinoBasicHardwareSerial
+
+    [ArduinoUseBindingCheckSetter( 'RestartPort' )]
+    Parity : TArduinoSerialParity = spNone
+
+    StopBits = 2
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_Due_ProcessorModuleOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduino_Due_ProcessorModuleOperations )]
+  [ArduinoHelpPostfix( '(Sam Processor Operations)' )]
+  TArduino_Due_ProcessorModuleBasicOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  TArduino_Due_ProcessorModuleBasicOperation : TArduinoCodePersistent, TArduino_Due_ProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  TArduino_Due_ProcessorModuleBasicClockedOperation : TArduino_Due_ProcessorModuleBasicOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Reset' )]
+  [CreateName( 'Reset' )]
+  [ArduinoInclude( 'Mitov_Sam_Processor.h' )]
+  [ArduinoClass( 'Mitov::SamProcessorReset' )]
+  [ParentImage( TArduinoProcessorModuleResetOperation )]
+  +TArduino_Due_ProcessorModuleResetOperation : TArduino_Due_ProcessorModuleBasicClockedOperation;
+//---------------------------------------------------------------------------
+  +TArduino_Due_ProcessorModuleGetIDOperation : TArduinoProcessorModuleBasicGetIDOperation, TArduino_Due_ProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Processor' )]
+  [CreateName( 'Processor' )]
+  [ParentImage( TArduinoProcessorModule )]
+  +TArduino_Due_ProcessorModule : TArduinoShield
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    Operations : TArduino_Due_ProcessorModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardArchitecture( 'sam' )]
+  TArduino_Sam_BasicBoard : TArduinoBoardExtendableImplementation
+
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduino_Due_ProcessorModule )]
+    Modules : TArduinoModules
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Due' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_DUE' )]
+  [ArduinoBoardCompileParams( 'arduino:sam:arduino_due_x' )]
+  [ArduinoBoardCompileParams( 'arduino:sam:arduino_due_x_dbg' )]
+  [ArduinoBoardCanReset]
+  [Category( TArduinoCortexM3Category )]
+  +TArduino_Due_Board : TArduino_Sam_BasicBoard
+
+    [AddItem( TArduinoUARTSerial )]
+    [AddItem( TArduinoUSARTSerial, 3 )]
+    [AddItem( TArduinoSeparatedUSBSerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,   1, TArduinoAdditionalDigitalSerial0InterruptChannel, 'Digital(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,   1, TArduinoAdditionalDigitalSerial0InterruptChannel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,   2, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,   1, TArduinoBasicDigitalPWMInterruptChannel, 'Digital(D87)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,   5, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10,  1, TArduinoBasicDigitalPWMInterruptChannel, 'Digital(D77)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11,  2, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13,  1, TArduinoBasicDigitalPWMInterruptChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14,  1, TArduinoAdditionalDigitalSerial3InterruptChannel, 'Digital(TX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15,  1, TArduinoAdditionalDigitalSerial3InterruptChannel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,  1, TArduinoAdditionalDigitalSerial2InterruptChannel, 'Digital(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17,  1, TArduinoAdditionalDigitalSerial2InterruptChannel, 'Digital(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20,  1, TArduinoAdditionalDigitalI2C1InterruptChannel, 'Digital(I2C1-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 21,  1, TArduinoAdditionalDigitalI2C1InterruptChannel, 'Digital(I2C1-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22, 32, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 54, 0, 12, TArduinoCombinedAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 66,  1, TArduinoBasicDigitalAnalogOutputInterruptChannel, 'Digital(DAC0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 67,  1, TArduinoBasicDigitalAnalogOutputInterruptChannel, 'Digital(DAC1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 68,  1, TArduinoAdditionalDigitalCAN0InterruptChannel, 'Digital(CANRX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 69,  1, TArduinoAdditionalDigitalCAN0InterruptChannel, 'Digital(CANTX)' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

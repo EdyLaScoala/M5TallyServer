@@ -1,0 +1,288 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBNO055Thermometer' )]
+  TArduinoBNO055Thermometer : TArduinoBasicEnabledThermometer
+
+    FromGyroscope : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoBNO0AccelerometerMode : Enum
+  
+    Normal
+    Suspend
+    LowPower1
+    Standby
+    LowPower2
+    DeepSuspend
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBNO055AccelerometerOffsets : TArduinoBasicXYZOffsets
+
+    [NamePostfix( '(m/s2)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerOffsets' )]
+    X
+
+    [NamePostfix( '(m/s2)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerOffsets' )]
+    Y
+
+    [NamePostfix( '(m/s2)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerOffsets' )]
+    Z
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBNO055Accelerometer' )]
+  TArduinoBNO055Accelerometer : TArduinoBasicEnabledXYZSensor
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [ValueRange( 2, 16 )]
+    [NamePostfix( '(G)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerMode' )]
+    Range : Unsigned = 4
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '7.81' )]
+    [PropertyListDesignValue( '15.63' )]
+    [PropertyListDesignValue( '31.25' )]
+    [PropertyListDesignValue( '62.5' )]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    [NamePostfix( '(Hz)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerMode' )]
+    Bandwidth : Single = 62.5
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerMode' )]
+    Mode : TArduinoBNO0AccelerometerMode = Normal
+
+    Offsets : TArduinoBNO055AccelerometerOffsets
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoBNO0GyroscopeMode : Enum
+  
+      Normal
+      FastPowerUp
+      DeepSuspend
+      Suspend
+      AdvancedPowersave
+      
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBNO055GyroscopeOffsets : TArduinoBasicXYZOffsets
+
+    [NamePostfix( '(Dps)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeOffsets' )]
+    X
+
+    [NamePostfix( '(Dps)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeOffsets' )]
+    Y
+
+    [NamePostfix( '(Dps)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeOffsets' )]
+    Z
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBNO055Gyroscope' )]
+  TArduinoBNO055Gyroscope : TArduinoBasicEnabledXYZSensor
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    [PropertyListDesignValue( '2000' )]
+    [ValueRange( 125, 2000 )]
+    [NamePostfix( '(dps)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeMode' )]
+    Range : Unsigned = 2000
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeMode' )]
+    Mode : TArduinoBNO0GyroscopeMode = Normal
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '523' )]
+    [PropertyListDesignValue( '230' )]
+    [PropertyListDesignValue( '116' )]
+    [PropertyListDesignValue( '47' )]
+    [PropertyListDesignValue( '23' )]
+    [PropertyListDesignValue( '12' )]
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '32' )]
+    [ValueRange( 32, 523 )]
+    [NamePostfix( '(Hz)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeMode' )]
+    Bandwidth : Unsigned = 32
+
+    Offsets : TArduinoBNO055GyroscopeOffsets
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoBNO055CompassOperationMode : Enum
+  
+      LowPower
+      Regular
+      EnhancedRegular
+      HighAccuracy
+      
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoBNO055CompassPowerMode : Enum
+  
+      Normal
+      Sleep
+      Suspend
+      ForceMode
+      
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBNO055CompassOffsets : TArduinoBasicXYZOffsets
+
+    [NamePostfix( '(uT)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateCompassOffsets' )]
+    X
+
+    [NamePostfix( '(uT)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateCompassOffsets' )]
+    Y
+
+    [NamePostfix( '(uT)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateCompassOffsets' )]
+    Z
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBNO055Compass' )]
+  TArduinoBNO055Compass : TArduinoBasicEnabledXYZSensor
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '6' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '15' )]
+    [PropertyListDesignValue( '20' )]
+    [PropertyListDesignValue( '25' )]
+    [PropertyListDesignValue( '30' )]
+    [ValueRange( 2, 30 )]
+    [NamePostfix( '(Hz)' )]
+    Rate : Unsigned = 20
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateCompassMode' )]
+    OperationMode : TArduinoBNO055CompassOperationMode = Regular
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateCompassMode' )]
+    PowerMode : TArduinoBNO055CompassPowerMode = Normal
+
+    Offsets : TArduinoBNO055CompassOffsets
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBNO055Fused' )]
+  TArduinoBNO055Fused : TArduinoBasicEnabledXYZSensor
+
+    Calibration : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBNO055Rotation' )]
+  TArduinoBNO055Rotation : TArduinoBasicEnabledRotationQuaternionSensor;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoBNO0Mode : Enum
+  
+      Accelerometer
+      Compass
+      Gyroscope
+      AccelerometerCompass
+      AccelerometerGyroscope
+      GyroscopeCompass
+      AccelerometerGyroscopeCompass
+
+      FusionAccelerometerGyroscopeRelative
+      FusionAccelerometerCompassAbsolute
+      FusionAccelerometerCompassRelative
+
+      FusionFull
+      FusionFullCalibrated
+
+      Auto
+      
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoBNO0PowerMode : Enum
+  
+    Normal
+    LowPower
+    Suspend
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoBNO0AxisOrientation : Enum
+
+    X
+    Y
+    Z
+    InvertedX
+    InvertedY
+    InvertedZ
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBNO055Orientation' )]
+  TArduinoBNO055Orientation : TArduinoCodePersistent
+
+    X : TArduinoBNO0AxisOrientation = X
+    Y : TArduinoBNO0AxisOrientation = Y
+    InvertZ : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BNO055.h' )]
+  [ArduinoClass( 'Mitov::BNO055I2C' )]
+  [Name( 'Accelerometer Gyroscope Compass BNO055 I2C' )]
+  [CreateName( 'AccelerometerGyroscopeCompass' )]
+  [ArduinoWebKeywords( 'BNO055' )]
+  [ArduinoPinDefinePrefix( '_MITOV_BNO055' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoBNO055I2C : TArduinoI2CClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [DesignRange( $28, $29 )]
+    Address : TArduinoUInt8 = $28
+
+    ExternalOscillator : Boolean = False
+    Mode : TArduinoBNO0Mode = Auto
+    PowerMode : TArduinoBNO0PowerMode = Normal
+    Orientation : TArduinoBNO055Orientation
+    Thermometer : TArduinoBNO055Thermometer
+    Accelerometer : TArduinoBNO055Accelerometer
+    Gyroscope : TArduinoBNO055Gyroscope
+    Compass : TArduinoBNO055Compass
+    Fused : TArduinoBNO055Fused    
+    Rotation : TArduinoBNO055Rotation
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,275 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoBinarySetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::BinaryValueSource' )]
+  [CreateName( 'BinaryValue' )]
+  [Name( 'Binary Value' )]
+  [Category( TArduinoBinaryDataSourcesToolbarCategory )]
+//  [ArrayValueSourceComponent]
+  +TArduinoBinaryValue : TArduinoCommonClockedByteSource, TArduinoValue_BasicExtender
+
+    Value : TArduinoBinaryPersistent
+    Elements : TArduinoBinarySetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatBinary' )]
+  [Name( 'Repeat Binary' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatByte : TArduinoCommonEnableByteFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [CreateName( 'BinaryMultiSource' )]
+  [Name( 'Binary Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  +TArduinoByteMultiSource : TArduinoCommonByteSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoByteSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoByteSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoByteIndexBasic : TArduinoCommonEnableByteFilter
+
+    [ValueRange( 0, 255 )]
+    Index : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayDeleteItems' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint8_t' )]
+  [Name( 'Binary Data(Array) Delete Items' )]
+  [CreateName( 'BinaryDeleteItems' )]
+  [Category( TArduinoBinaryFiltersToolbarCategory )]
+  +TArduinoByteDeleteItems : TArduinoByteIndexBasic
+
+    [ValueRange( 0, 255 )]
+    Count : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBinaryBasicInitialValueFilter : TArduinoCommonEnableByteFilter
+  
+    InitialValue : TArduinoBinaryNoBindingPersistent
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'DATA', 'uint8_t' )]
+  [CreateName( 'RememberBinary' )]
+  [Name( 'Remember Binary Data(Array)' )]
+  [Category( TArduinoBinaryFiltersToolbarCategory )]
+  +TArduinoRememberBinary : TArduinoBinaryBasicInitialValueFilter, TArduinoRememberArray_Extender;
+//---------------------------------------------------------------------------
+  TArduinoByteItemsAtIndexBasic : TArduinoByteIndexBasic
+
+    Value : TArduinoBinaryPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayInsertItems' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint8_t' )]
+  [Name( 'Binary Insert Items' )]
+  [CreateName( 'ByteInsertItems' )]
+  [Category( TArduinoBinaryFiltersToolbarCategory )]
+  +TArduinoByteInsertItems : TArduinoByteItemsAtIndexBasic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayReplaceItemsAtIndex' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint8_t' )]
+  [Name( 'Binary Replace Items At Index' )]
+  [CreateName( 'ReplaceItemsAtIndex' )]
+  [Category( TArduinoBinaryFiltersToolbarCategory )]
+  +TArduinoByteReplaceItemsAtIndex : TArduinoByteItemsAtIndexBasic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Snapshot.h' )]
+  [ArduinoClass( 'Mitov::SnapshotArray' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'uint8_t' )]
+  [CreateName( 'BinarySnapshot' )]
+  [Name( 'Binary Snapshot' )]
+  [Category( TArduinoBinaryFiltersToolbarCategory )]
+  +TArduinoBinarySnapshot : TArduinoCommonEnableByteFilter
+
+    [OWPrimaryPin]
+    SnapshotInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::ArrayReplace' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint8_t' )]
+  [Name( 'Binary Replace' )]
+  [CreateName( 'BinaryReplace' )]
+  [Category( TArduinoBinaryFiltersToolbarCategory )]
+  +TArduinoBinaryReplace : TArduinoCommonEnableByteFilter
+
+    FromValue : TArduinoBinaryPersistent
+    ToValue : TArduinoBinaryPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Binary Multi-Source Merger' )]
+  [CreateName( 'BinaryMultiMerger' )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  +TArduinoByteMultiMerger : TArduinoByteMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareBinaryValue' )]
+  [Name( 'Compare Binary Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoBinaryMathFilterToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [ArduinoStart]
+  +TArduinoCompareByteValue : TArduinoCommonByteEnableSink
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+//    [ArduinoUseBindingSetter]
+//    [ArduinoBindingPostfix( '_Binding' )]
+    Value : TArduinoBinaryPersistent
+
+    [ArduinoTransformImplementation( 'CompareType' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareEqualValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoBinarySetValueElement' )]
+  [ParentImage( TArduinoBinaryValue )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoBinarySetValueElement : TArduinoBinaryBasicValueElement
+
+    [OWPinGroup( TArduinoBinarySetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoBinaryStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  [ArduinoSetValueTryActiveCallChain]
+  +TArduinoBinaryStateSetValueElement : TArduinoBinaryBasicValueElement
+
+    [OWPinGroup( TArduinoBinaryStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    Value : TArduinoBinaryPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBinarySetValueElements )]
+  [ArduinoHelpPostfix( '(Binary Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicBinarySetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoBinaryBasicValueElement : TArduinoBasicBinarySetValueElement
+
+    Value : TArduinoBinaryPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TValueArray<uint8_t>' )]
+  [Name( 'Binary On/Off Switch' )]
+  [CreateName( 'BinarySwitch' )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  +TArduinoBinarySwitch : TArduinoCommonByteSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoByteSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TValueArray<uint8_t>' )]
+  [Name( 'Binary Toggle Switch' )]
+  [CreateName( 'BinaryToggleSwitch' )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  +TArduinoBinaryToggleSwitch : TArduinoCommonByteSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoByteSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoByteSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TValueArray<uint8_t>' )]
+  [Name( 'Binary Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'BinaryDemux' )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  +TArduinoBinaryDemux : TArduinoCommonByteSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoByteSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoByteSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Binary Toggle Demux' )]
+  [CreateName( 'BinaryToggleDemux' )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  +TArduinoBinaryToggleDemux : TArduinoCommonByteSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoByteSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin  : TOWArduinoByteSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TValueArray<uint8_t>' )]
+  [Name( 'Binary Mux(Multi channel Switch)' )]
+  [CreateName( 'BinaryMux' )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  +TArduinoBinaryMux : TArduinoByteMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::TArduinoArrayToBinary' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Analog Array To Binary' )]
+  [CreateName( 'AnalogArrayToBinary' )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  +TArduinoAnalogArrayToBinary : TArduinoCommonAnalogArrayEnableSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArrayOperations.h' )]
+  [ArduinoClass( 'Mitov::TArduinoArrayToBinary' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  [Name( 'Complex Array To Binary' )]
+  [CreateName( 'ComplexArrayToBinary' )]
+  [Category( TArduinoBinaryToolbarCategory )]
+  [Category( TArduinoComplexToolbarCategory )]
+  +TArduinoComplexArrayToBinary : TArduinoCommonAnalogArrayEnableSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

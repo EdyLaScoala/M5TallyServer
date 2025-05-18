@@ -1,0 +1,137 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTemperatureHumidityHTS221Average' )]
+  TArduinoTemperatureHumidityHTS221Average : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '128' )]
+    [PropertyListDesignValue( '256' )]
+    Temperature : Unsigned = 16
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '128' )]
+    [PropertyListDesignValue( '256' )]
+    [PropertyListDesignValue( '512' )]
+    Humidity : Unsigned = 32
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTemperatureHumidityHTS221DataReadySignal' )]
+  TArduinoTemperatureHumidityHTS221DataReadySignal : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl2' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl2' )]
+    ActiveLow : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl2' )]
+    OpenDrain : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TemperatureHumidityHTS221.h' )]
+  [CreateName( 'HumidityThermometer' )]
+  [ArduinoWebKeywords( 'HTS221 Humidity Thermometer' )]
+  [Category( TArduinoMeasurementTemperatureHumidityToolbarCategory )]
+  TArduinoTemperatureHumidityHTS221_Extender : Extender
+
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Humidity(%)' )]
+    HumidityOutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginClock' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStart' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    InFahrenheit : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateControl1' )]
+    PowerDown : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1.0' )]
+    [PropertyListDesignValue( '7.0' )]
+    [PropertyListDesignValue( '12.5' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateControl1' )]
+    SampleRate : Single = 12.5
+
+    [ArduinoUseBindingCheckSetter( 'UpdateControl1' )]
+    OneShot : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateControl2' )]
+    Heater : Boolean = False
+
+    Average : TArduinoTemperatureHumidityHTS221Average
+
+  ;
+//---------------------------------------------------------------------------
+    TArduinoTemperatureHumidityHTS221_Basic : TArduinoClockedEnableComponent, TArduinoTemperatureHumidityHTS221_Extender
+    
+      DataReadySignal : TArduinoTemperatureHumidityHTS221DataReadySignal
+      
+    ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TemperatureHumidityHTS221' )]
+  [Name( 'Humidity and Thermometer Sensirion HTS221(I2C)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2C' )]
+  +TArduinoTemperatureHumidityHTS221_I2C : TArduinoTemperatureHumidityHTS221_Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $5F
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TemperatureHumidityHTS221' )]
+  [Name( 'Humidity and Thermometer Sensirion HTS221(SPI)' )]
+  [ArduinoInclude( 'Mitov_Arduino_SPI.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPISpeed' )]
+  +TArduinoTemperatureHumidityHTS221_SPI : TArduinoTemperatureHumidityHTS221_Basic
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_TemperatureHumidityHTS221.h' )]
+  [ArduinoClass( 'Mitov::TemperatureHumidityHTS221' )]
+  [ArduinoTemplateParameter( 'DataReadySignal', 'Mitov::NestedProperty<17, Mitov::TArduinoTemperatureHumidityHTS221DataReadySignal<Mitov::ConstantProperty<26, bool, false >, Mitov::ConstantProperty<15, bool, false >, Mitov::ConstantProperty<17, bool, false > > >' )]
+  [Name( 'Humidity/Thermometer' )]
+  [CreateName( 'Humidity/Thermometer' )]
+  [ParentImage( TArduinoBasicDHTModule )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoTemperatureHumidityHTS221_I2C_Module : TArduinoClockEnabledBasicShield, TArduinoTemperatureHumidityHTS221_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

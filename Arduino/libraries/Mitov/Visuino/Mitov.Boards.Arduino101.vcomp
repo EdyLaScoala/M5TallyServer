@@ -1,0 +1,470 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Curie' )]
+  TCurieCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Curie' )]
+  [Category( TArduinoCategory )]
+  [AlternateCategory( TCurieCategory )]
+  [ParentImage( TCurieCategory )]
+  TArduinoCurieCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'HandleInterrupt' )]
+  TArduino101GyroscopeAccelerometerModuleHandleInterruptCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduino101GyroscopeAccelerometerModuleHandleInterruptCallChain]
+  TArduino101Functions : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_CurieIMU.h' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduino101BasicXYZSensor : TArduinoCodePersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'X', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Z', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Arduino101Gyroscope' )]
+  [ArduinoStart]
+  [ParentImage( TArduinoMPUXYZGyroscope )]
+  TArduino101Gyroscope : TArduino101BasicXYZSensor
+
+    [ArduinoUseBindingSetter]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '25' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '100' )]
+    [PropertyListDesignValue( '200' )]
+    [PropertyListDesignValue( '400' )]
+    [PropertyListDesignValue( '800' )]
+    [PropertyListDesignValue( '1600' )]
+    [PropertyListDesignValue( '3200' )]
+    Rate : Unsigned = 3200
+
+    [ArduinoUseBindingSetter]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    [PropertyListDesignValue( '2000' )]
+    Range : Unsigned = 2000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Arduino101Accelerometer' )]
+  [ArduinoStart]
+  [ParentImage( TArduinoMPUXYZAccelerometer )]
+  TArduino101Accelerometer : TArduino101BasicXYZSensor
+
+    [ArduinoUseBindingSetter]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '12.5' )]
+    [PropertyListDesignValue( '25' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '100' )]
+    [PropertyListDesignValue( '200' )]
+    [PropertyListDesignValue( '400' )]
+    [PropertyListDesignValue( '800' )]
+    [PropertyListDesignValue( '1600' )]
+    Rate : Single = 1600
+
+    [ArduinoUseBindingSetter]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    Range : Unsigned = 16
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::Arduino101Thermometer' )]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicEnabledThermometer )]
+  TArduino101Thermometer : TArduinoCodePersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    InFahrenheit : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Gyroscope Accelerometer' )]
+  [CreateName( 'GyroscopeAccelerometer' )]
+  [ArduinoInclude( 'CurieIMU.h' )]
+  [ArduinoInclude( 'Mitov_CurieIMU.h' )]
+  [ArduinoClass( 'Mitov::Arduino101CurieIMU' )]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicGyroscopeAccelerometerCompassModule )]
+  +TArduino101GyroscopeAccelerometerModule : TArduinoShield
+
+     Accelerometer : TArduino101Accelerometer
+     Gyroscope : TArduino101Gyroscope
+     Thermometer : TArduino101Thermometer
+
+     Functions : TArduino101Functions
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'CurieBLE.h' )]
+  +TArduino101BluetoothModule : TArduinoBluetoothModule;
+//---------------------------------------------------------------------------
+  [Name( 'Detections' )]
+  TArduino101FunctionsDetectionsCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Set Offset' )]
+  TArduino101FunctionsSetOffsetCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Auto Calibrate' )]
+  TArduino101FunctionsAutoCalibrateCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  TArduino101StepMode : Enum
+  
+    smNormal
+    smSensitive
+    smRobust
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduino101ClockedFunction : TArduino101Function
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Steps' )]
+  [ArduinoClass( 'Mitov::Arduino101CurieDetectSteps' )]
+  [Category( TArduino101FunctionsDetectionsCategory )]
+  [ArduinoStart]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduino101StepsDetector : TArduino101ClockedFunction
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled : Boolean = True
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateMode' )]
+    Mode : TArduino101StepMode = smNormal
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino101AccelerometerOrientation : Enum 
+  
+    aoXUp
+    aoXDown
+    aoYUp
+    aoYDown
+    aoZUp
+    aoZDown
+    
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduino101FunctionsAutoCalibrateCategory )]
+  TArduino101BasicAutoCalibrateFunction : TArduino101ClockedFunction
+
+    [OWPrimaryPin]
+    CalibratingOutputPin : TOWArduinoDigitalSourcePin
+
+    Orientation : TArduino101AccelerometerOrientation = aoZUp
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Auto Calibrate Accelerometer' )]
+  [ArduinoClass( 'Mitov::Arduino101CalibrateAccelerometer' )]
+  +TArduino101CalibrateAccelerometer : TArduino101BasicAutoCalibrateFunction;
+//---------------------------------------------------------------------------
+  [Name( 'Auto Calibrate Gyroscope' )]
+  [ArduinoClass( 'Mitov::Arduino101CalibrateGyroscope' )]
+  +TArduino101CalibrateGyroscope : TArduino101BasicAutoCalibrateFunction;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduino101Functions )]
+  [ArduinoDeclaredClass]
+  [ArduinoHelpPostfix( '(Arduino 101 Functions)' )]
+  [SingleCollectionInstance]
+  [ArduinoInclude( 'CurieIMU.h' )]
+  [ArduinoInclude( 'Mitov_CurieIMU.h' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  TArduino101Function : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduino101BasicDigitalSensor : TArduino101Function
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAddPin( 'X Up', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'X Down', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Y Up', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Y Down', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Z Up', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Z Down', TOWArduinoClockSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Tap' )]
+  [ArduinoClass( 'Mitov::Arduino101CurieDetectTap' )]
+  [Category( TArduino101FunctionsDetectionsCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoVariable( Boolean, 'FDetectedDoubleTap' )]
+  [TArduino101GyroscopeAccelerometerModuleHandleInterruptCallChain]
+  +TArduino101TapDetector : TArduino101BasicDigitalSensor
+
+    [OWPrimaryPin]
+    DoubleTapOutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateThreshold' )]
+    [ValueRange( 31.25, 127750.00 )]
+    [ NamePostfix( '(mg)' ) ]
+    Threshold : Single = 31.25
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDurationQuiet' )]
+    [ValueRange( 20, 30 )]
+    [ NamePostfix( '(mS)' ) ]
+    DurationQuiet : Single = 20.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDurationShock' )]
+    [ValueRange( 50, 75 )]
+    [ NamePostfix( '(mS)' ) ]
+    DurationShock : Single = 50.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDurationDoubleTap' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '100' )]
+    [PropertyListDesignValue( '150' )]
+    [PropertyListDesignValue( '200' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '275' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '700' )]
+    [Name( 'Duration Double-Tap (mS)' )]
+    DurationDoubleTap : Unsigned = 700
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Shock' )]
+  [ArduinoClass( 'Mitov::Arduino101CurieDetectShock' )]
+  [Category( TArduino101FunctionsDetectionsCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [TArduino101GyroscopeAccelerometerModuleHandleInterruptCallChain]
+  +TArduino101ShockDetector : TArduino101BasicDigitalSensor
+
+    [ArduinoUseBindingCheckSetter( 'UpdateThreshold' )]
+    [ValueRange( 3.91, 15968.75 )]
+    [ NamePostfix( '(mg)' ) ]
+    Threshold : Single = 3.91
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDuration' )]
+    [ValueRange( 2.5, 637.5 )]
+    [ NamePostfix( '(mS)' ) ]
+    Duration : Single = 2.5
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Zero Motion' )]
+  [ArduinoClass( 'Mitov::Arduino101CurieDetectZeroMotion' )]
+  [Category( TArduino101FunctionsDetectionsCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoVariable( Boolean, 'FDetected' )]
+  [TArduino101GyroscopeAccelerometerModuleHandleInterruptCallChain]
+  +TArduino101ZeroMotionDetector : TArduino101Function
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateThreshold' )]
+    [ValueRange( 0, 7968.75 )]
+    [ NamePostfix( '(mg)' ) ]
+    Threshold : Single = 0.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDuration' )]
+    [ValueRange( 1.28, 430.08 )]
+    [ NamePostfix( '(mS)' ) ]
+    Duration : Single = 1.28
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Motion' )]
+  [ArduinoClass( 'Mitov::Arduino101CurieDetectMotion' )]
+  [Category( TArduino101FunctionsDetectionsCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [TArduino101GyroscopeAccelerometerModuleHandleInterruptCallChain]
+  +TArduino101MotionDetector : TArduino101BasicDigitalSensor
+
+    [ArduinoUseBindingCheckSetter( 'UpdateThreshold' )]
+    [ValueRange( 0, 7968.75 )]
+    [ NamePostfix( '(mg)' ) ]
+    Threshold : Single = 0.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateSampleCount' )]
+    [ValueRange( 1, 4 )]
+    SampleCount : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduino101FunctionsSetOffsetCategory )]
+  [ArduinoStart]
+  TArduino101BasicSensorChannelOffset : TArduino101Function
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOffset' )]
+    [ValueRange( -$8000, $7FFFF )]
+    Offset : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Accelerometer Offset X' )]
+  [ArduinoClass( 'Mitov::Arduino101AccelerometerOffset' )]
+  [ArduinoTemplateParameter( 'C_AXIS' ,'X_AXIS' )]
+  +TArduino101AccelerometerOffsetX : TArduino101BasicSensorChannelOffset;
+//---------------------------------------------------------------------------
+  [Name( 'Set Accelerometer Offset Y' )]
+  [ArduinoClass( 'Mitov::Arduino101AccelerometerOffset' )]
+  [ArduinoTemplateParameter( 'C_AXIS' ,'Y_AXIS' )]
+  +TArduino101AccelerometerOffsetY : TArduino101BasicSensorChannelOffset;
+//---------------------------------------------------------------------------
+  [Name( 'Set Accelerometer Offset Z' )]
+  [ArduinoClass( 'Mitov::Arduino101AccelerometerOffset' )]
+  [ArduinoTemplateParameter( 'C_AXIS' ,'Z_AXIS' )]
+  +TArduino101AccelerometerOffsetZ : TArduino101BasicSensorChannelOffset;
+//---------------------------------------------------------------------------
+  [Name( 'Set Gyroscope Offset X' )]
+  [ArduinoClass( 'Mitov::Arduino101GyroscopeOffset' )]
+  [ArduinoTemplateParameter( 'C_AXIS' ,'X_AXIS' )]
+  +TArduino101GyroscopeOffsetX : TArduino101BasicSensorChannelOffset;
+//---------------------------------------------------------------------------
+  [Name( 'Set Gyroscope Offset Y' )]
+  [ArduinoClass( 'Mitov::Arduino101GyroscopeOffset' )]
+  [ArduinoTemplateParameter( 'C_AXIS' ,'Y_AXIS' )]
+  +TArduino101GyroscopeOffsetY : TArduino101BasicSensorChannelOffset;
+//---------------------------------------------------------------------------
+  [Name( 'Set Gyroscope Offset Z' )]
+  [ArduinoClass( 'Mitov::Arduino101GyroscopeOffset' )]
+  [ArduinoTemplateParameter( 'C_AXIS' ,'Z_AXIS' )]
+  +TArduino101GyroscopeOffsetZ : TArduino101BasicSensorChannelOffset;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoNormalizedAnalogValueElements )]
+  [ArduinoHelpPostfix( '(Normalized Analog Value Array)' )]
+  +TArduinoNormalizedAnalogValueElement : TArduinoBasicAnalogValueElement
+
+    [ValueRange( 0.0, 1.0 )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Neurons' )]
+  [CreateName( 'Neurons' )]
+  [ArduinoInclude( 'Mitov_CurieNeurons.h' )]
+  [ArduinoClass( 'Mitov::Arduino101CurieNeurons ' )]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduino101Neuron )]
+  +TArduino101NeuronsModule : TArduinoShield
+
+    ForgetInputPin : TOWArduinoClockSinkPin
+
+    [ComponentEditorEntryDesign( 'Edit C&lassifiers ...' )]
+    Classifiers : TArduino101NeuronClassifiers
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Forget' )]
+  [ArduinoClass( 'Mitov::Arduino101NeuronForgetOperation' )]
+  +TArduino101NeuronForgetOperation : TArduino101NeuronBasicClockedOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Read Knowledge' )]
+  [ArduinoClass( 'Mitov::Arduino101NeuronReadKnowledgeOperation' )]
+  +TArduino101NeuronReadKnowledgeOperation : TArduino101NeuronBasicClockedOperation
+
+    FeaturesOutputPin : TOWArduinoAnalogArraySourcePin
+    CategoryOutputPin : TOWArduinoIntegerSourcePin
+    InfluenceFieldOutputPin : TOWArduinoUnsignedSourcePin
+    MinInfluenceFieldOutputPin : TOWArduinoUnsignedSourcePin
+    NeuronCompletedOutputPin : TOWArduinoClockSourcePin
+    CompletedOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino 101' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_101' )]
+  [ArduinoBoardArchitecture( 'arc32' )]
+  [ArduinoBoardCompileParams( 'Intel:arc32:arduino_101' )]
+  [Category( TArduinoCurieCategory )]
+  [ArduinoBoardCanReset]
+  +TArduino_101_Board : TArduinoBoardExtendableImplementation
+  
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduino101GyroscopeAccelerometerModule )]
+    [AddItem( TArduino101BluetoothModule )]
+    [AddItem( TArduino101NeuronsModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoHardwareSerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,   1, TArduinoAdditionalDigitalSerial0InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0InterruptChannel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  2, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoBasicDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoBasicDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoAdditionalDigitalSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalSPI0InterruptChannel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 4, TArduinoCombinedAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoBasicDigitalInterruptChannel, 'Digital(ATN)', 'ATN' )]
+    Digital : TArduinoDigitalChannels
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

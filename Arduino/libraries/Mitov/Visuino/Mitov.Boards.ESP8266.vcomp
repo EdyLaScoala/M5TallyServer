@@ -1,0 +1,891 @@
+Mitov
+//---------------------------------------------------------------------------
+  ArduinoESP8266WiFiScanAttribute : TCustomAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  TESP8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoESP8266WiFiModuleOperations )]
+  [ArduinoHelpPostfix( '(ESP8266 WiFi Operations)' )]
+  [ArduinoDeclaredClass]
+  TArduinoESP8266WiFiModuleOperation : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  ['{45672778-2CCC-4BC5-AA63-6AFDD03E4419}']
+  IESP8266_01_Shield : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IESP8266_01_Shield )]
+  TArduinoESP8266_01_Shields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [Name( 'Scan WiFi Networks' )]
+  [CreateName( 'ScanNetworks' )]
+  [ArduinoClass( 'Mitov::ESP8266ModuleScanNetworksOperation' )]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnected]
+  [ArduinoVariable( Boolean, 'FScanRequest' )]
+  [ParentImage( TArduinoESP32WiFiModuleScanNetworksOperation )]
+  [ArduinoESP8266WiFiScan]
+  +TArduinoESP8266WiFiModuleScanNetworksOperation : TArduinoESP8266WiFiModuleOperation
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ScanInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoChangeOnlyPin]
+    ScanningOutputPin : TOWArduinoDigitalSourcePin
+
+    FailedOutputPin : TOWArduinoClockSourcePin
+    CountOutputPin : TOWArduinoUnsignedSourcePin
+    SignalStrengthOutputPin : TOWArduinoIntegerSourcePin
+    SSIDOutputPin : TOWArduinoStringSourcePin
+
+    [Name( 'MAC Address (BSSID)' )]
+    MACAddressOutputPin : TOWArduinoStringSourcePin
+
+    EncryptionOutputPin : TOWArduinoUnsignedSourcePin
+    ChannelOutputPin : TOWArduinoIntegerSourcePin
+    IsHiddenOutputPin : TOWArduinoDigitalSourcePin
+    FoundNetworkOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Program Over WiFi' )]
+  [ArduinoInclude( 'ArduinoOTA.h' )]
+  [ArduinoInclude( 'Mitov_ESP8266_ProgramOverWiFi.h' )]
+  [ArduinoClass( 'Mitov::ProgramESP8266OverWiFi' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoESP32WiFiModuleProgramOverWiFiOperation )]
+  +TArduinoESP8266WiFiModuleProgramOverWiFiOperation : TArduinoESP8266WiFiModuleOperation
+
+    UploadingOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoChangeOnlyPin]
+    ProgressOutputPin : TOWArduinoAnalogSourcePin
+
+    ErrorOutputPin : TOWArduinoUnsignedSourcePin
+
+    [MaxValue( $FFFF )]
+    Port : Unsigned = 8266
+
+    Hostname : String = ''
+    Password : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266WiFiModuleClockedOperation : TArduinoESP8266WiFiModuleOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'WiFi Signal Strength' )]
+  [CreateName( 'SignalStrength' )]
+  [ArduinoClass( 'Mitov::ESP8266ModuleSignalStrengthOperation' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoESP32WiFiModuleSignalStrengthOperation )]
+  +TArduinoESP8266WiFiModuleSignalStrengthOperation : TArduinoESP8266WiFiModuleClockedOperation
+
+    SignalStrengthOutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'WiFi Reconnect' )]
+  [CreateName( 'Reconnect' )]
+  [ArduinoClass( 'Mitov::ESP8266ModuleReconnectOperation' )]
+  [ParentImage( TArduinoESP32WiFiModuleReconnectOperation )]
+  +TArduinoESP8266WiFiModuleReconnectOperation : TArduinoESP8266WiFiModuleClockedOperation;
+//---------------------------------------------------------------------------
+  TArduinoBasicPasswordRemoteWiFiAccessPoint : TArduinoBasicRemoteWiFiAccessPoint
+
+    Password : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicPasswordConfigRemoteWiFiAccessPoint : TArduinoBasicPasswordRemoteWiFiAccessPoint
+
+    Config : TArduinoESP8266WiFiModuleRemoteConfig
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoESP8266WiFiModuleRemoteAccessPoints )]
+  [ArduinoHelpPostfix( '(ESP8266 WiFi Module)' )]
+  [Name( 'WiFi Access Point' )]
+  [CreateName( 'Access Point' )]
+  [ArduinoClass( 'Mitov::ESP8266ModuleRemoteAccessPoint' )]
+  [ParentImage( TArduinoRemoteWiFiAccessPoint )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoCallChainIndex]
+  +TArduinoESP8266WiFiModuleRemoteAccessPoint : TArduinoBasicPasswordConfigRemoteWiFiAccessPoint
+
+    Channel : TArduinoESP8266WiFiModuleOptionalChannel
+
+    [Name( 'MAC Address(BSSID)' )]
+    MacAddress : TArduinoESP8266WiFiModuleOptionalMacAddress
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266ProcessorModuleOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoESP8266ProcessorModuleOperations )]
+  [ArduinoHelpPostfix( '(ESP8266 Processor Operations)' )]
+  TArduinoESP8266ProcessorModuleBasicOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  TArduinoESP8266ProcessorModuleBasicOperation : TArduinoCodePersistent, TArduinoESP8266ProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  TArduinoESP8266ProcessorModuleBasicClockedOperation : TArduinoESP8266ProcessorModuleBasicOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP8266ProcessorModuleGetIDOperation : TArduinoProcessorModuleBasicGetIDOperation, TArduinoESP8266ProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  TArduinoESP8266ProcessorModuleBasicClockedTextOperation : TArduinoESP8266ProcessorModuleBasicClockedOperation
+
+    OutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266ProcessorModuleBasicOptionalClockedTextOperation : TArduinoESP8266ProcessorModuleBasicClockedTextOperation
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Reset' )]
+  [CreateName( 'Reset' )]
+  [ArduinoInclude( 'Esp.h' )]
+  [ArduinoInclude( 'Mitov_ESP8266_Processor.h' )]
+  [ArduinoClass( 'Mitov::ESP8266ProcessorReset' )]
+  [ParentImage( TArduinoProcessorModuleResetOperation]
+  +TArduinoESP8266ProcessorModuleResetOperation : TArduinoESP8266ProcessorModuleBasicClockedOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Reset Reason' )]
+  [CreateName( 'Reset Reason' )]
+  [ArduinoInclude( 'Esp.h' )]
+  [ArduinoInclude( 'Mitov_ESP8266_Processor.h' )]
+  [ArduinoClass( 'Mitov::ESP8266GetProcessorResetReason' )]
+  +TArduinoESP8266ProcessorModuleGetResetReasonOperation : TArduinoESP8266ProcessorModuleBasicOptionalClockedTextOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Reset Info' )]
+  [CreateName( 'Reset Info' )]
+  [ArduinoInclude( 'Esp.h' )]
+  [ArduinoInclude( 'Mitov_ESP8266_Processor.h' )]
+  [ArduinoClass( 'Mitov::ESP8266GetProcessorResetInfo' )]
+  +TArduinoESP8266ProcessorModuleGetResetInfoOperation : TArduinoESP8266ProcessorModuleBasicOptionalClockedTextOperation;
+//---------------------------------------------------------------------------
+  TArduinoESP8266ProcessorModuleDeepSleepMode : Enum 
+  
+    dsmDefault
+    dsmCalibration
+    dsmNoCalibration
+    dsmDisableRF
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Deep Sleep' )]
+  [CreateName( 'Deep Sleep' )]
+  [ArduinoInclude( 'Esp.h' )]
+  [ArduinoInclude( 'Mitov_ESP8266_Processor.h' )]
+  [ArduinoClass( 'Mitov::ESP8266ProcessorDeepSleep' )]
+  [ParentImage( TArduinoESP32ProcessorModuleDeepSleepOperation )]
+  +TArduinoESP8266ProcessorModuleDeepSleepOperation : TArduinoESP8266ProcessorModuleBasicClockedOperation
+
+    Mode : TArduinoESP8266ProcessorModuleDeepSleepMode = dsmDefault
+
+    [ NamePostfix( '(uS)' ) ]
+    Period : Unsigned = 1000000
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Get Available RAM' )]
+  [CreateName( 'Available RAM' )]
+  [ArduinoInclude( 'Mitov_ESP8266_Processor.h' )]
+  [ArduinoClass( 'Mitov::ESP8266GetArduinoAvailableRAM' )]
+  [ParentImage( TArduinoProcessorAvailableRAMOperation]
+  +TArduinoESP8266ProcessorAvailableRAMOperation : TArduinoESP8266ProcessorModuleBasicClockedOperation
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Processor' )]
+  [CreateName( 'Processor' )]
+  [ParentImage( TArduinoProcessorModule )]
+  +TArduinoESP8266ProcessorModule : TArduinoShield
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    Operations : TArduinoESP8266ProcessorModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Watchdog Timer' )]
+  [CreateName( 'Watchdog Timer' )]
+  [ArduinoInclude( 'Esp.h' )]
+  [ArduinoInclude( 'Mitov_ESP8266_WatchdogTimer.h' )]
+  [ArduinoClass( 'Mitov::ESP8266_WatchdogTimer' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  [ParentImage( TArduinoWatchdogTimerModule )]
+  +TArduinoESP8266WatchdogTimerModule : TArduinoDisabledUpdateShield
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoESP8266WiFiSockets )]
+//  [ArduinoInclude( 'Ethernet.h', 'Ethernet', 'https://github.com/arduino-libraries/Ethernet' )]
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoHelpPostfix( '(WiFi Socket)' )]
+  [ArduinoClass( 'Mitov::TCPClientSocket' )] //<Mitov::BasicEthernetShield,WiFiClient>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicTCPClientSocket_Implementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_CLIENT', 'WiFiClient' )]
+  +TArduinoWiFiTCPClientSocket : TArduinoBasicTCPClientSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoESP8266WiFiSockets )]
+//  [ArduinoInclude( 'Ethernet.h', 'Ethernet', 'https://github.com/arduino-libraries/Ethernet' )]
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoHelpPostfix( '(WiFi Socket)' )]
+  [ArduinoClass( 'Mitov::TCPServerSocket' )] //<Mitov::BasicEthernetShield,WiFiServer,WiFiClient>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'SERVER', 'Mitov::AvailableAcceptWrapper<WiFiServer, WiFiClient>' )]
+  [ArduinoTemplateParameter( 'CLIENT', 'WiFiClient' )]
+  +TArduinoWiFiTCPServerSocket : TArduinoBasicTCPServerSocket
+  
+    [ArduinoUseBindingCheckSetter( 'UpdateNoDelay' )]
+    NoDelay : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoESP8266WiFiSockets )]
+  [ArduinoInclude( 'WiFiUDP.h' )]
+//  [ArduinoInclude( 'Ethernet.h', 'Ethernet', 'https://github.com/arduino-libraries/Ethernet' )]
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoHelpPostfix( '(WiFi Socket)' )]
+  [ArduinoClass( 'Mitov::UDPSocket' )] //<Mitov::BasicEthernetShield,WiFiUDP>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'CLIENT', 'WiFiUDP' )]
+  +TArduinoWiFiUDPSocket : TArduinoBasicUDPSocket;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoESP8266WiFiFingerprint' )]
+  TArduinoESP8266WiFiFingerprint : TArduinoCodeDisabledPersistent
+
+    [ValueRange( 20, 20 )]
+    Key : TArduinoBinaryPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoESP8266WiFiSockets )]
+//  [ArduinoIncludeDefine( '#define protected public' )]
+//  [ArduinoIncludeDefine( '#define private public' )]
+  [ArduinoInclude( 'WiFiClientSecure.h' )]
+//  [ArduinoIncludeDefine( '#undef private' )]
+//  [ArduinoIncludeDefine( '#undef protected' )]
+  [ArduinoHelpPostfix( '(ESP8266 Socket)' )]
+  [ArduinoClass( 'Mitov::TCPCACertSecureClientSocket' )] //<Mitov::BasicEthernetShield,WiFiClientSecure>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'CLIENT', 'WiFiClientSecure' )]
+//  [ArduinoVariable( Boolean, 'FRunning' )]
+//  [ArduinoVariable( Boolean, 'FConnecting' )]
+  [Name( 'TCP/IP Secure Client (SSL)' )]
+  [CreateName( 'TCP Secure Client' )]
+  [CollectionItemAssociation( TArduinoBasicTCPClientSocket )]
+  [ParentImage( TArduinoESP32WiFiTCPSecureClientSocket )]
+  +TArduinoESP8266WiFiTCPSecureClientSocket : TArduinoBasicTCPClientSocket //TArduinoBasicTCPSecureClientCACertSocket
+  
+    Fingerprint : TArduinoESP8266WiFiFingerprint
+    
+    [MultiLine]
+    CACert : String
+    
+//    [ArduinoUseBindingSetter]
+    [OWExcludeBindings]
+    Insecure : Boolean = False
+    
+    [OWExcludeBindings]
+    AllowSelfSigned : Boolean = False
+    
+    Port = 443
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266WiFiSockets : TArduinoBasicSockets;
+//---------------------------------------------------------------------------
+  [ArduinoOwnerTemplateType]
+  [ArduinoClass( 'Mitov::ESP8266WiFiModuleAccessPoint' )]
+  TArduinoESP8266WiFiModuleAccessPoint : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccessPoint' )]
+    Enabled
+
+    SSID : String = ''
+    Password : String = ''
+
+    [DesignRange( 1, 13 )]
+    Channel : Unsigned = 1
+
+    IsHidden : Boolean = False
+    Config : TArduinoESP8266WiFiModuleConfig
+
+    [Name( 'MAC Address(BSSID)' )]
+    MacAddress : TArduinoESP8266WiFiModuleOptionalMacAddress
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'TryStart' )]
+  ArduinoESP8266WiFiModuleElementConnectCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoESP8266WiFiModuleElementConnectCallChain]
+  TArduinoESP8266WiFiModuleOperations : TArduinoBasicNetworkOperations;
+//---------------------------------------------------------------------------
+  [TArduinoESP8266WiFiAccessPointElementIsEnabledCallChain]
+  [TArduinoESP8266WiFiAccessPointElementTryConnectCallChain]
+  [TArduinoESP8266WiFiAccessPointElementAssignDNSCallChain]
+  TArduinoESP8266WiFiModuleRemoteAccessPoints : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoESP8266PhysicalMode : Enum
+  
+    Mode11B
+    Mode11G
+    Mode11N
+    
+  ;  
+//---------------------------------------------------------------------------
+  TArduinoESP8266WiFiNetworkTimeServers : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+//  [ArduinoDirectProperties]
+//  [ArduinoDontMakeInstance]
+  [ArduinoEmbeddedClass]
+//[ArduinoDeclaredClass]
+  [PersistentCollection( TArduinoESP8266WiFiNetworkTimeServers )]
+  [ArduinoClass( 'Mitov::TArduinoESP8266WiFiNetworkTimeServer' )]
+  TArduinoESP8266WiFiNetworkTimeServer : TArduinoCodeEnabledPersistent
+  
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateSettings' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateSettings' )]
+    Host : String
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266WiFiNetworkTimeServer1 : TArduinoESP8266WiFiNetworkTimeServer
+
+    Host = 'pool.ntp.org'
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266WiFiNetworkTimeServer2 : TArduinoESP8266WiFiNetworkTimeServer
+
+    Host = 'time.nist.gov'
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266WiFiNetworkTimeServer3 : TArduinoESP8266WiFiNetworkTimeServer
+
+    Host = 'time1.google.com'
+
+  ;
+//---------------------------------------------------------------------------
+//[ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoESP8266WiFiNetworkTime' )]
+  TArduinoESP8266WiFiNetworkTime : TArduinoCodeEnabledPersistent
+
+    DaylightOffset : TArduinoTimeDaylightOffset
+
+    [ValueRange( -12.0, 12.0 )]
+    [NamePostfix( '(H)' )]
+    TimeZoneOffset : Single = 0.0
+    
+    [AddItem( TArduinoESP8266WiFiNetworkTimeServer1 )]
+    [AddItem( TArduinoESP8266WiFiNetworkTimeServer2 )]
+    [AddItem( TArduinoESP8266WiFiNetworkTimeServer3 )]
+    Servers : TArduinoESP8266WiFiNetworkTimeServers
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoESP8266WiFiTime' )]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault( True )]
+  TArduinoESP8266WiFiTime : TArduinoCodeEnabledPersistent
+  
+//    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginTime' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    InputPin : TOWArduinoDateTimeSinkPin
+    
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDateTimeSourcePin
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateSettings' )]
+    Enabled
+    
+    NetworkTime : TArduinoESP8266WiFiNetworkTime
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TDateTime = 44197.0
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'WiFi' )]
+  [CreateName( 'WiFi' )]
+  [ArduinoInclude( 'ESP8266WiFi.h' )]
+  [ArduinoInclude( 'Mitov_ESP8266_WiFi.h' )]
+  [ArduinoClass( 'Mitov::ESP8266WiFiModule' )]
+  [ParentImage( TArduinoESP8266BasicModule )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FIsStarted' )]
+  [ArduinoVariable( Boolean, 'FRemoteStarted' )]
+  [ArduinoVariable( Boolean, 'FDNSUpdated' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoESP8266WiFiModule : TArduinoEnabledShield
+
+    AddressOutputPin : TOWArduinoStringSourcePin
+
+    [Name( 'MAC Address' )]
+    MACOutputPin : TOWArduinoStringSourcePin
+
+    BSSIDOutputPin : TOWArduinoStringSourcePin
+    GatewayIPOutputPin : TOWArduinoStringSourcePin
+    SubnetMaskIPOutputPin : TOWArduinoStringSourcePin
+
+    [ArduinoChangeOnlyPin]
+    RemoteConnectedOutputPin : TOWArduinoDigitalSourcePin
+
+    [Name( 'Module As Access Point'  )]
+    AccessPoint : TArduinoESP8266WiFiModuleAccessPoint
+
+    [ArduinoExcludeCollectionItems]
+    [Name( 'Connect To Access Points'  )]
+    [ArduinoTemplateParameterCollectionCount]
+    [ArduinoTemplateParameterCollectionPowerConstIfZero( 'FAccessPointIndex', 1, 0 )]
+    AccessPoints : TArduinoESP8266WiFiModuleRemoteAccessPoints
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Edit Op&tions ...', True )]
+    [ArduinoTemplateParameterCollectionCountOfAttribute( 'COUNT_Scan_Elements', ArduinoESP8266WiFiScanAttribute )]
+    Operations : TArduinoESP8266WiFiModuleOperations
+
+    [ArduinoExcludeCollectionItems]
+    [ArduinoTemplateParameterCollectionCount]
+    Sockets : TArduinoESP8266WiFiSockets
+
+    [ArduinoUseBindingCheckSetter( 'UpdateAutoReconnect' )]
+    AutoReconnect : Boolean = True
+
+    HostName : String = ''
+
+    [Name( 'MAC Address' )]
+    MacAddress : TArduinoESP8266WiFiModuleOptionalMacAddress
+
+    [NamePostfix( '(dBm)' )]
+    [ValueRange( 0, 20.5 )]
+    [ArduinoUseBindingCheckSetter( 'Update_TransmitPower' )]
+    TransmitPower : Single = 20.5
+    
+    [ArduinoUseBindingCheckSetter( 'Update_PhysicalMode' )]
+    PhysicalMode : TArduinoESP8266PhysicalMode = Mode11N
+    
+    Time : TArduinoESP8266WiFiTime
+    
+    [Name( 'ESP-Now' )]
+    ESPNow : TArduino_ESP8266_ESPNow
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ESP8266Serial.h' )]
+  [ArduinoClass( 'Mitov::SerialESP8266Port' )]
+  +TArduinoESP8266HardwareSerial : TArduinoHardwareSerial 
+
+    [ArduinoUseBindingCheckSetter( 'ResetSerial' )]
+    ReceiveEnabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'ResetSerial' )]
+    TransmitEnabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'ResetSerial' )]
+    UseAlternativePins : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ESP8266Serial.h' )]
+  [ArduinoClass( 'Mitov::SerialESP8266PortSendOnly' )]
+  +TArduinoESP8266HardwareSerial1 : TArduinoBasicSerialOutputOnly
+
+    [ArduinoUseBindingCheckSetter( 'RestartPort' )]
+    [PropertyListDesignValue( '110' )]
+    [PropertyListDesignValue( '300' )]
+    [PropertyListDesignValue( '600' )]
+    [PropertyListDesignValue( '1200' )]
+    [PropertyListDesignValue( '2400' )]
+    [PropertyListDesignValue( '4800' )]
+    [PropertyListDesignValue( '9600' )]
+    [PropertyListDesignValue( '14400' )]
+    [PropertyListDesignValue( '19200' )]
+    [PropertyListDesignValue( '38400' )]
+    [PropertyListDesignValue( '56000' )]
+    [PropertyListDesignValue( '57600' )]
+    [PropertyListDesignValue( '115200' )]
+    [PropertyListDesignValue( '128000' )]
+    [PropertyListDesignValue( '256000' )]
+    [ExtendDisplayName( ' (', ')' )]
+    Speed : Unsigned = 9600
+
+    [ArduinoUseBindingCheckSetter( 'RestartPort' )]
+    [PropertyListDesignValue( '5' )]
+    [PropertyListDesignValue( '6' )]
+    [PropertyListDesignValue( '7' )]
+    [PropertyListDesignValue( '8' )]
+    [ValueRange( 5, 8 )]
+    DataBits : Unsigned = 8
+
+    [ArduinoUseBindingCheckSetter( 'RestartPort' )]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [ValueRange( 1, 2 )]
+    StopBits : Unsigned = 1
+
+    [ArduinoUseBindingCheckSetter( 'RestartPort' )]
+    Parity : TArduinoStandardSerialParity = spNone
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP8266_01_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 4 )]
+    SDA = 0
+
+    [ValueRange( 0, 4 )]
+    SCL = 2
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP8266_Generic_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 16 )]
+    SDA = 4
+
+    [ValueRange( 0, 16 )]
+    SCL = 5
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP8266_Generic_Reversed_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 16 )]
+    SDA = 5
+
+    [ValueRange( 0, 16 )]
+    SCL = 4
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_D_Duino_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 12 )]
+    SDA = 1
+
+    [ValueRange( 0, 12 )]
+    SCL = 2
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_ESP8266' )]
+  [ArduinoBoardArchitecture( 'esp8266' )]
+  TArduinoBasicESP8266Board_NoI2C : TArduinoBoardExtendableImplementation
+
+    [AddItem( TArduinoESP8266WiFiModule )]
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduinoPWMConfigModule )]
+    [AddItem( TArduinoESP8266ProcessorModule )]
+    [AddItem( TArduinoESP8266WatchdogTimerModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoESP8266HardwareSerial )]
+    [AddItem( TArduinoESP8266HardwareSerial1 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicESP8266Board : TArduinoBasicESP8266Board_NoI2C
+
+    [AddItem( TArduinoESP8266_Generic_I2C )]
+    I2CChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_Basic_DefaultPins_NoI2C_Board : TArduinoBasicESP8266Board_NoI2C
+
+    [ArduinoBoardDefaultChannelName( 'GPIO' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 0,  1, TArduinoBasicDigitalOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 1,  1, TArduinoBasicDigitalOpenDrainPWMSerial0InterruptChannel, 'GPIO(TX0)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 2,  1, TArduinoBasicDigitalOpenDrainPWMSerial1InterruptChannel, 'GPIO(TX1)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalOpenDrainPWMSerial0InterruptChannel, 'GPIO(RX0)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 4,  8, TArduinoBasicDigitalOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 12, 1, TArduinoBasicDigitalOpenDrainPWMSPI0InterruptChannel, 'GPIO(MISO)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalOpenDrainPWMSPI0InterruptChannel, 'GPIO(MOSI)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 14, 1, TArduinoBasicDigitalOpenDrainPWMSPI0InterruptChannel, 'GPIO(SCLK)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 15, 1, TArduinoBasicDigitalOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 16, 1, TArduinoBasicDigitalPWMChannel )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_Basic_DefaultPins_Analog_NoI2C_Board : TArduinoESP8266_Basic_DefaultPins_NoI2C_Board
+
+    [Name( 'Analog Input' )]
+    [ArduinoBoard_Add_AnalogInputChannels( 0, 1, TArduinoESP8266AnalogInputChannel, 'Analog Input' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_Basic_DefaultPins_Board : TArduinoESP8266_Basic_DefaultPins_NoI2C_Board
+
+    [AddItem( TArduinoESP8266_Generic_I2C )]
+    I2CChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_Basic_DefaultPins_Analog_Board : TArduinoESP8266_Basic_DefaultPins_Analog_NoI2C_Board
+  
+    [AddItem( TArduinoESP8266_Generic_I2C )]
+    I2CChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:generic:baud=921600' )]
+  TArduinoBasicESP8266GenericBootloaderBoard : TArduinoBasicESP8266Board;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266-01' )]
+  [Category( TESP8266Category )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:generic' )]
+  [ParentImage( TArduinoESP8266 )]
+  +TArduinoESP8266_01_Board : TArduinoESP8266_Basic_DefaultPins_NoI2C_Board
+
+    [AddItem( TArduinoESP8266_01_I2C )]
+    I2CChannels
+    
+    [ArduinoBoard_Add_ReservedChannels( 0, 4 )]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoESP8266_01_Shields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Generic ESP8266' )]
+  [Category( TESP8266Category )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:generic' )]
+  [ParentImage( TESP8266Category )]
+  +TArduinoESP8266_Generic_Board : TArduinoESP8266_Basic_DefaultPins_Analog_Board
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_NodeMCU_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 16 )]
+    SDA = 2
+
+    [ValueRange( 0, 16 )]
+    SCL = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_NODE_MCU' )]
+  TArduinoESP8266_NodeMCU_Basic_Board : TArduinoESP8266_Basic_DefaultPins_Analog_NoI2C_Board
+
+    [ArduinoBoard_Add_RemappedChannel( 0,     16, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 1,     5,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 2,     4,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 3,     0,  'Digital(Button)' )]
+    [ArduinoBoard_Add_RemappedChannel( 4,     2,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 5,     14, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 6, 2,  12, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 8,     15, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 9,     3,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 10,    1,  'Digital' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_NodeMCU_BasicAllChannels_Board : TArduinoESP8266_NodeMCU_Basic_Board
+
+    [ArduinoBoard_Add_RemappedChannel( 11,    9,  'Digital(SD2)' )]
+    [ArduinoBoard_Add_RemappedChannel( 12,    10, 'Digital(SD3)' )]
+    [ArduinoBoard_Add_RemappedChannel( 13,    8,  'Digital(SD1)' )]
+    [ArduinoBoard_Add_RemappedChannel( 14,    11, 'Digital(CMD)' )]
+    [ArduinoBoard_Add_RemappedChannel( 15,    7,  'Digital(SD0)' )]
+    [ArduinoBoard_Add_RemappedChannel( 16,    6,  'Digital(CLK)' )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [Category( TESP8266Category )]
+  [Name( 'NodeMCU ESP-12' )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:nodemcu:generic,baud=921600' )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:nodemcuv2:generic,baud=921600' )]
+  +TArduinoESP8266_NodeMCU_Board : TArduinoESP8266_NodeMCU_BasicAllChannels_Board
+
+    [AddItem( TArduinoESP8266_NodeMCU_I2C )]
+    I2CChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ESP-Mx (ESP8285)' )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:esp8285' )]
+  [Category( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  +TArduinoESP8285_ESP_Mx_Board : TArduinoESP8266_Basic_DefaultPins_Analog_NoI2C_Board
+
+    [AddItem( TArduinoESP8266_Generic_I2C )]
+    I2CChannels
+
+    [ArduinoBoard_Add_ReservedChannel( 0,  'Digital(Button)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 1,  'Digital(TX0)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 2,  'Digital(TX1)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 3,  'Digital(RX0)', True )]
+    [ArduinoBoard_Add_ReservedChannels( 4, 2,  'Digital', True )]
+    [ArduinoBoard_Add_ReservedChannel( 14, 'Digital(SPI-SCK)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 15, 'Digital(SPI-MISO)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 16, 'Digital(SPI-MOSI)(LED)', True )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Relay' )]
+  [ParentImage( TArduinoBasicRelayModule )]
+  TRelayCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TRelayCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TRelayESP82666Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'LC Tech. ESP8266 4 Channel Relay' )]
+  [Category( TRelayESP82666Category )]
+  [ParentImage( TESP8266_01_4_SerialRelayShield )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:generic' )]
+  +TArduinoESP8266_LC_Technology_Relay_4_Board : TArduinoESP8266_Basic_DefaultPins_Analog_Board
+
+    [ArduinoBoard_Add_ReservedChannel( 16,  'GPIO16(Relay 1)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 14,  'GPIO14(Relay 2)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 12,  'GPIO12(Relay 3)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 13,  'GPIO13(Relay 4)', True )]
+
+    [ArduinoBoard_Add_ReservedChannel( 15 )]
+    [ArduinoBoard_Add_ReservedChannel( 2 )]
+    [ArduinoBoard_Add_ReservedChannel( 0 )]
+    [ArduinoBoard_Add_ReservedChannel( 4 )]
+    [ArduinoBoard_Add_ReservedChannel( 5 )]
+
+    [ArduinoBoard_Add_ReservedChannel( 3 )]
+    [ArduinoBoard_Add_ReservedChannel( 1 )]
+    Digital
+  
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoDigitalModuleEnableInitialValue' )]
+  TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay : TArduinoBasicRelayModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '16' )]
+  [CreateName( 'Relay 1' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board_Relay1 : TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '14' )]
+  [CreateName( 'Relay 2' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board_Relay2 : TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '12' )]
+  [CreateName( 'Relay 3' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board_Relay3 : TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '13' )]
+  [CreateName( 'Relay 4' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board_Relay4 : TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '15' )]
+  [CreateName( 'Relay 5' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board_Relay5 : TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay;
+//---------------------------------------------------------------------------
+  [ArduinoShieldPin( '0' )]
+  [ArduinoTemplateParameter( 'C_PIN', '0' )]
+  [CreateName( 'Relay 6' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board_Relay6 : TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '4' )]
+  [CreateName( 'Relay 7' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board_Relay7 : TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '5' )]
+  [CreateName( 'Relay 8' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board_Relay8 : TArduinoESP8266_LC_Technology_Relay_8_Board_Basic_Relay;
+//---------------------------------------------------------------------------
+  [Name( 'LC Tech. ESP8266 8 Channel Relay' )]
+  [Category( TRelayESP82666Category )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:generic' )]
+  +TArduinoESP8266_LC_Technology_Relay_8_Board : TArduinoESP8266_Basic_DefaultPins_Analog_Board
+  
+    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay1 )]
+    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay2 )]
+    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay3 )]
+    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay4 )]
+    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay5 )]
+    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay6 )]
+    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay7 )]
+    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay8 )]
+    Modules
+
+//    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoBasicDigitalInputChannel, 'Relay 1', '16' )]
+//    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoBasicDigitalInputChannel, 'Relay 2', '14' )]
+
+    
+//    [ArduinoBoard_Add_ReservedChannel( 16,  'GPIO16(Relay 1)', True )]
+//    [ArduinoBoard_Add_ReservedChannel( 14,  'GPIO14(Relay 2)', True )]
+//    [ArduinoBoard_Add_ReservedChannel( 12,  'GPIO12(Relay 3)', True )]
+//    [ArduinoBoard_Add_ReservedChannel( 13,  'GPIO13(Relay 4)', True )]
+//    [ArduinoBoard_Add_ReservedChannel( 15,  'GPIO15(Relay 5)', True )]
+//    [ArduinoBoard_Add_ReservedChannel(  0,  'GPIO0(Relay 6)', True )]
+//    [ArduinoBoard_Add_ReservedChannel(  4,  'GPIO4(Relay 7)', True )]
+//    [ArduinoBoard_Add_ReservedChannel(  5,  'GPIO5(Relay 8)', True )]
+
+    [ArduinoBoard_Add_ReservedChannel( 0,  'GPIO0(Relay 6)', True )]
+    [ArduinoBoard_Add_ReservedChannel( 2 )]
+    [ArduinoBoard_Add_ReservedChannel( 3 )]
+    [ArduinoBoard_Add_ReservedChannel( 1 )]
+    Digital
+    
+//    [AddItem( TArduinoESP8266_LC_Technology_Relay_8_Board_Relay1 )]
+//    Relays : TArduinoFixedPersistentCollection  
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

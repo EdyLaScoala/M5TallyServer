@@ -1,0 +1,75 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'SendOutput' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  TArduinoBedacDIO_I2C_ElementSendOutputCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetInput' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AValue' )]
+  TArduinoBedacDIO_I2C_ElementGetInputCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  TArduinoBedacDIO_I2C_InputAttribute : TCustomAttribute;
+//---------------------------------------------------------------------------
+//  TArduinoBedacDIO_I2C_OutputAttribute : TCustomAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  TArduinoBedacDIO_I2C_BasicChannel : TArduinoCodeFixedNamePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::BedacDIO_I2C_InputChannel' )]
+  [TArduinoBedacDIO_I2C_ElementSendOutputCallChain]
+  [TArduinoBedacDIO_I2C_Input]
+  +TArduinoBedacDIO_I2C_InputChannel : TArduinoBedacDIO_I2C_BasicChannel
+  
+    OutputPin : TOWArduinoDigitalSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::BedacDIO_I2C_OutputChannel' )]
+//  [ArduinoOptionalVariable( Boolean, 'FValue', True )]
+  [TArduinoBedacDIO_I2C_ElementGetInputCallChain]
+//  [TArduinoBedacDIO_I2C_Output]
+  +TArduinoBedacDIO_I2C_OutputChannel : TArduinoBedacDIO_I2C_BasicChannel
+
+    [ArduinoVariableIfPinConnected_Parent( 'FModified' )]
+    InputPin : TOWArduinoDigitalSinkPin
+    
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GPIO_Bedac_I2C.h' )]
+  [ArduinoClass( 'Mitov::BedacDIO_I2C' )]
+  [Name( 'PLC-X DIO GPIO (I2C)' )]
+  [CreateName( 'GPIO' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoLoopUpdateHardware]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoOptionalVariable( Boolean, 'FModified', False )]
+  +TArduinoBedacDIO_I2C : TArduinoI2CAddressControlPinComponent
+
+    [ArduinoProcessChildParentVariables]
+    [AddIndexedNamedItem( TArduinoBedacDIO_I2C_InputChannel, 'Input', 4 )]
+    [AddIndexedStartNamedItem( TArduinoBedacDIO_I2C_OutputChannel, 0, 'Output', 4 )]
+    [TArduinoBedacDIO_I2C_ElementSendOutputCallChain]
+    [TArduinoBedacDIO_I2C_ElementGetInputCallChain]
+    [ArduinoTemplateParameterCollectionCountOfAttribute( 'COUNT_Inputs', TArduinoBedacDIO_I2C_InputAttribute )]
+//    [ArduinoTemplateParameterCollectionCountOfAttribute( 'COUNT_Outputs', TArduinoBedacDIO_I2C_OutputAttribute )]
+//    [ArduinoAddVariableIfElementHasAttribute( TArduinoBedacDIO_I2C_OutputAttribute, Boolean, 'FModified', False )]
+    Channels : TArduinoFixedPersistentCollection
+    
+//    [DesignRange( $20, $27 )]
+    Address = $20
+//    Address : TArduinoUInt8
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'PLC-X AI ADC (I2C)' )]
+  +TArduinoBedacAI_I2C : TArduinoMicrochip_ADC_MCP3424;
+//---------------------------------------------------------------------------
+; // Mitov

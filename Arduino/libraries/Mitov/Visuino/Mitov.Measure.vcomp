@@ -1,0 +1,29 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SpeedChangeMeter.h' )]
+  [ArduinoClass( 'Mitov::SpeedChangeMeter' )]
+  [CreateName( 'SpeedChangeMeter' )]
+  [Name( 'Speed Change Meter' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FHasTime' )]
+  +TArduinoMeasureChangeSpeed : TArduinoCommonAnalogFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_FrequencyMeter.h' )]
+  [ArduinoClass( 'Mitov::FrequencyMeter' )]
+  [CreateName( 'FrequencyMeter' )]
+  [Name( 'Frequency Meter' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FFirstTime' )]
+  [ArduinoVariable( Boolean, 'FZeroed' )]
+  +TArduinoFrequencyMeter : TArduinoCommonAnalogEnableSource
+
+    [OWPrimaryPin]
+    [ArduinoInterruptRaising( '_Interrupt', True, 'InterruptHandler' )]
+    InputPin : TOWArduinoClockOptionalInterruptSinkPin
+
+    MinFrequency : Single = 0.1
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

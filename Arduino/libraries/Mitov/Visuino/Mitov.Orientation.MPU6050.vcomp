@@ -1,0 +1,118 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU6050LowPowerMode' )]
+  TArduinoMPU6050LowPowerMode : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerManagementReg1' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerManagementReg2' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1.25' )]
+    [PropertyListDesignValue( '5' )]
+    [PropertyListDesignValue( '20' )]
+    [PropertyListDesignValue( '40' )]
+    SampleFrequency : Single = 1.25
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU6050Filter : Enum
+
+      f_AB_260Hz_GB_256Hz_F_8KHz
+      f_AB_184Hz_GB_188Hz_F_1KHz
+      f_AB_94Hz_GB_98Hz_F_1KHz
+      f_AB_44Hz_GB_42Hz_F_1KHz
+      f_AB_21Hz_GB_20Hz_F_1KHz
+      f_AB_10Hz_GB_10Hz_F_1KHz
+      f_AB_5Hz_GB_5Hz_F_1KHz
+      
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPUAccelerometerGyroscopeI2CPersistent : TArduinoCodeEnabledPersistent
+
+    ClockInputPin : TOWArduinoClockSinkPin
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [OWExcludeBindings]
+//    [ArduinoExclude] // Populate by code!
+    [DesignRange( $68, $69 )]
+//    [ArduinoTemplateParameterConst]
+    Address : TArduinoUInt8 = $68
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClockSource' )]
+    ClockSource : TArduinoMPUClockSource = mcsAutoSelect
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_MPU6050.h' )]
+  [ArduinoClass( 'Mitov::MPU6050I2C' )]
+  [Name( 'Accelerometer Gyroscope MPU6000/MPU6050 I2C' )]
+  [CreateName( 'AccelerometerGyroscope' )]
+  [ArduinoWebKeywords( 'MPU6050' )]
+  [ArduinoWebKeywords( 'MPU6000' )]
+  [ArduinoPinDefinePrefix( '_MITOV_MPU6050' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoMPU6050I2C : TArduinoMPUAccelerometerGyroscopeI2C
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    Accelerometer : TArduinoMPUXYZAccelerometer
+    Gyroscope : TArduinoMPUXYZGyroscope
+    Thermometer : TArduinoMPU9250Thermometer
+    Interrupt : TArduinoMPUInterrupt
+    FrameSynchronization : TArduinoMPUFrameSynchronization
+    LowPowerMode : TArduinoMPU6050LowPowerMode
+    Filter : TArduinoMPU6050Filter = f_AB_260Hz_GB_256Hz_F_8KHz
+
+    [ValueRange( 1, 256 )]
+    [OWExcludeBindings]
+    SampleRateDivider : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_MPU6050.h' )]
+  [ArduinoClass( 'Mitov::MPU6050I2CBuiltin' )]
+  [Name( 'Accelerometer Gyroscope MPU6000/MPU6050/GY-521 I2C' )]
+  [CreateName( 'AccelerometerGyroscope' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoI2C( 0 )]
+  TArduinoMPU6050I2CPersistent : TArduinoMPUAccelerometerGyroscopeI2CPersistent
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [IgnoreNamePath]
+    Accelerometer : TArduinoMPUXYZAccelerometer
+
+    [IgnoreNamePath]
+    Gyroscope : TArduinoMPUXYZGyroscope
+
+    [IgnoreNamePath]
+    Thermometer : TArduinoMPU9250Thermometer
+
+    [IgnoreNamePath]
+    Interrupt : TArduinoMPUInterrupt
+
+    [IgnoreNamePath]
+    FrameSynchronization : TArduinoMPUFrameSynchronization
+
+    [IgnoreNamePath]
+    LowPowerMode : TArduinoMPU6050LowPowerMode
+
+    [IgnoreNamePath]
+    Filter : TArduinoMPU6050Filter = f_AB_260Hz_GB_256Hz_F_8KHz
+
+    [ValueRange( 1, 256 )]
+    [OWExcludeBindings]
+    SampleRateDivider : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

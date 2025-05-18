@@ -1,0 +1,48 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoRTCDS1307ClockFrequency : Enum
+
+    rtc1307fDisabledLow
+    rtc1307fDisabledHigh
+    rtc1307f1Hz
+    rtc1307f4096Hz
+    rtc1307f8192Hz
+    rtc1307f32768Hz
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCDS1307_Extender : Extender
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateClockFrequency' )]
+    ClockFrequency : TArduinoRTCDS1307ClockFrequency = rtc1307fDisabledLow
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RTC_DS1307.h' )]
+  [ArduinoClass( 'Mitov::RTC_DS1307' )]
+  [Name( 'Real Time Clock(RTC) DS1307' )]
+  [ArduinoWebKeywords( 'DS1307 RTC' )]
+  [ArduinoPinDefinePrefix( '_MITOV_DS1307' )]
+  [ArduinoInit]
+  +TArduinoRTCDS1307 : TArduinoBasicHaltRTC, TArduinoRTCDS1307_Extender
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    ControlOutputPin : TOWArduinoI2CSourcePin
+
+    [DesignRange( $68, $68 )]
+    Address : TArduinoUInt8 = $68
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RTC_DS1307.h' )]
+  [ArduinoClass( 'Mitov::RTC_DS1307' )]
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInit]
+  TArduinoRTCDS1307BasicModule : TArduinoBasicHaltRTCModule, TArduinoRTCDS1307_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,111 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'int32_t *&', 'ACurrentIndex' )]
+  [Name( 'MoveToNextIndex' )]
+  ArduinoSequenceMoveToNextIndexCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'bool', 'AValue' )]
+  [Name( 'SetElementValue' )]
+  [ArduinoCallChainIndex]
+  ArduinoSequenceSetElementValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'InitElementValue' )]
+  ArduinoSequenceInitElementValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoSequenceMoveToNextIndexCallChain]
+  [ArduinoSequenceSetElementValueCallChain]
+  [ArduinoSequenceInitElementValueCallChain]
+  TArduinoSequenceClockElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoHelpPostfix( '(Sequence)' )]
+  [PersistentCollection( TArduinoSequenceClockElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoSequenceMoveToNextIndexCallChain]
+  [ArduinoSequenceSetElementValueCallChain]
+  TArduinoSequenceBasicElement : TArduinoBasicNamedExludePersistent
+
+    StartInputPin : TOWArduinoClockSinkPin
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoLoopBegin]
+  TArduinoSequenceBasicDelayElement : TArduinoSequenceBasicElement
+
+    [AutoNameChangeNotify]
+    [BooleanExtendDisplayName( '', ' uS)', '', ' mS)' )]
+    InMicroSeconds : Boolean = False
+
+    [ExtendDisplayName( ' (', '' )]
+    [AutoNameChangeNotify]
+    Delay : Unsigned = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Period' )]
+  [ArduinoClass( 'Mitov::SequenceElement' )]
+  +TArduinoSequenceClockElement : TArduinoSequenceBasicDelayElement
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital Period' )]
+  [ArduinoClass( 'Mitov::SequenceElementDigital' )]
+  [ArduinoSequenceInitElementValueCallChain]
+  +TArduinoSequenceDigitalElement : TArduinoSequenceBasicDelayElement
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Repeat' )]
+  [ArduinoClass( 'Mitov::SequenceElementRepeat' )]
+  [ParentImage( TArduinoRepeat )]
+  +TArduinoSequenceRepeatElement : TArduinoSequenceBasicElement
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    [ArduinoTemplateParameterCollectionCountIncluded]
+    [ArduinoTemplateParameterCollectionPowerIncluded( 'FCurrentIndex', 2 )]
+    Elements : TArduinoSequenceClockElements
+
+    [MinValue( 1 )]
+    [ExtendDisplayName( ' (', ')' )]
+    Count : Unsigned = 10
+
+    CanRestart : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Sequence.h' )]
+  [ArduinoClass( 'Mitov::Sequence' )]
+  [Name( 'Sequence' )]
+  [CreateName( 'Sequence' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoSequence : TArduinoCommonEnabledComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    StartInputPin : TOWArduinoClockSinkPin
+
+    IntervalOutputPin : TOWArduinoUnsignedSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    [ArduinoTemplateParameterCollectionCountIncluded]
+    [ArduinoTemplateParameterCollectionPowerIncluded( 'FCurrentIndex', 2 )]
+    Elements : TArduinoSequenceClockElements
+
+    Repeat : Boolean = False
+    CanRestart : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

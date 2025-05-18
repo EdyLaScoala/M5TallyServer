@@ -1,0 +1,161 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoDisplayST7735Type : Enum
+
+    dtST7735R_Arduino
+    dtST7735R_BlackTab
+    dtST7735R_GreenTab
+    dtST7735R_GreenTab_144
+    dtST7735R_GreenTab_160_80
+    dtST7735R_RedTab_160_80
+    dtST7735R_RedTab
+    dtST7735B
+    dtST7789_240_240
+    dtST7789_135_240
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDisplayST7735PixelOffset' )]
+  TArduinoDisplayST7735PixelOffset : TArduinoCodeDisabledPersistent
+
+    X : TArduinoUInt8 = 0
+    Y : TArduinoUInt8 = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Display' )]
+//  [ArduinoClass( 'Mitov::DisplayST7735' )]
+  [ArduinoClass( 'Mitov::DisplayST7735Basic' )]
+//  [ArduinoInclude( 'Mitov_Display_ST7735.h' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [Name( 'TFT Color Display ST7735/ST7789' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [Supports565Color]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicSPI_ST7735' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorY', 0 )]
+  TArduinoDisplayBasicST77XX : TArduinoBasicImplementationSpeedSPI
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+//    RefreshInputPin : TOWArduinoClockSinkPin                     read FRefreshInputPin         write FRefreshInputPin;
+
+    [OWPrimaryPin]
+//    [ArduinoPinConnectDefine( '_MITOV_ST7735_RESET_PIN_' )]
+//    [ArduinoPinImplementationTemplatePreffix( 'Mitov::ST7735_Reset' )]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    [OWRequiredPin]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    [Name( 'Data/Command' )]
+    RegisterSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoColorGraphicsElements
+
+    [ArduinoNeedsRGBColor]
+    BackgroundColor : TColor = Black
+
+    Text : TArduinoColorGraphicsTextSettings
+
+//    [ArduinoUseBindingCheckSetter( 'UpdateOrientation' )]
+//    [ArduinoExclude]
+    [ArduinoUseBindingCheckSetter( 'UpdateOrientation' )]
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInverted' )]
+    Inverted : Boolean = False
+
+    OverridePixelOffset : TArduinoDisplayST7735PixelOffset
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoDisplayST7735 : TArduinoDisplayBasicST77XX
+
+    [ArduinoExclude]
+    [ArduinoEnumInclude( 'Mitov_Display_', '.h', True )]
+    [ArduinoEnumTemplateParameter( '0_IMPLEMENTATION_TYPE', 'Mitov::Display_', True )]
+    Type : TArduinoDisplayST7735Type = dtST7735R_BlackTab
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Display' )]
+  [CreateName( 'Display' )]
+//  [ArduinoInclude( 'Mitov_EVIVE_Display.h' )]
+  [ArduinoClass( 'Mitov::DisplayST7735Basic' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ParentImage( TArduinoDisplayST7735 )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [Supports565Color]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicSPI_ST7735' )]
+  TArduinoBasicDisplayST7735BasicModule : TArduinoShield
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoColorGraphicsElements
+
+    [ArduinoNeedsRGBColor]
+    BackgroundColor : TColor = Black
+
+    Text : TArduinoColorGraphicsTextSettings
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOrientation' )]
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInverted' )]
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Display' )]
+  [CreateName( 'Display' )]
+  [ArduinoInclude( 'Mitov_Brightness_ESP32_ST77XX_Display.h' )]
+  [ArduinoClass( 'Mitov::DisplayST77XXBrightness' )]
+  [ArduinoStart]
+  TArduinoBasicBrightnessDisplayST7735Module : TArduinoBasicDisplayST7735BasicModule
+
+    [ArduinoUseBindingSetter]
+    [ValueRange( 0, 1.0 )]
+    Brightness : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Display' )]
+  [CreateName( 'Display' )]
+//  [ArduinoInclude( 'Mitov_EVIVE_Display.h' )]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::DisplayST7735Basic' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ParentImage( TArduinoDisplayST7735 )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [Supports565Color]
+  TArduinoBasicDisplayST7735BasicElement : TArduinoCodePersistent
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoColorGraphicsElements
+
+    [ArduinoNeedsRGBColor]
+    BackgroundColor : TColor = Black
+
+    Text : TArduinoColorGraphicsTextSettings
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOrientation' )]
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInverted' )]
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

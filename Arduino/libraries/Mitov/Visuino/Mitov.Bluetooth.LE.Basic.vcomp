@@ -1,0 +1,18 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BluetoothLE_Uart_Client.h' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLEUartClient' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoCallChain( 'TryStart' )]
+  [ArduinoCallChainParameter( 'bool AValue' )]
+  [ArduinoCallChainParameter( 'bool & AResult' )]
+  *TArduinoBluetoothUartClient : TArduinoBluetoothBasicUart
+
+    [ArduinoEnumTemplateParameter( 'BASE', 'Mitov::ArduinoBluetoothLEUartClientImpl_', True )]
+    Type
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,67 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoGPRSSockets : TArduinoBasicSockets;
+//---------------------------------------------------------------------------
+  [Name( 'StartModule' )]
+  TArduinoGPRSStartModuleCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'StopModule' )]
+  TArduinoGPRSStopModuleCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoGPRSSockets )]
+  [ArduinoClass( 'Mitov::TCPClientSocket' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicTCPClientSocket_Implementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_CLIENT', 'GSMClient' )]
+  +TArduinoGPRSTCPClientSocket : TArduinoBasicTCPClientSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoGPRSSockets )]
+  [ArduinoClass( 'Mitov::TCPServerSocket' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'SERVER', 'Mitov::AvailableAcceptWrapper<GSMServer, GSMClient>' )]
+  [ArduinoTemplateParameter( 'CLIENT', 'GSMClient' )]
+  +TArduinoGPRSTCPServerSocket : TArduinoBasicTCPServerSocket;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_GPRS.h' )]
+  [ArduinoClass( 'Mitov::GPRSModule' )]
+  [ArduinoVariable( Boolean, 'IsStarted' )]
+  [ArduinoVariable( Boolean, 'FConnected' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [TArduinoGPRSStartModuleCallChain]
+  [TArduinoGPRSStopModuleCallChain]
+  TArduinoGPRS : TArduinoCodeEnabledSetterPersistent
+
+    [ArduinoTemplateParameterCollectionCount]
+    AccessPoints : TArduinoGPRSAccessPoints
+
+    Sockets : TArduinoGPRSSockets
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'GSM Shield' )]
+  [CreateName( 'GSMShield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoWebKeywords( 'Arduino GSM Shield' )]
+  [ArduinoInclude( 'GSM.h' )]
+  [ArduinoInclude( 'Mitov_GSMShield.h' )]
+  [ArduinoClass( 'Mitov::GSMShield' )]
+  [ArduinoVariable( Boolean, 'IsStarted' )]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoInit]
+  [ParentImage( TArduinoLinkItGSMModule )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoShieldPin( '2' )]
+  [ArduinoShieldPin( '3' )]
+  [ArduinoShieldPin( '7' )]
+  +TArduinoGSMShield : TArduinoEnabledShield, IStandardShield
+   
+    PIN : String
+    Restart : Boolean = True
+    PacketService : TArduinoGPRS
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

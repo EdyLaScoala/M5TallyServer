@@ -1,0 +1,450 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoDisplayFT800ElementClockedBasic : TArduinoDisplayFT800ElementDisplayBasic
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayFT800ElementRenderClockedBasic : TArduinoDisplayFT800ElementClockedBasic
+
+    [ArduinoPinDisconnectCallChain( 'Render( ATagValue, ATagXY, AFromStart );' )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDisplayFT800SceneElementGaugeTicks' )]
+  TArduinoDisplayFT800SceneElementGaugeTicks : TArduinoCodeEnabledPersistent
+
+    [ValueRange( 1, 10 )]
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    Minor : Unsigned = 4
+
+    [ValueRange( 1, 10 )]
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    Major : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Gauge' )]
+  [CreateName( 'Gauge' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Gauge' )]
+  [ParentImage( TArduinoDisplayNextionElementAnalogGauge )]
+  +TArduinoDisplayFT800SceneElementGauge : TArduinoDisplayFT800SceneElementPositionRadiusBasic
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [ValueRange( 0.0, 1.0 )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+    HasHand : Boolean = True
+    Ticks : TArduinoDisplayFT800SceneElementGaugeTicks
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Progress Bar' )]
+  [CreateName( 'Progress Bar' )]
+  [ArduinoClass( 'Mitov::DisplayFT800ProgressBar' )]
+  [ParentImage( TArduinoDisplayNextionElementAnalogProgressBar )]
+  +TArduinoDisplayFT800SceneElementProgressBar : TArduinoDisplayFT800SceneElementPositionSizeBasic
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [ValueRange( 0.0, 1.0 )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Slider' )]
+  [CreateName( 'Slider' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Slider' )]
+  [ParentImage( TArduinoViSiGenieSlider )]
+  +TArduinoDisplayFT800SceneElementSlider : TArduinoDisplayFT800SceneElementTaggedAnalogSource;
+//---------------------------------------------------------------------------
+  [Name( 'Scrollbar' )]
+  [CreateName( 'Scrollbar' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Scrollbar' )]
+  +TArduinoDisplayFT800SceneElementScrollbar : TArduinoDisplayFT800SceneElementTaggedAnalogSource
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [MaxValue( $FFFF )]
+    [ValueRange( 0.0, 1.0 )]
+    Size : Single = 0.3
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Animate Logo' )]
+  [CreateName( 'Animate Logo' )]
+  [ArduinoClass( 'Mitov::DisplayFT800AnimateLogo' )]
+  +TArduinoDisplayFT800ElementAnimateLogo : TArduinoDisplayFT800ElementRenderClockedBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Stop Animation' )]
+  [CreateName( 'Stop Animation' )]
+  [ArduinoClass( 'Mitov::DisplayFT800StopAnimation' )]
+  +TArduinoDisplayFT800ElementStopAnimation : TArduinoDisplayFT800ElementClockedBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Set Touch Transform' )]
+  [CreateName( 'Set Touch Transform' )]
+  [ArduinoClass( 'Mitov::DisplayFT800SetTouchTransform' )]
+  +TArduinoDisplayFT800ElementSetTouchTransform : TArduinoDisplayFT800ElementRenderClockedBasic
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    A : Unsigned = $10000
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    B : Unsigned = $0
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    C : Unsigned = $0
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    D : Unsigned = $0
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    E : Unsigned = $10000
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    F : Unsigned = $0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Get Touch Transform' )]
+  [CreateName( 'Get Touch Transform' )]
+  [ArduinoClass( 'Mitov::DisplayFT800GetTouchTransform' )]
+  +TArduinoDisplayFT800ElementGetTouchTransform : TArduinoDisplayFT800ElementRenderClockedBasic
+
+    [OWPrimaryPin]
+    AOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    BOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    COutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    DOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    EOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    FOutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Points' )]
+  [CreateName( 'Draw Points' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::FT800Display::FT_POINTS' )]
+  +TArduinoDisplayFT800SceneElementDrawPoints : TArduinoDisplayFT800SceneElementDrawPointsBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Connected Lines' )]
+  [CreateName( 'Draw Connected Lines' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::FT800Display::FT_LINE_STRIP' )]
+  +TArduinoDisplayFT800SceneElementDrawConnectedLines : TArduinoDisplayFT800SceneElementDrawConnectedLinesBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Fill Left Connected Lines' )]
+  [CreateName( 'Fill Left Connected Lines' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::FT800Display::FT_EDGE_STRIP_L' )]
+  +TArduinoDisplayFT800SceneElementFillLeftConnectedLines : TArduinoDisplayFT800SceneElementDrawConnectedLinesBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Fill Right Connected Lines' )]
+  [CreateName( 'Fill Right Connected Lines' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::FT800Display::FT_EDGE_STRIP_R' )]
+  +TArduinoDisplayFT800SceneElementFillRightConnectedLines : TArduinoDisplayFT800SceneElementDrawConnectedLinesBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Fill Top Connected Lines' )]
+  [CreateName( 'Fill Top Connected Lines' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::FT800Display::FT_EDGE_STRIP_A' )]
+  +TArduinoDisplayFT800SceneElementFillTopConnectedLines : TArduinoDisplayFT800SceneElementDrawConnectedLinesBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Fill Bottom Connected Lines' )]
+  [CreateName( 'Fill Bottom Connected Lines' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::FT800Display::FT_EDGE_STRIP_B' )]
+  +TArduinoDisplayFT800SceneElementFillBottomConnectedLines : TArduinoDisplayFT800SceneElementDrawConnectedLinesBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Button' )]
+  [CreateName( 'Button' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Button' )]
+  [ParentImage( TArduinoDisplayNextionElementButton )]
+  +TArduinoDisplayFT800SceneElementButton : TArduinoDisplayFT800SceneElementPositionWidthDigitalBasic
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [MaxValue( $7FFF)]
+    Height : Unsigned = 20
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ValueRange( 0, 31 )]
+    Font : Unsigned = 16
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    Text : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Spinner' )]
+  [CreateName( 'Spinner' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Spinner' )]
+  +TArduinoDisplayFT800SceneElementSpinner : TArduinoDisplayFT800SceneElementPositionBasic
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [MaxValue( 3 )]
+    Style : Unsigned = 0
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [MaxValue( $FFFF )]
+    Scale : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text' )]
+  [CreateName( 'Text' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Text' )]
+  [ParentImage( TArduinoDisplayNextionElementText )]
+  +TArduinoDisplayFT800SceneElementText : TArduinoDisplayFT800SceneElementTextBasic
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayFT800SceneElementNumberBasic : TArduinoDisplayFT800SceneElementTextBasic
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ValueRange( 0, 9 )]
+    Width : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Number' )]
+  [CreateName( 'Integer Number' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Number' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [ArduinoTemplateParameter( 'C_OPTIONS', 'Mitov::FT800Display::FT_OPT_SIGNED' )]
+  [ParentImage( TArduinoDisplayNextionElementNumber )]
+  +TArduinoDisplayFT800SceneElementIntegerNumber : TArduinoDisplayFT800SceneElementNumberBasic
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Number' )]
+  [CreateName( 'Integer Number' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Number' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'C_OPTIONS', '0' )]
+  [ParentImage( TArduinoMemoryUnsignedElement )]
+  +TArduinoDisplayFT800SceneElementUnsignedNumber : TArduinoDisplayFT800SceneElementNumberBasic
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Calibrate Touch' )]
+  [CreateName( 'Calibrate' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Calibrate' )]
+  [ArduinoVariable( Boolean, 'Calibrated' )]
+  +TArduinoDisplayFT800SceneElementCalibrate : TArduinoDisplayFT800SceneElementBasic;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDisplayFT800SceneElementToggleText' )]
+  TArduinoDisplayFT800SceneElementToggleText : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    On : String = 'On'
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    Off : String = 'Off'
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Toggle Switch' )]
+  [CreateName( 'Toggle Switch' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Toggle' )]
+  [ParentImage( TArduinoViSiGenieDipSwitch )]
+  +TArduinoDisplayFT800SceneElementToggle : TArduinoDisplayFT800SceneElementPositionWidthDigitalBasic
+
+    Text : TArduinoDisplayFT800SceneElementToggleText
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Keys' )]
+  [CreateName( 'Keys' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Keys' )]
+  +TArduinoDisplayFT800SceneElementKeys : TArduinoDisplayFT800SceneElementPositionSizeBasic
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoCharSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    Track : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    Characters : String = ''
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    Value : AnsiChar = #0
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ValueRange( 0, 31 )]
+    Font : Unsigned = 16
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    HorizontalAlignment : TArduinoDisplayFT800SceneElementHorizontalAlignment = TArduinoDisplayFT800SceneElementHorizontalAlignment.Left
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    VerticalCentered : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayFT800SceneElementAlphaColorBasic : TArduinoDisplayFT800SceneElementBasic
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ArduinoFullColor]
+    Color : TAlphaColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayFT800SceneElementColorBasic : TArduinoDisplayFT800SceneElementBasic
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ArduinoFullColor]
+    Color : TColor = Blue
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Clear Screen' )]
+  [CreateName( 'Clear Screen' )]
+  [ArduinoClass( 'Mitov::DisplayFT800ClearScreen' )]
+  [ParentImage( TArduinoColorGraphicsElementFillScreen )]
+  +TArduinoDisplayFT800SceneElementClearScreen : TArduinoDisplayFT800SceneElementAlphaColorBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Background Color' )]
+  [CreateName( 'Background Color' )]
+  [ArduinoClass( 'Mitov::DisplayFT800BackgroundColor' )]
+  +TArduinoDisplayFT800SceneElementBackgroundColor : TArduinoDisplayFT800SceneElementColorBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Foreground Color' )]
+  [CreateName( 'Foreground Color' )]
+  [ArduinoClass( 'Mitov::DisplayFT800ForegroundColor' )]
+  +TArduinoDisplayFT800SceneElementForegroundColor : TArduinoDisplayFT800SceneElementColorBasic
+
+    Color = Green
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color' )]
+  [CreateName( 'Color' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Color' )]
+  +TArduinoDisplayFT800SceneElementColor : TArduinoDisplayFT800SceneElementAlphaColorBasic
+
+    Color = Red
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDisplayFT800SceneElementGradientSingleColor' )]
+  TArduinoDisplayFT800SceneElementGradientSingleColor1 : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ArduinoFullColor]
+    Color : TColor = Red
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ValueRange( -$8000, $7FFF)]
+    X : Integer = 0
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [ValueRange( -$8000, $7FFF)]
+    Y : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayFT800SceneElementGradientSingleColor2 : TArduinoDisplayFT800SceneElementGradientSingleColor1
+
+    Color = Blue
+    X = 200
+    Y = 200
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color Gradient' )]
+  [CreateName( 'Color Gradient' )]
+  [ArduinoClass( 'Mitov::DisplayFT800ColorGradient' )]
+  +TArduinoDisplayFT800SceneElementColorGradient : TArduinoDisplayFT800SceneElementBasic
+
+    Color1 : TArduinoDisplayFT800SceneElementGradientSingleColor1
+    Color2 : TArduinoDisplayFT800SceneElementGradientSingleColor2
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDisplayFT800SceneElementClockHands' )]
+  TArduinoDisplayFT800SceneElementClockHands : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    Seconds : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    HoursMinutes : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Clock' )]
+  [CreateName( 'Clock' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Clock' )]
+  +TArduinoDisplayFT800SceneElementClock : TArduinoDisplayFT800SceneElementPositionRadiusBasic
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDateTimeSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : TDateTime = 0.0
+
+    Hands : TArduinoDisplayFT800SceneElementClockHands
+    TicksEnabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Crop' )]
+  [CreateName( 'Crop' )]
+  [ArduinoClass( 'Mitov::DisplayFT800Crop' )]
+  +TArduinoDisplayFT800SceneElementCrop : TArduinoDisplayFT800SceneElementBasic
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [MaxValue( $1FF )]
+    X : Unsigned = 0
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [MaxValue( $1FF )]
+    Y : Unsigned = 0
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [MaxValue( 512 )]
+    Width : Unsigned = 100
+
+    [ArduinoUseBindingCheckSetter( 'Modified' )]
+    [MaxValue( 512 )]
+    Height : Unsigned = 100
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,122 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoDHTSensorType : Enum
+
+    DHT11
+    DHT21
+    DHT22
+    AM2301
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDHTBasic_Extender : Extender
+
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Humidity(%)' )]
+    HumidityOutputPin : TOWArduinoAnalogSourcePin
+
+    InFahrenheit : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DHT_Sensor.h' )]
+  [ArduinoClass( 'Mitov::DHT12SensorI2C' )]
+  [Name( 'Humidity and Thermometer DHT12' )]
+  [CreateName( 'HumidityThermometer' )]
+  [ArduinoWebKeywords( 'DHT12 Humidity Thermometer' )]
+  [Category( TArduinoMeasurementTemperatureHumidityToolbarCategory )]
+  +TArduinoDHT12SensorI2C : TArduinoI2CAddressSensorPinClockedEnableComponent, TArduinoDHTBasic_Extender
+
+//    [ArduinoPinIsConnectedFlag]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    Address = $5C    
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DHT_Sensor.h' )]
+  [ArduinoClass( 'Mitov::DHTSensor' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [Name( 'Temperature/Humidity' )]
+  [CreateName( 'Temperature/Humidity' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoMeasurementTemperatureHumidityToolbarCategory )]
+  TArduinoDHT_Extender : TArduinoDHTBasic_Extender
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoVariable( Unsigned, 3, 'FBitIndex' )]
+  [ArduinoVariable( Unsigned, 3, 'FIndex' )]
+  [ArduinoVariable( Unsigned, 3, 'FState' )]
+  [ArduinoVariable( Unsigned, 3, 'FStatus' )]
+  TArduinoBasicDHTModule : TArduinoEnabledShield, TArduinoDHT_Extender;
+//---------------------------------------------------------------------------
+  [Category( TArduinoMeasurementTemperatureHumidityToolbarCategory )]
+  TArduinoBasicGenericDHTSensor : TArduinoCommonEnabledComponent, TArduinoDHT_Extender;
+//---------------------------------------------------------------------------
+  TArduinoBasicDHTSensor : TArduinoBasicGenericDHTSensor
+
+    [OWRequiredPin]
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoDirectPinTemplate]
+    [ArduinoInterruptFalling( '_Interrupt', True, 'InterruptHandler' )]
+    [ArduinoInterruptHandler( 'INTERRUPT' )]
+    [ArduinoAddVariableIfPinInterruptConnected( Boolean, 'FClocked' )]
+    [ArduinoAddVariableIfPinInterruptConnected( True, Unsigned, 3, 'FState' )]
+    [ArduinoAddVariableIfPinInterruptConnected( True, Unsigned, 3, 'FStatus' )]
+    [ArduinoAddVariableIfPinInterruptConnected( True, Unsigned, 3, 'FIndex' )]
+    [ArduinoAddVariableIfPinInterruptConnected( True, Unsigned, 3, 'FBitIndex' )]
+    [ArduinoAddVariableIfPinInterruptUnconnected( Boolean, 'FLastResult' )]
+    SensorOutputPin : TOWArduinoDigitalInterruptOutputSingleConnectionSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Humidity and Thermometer DHT11/21/22/AM2301' )]
+  [CreateName( 'HumidityThermometer' )]
+  [ArduinoWebKeywords( 'DHT11 Humidity Thermometer' )]
+  [ArduinoWebKeywords( 'DHT21 Humidity Thermometer' )]
+  [ArduinoWebKeywords( 'DHT22 Humidity Thermometer' )]
+  [ArduinoWebKeywords( 'AM2301 Humidity Thermometer' )]
+  +TArduinoDHTSensor : TArduinoBasicDHTSensor
+
+    [ArduinoExclude]
+    [ArduinoNotDefaultPostfix( '_DHT22' )]
+    Type : TArduinoDHTSensorType = DHT11
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Grove Temperature & Humidity Sensor(DHT11)' )]
+  [CreateName( 'HumidityThermometer' )]
+  [ArduinoWebKeywords( 'DHT11 Humidity Thermometer' )]
+  +TArduinoGroveDHT11Sensor : TArduinoBasicGenericDHTSensor
+
+    [OWRequiredPin]
+    [OWPrimaryPin]
+    [ArduinoDirectPinTemplate]
+    [ArduinoInterruptFalling( 0, '_Interrupt', True, 'InterruptHandler' )]
+    [ArduinoInterruptHandler( 0, 'INTERRUPT' )]
+    [ArduinoAddVariableIfPinInterruptConnected( 0, Boolean, 'FClocked' )]
+    [ArduinoAddVariableIfPinInterruptConnected( 0, True, Unsigned, 3, 'FState' )]
+    [ArduinoAddVariableIfPinInterruptConnected( 0, True, Unsigned, 3, 'FStatus' )]
+    [ArduinoAddVariableIfPinInterruptConnected( 0, True, Unsigned, 3, 'FIndex' )]
+    [ArduinoAddVariableIfPinInterruptConnected( 0, True, Unsigned, 3, 'FBitIndex' )]
+    [ArduinoAddVariableIfPinInterruptUnconnected( 0, Boolean, 'FLastResult' )]
+    [ArduinoExclude]
+    [ArduinoPropertyName( 'SensorOutputPin' )]
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

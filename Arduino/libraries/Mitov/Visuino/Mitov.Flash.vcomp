@@ -1,0 +1,98 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoFlashBasicElementClocked : TArduinoFlashBasicElement
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoEraseFlashBlock' )]
+  [Name( 'Erase Block' )]
+  [CreateName( 'Erase Block' )]
+  +TArduinoFlashEraseBlockElement : TArduinoFlashBasicElementClocked
+
+    [NamePostfix( '(Will Size Allign)' )]
+    Address : Unsigned = 0
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '64' )]
+    [NamePostfix( '(KB)' )]
+    Size : Unsigned = 4
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoFlashWriteProtect' )]
+  TArduinoFlashWriteProtect : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateWriteProtect' )]
+    Enabled
+
+    [NamePostfix( '(KB)' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '128' )]
+    [PropertyListDesignValue( '256' )]
+    [PropertyListDesignValue( '512' )]
+    [PropertyListDesignValue( '1024' )]
+    [PropertyListDesignValue( '2048' )]
+    [PropertyListDesignValue( '4096' )]
+    [PropertyListDesignValue( '8192' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateWriteProtect' )]
+    Size : Unsigned = 4
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateWriteProtect' )]
+    Upper : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateWriteProtectReverse' )]
+    Reverse : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoFlashSPI_Extender : Extender
+
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin )]
+    WriteProtectedOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoFlashElements
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePowerDown' )]
+    PowerDown : Boolean = False
+
+    WriteProtect : TArduinoFlashWriteProtect
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Generic_SPI_Flash.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericFlash_SPI' )]
+  [Category( TMemoryToolbarCategory )]
+  [ArduinoStart]
+  [Name( 'Flash Memory(SPI)' )]
+  [CreateName( 'Flash' )]
+  +TArduinoFlashSPI : TArduinoBasicEnableSpeedSPI, TArduinoFlashSPI_Extender
+
+    [OWRequiredPin]
+    ChipSelectOutputPin
+
+    [ValueRange( 2, 4 )]
+    [OWExcludeBindings]
+    AddressBytes : Unsigned = 3
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Flash Memory(SPI)' )]
+  [CreateName( 'SPI Flash' )]
+  [ArduinoInclude( 'Mitov_Generic_SPI_Flash.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericFlash_SPI' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  [ParentImage( TArduinoFlashSPI )]
+  TArduinoBasicFlashSPIModule : TArduinoEnabledShieldSpeedSPI, TArduinoFlashSPI_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

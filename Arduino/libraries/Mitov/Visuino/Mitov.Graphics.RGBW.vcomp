@@ -1,0 +1,169 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRGBWGraphicsElements )]
+  [ArduinoHelpPostfix( '(RGBW Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_RGBW.h' )]
+  [ArduinoTemplateParameter( 'OPERATIONS', 'Mitov::RGBWColorOperations' )]
+  TArduinoRGBWGraphicsElementColored : TArduinoGraphicsElementClocked
+
+    Color : TRGBWAlphaColor = $FFFFFFFFFF
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRGBWGraphicsElementFillColored : TArduinoRGBWGraphicsElementColored
+
+    FillColor : TRGBWAlphaColor = Transparent
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRGBWGraphicsPositionedFillColored : TArduinoRGBWGraphicsElementFillColored, TArduinoGraphicsPosition_Extender;
+//---------------------------------------------------------------------------
+  TArduinoRGBWGraphicsPositionedColored : TArduinoRGBWGraphicsElementColored, TArduinoGraphicsPosition_Extender;
+//---------------------------------------------------------------------------
+  TArduinoRGBWGraphicsDrawSized : TArduinoRGBWGraphicsPositionedFillColored, TArduinoGraphicsDrawSized_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Fill Screen' )]
+  [ArduinoClass( 'Mitov::GraphicsElementFillScreen' )]
+  [ParentImage( TArduinoMonochromeGraphicsElementFillScreen )]
+  +TArduinoRGBWGraphicsElementFillScreen : TArduinoRGBWGraphicsElementColored
+
+    Color = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Pixel' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawPixel' )]
+  [ParentImage( TArduinoMonochromeGraphicsDrawPixel )]
+  [Category( ArduinoGraphicsPixelsToolbarCategory )]
+  +TArduinoRGBWGraphicsDrawPixel : TArduinoRGBWGraphicsPositionedColored;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Rectangle' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawRectangle' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  [ParentImage( TArduinoMonochromeGraphicsDrawRectangle )]
+  +TArduinoRGBWGraphicsDrawRectangle : TArduinoRGBWGraphicsDrawSized;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoMonochromeGraphicsDrawRoundRectangle )]
+  +TArduinoRGBWGraphicsDrawRoundRectangle : TArduinoRGBWGraphicsDrawSized, TArduinoGraphicsDrawRoundRectangle_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoMonochromeGraphicsDrawEllipse )]
+  +TArduinoRGBWGraphicsDrawEllipse : TArduinoRGBWGraphicsDrawSized, TArduinoGraphicsDrawEllipse_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoMonochromeGraphicsDrawAngledLine )]
+  +TArduinoRGBWGraphicsDrawAngledLine : TArduinoRGBWGraphicsPositionedColored, TArduinoGraphicsDrawAngledLine_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoMonochromeGraphicsDrawLine )]
+  +TArduinoRGBWGraphicsDrawLine : TArduinoRGBWGraphicsPositionedColored, TArduinoGraphicsDrawLine_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoMonochromeGraphicsDrawLines )]
+  +TArduinoRGBWGraphicsDrawLines : TArduinoRGBWGraphicsPositionedColored, TArduinoGraphicsDrawLines_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoMonochromeGraphicsDrawPolygon )]
+  +TArduinoRGBWGraphicsDrawPolygon : TArduinoRGBWGraphicsPositionedFillColored, TArduinoGraphicsDrawPolygon_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoMonochromeGraphicsElementDrawText )]
+  +TArduinoRGBWGraphicsElementDrawText : TArduinoRGBWGraphicsPositionedFillColored, TArduinoGraphicsElementDrawText_Extender;
+//---------------------------------------------------------------------------
+  TArduinoRGBWGraphicsElementBasicField : TArduinoRGBWGraphicsElementColored, TArduinoGraphicsElementBasicField_Extender
+
+    FillColor : TRGBWAlphaColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoMonochromeGraphicsElementTextFeld )]
+  +TArduinoRGBWGraphicsElementTextFeld : TArduinoRGBWGraphicsElementBasicField, TArduinoGraphicsElementTextField_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Graphics' )]
+  [CreateName( 'Graphics' )]
+  [ArduinoClass( 'Mitov::GraphicsRGBWElementDrawGraphics' )]
+  [ParentImage( TArduinoMonochromeGraphicsElementDrawGraphics )]
+  [PersistentCollection( TArduinoRGBWGraphicsElements )]
+  [ArduinoHelpPostfix( '(RGBW Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_RGBW.h' )]
+  +TArduinoRGBWGraphicsElementDrawGraphics : TArduinoGraphicsClockedPositionElement, TArduinoGraphicsElementDrawGraphics_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Scroll' )]
+  [ArduinoClass( 'Mitov::GraphicsElementScroll' )]
+  [PersistentCollection( TArduinoRGBWGraphicsElements )]
+  [ArduinoHelpPostfix( '(RGBW Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_RGBW.h' )]
+  [ParentImage( TArduinoMonochromeGraphicsScroll )]
+  [ArduinoTemplateParameter( 'OPERATIONS', 'Mitov::RGBWColorOperations' )]
+  +TArduinoRGBWGraphicsScroll : TArduinoGraphicsClockedPositionElement
+
+    Color : TRGBWColor = $FF000000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GraphicsElementCheckPixel' )]
+  [ArduinoTemplateParameter( 'OPERATIONS', 'Mitov::RGBWColorOperations' )]
+  [PersistentCollection( TArduinoRGBWGraphicsElements )]
+  [ArduinoHelpPostfix( '(RGBW Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_RGBW.h' )]
+  [ParentImage( TArduinoMonochromeGraphicsElementCheckPixel )]
+  +TArduinoRGBWGraphicsElementCheckPixel : TArduinoGraphicsClockedPositionElement, TArduinoGraphicsElementCheckPixel_Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Scene' )]
+  [CreateName( 'Draw Scene' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawScene' )]
+  [PersistentCollection( TArduinoRGBWGraphicsElements )]
+  [ArduinoHelpPostfix( '(RGBW Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics.h' )]
+  [ParentImage( TArduinoMonochromeGraphicsElementScene )]
+  [ArduinoSupportsSceneInfo]
+  +TArduinoRGBWGraphicsElementScene : TArduinoGraphicsClockedPositionElement
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoRGBWGraphicsElements
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRGBWGraphicsElements )]
+  [Name( 'Monohrome Draw Scene' )]
+  [ArduinoClass( 'Mitov::GraphicsElementRGBWMonohromeDrawScene' )]
+  [ArduinoHelpPostfix( '(RGBW Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_RGBW.h' )]
+  [ParentImage( TArduinoGraphicsGrayscaleMonohromeScene )]
+  +TArduinoGraphicsRGBWMonohromeScene : TArduinoMonochromeGraphicsElementBasicScene
+
+    WhiteColor : TRGBWAlphaColor = $FFFFFFFFFF
+    BlackColor : TRGBWAlphaColor = Black
+    BackgroundColor : TRGBWAlphaColor = Black
+
+    Text : TArduinoMonochromeGraphicsTextSettings
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRGBWGraphicsElements )]
+  [Name( 'Grayscale Draw Scene' )]
+  [ArduinoClass( 'Mitov::GraphicsElementRGBWGrayscaleDrawScene' )]
+  [ArduinoHelpPostfix( '(RGBW Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_RGBW.h' )]
+  [ParentImage( TArduinoGraphicsColorGrayscaleScene )]
+  +TArduinoGraphicsRGBWGrayscaleScene : TArduinoGrayscaleGraphicsElementBasicScene
+
+    Text : TArduinoGrayscaleGraphicsTextSettings
+    BackgroundColor : TRGBWAlphaColor = Transparent
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRGBWGraphicsElements )]
+  [Name( 'Color Draw Scene' )]
+  [ArduinoClass( 'Mitov::GraphicsElementRGBWColorDrawScene' )]
+  [ArduinoHelpPostfix( '(RGBW Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_RGBW.h' )]
+  [ParentImage( TArduinoColorGraphicsElementScene )]
+  +TArduinoGraphicsRGBWColorScene : TArduinoColorGraphicsElementBasicScene
+
+    Text : TArduinoColorGraphicsTextSettings
+    BackgroundColor : TRGBWAlphaColor = Transparent
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,117 @@
+Mitov
+//---------------------------------------------------------------------------
+//  +TArduinoAdafruitMetroGrandCentral_QSPIFlash : TArduinoBasicCommonBoardQSPIFlashModule;
+//---------------------------------------------------------------------------
+  [Name( 'Metro' )]
+  [Category( TAdafruitCategory )]
+  TAdafruitMetroCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '88' )]
+  +TArduinoAdafruitMetroGrandCentral_RGBLed : TArduinoNeoPixelRGBLedBasicGRBLedModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', 'SDCARD_SS_PIN' )]
+  +TArduinoAdafruitMetroGrandCentralMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [Name( 'Metro Grand Central M4 Express' )]
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_grandcentral_m4:cache=on,speed=120,opt=small,maxqspi=50,usbstack=arduino,debug=off' )]
+  [Category( TAdafruitMetroCategory )]
+  [Category( TAdafruitCortexM4Category )]
+  [ArduinoDefine( 'VISUINO_FEATHER_M0_BASIC' )]
+  +TArduinoAdafruitMetroGrandCentral_Board : TArduinoSamd51BasicBoard
+
+    [AddItem( TArduinoAdafruitMetroGrandCentral_RGBLed )]
+//    [AddItem( TArduinoAdafruitMetroGrandCentral_QSPIFlash )]
+    [AddItem( TArduinoAdafruitMetroGrandCentralMicroSDModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  8, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10,  1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11,  1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12,  1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital(LED)' )]
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial4InterruptChannel, 'Digital(TX4)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial4InterruptChannel, 'Digital(RX4)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial3InterruptChannel, 'Digital(TX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial3InterruptChannel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial2InterruptChannel, 'Digital(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial2InterruptChannel, 'Digital(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20,  1, TArduinoAdditionalDigitalPullUpDownPWMI2C0InterruptChannel, 'Digital(SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 21,  1, TArduinoAdditionalDigitalPullUpDownPWMI2C0InterruptChannel, 'Digital(SCL)' )]
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22,  24, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 46,  2, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 48,  1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 49,  1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 50,  1, TArduinoAdditionalDigitalPullUpDownPWMSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 51,  1, TArduinoAdditionalDigitalPullUpDownPWMSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 52,  1, TArduinoAdditionalDigitalPullUpDownPWMSPI0InterruptChannel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 53,  1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 67, 0, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 0 ]/Digital' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 68, 1, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 1 ]/Digital' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 69, 2, 6, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 54, 8, 8, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+   
+    
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( 'C_PIN', '40' )]
+  +TArduinoAdafruitMetroM4Express_RGBLed : TArduinoNeoPixelRGBLedBasicGRBLedModule;
+//---------------------------------------------------------------------------
+  [Category( TAdafruitMetroCategory )]
+  [Category( TAdafruitCortexM4Category )]
+  [ArduinoDefine( 'VISUINO_FEATHER_M0_BASIC' )]
+  TArduinoAdafruitMetroM4Express_Basic_Board : TArduinoSamd51BasicBoard
+
+    [AddItem( TArduinoAdafruitMetroM4Express_RGBLed )]
+//    [AddItem( TArduinoAdafruitMetroGrandCentral_QSPIFlash )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  10, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital(LED)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 0 ]/Digital' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 1 ]/Digital' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2, 4, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel, 'Digital(SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 21, 7, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel, 'Digital(SCL)' )]
+//    SDA
+    
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------  
+  [Name( 'Metro M4 Express' )]
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_metro_m4:cache=on,speed=120,opt=small,maxqspi=50,usbstack=arduino,debug=off' )]
+  +TArduinoAdafruitMetroM4Express_Board : TArduinoAdafruitMetroM4Express_Basic_Board;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AirLiftM4ModuleInterface' )]
+  +TArduinoAdafruitM4Express_AirLift_WiFi_Module : TArduinoAdafruitAirLift_Basic_Module;
+//---------------------------------------------------------------------------  
+  [Name( 'Metro M4 Express AirLift (WiFi)' )]
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_metro_m4_airliftlite:cache=on,speed=120,opt=small,maxqspi=50,usbstack=arduino,debug=off' )]  
+  +TArduinoAdafruitMetroM4Express_AirLift_Board : TArduinoAdafruitMetroM4Express_Basic_Board
+
+    [AddItem( TArduinoAdafruitM4Express_AirLift_WiFi_Module )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------  
+; // Mitov

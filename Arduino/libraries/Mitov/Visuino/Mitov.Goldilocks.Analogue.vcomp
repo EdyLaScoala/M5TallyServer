@@ -1,0 +1,81 @@
+Mitov
+  [Name( 'Goldilocks' )]
+  TGoldilocksCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AnalogOutputs' )]
+  [CreateName( 'AnalogOutputs' )]
+  [ArduinoInclude( 'Mitov_Goldilocks_DAC.h' )]
+  [ArduinoInclude( 'DAC.h' )]
+  [ArduinoClass( 'Mitov::GoldilocksDAC' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  TArduinoGoldilocksDACModule : TArduinoEnabledShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Left', TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Right', TOWArduinoAnalogSinkPin )]
+    InputPins : TOWArduinoPinList
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '22' )]
+  +TArduinoGoldilocksMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [Name( 'Goldilocks Analogue' )]
+  [ArduinoDefine( 'VISUINO_GOLDILOCKS_ANALOGUE' )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'Goldilocks:avr:goldilocks_analogue' )]
+  [Category( TGoldilocksCategory )]
+  [ParentImage( TGoldilocksCategory )]
+  [ArduinoBoardCanReset]
+  +TArduino_Goldilocks_Analogue_Board : TArduinoBoardExtendableImplementation
+  
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduinoGoldilocksDACModule )]
+    [AddItem( TArduinoGoldilocksMicroSDModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoHardwareSerial, 2 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  4, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  2, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14, 2, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16, 1, TArduinoAdditionalDigitalI2C0Channel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17, 1, TArduinoAdditionalDigitalI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18, 6, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 24, 0, 8, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 6, 1, TArduinoAnalogInputChannel, 'Microphone' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 7, 1, TArduinoAnalogInputChannel, 'Line-In' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

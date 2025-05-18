@@ -1,0 +1,110 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInit]
+  [Category( TArduinoRelayToolbarCategory )]
+  [PersistentCollection( TArduinoBasicShields )]
+  TESP8266_01_BasicRelayShield : TArduinoShield, IESP8266_01_Shield
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOutput' )]
+    Enabled : Boolean = True
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Simple Relay' )]
+  [CreateName( 'Relay' )]
+  [ArduinoShieldPin( '0', 'Relay' )]
+  [ArduinoClass( 'Mitov::ArduinoInvertedDigitalModuleEnableInitialValue' )]
+  [ArduinoTemplateParameter( 'C_PIN', '0' )]
+  +TESP8266_01_SimpleRelayShield : TESP8266_01_BasicRelayShield;
+//---------------------------------------------------------------------------
+  [Name( 'LC Technology Serial Relay' )]
+  [CreateName( 'Relay' )]
+  [ArduinoSerial( 0 )]
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_SerialRelay.h' )]
+  [ArduinoClass( 'Mitov::SerialRelay' )]
+  [ArduinoTemplateParameter( 'INDEX', '0' )]
+  +TESP8266_01_SerialRelayShield : TESP8266_01_BasicRelayShield;
+//---------------------------------------------------------------------------
+  TESP8266_01_SerialRelayShieldChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoInclude( 'Mitov_SerialRelay.h' )]
+  [ArduinoClass( 'Mitov::SerialRelay' )]
+  [ParentImage( TESP8266_01_SimpleRelayShield )]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  TESP8266_01_SerialRelayShieldChannel : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOutput' )]
+    Enabled : Boolean = True
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    [OWPinGroup( TESP8266_01_SerialRelayShieldChannel )]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'LC Technology 2 Relays' )]
+  [CreateName( '2 Relays' )]
+  [ArduinoSerial( 0 )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TArduinoRelayToolbarCategory )]
+  +TESP8266_01_2_SerialRelayShield : TArduinoShield, IESP8266_01_Shield
+
+    [AddItem( TESP8266_01_SerialRelayShieldChannel, 2 )]
+    Relays : TESP8266_01_SerialRelayShieldChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'LC Technology 4 Relays' )]
+  [CreateName( '4 Relays' )]
+  [ArduinoSerial( 0 )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TArduinoRelayToolbarCategory )]
+  +TESP8266_01_4_SerialRelayShield : TArduinoShield, IESP8266_01_Shield
+
+    [AddItem( TESP8266_01_SerialRelayShieldChannel, 4 )]
+    Relays : TESP8266_01_SerialRelayShieldChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '2', 'NeoPixels RGB LED' )]
+  [ArduinoShieldPin( '2', 'NeoPixels' )]
+  +TESP8266_01_NeoPixels_Shield : TArduinoNeoPixels_Shield, IESP8266_01_Shield;
+//---------------------------------------------------------------------------
+  [CreateName( 'Temperature/Humidity' )]
+  [ArduinoTemplateParameter( 'INTERRUPT', 'Interrupts::Handler2' )]
+  [ArduinoAddInterruptHandler( 'SensorOutputPin', '2', True, False )]
+  [Category( TArduinoTemperatureHumidityToolbarCategory )]
+  TESP8266_01_Basic_DHT_Shield : TArduinoBasicDHTModule, IESP8266_01_Shield;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [Name( 'Temperature/Humidity DHT11' )]
+  [ArduinoShieldPin( '2', 'DHT11' )]
+  [ArduinoClass( 'Mitov::DHTSensor_Interrupt' )]
+  +TESP8266_01_DHT11_Shield : TESP8266_01_Basic_DHT_Shield;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [Name( 'Temperature/Humidity DHT22' )]
+  [ArduinoShieldPin( '2', 'DHT22' )]
+  [ArduinoClass( 'Mitov::DHTSensor_Interrupt_DHT22' )]
+  +TESP8266_01_DHT22_Shield : TESP8266_01_Basic_DHT_Shield;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '2', 'Thermometer' )]
+  +TESP8266_01_MaximOneWireThermometer_Shield : TArduinoMaximOneWireThermometerModule, IESP8266_01_Shield;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,129 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoMicroSDCardElementClocked : TArduinoMicroSDCardElementPathName
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMicroSDCardElementClockedResult : TArduinoMicroSDCardElementClocked
+
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'File or Directory Exists' )]
+  [CreateName( 'Exists' )]
+  [ArduinoClass( 'Mitov::MicroSDCardElementExists' )]
+  +TArduinoMicroSDCardElementExists : TArduinoMicroSDCardElementClockedResult
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'List' )]
+  [CreateName( 'List' )]
+  [ArduinoClass( 'Mitov::MicroSDCardElementList' )]
+  [ArduinoStart]
+  +TArduinoMicroSDCardElementList : TArduinoMicroSDCardElementClocked
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    OutputPin : TOWArduinoStringSourcePin
+    FailedOutputPin : TOWArduinoClockSourcePin
+
+    Recursive : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMicroSDCardElementOperationCreate : TArduinoMicroSDCardElementOperation
+
+    [ArduinoPinCall( 'Create_ClockInputPin' )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMicroSDCardElementOperationCheckExists : TArduinoMicroSDCardElementOperation
+
+    [ArduinoPinCall( 'CheckExists_ClockInputPin' )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Directory' )]
+  [CreateName( 'Directory' )]
+  [ArduinoClass( 'Mitov::MicroSDCardElementDirectory' )]
+  +TArduinoMicroSDCardElementDirectory : TArduinoMicroSDCardElementPathName
+
+    CheckExists : TArduinoMicroSDCardElementOperationCheckExists
+    Create : TArduinoMicroSDCardElementOperationCreate
+    Remove : TArduinoMicroSDCardElementOperationRemove
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMicroSDCardElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Bitmap File' )]
+  [CreateName( 'Bitmap File' )]
+  [ArduinoInclude( 'Mitov_MicroSDCardBitmapFile.h' )]
+  [ArduinoClass( 'Mitov::MicroSDCardElementBitmapFile' )]
+  [ParentImage( TArduinoMonochromeGraphicsElementDrawBitmap )]
+  +TArduinoMicroSDCardElementBitmapFile : TArduinoMicroSDCardElementPathName
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoGraphicsMultiSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoVariable( Boolean, 'FRunning' )]
+  TArduinoMicroSDCard_BasicExtender : Extender
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    [ArduinoFlexibleVariable] // Needed to handle errors
+    Enabled
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMicroSDCardElements
+
+    FailedOutputPin : TOWArduinoClockSourcePin
+    SuccessOutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoPinConnectDefine( '_MICROSD_USE_ERROR_INFO_PIN_' )]
+    ErrorInfoOutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_MicroSDCard.h' )]
+  [ArduinoClass( 'Mitov::MicroSDCard' )]
+  [ArduinoIfPlatformRemoveLibrary( 'teensy', 'SD', 'https://github.com/arduino-libraries/SD' )]
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoIncludeDefine( '#ifndef SEEEDUINO_WIO_TERMINAL' )]
+  [ArduinoIncludeDefine( '#define private public' )]
+  [ArduinoIncludeDefine( '#undef private' )]
+  [ArduinoIncludeDefine( '#endif // SEEEDUINO_WIO_TERMINAL' )]
+  [ArduinoTemplateParameter( 'TYPE', 'SDClass' )]
+  [ArduinoInit]
+  TArduinoMicroSDCard_NoLibrary_Extender : TArduinoMicroSDCard_BasicExtender;
+//---------------------------------------------------------------------------
+  [ArduinoIfNotPlatformLibrary( 'teensy', 'SD', 'https://github.com/arduino-libraries/SD' )]
+  [ArduinoInclude( 'SD.h' )]
+  TArduinoMicroSDCard_Extender : TArduinoMicroSDCard_NoLibrary_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'MicroSDCard' )]
+  [CreateName( 'Micro SD Card' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoBasicCommonBoardMicroSDModule : TArduinoEnableUpdateShield;
+//---------------------------------------------------------------------------
+  TArduinoBasicStandardBoardMicroSDModule : TArduinoBasicCommonBoardMicroSDModule, TArduinoMicroSDCard_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicCommonBoardMicroSDModule )]
+  TArduinoBasicMicroSDShieldElement : TArduinoEnableUpdateShield, TArduinoMicroSDCard_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,127 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'UpdateValues' )]
+  TArduinoAnalogPCA9685UpdateValuesCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoAnalogPCA9685UpdateValuesCallChain]
+  TArduinoAnalogPCA9685Channels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_PWM_PCA9685.h' )]
+  [ArduinoDeclaredClass]
+  [ArduinoDirectProperties]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoDontMakeInstance]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [PersistentCollection( TArduinoAnalogPCA9685Channels )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoTemplateParameter( 'TRANSFORM', 'Mitov::TAnalogTransform_Normal' )]
+  TArduinoPCA9685BasicChannel : TArduinoBasicAnalogDirectInputPinChannel
+
+    [OWExcludeBindings]
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::PCA9685PWMChannel' )]
+  [ParentImage( TArduinoMemoryAnalogElement )]
+  +TArduinoAnalogPCA9685Channel : TArduinoPCA9685BasicChannel
+
+    [ValueRange( 0.0, 1.0 )]
+    OnValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::PCA9685ServoChannel' )]
+  [ArduinoClass( 'Mitov::PCA9685ServoChannel' )]
+  [ParentImage( TArduinoServo )]
+  +TArduinoServoPCA9685Channel : TArduinoPCA9685BasicChannel
+
+    Reversed : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+//  TArduinoAnalogPCA9685SubAddress
+//---------------------------------------------------------------------------
+  TArduinoAnalogPCA9685OutputLogicMode : Enum
+  
+    olmZero
+    olmOne
+    olmHighImpedance
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAnalogPCA9685OutputLogic' )]
+  TArduinoAnalogPCA9685OutputLogic : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    Inverted : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    Mode : TArduinoAnalogPCA9685OutputLogicMode = olmZero
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_PWM_PCA9685.h' )]
+  [ArduinoWebKeywords( 'PCA9685' )]
+  TArduinoBasicPCA9685 : TArduinoClockedEnableFlexibleI2CComponent
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [DesignRange( $40, $7F )]
+    Address = $40
+
+    [MinValue( 1 )]
+    [NamePostfix( '(Hz)' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateFrequency' )]
+    OscilatorFrequency : Single = 25000000.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    OpenDrain : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    Sleep : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    UpdateOnAck : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    ExternalClock : Boolean = False
+
+    OutputLogic : TArduinoAnalogPCA9685OutputLogic
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'NXP PWM PCA9685 (I2C)' )]
+  [CreateName( 'PWMPCA9685' )]
+  [ArduinoClass( 'Mitov::PCA9685PWM' )]
+  [Category( TArduinoAnalogOutputToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoAnalogPCA9685 : TArduinoBasicPCA9685
+
+    [AddItem( TArduinoAnalogPCA9685Channel, 16 )]
+    Channels : TArduinoAnalogPCA9685Channels
+
+    [MinValue( 0.00001 )]
+    [Name( 'PWM Frequency (Hz)' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateFrequency' )]
+    Frequency : Single = 1000.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'NXP Servo PCA9685 (I2C)' )]
+  [CreateName( 'ServoPCA9685' )]
+  [ArduinoClass( 'Mitov::PCA9685Servo' )]
+  [Category( TArduinoServoMottorsToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoServoPCA9685 : TArduinoBasicPCA9685
+
+    [AddItem( TArduinoServoPCA9685Channel, 16 )]
+    Channels : TArduinoAnalogPCA9685Channels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

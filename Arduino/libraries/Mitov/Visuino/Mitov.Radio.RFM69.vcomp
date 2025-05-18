@@ -1,0 +1,135 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoLoRaRFM69Modulation : Enum
+  
+    mFrequencyShiftKeying_Gaussian_1_0
+    mFrequencyShiftKeying_Gaussian_0_5
+    mFrequencyShiftKeying_Gaussian_0_3
+    mOnOffKeying_NoShaping
+    mOnOffKeying_Cutoff_BitRate
+    mOnOffKeying_Cutoff_2_BitRate
+    
+  ;   
+//---------------------------------------------------------------------------
+  TArduinoLoRaRFM69DCCCutoffFrequency : Enum
+
+    rfmDCCCutoff16
+    rfmDCCCutoff8
+    rfmDCCCutoff4
+    rfmDCCCutoff2
+    rfmDCCCutoff1
+    rfmDCCCutoff0_5
+    rfmDCCCutoff0_25
+    rfmDCCCutoff0_125
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoLoRaRFM69ChannelFilterBandwidth : Enum
+
+    bfFSK_2_6_OOK_1_3
+    bfFSK_3_1_OOK_1_6
+    bfFSK_3_9_OOK_2_0
+    bfFSK_5_2_OOK_2_6
+    bfFSK_6_3_OOK_3_1
+    bfFSK_7_8_OOK_3_9
+    bfFSK_10_4_OOK_5_2
+    bfFSK_12_5_OOK_6_3
+    bfFSK_15_6_OOK_7_8
+    bfFSK_20_8_OOK_10_4
+    bfFSK_25_0_OOK_12_5
+    bfFSK_31_3_OOK_15_6
+    bfFSK_41_7_OOK_20_8
+    bfFSK_50_0_OOK_25_0
+    bfFSK_62_5_OOK_31_3
+    bfFSK_83_3_OOK_41_7
+    bfFSK_100_0_OOK_50_0
+    bfFSK_125_0_OOK_62_5
+    bfFSK_166_7_OOK_83_3
+    bfFSK_200_0_OOK_100_0
+    bfFSK_250_0_OOK_125_0
+    bfFSK_333_3_OOK_166_7
+    bfFSK_400_0_OOK_200_0
+    bfFSK_500_0_OOK_250_0
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoLoRaRFM69DCFreeEncoding : Enum
+
+    dcfeNone
+    dcfeManchester
+    dcfeWhitening
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLoRaRFM69ModemSettings' )]
+  TArduinoLoRaRFM69ModemSettings : TArduinoCodePersistent
+
+    Modulation : TArduinoLoRaRFM69Modulation = mFrequencyShiftKeying_Gaussian_1_0
+
+    [ValueRange( 0, $FFFF )]
+    BitRate : Unsigned = $80
+
+    FrequencyDeviation : Single = 0.25
+    DCCCutoffFrequency : TArduinoLoRaRFM69DCCCutoffFrequency = rfmDCCCutoff4
+    ChannelFilterBandwidth : TArduinoLoRaRFM69ChannelFilterBandwidth = bfFSK_500_0_OOK_250_0
+    DCFreeEncoding : TArduinoLoRaRFM69DCFreeEncoding = dcfeNone
+    CRCEnabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LoRa_RFM69.h' )]
+  [ArduinoVariable( Boolean, 'FModeChange' )]
+  [ArduinoVariable( Unsigned, 3, 'FMode' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  TArduinoLoRaRFM69_Extender : Extender
+
+    SentToOutputPin : TOWArduinoIntegerSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoLoRaElements
+
+    [ValueRange( 0, $FF )]
+    [ArduinoUseBindingCheckSetter( 'UpdateAddress' )]
+    Address : Unsigned = 0
+
+    [ValueRange( 0, $FF )]
+    [ArduinoUseBindingCheckSetter( 'UpdateAddress' )]
+    BroadcastAddress : Unsigned = 255
+
+    Promiscuous : Boolean = False
+
+    [ValueRange( -18, 20 )]
+    [Name( 'Power(dB)' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateTransmitPower' )]
+    Power : Integer = 14
+
+    [ValueRange( 0, $FFFF )]
+    [ArduinoUseBindingCheckSetter( 'UpdatePreambleLength' )]
+    PreambleLength : Unsigned = 4
+
+    ModemSettings : TArduinoLoRaRFM69ModemSettings
+
+    SyncWords : TArduinoBinaryPersistent
+
+    [ValueRange( 16, 16 )]
+    EncryptionKey : TArduinoBinaryPersistent
+
+    [PropertyListDesignValue( '433.0' )]
+    [PropertyListDesignValue( '868.0' )]
+    [PropertyListDesignValue( '915.0' )]
+    Frequency
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MitovLoRaRFM69' )]
+  [Name( 'RFM69' )]
+  [CreateName( 'RFM69' )]
+  [ArduinoWebKeywords( 'RFM69' )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoLoRaRFM69 : TArduinoLoRaBasicRFM, TArduinoLoRaRFM69_Extender;
+//---------------------------------------------------------------------------
+  TArduinoLoRaRFM69BasicShield : TArduinoLoRaBasicRFMShield, TArduinoLoRaRFM69_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

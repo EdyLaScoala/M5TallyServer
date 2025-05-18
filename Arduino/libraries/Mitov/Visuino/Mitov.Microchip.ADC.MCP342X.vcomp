@@ -1,0 +1,169 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'GetActiveChannels' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AValue' )]
+  TArduinoMicrochip_ADC_MCP342XGetActiveChannelsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'SendOutput' )]
+  [ArduinoCallChainIndex]
+  [ArduinoPopulatedCallChainParameter( 'float', 'AValue' )]
+  TArduinoMicrochip_ADC_MCP342XSendOutputChannelsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoClass( 'Mitov::TArduinoMicrochip_ADC_MCP342XChannel' )]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', True )]
+  [TArduinoMicrochip_ADC_MCP342XGetActiveChannelsCallChain]
+  [TArduinoMicrochip_ADC_MCP342XSendOutputChannelsCallChain]
+  +TArduinoMicrochip_ADC_MCP342XChannel : TArduinoCodeFixedNamePersistent
+  
+    [ArduinoPinIsConnectedFlag]
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CONFIG' )]
+    Enabled : Boolean = True
+    
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMicrochip_ADC_MCP342XMode' )]
+  TArduinoMicrochip_ADC_MCP342XMode : TArduinoCodePersistent
+  
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CONFIG' )]
+    ContinuosSingleChannel : Boolean = False
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CONFIG' )]
+    AllChannels : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CONFIG' )]
+    Channel : Unsigned = 0
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_ADC_MCP342X.h' )]
+  [ArduinoClass( 'Mitov::Microchip_ADC_MCP342X' )]
+  [CreateName( 'ADC' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  TArduinoMicrochip_ADC_MCP342X_16 : TArduinoI2CAddressControlPinComponent
+
+    [ArduinoUseBindingCheckSetter( 'Update_CONFIG' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [ValueRange( 1, 8 )]
+    Gain : Unsigned = 1
+    
+    [ArduinoUseBindingCheckSetter( 'Update_CONFIG' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '12' )]
+    [PropertyListDesignValue( '14' )]
+    [PropertyListDesignValue( '16' )]
+    [ValueRange( 12, 16 )]
+    [Name( 'Bits(Resolution)' )]
+    Resolution : Unsigned = 12
+    
+    Mode : TArduinoMicrochip_ADC_MCP342XMode
+    
+    [TArduinoMicrochip_ADC_MCP342XGetActiveChannelsCallChain]
+    [TArduinoMicrochip_ADC_MCP342XSendOutputChannelsCallChain]
+    Channels : TArduinoFixedPersistentCollection
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMicrochip_ADC_MCP342X_18 : TArduinoMicrochip_ADC_MCP342X_16
+  
+    [PropertyListDesignValue( '18' )]
+    [ValueRange( 12, 18 )]
+    Resolution
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP3422 ADC (I2C)' )]
+  [ArduinoWebKeywords( 'MCP3422' )]
+  [ArduinoVariable( Unsigned, 1, 'FIndex' )]
+  +TArduinoMicrochip_ADC_MCP3422 : TArduinoMicrochip_ADC_MCP342X_18
+
+    [DesignRange( $68, $68 )]
+    Address = $68
+    
+    [AddItem( TArduinoMicrochip_ADC_MCP342XChannel, 2 )]
+    Channels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP3423 ADC (I2C)' )]
+  [ArduinoWebKeywords( 'MCP3423' )]
+  [ArduinoVariable( Unsigned, 1, 'FIndex' )]
+  +TArduinoMicrochip_ADC_MCP3423 : TArduinoMicrochip_ADC_MCP342X_18
+
+    [DesignRange( $68, $6F )]
+    Address = $68
+
+    [AddItem( TArduinoMicrochip_ADC_MCP342XChannel, 2 )]
+    Channels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP3424 ADC (I2C)' )]
+  [ArduinoWebKeywords( 'MCP3424' )]
+  [ArduinoVariable( Unsigned, 2, 'FIndex' )]
+  +TArduinoMicrochip_ADC_MCP3424 : TArduinoMicrochip_ADC_MCP342X_18
+      
+    [DesignRange( $68, $6F )]
+    Address = $68
+    
+    [AddItem( TArduinoMicrochip_ADC_MCP342XChannel, 4 )]
+    Channels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP3426 ADC (I2C)' )]
+  [ArduinoWebKeywords( 'MCP3426' )]
+  [ArduinoVariable( Unsigned, 1, 'FIndex' )]
+  +TArduinoMicrochip_ADC_MCP3426 : TArduinoMicrochip_ADC_MCP342X_16
+
+    [DesignRange( $68, $68 )]
+    Address = $68
+    
+    [AddItem( TArduinoMicrochip_ADC_MCP342XChannel, 2 )]
+    Channels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP3427 ADC (I2C)' )]
+  [ArduinoWebKeywords( 'MCP3427' )]
+  [ArduinoVariable( Unsigned, 1, 'FIndex' )]
+  +TArduinoMicrochip_ADC_MCP3427 : TArduinoMicrochip_ADC_MCP342X_16
+
+    [DesignRange( $68, $6F )]
+    Address = $68
+
+    [AddItem( TArduinoMicrochip_ADC_MCP342XChannel, 2 )]
+    Channels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP3428 ADC (I2C)' )]
+  [ArduinoWebKeywords( 'MCP3428' )]
+  [ArduinoVariable( Unsigned, 2, 'FIndex' )]
+  +TArduinoMicrochip_ADC_MCP3428 : TArduinoMicrochip_ADC_MCP342X_16
+      
+    [DesignRange( $68, $6F )]
+    Address = $68
+    
+    [AddItem( TArduinoMicrochip_ADC_MCP342XChannel, 4 )]
+    Channels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

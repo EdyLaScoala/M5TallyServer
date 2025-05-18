@@ -1,0 +1,60 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Stepper.h' )]
+  [ArduinoWebKeywords( 'arduino stepper motor' )]
+  [ArduinoOptionalVariable( Unsigned, 32, 'FLastTime', 0 )]
+  TArduinoStepper_Extender : Extender
+
+    StepInputPin : TOWArduinoClockSinkPin
+
+    Enabled : Boolean = True
+    Reversed : Boolean = False
+
+    [DesignRange( -10000, 10000 )]
+    [ValueRange( -100000, 100000 )]
+    [ArduinoVariableIfNotDefault( 'FLastTime' )]
+    [ArduinoNotDefaultAddCodeEntry( ceStart )]
+    [ArduinoNotDefaultAddCodeEntry( ceLoopBegin )]
+    StepsPerSecond : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoStepperMottorsToolbarCategory )]
+  [CreateName( 'Stepper' )]
+  TArduinoCommonStepper : TArduinoComponent, TArduinoStepper_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalInterruptOutputSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonStepperHalfStep : TArduinoCommonStepper
+
+    HalfStep : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::StepperMotor4Wire' )]
+  [Name( '4 Wire Stepper Motor' )]
+//  [StepperNumberWires( 4 )]
+  [ArduinoVariable( Unsigned, 4, 'FStep' )]
+  +TArduinoStepperMotor4Wire : TArduinoCommonStepperHalfStep
+  
+    [OWAddPins( '', 0, 4, TOWArduinoDigitalSourcePin )]
+    OutputPins
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::StepperMotor3Wire' )]
+  [Name( '3 Wire Stepper Motor' )]
+//  [StepperNumberWires( 3 )]
+  [ArduinoVariable( Unsigned, 3, 'FStep' )]
+  +TArduinoStepperMotor3Wire : TArduinoCommonStepperHalfStep
+  
+    [OWAddPins( '', 0, 3, TOWArduinoDigitalSourcePin )]
+    OutputPins
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

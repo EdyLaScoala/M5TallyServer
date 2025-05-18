@@ -1,0 +1,37 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SoftwareSerial.h' )]
+  [ArduinoInclude( 'Mitov_SoftwareSerial.h' )]
+  [ArduinoLibrary( 'EspSoftwareSerial', 'https://github.com/plerup/espsoftwareserial' )]
+  TArduinoSoftwareSerial_Extender : Extender;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::VisuinoSoftwareSerial' )]
+  [ArduinoSerialType( '' )]
+  [ArduinoSerialOutputType( '' )]
+  [ArduinoStart]
+  TArduinoBasicSpeedSoftwareSerial : TArduinoCommonSpeedSerial, TArduinoSoftwareSerial_Extender;
+//---------------------------------------------------------------------------
+  TArduinoSoftwareSerialSpeedModule : TArduinoSoftwareSerialModule, TArduinoSoftwareSerial_Extender
+
+    [PropertyListDesignValue( '110' )]
+    [PropertyListDesignValue( '300' )]
+    [PropertyListDesignValue( '600' )]
+    [PropertyListDesignValue( '1200' )]
+    [PropertyListDesignValue( '2400' )]
+    [PropertyListDesignValue( '4800' )]
+    [PropertyListDesignValue( '9600' )]
+    [PropertyListDesignValue( '14400' )]
+    [PropertyListDesignValue( '19200' )]
+    [PropertyListDesignValue( '38400' )]
+    [PropertyListDesignValue( '56000' )]
+    [PropertyListDesignValue( '57600' )]
+    [PropertyListDesignValue( '115200' )]
+    [PropertyListDesignValue( '128000' )]
+    [PropertyListDesignValue( '256000' )]
+    [AutoNameChangeNotify]
+    [ExtendDisplayName( ' (', ')' )]
+    Speed : Unsigned = 9600
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,445 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoDateTimeSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoDateTimeSetValueElements )]
+  [ArduinoHelpPostfix( '(Date/Time Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicDateTimeSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [CreateName( 'DateTimeValue' )]
+  [Name( 'Date/Time Value' )]
+  [Category( TArduinoDateTimeDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoDateTimeValue : TArduinoCommonClockedDateTimeSource, TArduinoValue_Extender
+
+    Value : TDateTime = 0.0
+    Elements : TArduinoDateTimeSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [Category( TArduinoDateTimeFilterToolbarCategory )]
+  TArduinoMinValueBasicDateTime : TArduinoCommonDateTimeFilter, TArduinoMinValue_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Min Date/Time Value' )]
+  [CreateName( 'MinValue' )]
+  [ArduinoTemplateParameter( '0_BASE', 'Mitov::CompareType_Implementation_Smaller' )]
+  +TArduinoMinValueDateTime : TArduinoMinValueBasicDateTime;
+//---------------------------------------------------------------------------
+  [Name( 'Max Date/Time Value' )]
+  [CreateName( 'MaxValue' )]
+  [ArduinoTemplateParameter( '0_BASE', 'Mitov::CompareType_Implementation_Bigger' )]
+  +TArduinoMaxValueDateTime : TArduinoMinValueBasicDateTime;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DateTime.h' )]
+  [ArduinoClass( 'Mitov::CompileDateTime' )]
+  [CreateName( 'CompileDateTime' )]
+  [Name( 'Compile Date/Time' )]
+  [Category( TArduinoDateTimeDataSourcesToolbarCategory )]
+  +TArduinoCompileDateTime : TArduinoCommonEnableClockedDateTimeSource
+  
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DateTime.h' )]
+  [ArduinoClass( 'Mitov::AddDateTime' )]
+  [CreateName( 'AddDateTime' )]
+  [Name( 'Add Date/Time' )]
+  [Category( TArduinoDateTimeFilterToolbarCategory )]
+  +TArduinoAddDateTimeValue : TArduinoCommonDateTimeFilter
+
+    Years : Integer = 0
+    Months : Integer = 0
+    Days : Integer = 0
+    Hours : Integer = 0
+    Minutes : Integer = 0
+    Seconds : Integer = 0
+    MilliSeconds : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnly' )]
+  [ArduinoContructorParameter( 'Mitov::TDateTime()' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'Date/Time Change Only' )]
+  [Category( TArduinoDateTimeFilterToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TDateTime' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoDateTimeChangeOnly : TArduinoCommonDateTimeFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TDateTimeCompareItems' )]
+  TArduinoDateTimeCompareValueItems : TArduinoCodePersistent
+
+    Years : Boolean = True
+    Months : Boolean = True
+    Days : Boolean = True
+    WeekDays : Boolean = True
+    Hours : Boolean = True
+    Minutes : Boolean = True
+    Seconds : Boolean = True
+    MilliSeconds : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareDateTimeValue' )]
+  [Name( 'Compare Date/Time Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoDateTimeFilterToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoDateTimeCompareValue : TArduinoCommonDateTimeSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingSetter]
+    Value : TDateTime = 0.0
+
+    [ArduinoTransformImplementation( 'CompareTypeDateTime' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+    Items : TArduinoDateTimeCompareValueItems
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [Name( 'Date/Time Mux(Multi channel Switch)' )]
+  [CreateName( 'DateTimeMux' )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoDateTimeMux : TArduinoDateTimeMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RandomGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TDateTime' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomDateTimeGenerator' )]
+  [CreateName( 'RandomDateTimeGenerator' )]
+  [Name( 'Random Date/Time Generator' )]
+  [Category( TArduinoDateTimeGeneratorsToolbarCategory )]
+  +TArduinoRandomDateTimeGenerator : TArduinoCommonEnableClockedDateTimeSource
+
+    Min : TDateTime = 0.0
+    Max : TDateTime = 100.0
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ValueRange' )]
+  TArduinoDateTimeValueRange : TArduinoCodePersistent
+
+    Min : TDateTime = 0.0
+    Max : TDateTime = 100.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareDateTimeRange' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [Name( 'Compare Date/Time Range' )]
+  [CreateName( 'CompareRange' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoDateTimeFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoDateTimeCompareRange : TArduinoCommonDateTimeSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+    Range : TArduinoDateTimeValueRange
+    IsOutsideRange : Boolean = False
+    IncludeLimits : Boolean = False
+    OnlyChanged : Boolean = True
+    Items : TArduinoDateTimeCompareValueItems
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [Name( 'Date/Time Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'DateTimeDemux' )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoDateTimeDemux : TArduinoCommonDateTimeSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoDateTimeSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoDateTimeSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DateTime.h' )]
+  [ArduinoClass( 'Mitov::DecodeDateTime' )]
+  [CreateName( 'DecodeDateTime' )]
+  [Name( 'Decode(Split) Date/Time' )]
+  [Category( TArduinoDateTimeConvertersToolbarCategory )]
+  +TArduinoDecodeDateTime : TArduinoCommonDateTimeSink
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoIntegerSourcePin )]
+
+    [OWAddPin( 'Year', TOWArduinoIntegerSourcePin )]
+    [OWAddPin( 'Month', TOWArduinoIntegerSourcePin )]
+    [OWAddPin( 'Day', TOWArduinoIntegerSourcePin )]
+
+    [OWAddPin( 'Hour', TOWArduinoIntegerSourcePin )]
+    [OWAddPin( 'Minute', TOWArduinoIntegerSourcePin )]
+    [OWAddPin( 'Second', TOWArduinoIntegerSourcePin )]
+    [OWAddPin( 'Milli Second', TOWArduinoIntegerSourcePin )]
+
+    [OWAddPin( 'Week Day', TOWArduinoIntegerSourcePin )]
+
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DateTime.h' )]
+  [ArduinoClass( 'Mitov::EncodeDateTime' )]
+  [CreateName( 'EncodeDateTime' )]
+  [Name( 'Encode(Make) Date/Time' )]
+  [Category( TArduinoDateTimeConvertersToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  +TArduinoEncodeDateTime : TArduinoCommonEnableClockedDateTimeSource
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoIntegerSinkPin )]
+
+    [OWAddPin( 'Year', TOWArduinoIntegerSinkPin )]
+    [OWAddPin( 'Month', TOWArduinoIntegerSinkPin )]
+    [OWAddPin( 'Day', TOWArduinoIntegerSinkPin )]
+
+    [OWAddPin( 'Hour', TOWArduinoIntegerSinkPin )]
+    [OWAddPin( 'Minute', TOWArduinoIntegerSinkPin )]
+    [OWAddPin( 'Second', TOWArduinoIntegerSinkPin )]
+    [OWAddPin( 'Milli Second', TOWArduinoIntegerSinkPin )]
+
+    InputPins : TOWArduinoPinList
+
+    InitialValue : TDateTime = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [Name( 'Date/Time On/Off Switch' )]
+  [CreateName( 'DateTimeSwitch' )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoDateTimeSwitch : TArduinoCommonDateTimeSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDateTimeSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [ArduinoContructorParameter( 'Mitov::TDateTime()' )]
+  [Name( 'Date/Time Toggle Switch' )]
+  [CreateName( 'DateTimeToggleSwitch' )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoDateTimeToggleSwitch : TArduinoCommonDateTimeSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoDateTimeSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoDateTimeSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Date/Time Toggle Demux' )]
+  [CreateName( 'DateTimeToggleDemux' )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoDateTimeToggleDemux : TArduinoCommonDateTimeSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoDateTimeSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoDateTimeSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'DateTimeMultiSource' )]
+  [Name( 'Date/Time Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoDateTimeMultiSource : TArduinoCommonDateTimeSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDateTimeSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoDateTimeSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatDateTime' )]
+  [Name( 'Repeat Date/Time' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatDateTime : TArduinoCommonDateTimeFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Date/Time Multi-Source Merger' )]
+  [CreateName( 'DateTimeMultiMerger' )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoDateTimeMultiMerger : TArduinoDateTimeMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'Mitov::TDateTime' )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TDateTime' )]
+  [CreateName( 'RememberDateTime' )]
+  [Name( 'Remember Date/Time Value' )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoRememberDateTime : TArduinoCommonDateTimeFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( TDateTime, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TDateTime
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreValues' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TDateTime' )]
+  [Name( 'Ignore Date/Time Values' )]
+  [CreateName( 'IgnoreDateTimeValues' )]
+  [Category( TArduinoDateTimeFilterToolbarCategory )]
+  +TArduinoIgnoreDateTimeValues : TArduinoCommonDateTimeFilter
+
+    Value : TDateTime = 0.0
+
+    PassValuesBellow : Boolean = False
+    PassEqualValues : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::TDateTime &', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AExclude' )]
+  [Name( 'Exclude' )]
+  TArduinoIgnoreDateTimeValuesExcludeCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoIgnoreDateTimeValuesExcludeCallChain]
+  TArduinoDateTimeRangeElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Ranges)' )]
+  [ArduinoClass( 'Mitov::IgnoreRangeElement' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TDateTime' )]
+  [Name( 'Range' )]
+  [CreateName( 'Range' )]
+  [PersistentCollection( TArduinoDateTimeRangeElements )]
+  +TArduinoDateTimeRangeElement : TArduinoBasicRangeElement
+
+    Min : TDateTime = 0.0
+    Max : TDateTime = 0.1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreRanges' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TDateTime' )]
+  [Name( 'Ignore Date/Time Ranges' )]
+  [CreateName( 'IgnoreDateTimeRanges' )]
+  [Category( TArduinoDateTimeFilterToolbarCategory )]
+  +TArduinoIgnoreDateTimeRanges : TArduinoCommonDateTimeFilter
+
+    IgnoredOutputPin : TOWArduinoDigitalSourcePin
+
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoDateTimeRangeElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TDateTime' )]
+  [CreateName( 'DateTimeSnapshot' )]
+  [Name( 'Date/Time Snapshot' )]
+  [Category( TDateTimeToolbarCategory )]
+  +TArduinoDateTimeSnapshot : TArduinoCommonDateTimeFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+  TArduinoDateTimeBasicValueElement : TArduinoBasicDateTimeSetValueElement
+
+    Value : TDateTime = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [ParentImage( TArduinoDateTimeValue )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoDateTimeSetValueElement : TArduinoDateTimeBasicValueElement
+
+    [OWPinGroup( TArduinoDateTimeSetValueElement]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoDateTimeStateSetValueElement : TArduinoDateTimeBasicValueElement
+
+    [OWPinGroup( TArduinoDateTimeStateSetValueElement]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Date/Time to Unix Epoch' )]
+  [ArduinoInclude( 'Mitov_DateTime.h' )]
+  [ArduinoClass( 'Mitov::DateTimeToUnixEpoch' )]
+  [CreateName( 'DateTimeToUnixEpoch' )]
+  [Category( TArduinoDateTimeConvertersToolbarCategory )]
+  +TArduinoDateTimeToUnixEpoch : TArduinoCommonDateTimeSink
+  
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoUInt64SourcePin
+    
+    MilliSeconds : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unix Epoch to Date/Time' )]
+  [ArduinoInclude( 'Mitov_DateTime.h' )]
+  [CreateName( 'UnixEpochToDateTime' )]
+  [ArduinoClass( 'Mitov::UnixEpochToDateTime' )]
+  [Category( TArduinoDateTimeConvertersToolbarCategory )]
+  +TArduinoUnixEpochToDateTime : TArduinoCommonDateTimeSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUInt64SinkPin
+    
+    MilliSeconds : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

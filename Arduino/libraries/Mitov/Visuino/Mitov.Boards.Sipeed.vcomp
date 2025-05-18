@@ -1,0 +1,122 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'k210' )]
+  TArduinoK210Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Sipeed' )]
+  TArduinoSipeedCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'k210' )]
+  [Category( TArduinoSipeedCategory )]
+  [AlternateCategory( TArduinoK210Category )]
+  [ParentImage( TArduinoK210Category )]
+  TArduinoSipeedK210Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'UARTHSClass' )]
+  +TArduinoSipeedK210Serial : TArduinoDefinedPinsBasicSpeedSerial
+
+    [ValueRange( 0, 39 )]
+    RXPin = 0
+
+    [ValueRange( 0, 39 )]
+    TXPin = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'UARTClass' )]
+  +TArduinoSipeedK210Serial1 : TArduinoDefinedPinsBasicSpeedSerial
+
+    [ValueRange( 0, 39 )]
+    RXPin = 6
+
+    [ValueRange( 0, 39 )]
+    TXPin = 7
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '16' )]
+  [ArduinoClass( 'Mitov::InvertedDigitalPullUpInput' )]
+  +TArduinoMaixduinoButtonModule : TArduinoBasicInterruptButtonModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '29' )]
+  +TArduinoMaixduinoMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [Name( 'Microphone' )]
+  [CreateName( 'Microphone' )]
+  [ArduinoInclude( 'I2S.h' )]
+  [ArduinoInclude( 'Mitov_Microphone_Maixduino.h' )]
+  [ArduinoClass( 'Mitov::MicrophoneMaixduino' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicAnalogMicrophone )]
+  +TArduinoMaixduino_MicrophoneModule : TArduinoEnableUpdateShield
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogArraySourcePin
+
+    [ValueRange( 2, 16 )]
+    [ArduinoUseBindingCheckSetter( 'Update_CountBuffers' )]
+    CountBuffers : Unsigned = 2
+
+    [ValueRange( 1, 4096 )]
+    BufferSize : Unsigned = 128
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RTC_Maixduino.h' )]
+  [ArduinoClass( 'Mitov::RTC_Maixduino' )]
+  [ArduinoInit]
+  [Name( 'Real Time Clock' )]
+  [CreateName( 'Real Time Clock(RTC)' )]
+  +TArduinoMaixduino_RTC_Module : TArduinoBasicRTCModule
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Sipeed Maixduino' )]
+  [ArduinoDefine( 'VISUINO_K210' )]
+  [ArduinoBoardArchitecture( 'k210' )]
+  [ArduinoBoardCompileParams( 'Maixduino:k210:mduino:toolsloc=default,clksrc=400,burn_baudrate=1000000,burn_tool_firmware=mduino' )]
+  [Category( TArduinoSipeedK210Category )]
+  [ParentImage( TArduinoSipeedCategory )]
+  [ArduinoBoardCanReset]
+  +TArduino_Sipeed_Maixduino_Board : TArduinoBoardExtendableImplementation
+
+    [AddItem( TArduinoMaixduinoButtonModule )]
+    [AddItem( TArduinoMaixduinoMicroSDModule )]
+    [AddItem( TArduinoMaixduino_MicrophoneModule )]
+    [AddItem( TArduinoMaixduino_RTC_Module )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoSipeedK210Serial )]
+    [AddItem( TArduinoSipeedK210Serial1 )]
+    [AddItem( TArduinoSipeedK210Serial1 )]
+    [AddItem( TArduinoSipeedK210Serial1 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial0InterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial0InterruptChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  4, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,  2, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  6, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

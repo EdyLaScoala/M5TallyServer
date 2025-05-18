@@ -1,0 +1,115 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoLIS3MDLCompassPerformanceMode : Enum
+
+    Low
+    Medium
+    High
+    UltraHigh
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LIS3MDL.h' )]
+  [ArduinoClass( 'Mitov::LIS3MDL' )]
+  [CreateName( 'Compass' )]
+  [ArduinoWebKeywords( 'LIS3MDL' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoInit]
+  TArduinoLIS3MDL_Basic : TArduinoEnableComponent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'X', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Z', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartCompassClock' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartCompass' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginCompass' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.625' )]
+    [PropertyListDesignValue( '1.25' )]
+    [PropertyListDesignValue( '2.5' )]
+    [PropertyListDesignValue( '5.0' )]
+    [PropertyListDesignValue( '10.0' )]
+    [PropertyListDesignValue( '20.0' )]
+    [PropertyListDesignValue( '40.0' )]
+    [PropertyListDesignValue( '80.0' )]
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG1_M' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Single = 20.0
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG1_M' )]
+    FastRate : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG1_M' )]
+    SelfTest : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG1_M' )]
+    TemperatureCompensation : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG1_M' )]
+    XYPerformanceMode : TArduinoLIS3MDLCompassPerformanceMode = Medium
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '12' )]
+    [PropertyListDesignValue( '16' )]
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG2_M' )]
+    [NamePostfix( '(Gauss)' )]
+    FullScaleRange : Unsigned = 4
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG3_M' )]
+    LowPowerMode : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG3_M' )]
+    PowerDown : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG4_M' )]
+    ZPerformanceMode : TArduinoLIS3MDLCompassPerformanceMode = Medium
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Magnetic Compass LIS3MDL(I2C)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2C' )]
+  +TArduinoLIS3MDL_I2C : TArduinoLIS3MDL_Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+    [PropertyListDesignValue( '28' )] // $1C
+    [PropertyListDesignValue( '30' )] // $1E
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $1E
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Magnetic Compass LIS3MDL(SPI)' )]
+  [ArduinoInclude( 'Mitov_Arduino_SPI.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPISpeed' )]
+  +TArduinoLIS3MDL_SPI : TArduinoLIS3MDL_Basic
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

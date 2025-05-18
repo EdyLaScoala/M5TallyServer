@@ -1,0 +1,56 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TMakerfabsCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TMakerfabsESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  +TArduino_Makerfabs_MakePython_ESP32_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 39 )]
+    SDA = 4
+
+    [ValueRange( 0, 39 )]
+    SCL = 5
+
+  ;
+//---------------------------------------------------------------------------
+  ['{E155C737-BA75-4508-9B9A-193A4C34FB16}']
+  IMakerfabs_MakePython_ESP32_Shield : Interface;
+//---------------------------------------------------------------------------  
+  [ArduinoShieldsType( IMakerfabs_MakePython_ESP32_Shield )]
+  TArduino_Makerfabs_MakePython_ESP32_Shields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [Name( 'MakePython ESP32' )]
+  [Category( TMakerfabsESP32Category )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduino_Makerfabs_MakePython_ESP32_Board : TArduinoBasicESP32Digital_Serial_ChannelsBoard
+  
+    [AddItem( TArduinoESP32HeltecSSD1306Display )]
+    Modules
+
+    [AddItem( TArduino_Makerfabs_MakePython_ESP32_I2C )]
+    [AddItem( TArduinoESP32_Generic_I2C_2 )]
+    I2CChannels
+
+    [AddItem( TArduinoESP32_Generic_SPI )]
+    [AddItem( TArduinoESP32_Generic_SPI1 )]
+    SPIChannels
+    
+    [ArduinoBoard_Add_ReservedChannel(  0, 'Button' )]
+    [ArduinoBoard_Add_ReservedChannels( 1,  5 )]
+    [ArduinoBoard_Add_ReservedChannels( 12, 4 )]
+    [ArduinoBoard_Add_ReservedChannels( 18, 2 )]
+    [ArduinoBoard_Add_ReservedChannels( 21, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 25, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 33, 4 )]
+    [ArduinoBoard_Add_ReservedChannels( 39, 1 )]
+    Digital
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduino_Makerfabs_MakePython_ESP32_Shields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,24 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Software SPI Port' )]
+  [CreateName( 'SoftwareSPI' )]
+  [ArduinoInclude( 'Mitov_SoftwareSPI.h' )]
+  [ArduinoClass( 'Mitov::VisuinoSoftwareSPI' )]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoSoftwareSPI : TArduinoComponent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalOutputSourcePin )]
+    [ArduinoExclude]
+    [ArduinoDirectPinTemplate]
+    [OWAddPin( 'Master Output (MOSI)', TOWArduinoDigitalOutputSourcePin )]
+    [OWAddPin( 'Clock', TOWArduinoDigitalOutputSourcePin )]
+    ControlOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoSPIMultiSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

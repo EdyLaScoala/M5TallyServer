@@ -1,0 +1,111 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMicrochipThermometerMCP9808_BasicAlert' )]
+  TArduinoMicrochipThermometerMCP9808_BasicAlert : TArduinoCodePersistent
+
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Value : Single = 0.0
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMicrochipThermometerMCP9808_UpperAlert : TArduinoMicrochipThermometerMCP9808_BasicAlert
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateUpperAlert' )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMicrochipThermometerMCP9808_LowerAlert : TArduinoMicrochipThermometerMCP9808_BasicAlert
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateLowerAlert' )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMicrochipThermometerMCP9808_CriticalAlert' )]
+  [ParentImage( TArduinoTexasInstrumentsINA3221CriticalAlert )]
+  TArduinoMicrochipThermometerMCP9808_CriticalAlert : TArduinoMicrochipThermometerMCP9808_BasicAlert
+  
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    Locked : Boolean = False
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateCriticalAlert' )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMicrochipThermometerMCP9808_LimitsAlert' )]
+  TArduinoMicrochipThermometerMCP9808_LimitsAlert : TArduinoCodePersistent
+  
+    Upper : TArduinoMicrochipThermometerMCP9808_BasicAlert
+    Lower : TArduinoMicrochipThermometerMCP9808_BasicAlert
+  
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.0' )]
+    [PropertyListDesignValue( '1.5' )]
+    [PropertyListDesignValue( '3.0' )]
+    [PropertyListDesignValue( '6.0' )]
+    [ValueRange( 0.0, 6.0 )]
+    Hysteresis : Single = 0.0
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    Locked : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMicrochipThermometerMCP9808_AlertSignal' )]
+  TArduinoMicrochipThermometerMCP9808_AlertSignal : TArduinoCodeDisabledPersistent
+  
+    [ArduinoPinCall( 'AlertSignal_ClearInputPin' )]
+    ClearInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    CryticalOnly : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    Positive : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    InterruptMode : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMicrochipThermometerMCP9808_Alerts' )]
+  [ParentImage( TArduinoBasicAlarm )]
+  TArduinoMicrochipThermometerMCP9808_Alerts : TArduinoCodePersistent
+  
+    Critical : TArduinoMicrochipThermometerMCP9808_CriticalAlert
+    Limits : TArduinoMicrochipThermometerMCP9808_LimitsAlert
+    
+    AlertPin : TArduinoMicrochipThermometerMCP9808_AlertSignal    
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_Thermometer_MCP9808.h' )]
+  [ArduinoClass( 'Mitov::TArduinoMicrochipThermometerMCP9808_I2C' )]
+  [Name( 'MCP9808 Thermometer (I2C)' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [CreateName( 'Thermometer' )]
+  +TArduinoMicrochipThermometerMCP9808_I2C : TArduinoClockedEnableFlexibleI2CComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartClocked' )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [DesignRange( $18, $1F )]
+    Address = $18
+
+    InFahrenheit : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    ShutDown : Boolean = False
+    
+    Alerts : TArduinoMicrochipThermometerMCP9808_Alerts
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

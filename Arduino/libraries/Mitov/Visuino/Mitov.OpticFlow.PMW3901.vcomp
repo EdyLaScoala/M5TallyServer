@@ -1,0 +1,55 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoOpticFlowPMW3901_Movement' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoOpticFlowPMW3901_Movement : TArduinoCodeEnabledClockedPersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddPin( 'X', TOWArduinoIntegerSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoIntegerSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoOpticFlowPMW3901_Image' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoInit]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoOpticFlowPMW3901_Image : TArduinoCodeEnabledClockedPersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginNoClock' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginClock' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartNoClock' )]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartClock' )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoGrayscaleImageSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Optic Flow PMW3901 (SPI)' )]
+  [CreateName( 'OpticFlow' )]
+  [ArduinoInclude( 'Mitov_OpticFlow_PMW3901.h' )]
+  [ArduinoClass( 'Mitov::OpticFlowPMW3901' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoOpticFlowPMW3901 : TArduinoCommonSpeedSPI
+
+    SPISpeed = 4000000
+
+    Movement : TArduinoOpticFlowPMW3901_Movement
+    Image : TArduinoOpticFlowPMW3901_Image
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

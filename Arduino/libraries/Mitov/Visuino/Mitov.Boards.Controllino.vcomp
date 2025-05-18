@@ -1,0 +1,197 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Controllino' )]
+  TControllinoCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Real Time Clock' )]
+  [CreateName( 'RealTimeClock' )]
+  [ArduinoInclude( 'Mitov_Controllino_RTC.h' )]
+  [ArduinoClass( 'Mitov::ControllinoRTCModule' )]
+  [ArduinoPinDefinePrefix( '_MITOV_CONTROLLINO' )]
+  [ArduinoInit]
+  +TArduinoControllinoRTCModule : TArduinoBasicRTCModule
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Controllino_RS485.h' )]
+  [ArduinoDefine( '_MITOV_SERIAL_SENDING_PIN_' )]
+  [ArduinoClass( 'Mitov::ControllinoRS48SerialPort' )]
+  [CreateName( 'RS485' )]
+  [ArduinoVariable( Boolean, 'FTransmit' )]
+  [ArduinoSerialType( 'SERIAL_TYPE' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TControllinoRS485Serial : TArduinoHardwareSerial
+
+    [ArduinoPinConnectDefine( '_MITOV_CONTROLLINO_RS485_TRANSMIT_PIN_' )]
+    TransmitInputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Controllino MINI' )]
+  [ArduinoInclude( 'Controllino.h', 'CONTROLLINO', 'https://github.com/CONTROLLINO-PLC/CONTROLLINO_Library' )]
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoDefine( 'VISUINO_CONTROLLINO_MINI' )]
+  [ArduinoBoardCompileParams( 'CONTROLLINO_Boards:avr:controllino_mini' )]
+  [Category( TControllinoCategory )]
+  [ParentImage( TControllinoCategory )]
+  +TArduino_Controllino_MINI_Board : TArduino_AVR_Basic_Modules_Board
+
+    [AddItem( TArduinoProcessor328Module )]
+    Modules
+    
+    [AddItem( TArduinoHardwareSerial )]
+    Serial
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 1, TArduinoAdditionalDigitalChannel, 'Digital ', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 2, TArduinoBasicDigitalPWMChannel, 'Digital', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3, 2, TArduinoAdditionalDigitalChannel, 'Digital', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5, 1, TArduinoBasicDigitalPWMChannel, 'Digital', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6, 2, TArduinoAdditionalDigitalChannel, 'Digital', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 2, TArduinoAdditionalDigitalInterruptChannel, 'Digital Int', 'CONTROLLINO_IN' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 6, TArduinoCombinedAnalogDigitalChannel,  'Analog', 'CONTROLLINO_A', 'CONTROLLINO_A', 'A' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Controllino.h', 'CONTROLLINO', 'https://github.com/CONTROLLINO-PLC/CONTROLLINO_Library' )]
+  [ArduinoInclude( 'SPI.h' )]
+  [Category( TControllinoCategory )]
+  TArduino_Basic_Controllino_MEGA_MAXI_Board : TArduino_AVR_Basic_Modules_Board
+
+    [AddItem( TArduinoEthernetModule )]
+    [AddItem( TArduinoControllinoRTCModule )]
+    [AddItem( TArduinoProcessor2560Module )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial, 3 )]
+    Serial
+    
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Controllino MAXI' )]
+  [ArduinoDefine( 'VISUINO_CONTROLLINO_MAXI' )]
+  [ArduinoBoardCompileParams( 'CONTROLLINO_Boards:avr:controllino_maxi' )]
+  +TArduino_Controllino_MAXI_Board : TArduino_Basic_Controllino_MEGA_MAXI_Board
+
+    [AddItem( TControllinoRS485Serial )]
+    Serial
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 12, TArduinoBasicDigitalPWMChannel, 'Digital', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoAdditionalDigitalChannel, 'Digital[ 12 ]', '42' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoAdditionalDigitalChannel, 'Digital[ 13 ]', '43' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoBasicDigitalPWMChannel, 'Digital[ 14 ]', '44' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoBasicDigitalPWMChannel, 'Digital[ 15 ]', '45' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 2, TArduinoAdditionalDigitalInterruptChannel, 'Digital Int', 'CONTROLLINO_IN' )] 
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 10, TArduinoAdditionalDigitalChannel, 'Relay', 'CONTROLLINO_R' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 10, TArduinoCombinedAnalogDigitalChannel,  'Analog', 'CONTROLLINO_A', 'CONTROLLINO_A', 'A' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 4, TArduinoCombinedAnalogDigitalChannel,  'Analog', '', '', 'A' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Controllino MAXI Automation' )]
+  [ArduinoDefine( 'VISUINO_CONTROLLINO_MAXI_AUTOMATION' )]
+  [ArduinoBoardCompileParams( 'CONTROLLINO_Boards:avr:controllino_maxi_automation' )]
+  +TArduino_Controllino_MAXI_Automation_Board : TArduino_Basic_Controllino_MEGA_MAXI_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Interrupt 0 (RX1)', '18' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Interrupt 1 (TX1)', '19' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoAdditionalDigitalSerial2Channel, 'Digital(RX2)[ 2 ]', '17' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoAdditionalDigitalSerial2Channel, 'Digital(TX2)[ 3 ]', '16' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoAdditionalDigitalI2C0Channel, 'Digital(SDA)[ 4 ]', '20' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoAdditionalDigitalI2C0Channel, 'Digital(SCL)[ 5 ]', '21' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoAdditionalDigitalSPI0Channel, 'Digital(MISO)[ 6 ]', '50' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoAdditionalDigitalSPI0Channel, 'Digital(MOSI)[ 7 ]', '51' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SCK)[ 8 ]', '52' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoAdditionalDigitalSPI0Channel, 'Digital(/SS)[ 9 ]', '53' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoBasicDigitalPWMInputChannel, 'Digital Out 0', '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoBasicDigitalPWMInputChannel, 'Digital Out 1', '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoBasicDigitalPWMInputChannel, 'Digital Out 2', '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoBasicDigitalPWMInputChannel, 'Digital Out 3', '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoBasicDigitalPWMInputChannel, 'Digital Out 4', '6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoBasicDigitalPWMInputChannel, 'Digital Out 5', '7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoBasicDigitalPWMInputChannel, 'Digital Out 6', '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoBasicDigitalPWMInputChannel, 'Digital Out 7', '9' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoDigitalAsAnalogOutputChannel, 'Analog Out 0', 'CONTROLLINO_AO0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoDigitalAsAnalogOutputChannel, 'Analog Out 1', 'CONTROLLINO_AO1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoDigitalInputOnlyChannel, 'Digital In 0', 'A12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoDigitalInputOnlyChannel, 'Digital In 1', 'A13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoDigitalInputOnlyChannel, 'Digital In 2', '10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoDigitalInputOnlyChannel, 'Digital In 3', '11' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoBasicDigitalInputChannel, 'Relay 0', '22' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoBasicDigitalInputChannel, 'Relay 1', '23' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoBasicDigitalInputChannel, 'Relay 2', '24' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoBasicDigitalInputChannel, 'Relay 3', '25' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoBasicDigitalInputChannel, 'Relay 4', '26' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoBasicDigitalInputChannel, 'Relay 5', '27' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoBasicDigitalInputChannel, 'Relay 6', '28' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoBasicDigitalInputChannel, 'Relay 7', '29' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoBasicDigitalInputChannel, 'Relay 8', '30' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoBasicDigitalInputChannel, 'Relay 9', '31' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoBasicDigitalPWMChannel, 'Digital[ 10 ]', '12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoBasicDigitalPWMChannel, 'Digital[ 11 ]', '13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoAdditionalDigitalChannel, 'Digital[ 12 ]', '42' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoAdditionalDigitalChannel, 'Digital[ 13 ]', '41' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoBasicDigitalPWMChannel, 'Digital[ 14 ]', '44' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoBasicDigitalPWMChannel, 'Digital[ 15 ]', '45' ),
+    Digital
+
+    [Name( 'Analog Input' )]
+    [ArduinoBoard_Add_AnalogInputChannels( 0, 12, TArduinoAnalogInputChannel )]
+    [ArduinoBoard_Add_AnalogInputChannel( 12, TArduinoAnalogInputChannel, 'Analog Input[ 12 ]', '14' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 13, TArduinoAnalogInputChannel, 'Analog Input[ 13 ]', '15' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Controllino MEGA' )]
+  [ArduinoDefine( 'VISUINO_CONTROLLINO_MEGA' )]
+  [ArduinoBoardCompileParams( 'CONTROLLINO_Boards:avr:controllino_mega' )]
+  +TArduino_Controllino_MEGA_Board : TArduino_Basic_Controllino_MEGA_MAXI_Board
+
+    [AddItem( TControllinoRS485Serial )]
+    Serial
+
+    [ArduinoBoard_Add_DigitalAnalogChannels(  0, 12, TArduinoBasicDigitalPWMChannel, 'Digital', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12,  2, TArduinoAdditionalDigitalChannel, 'Digital', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14,  3, TArduinoBasicDigitalPWMChannel, 'Digital', 'CONTROLLINO_D' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17,  7, TArduinoAdditionalDigitalChannel, 'Digital', 'CONTROLLINO_D' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,  3, TArduinoAdditionalDigitalChannel, 'Input', 'CONTROLLINO_I' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  0,  2, TArduinoAdditionalDigitalInterruptChannel, 'Digital Int', 'CONTROLLINO_IN' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  0, 16, TArduinoAdditionalDigitalChannel, 'Relay', 'CONTROLLINO_R' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  0, 10, TArduinoCombinedAnalogDigitalChannel,  'Analog', 'CONTROLLINO_A', 'CONTROLLINO_A', 'A' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10,  6, TArduinoCombinedAnalogDigitalChannel,  'Analog', '', '', 'A' )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

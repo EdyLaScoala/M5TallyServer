@@ -1,0 +1,113 @@
+Mitov
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::SenodiaSH200QThermometer' )]
+  TArduinoSenodiaSH200QThermometer : TArduinoBasicEnabledThermometer;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoSenodiaSH200QAccelerometerRange : Enum
+
+    Max4g
+    Max8g
+    Max16g
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoSenodiaSH200QAccelerometerRate : Enum
+
+    Normal_1024_LowPower_64_Hz
+    Normal_512_LowPower_32_Hz
+    Normal_256_LowPower_16_Hz
+    Normal_128_LowPower_8_Hz
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::SenodiaSH200QAccelerometer' )]
+  [ParentImage( TArduinoMPUXYZAccelerometer )]
+  TArduinoSenodiaSH200QAccelerometer : TArduinoBasicXYZAccelerometerSensor
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerConfig' )]
+    LowPowerMode : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerConfig' )]
+    UseInternalClock : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerConfig' )]
+    Rate : TArduinoSenodiaSH200QAccelerometerRate = Normal_1024_LowPower_64_Hz
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerRange' )]
+    FullScaleRange : TArduinoSenodiaSH200QAccelerometerRange = Max4g
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoSenodiaSH200QGyroscopeRange : Enum
+
+    Max2000dps
+    Max1000dps
+    Max500dps
+    Max250dps
+    Max125dps
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::SenodiaSH200QGyroscope' )]
+  [ParentImage( TArduinoMPUXYZGyroscope )]
+  TArduinoSenodiaSH200QGyroscope : TArduinoBasicXYZSensor
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeConfig' )]
+    AutoPowerDown : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeRange' )]
+    FullScaleRange : TArduinoSenodiaSH200QGyroscopeRange = Max2000dps
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroscopeConfig' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '31.25' )]
+    [PropertyListDesignValue( '250.0' )]
+    [PropertyListDesignValue( '500.0' )]
+    [PropertyListDesignValue( '1000.0' )]
+    [PropertyListDesignValue( '8000.0' )]
+    [PropertyListDesignValue( '16000.0' )]
+    [PropertyListDesignValue( '32000.0' )]
+    SampleFrequency : Single = 1000.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoSenodiaSH200QExtender : Extender
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    Thermometer : TArduinoSenodiaSH200QThermometer
+    Accelerometer : TArduinoSenodiaSH200QAccelerometer
+    Gyroscope : TArduinoSenodiaSH200QGyroscope
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Senodia_SH200Q.h' )]
+  [ArduinoClass( 'Mitov::SenodiaSH200Q' )]
+  [Name( 'Accelerometer Gyroscope SH200Q I2C' )]
+  [CreateName( 'AccelerometerGyroscope' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoSenodiaSH200QI2C : TArduinoI2CClockedEnableComponent, TArduinoSenodiaSH200QExtender
+
+    [OWExcludeBindings]
+    [DesignRange( $6C, $6D )]
+    Address : TArduinoUInt8 = $6C
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Orientation' )]
+  [CreateName( 'Orientation' )]
+  [ArduinoInclude( 'Wire.h' )]
+  [ParentImage( TArduinoSenodiaSH200QI2C )]
+  [ArduinoInclude( 'Mitov_Senodia_SH200Q.h' )]
+  [ArduinoClass( 'Mitov::SenodiaSH200Q' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicGyroscopeAccelerometerCompassModule )]
+  TArduinoSenodiaSH200QI2CBasicModule : TArduinoClockEnabledBasicShield, TArduinoSenodiaSH200QExtender;
+//---------------------------------------------------------------------------
+; // Mitov

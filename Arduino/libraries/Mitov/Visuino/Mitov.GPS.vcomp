@@ -1,0 +1,68 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GPS.h' )]
+  [ArduinoClass( 'Mitov::MitovSerialGPS' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FValuePopulated' )]
+  [ArduinoVariable( Unsigned, 1, 'FState' )]
+  TArduinoSerialSimpleGPSBasic_Extender : Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoUnsignedSourcePin )]
+    [OWAddPin( 'Speed', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Course', TOWArduinoAnalogSourcePin )]
+    CourseOutputPins : TOWArduinoPinList
+
+    [ArduinoVariableIfPinConnected( Unsigned, 5, 'FHour', 0 )]
+    [ArduinoVariableIfPinConnected( Unsigned, 6, 'FMinutes', 0 )]
+    [ArduinoVariableIfPinConnected( Unsigned, 6, 'FSeconds', 0 )]
+    [ArduinoVariableIfPinConnected( Unsigned, 10, 'FMilliSeconds', 0 )]
+    DateTimeOutputPin : TOWArduinoDateTimeSourcePin
+
+    InvalidOutputPin : TOWArduinoDigitalSourcePin
+    MessageErrorOutputPin : TOWArduinoDigitalSourcePin
+
+    BaseYear : Unsigned = 2000
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoWebKeywords( 'NEO6MV2' )]
+  TArduinoSerialGPSBasic : TArduinoEnableComponent, TArduinoSerialSimpleGPSBasic_Extender
+
+    [ArduinoExclude]
+    OutputPin : TOWArduinoSharedSerialBasicSourcePin
+
+    [Name( 'In (NMEA)' )]
+    InputPin : TOWArduinoCharSinkPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Latitude', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Longitude', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Altitude', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Height Above WGS84 Ellipsoid', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Magnetic Variation', TOWArduinoAnalogSourcePin )]
+    LocationOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Count', TOWArduinoUnsignedSourcePin )]
+    [OWAddPin( 'Start Scan', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Satellite Number (PRN)', TOWArduinoUnsignedSourcePin )]
+    [OWAddPin( 'Elevation', TOWArduinoUnsignedSourcePin )]
+    [OWAddPin( 'Azimuth', TOWArduinoUnsignedSourcePin )]
+    [OWAddPin( 'Signal Strength (dB)', TOWArduinoUnsignedSourcePin )]
+    [OWAddPin( 'Satelite Found', TOWArduinoClockSourcePin )]
+    SatellitesOutputPins : TOWArduinoPinList
+
+    ModeOutputPin : TOWArduinoUnsignedSourcePin
+    NavigationStatusOutputPin : TOWArduinoUnsignedSourcePin
+    HorizontalPrecisionOutputPin : TOWArduinoAnalogSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Serial GPS' )]
+  [CreateName( 'GPS' )]
+  +TArduinoSerialGPS : TArduinoSerialGPSBasic;
+//---------------------------------------------------------------------------
+; // Mitov

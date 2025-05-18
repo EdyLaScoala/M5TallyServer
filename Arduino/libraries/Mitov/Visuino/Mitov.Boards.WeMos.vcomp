@@ -1,0 +1,222 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'WeMos' )]
+  TArduinoWeMosCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TArduinoWeMosCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TArduinoWeMosESP8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TArduinoWeMosCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TArduinoWeMosESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  ['{92781E76-1244-4320-9777-2DC347E81DE3}']
+  IWeMosMiniShield : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IWeMosMiniShield )]
+  TArduinoWeMosMiniShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_WeMos_D1_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 10 )]
+    SDA = 2
+
+    [ValueRange( 0, 10 )]
+    SCL = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_WeMos_D1_R1_I2C : TArduinoESP8266_WeMos_D1_I2C
+
+    SDA = 4
+    SCL = 3
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoWeMosESP8266Category )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:d1' )]
+  TArduinoESP8266_WeMos_Basic_Board : TArduinoESP8266_Basic_DefaultPins_Analog_NoI2C_Board
+
+    [AddItem( TArduinoESP8266_WeMos_D1_I2C )]
+    I2CChannels
+
+    [ArduinoBoard_Add_RemappedChannel( 9,   1,  'TX0' )]
+    [ArduinoBoard_Add_RemappedChannel( 10,  3,  'RX0' )]
+    [ArduinoBoard_Add_RemappedChannel( 0,   16, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 1,   5,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 2,   4,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 3,   0,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 4,   2,  'Digital(TX1)(LED)' )]
+    [ArduinoBoard_Add_RemappedChannel( 5,   14, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_RemappedChannel( 6,   12, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_RemappedChannel( 7,   13, 'Digital(SPI-MOSI)(RX2)' )]
+    [ArduinoBoard_Add_RemappedChannel( 8,   15, 'Digital(TX2)' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoWeMosESP8266Category )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:d1' )]
+  [Name( 'WeMos D1 / R1 (Retired)' )]
+  [ArduinoDefine( 'VISUINO_WEMOS_D1_R1' )]
+  +TArduinoESP8266_WeMos_Mini_D1_R1_Board : TArduinoESP8266_Basic_DefaultPins_Analog_NoI2C_Board
+
+    [AddItem( TArduinoESP8266_WeMos_D1_R1_I2C )]
+    I2CChannels
+
+    [ArduinoBoard_Add_RemappedChannel( 0,   3,  'RX0' )]
+    [ArduinoBoard_Add_RemappedChannel( 1,   1,  'TX0' )]
+    [ArduinoBoard_Add_RemappedChannel( 2,   16, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 3,   5,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 4,   4,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 5,   14, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_RemappedChannel( 6,   12, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_RemappedChannel( 7,   13, 'Digital(SPI-MOSI)(RX2)' )]
+    [ArduinoBoard_Add_RemappedChannel( 8,   0,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 9,   2,  'Digital(TX1)(LED)' )]
+    [ArduinoBoard_Add_RemappedChannel( 10,  15, 'Digital(TX2)' )]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'WeMos D1 / R2' )]
+  [ArduinoDefine( 'VISUINO_WEMOS_D1_R2' )]
+  +TArduinoESP8266_WeMos_Mini_D1_R2_Board : TArduinoESP8266_WeMos_Basic_Board
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'WeMos D1 Mini' )]
+  [ArduinoDefine( 'VISUINO_WEMOS_D1_MINI' )]
+  +TArduinoESP8266_WeMos_Mini_D1_Board : TArduinoESP8266_WeMos_Basic_Board
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoWeMosMiniShields
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TESP32Category )]
+  [Category( TArduinoWeMosESP32Category )]
+  [Name( 'WeMos D1 R32 ESP32' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduinoESP32_WeMos_D1_R32_Board : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard
+
+    [ArduinoBoard_Add_RemappedChannel( 0,   3, 'GPIO3(RX0)' )]
+    [ArduinoBoard_Add_RemappedChannel( 1,   1, 'GPIO1(TX0)' )]
+    [ArduinoBoard_Add_RemappedChannel( 2,  26, 'GPIO26(DAC2)' )]
+    [ArduinoBoard_Add_RemappedChannel( 3,  25, 'GPIO25(DAC1)' )]
+    [ArduinoBoard_Add_RemappedChannel( 4,  17, 'GPIO17(TX2)' )]
+    [ArduinoBoard_Add_RemappedChannel( 5,  16, 'GPIO16(RX2)' )]
+    [ArduinoBoard_Add_RemappedChannel( 6,  27, 'GPIO27' )]
+    [ArduinoBoard_Add_RemappedChannel( 7,  14, 'GPIO14' )]
+    [ArduinoBoard_Add_RemappedChannel( 8,  12, 'GPIO12' )]
+    [ArduinoBoard_Add_RemappedChannel( 9,  13, 'GPIO13' )]
+    [ArduinoBoard_Add_RemappedChannel( 10,  5, 'GPIO5' )]
+    [ArduinoBoard_Add_RemappedChannel( 11, 23, 'GPIO23' )]
+    [ArduinoBoard_Add_RemappedChannel( 12, 19, 'GPIO19' )]
+    [ArduinoBoard_Add_RemappedChannel( 13, 18, 'GPIO18' )]
+
+    [ArduinoBoard_Add_RemappedChannel( 14,  2, 'GPIO2' )]
+    [ArduinoBoard_Add_RemappedChannel( 15,  4, 'GPIO4' )]
+    [ArduinoBoard_Add_RemappedChannel( 16, 35, 'GPIO35' )]
+    [ArduinoBoard_Add_RemappedChannel( 17, 34, 'GPIO34' )]
+    [ArduinoBoard_Add_RemappedChannel( 18, 36, 'GPIO36' )]
+    [ArduinoBoard_Add_RemappedChannel( 19, 39, 'GPIO39' )]
+    [ArduinoBoard_Add_RemappedChannel( 20,  0, 'GPIO0' )]
+    
+    [ArduinoBoard_Add_RemappedChannel( 21, 21, 'GPIO21' )]
+    [ArduinoBoard_Add_RemappedChannel( 22, 22, 'GPIO22' )]
+    
+    [ArduinoBoard_Add_RemappedChannel( 23,  8, 'GPIO8(SD1)' )]
+    [ArduinoBoard_Add_RemappedChannel( 24,  7, 'GPIO7(SD0)' )]
+    
+    [ArduinoBoard_Add_RemappedChannel( 25,  6, 'GPIO6(CLK)' )]
+    [ArduinoBoard_Add_RemappedChannel( 26, 11, 'GPIO11(CMD)' )]
+
+    [ArduinoBoard_Add_RemappedChannel( 27,  9, 'GPIO9(SD2)' )]
+    [ArduinoBoard_Add_RemappedChannel( 28, 10, 'GPIO10(SD3)' )]
+
+    [ArduinoBoard_Add_RemappedChannel( 29, 15, 'GPIO15' )]
+    [ArduinoBoard_Add_RemappedChannel( 30, 33, 'GPIO33' )]
+    [ArduinoBoard_Add_RemappedChannel( 31, 32, 'GPIO32' )]
+    Digital
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoWeMosMiniESP32Shields : TArduinoWeMosMiniShields;
+//---------------------------------------------------------------------------
+  [ParentImage( TESP32Category )]
+  [Category( TArduinoWeMosESP32Category )]
+  [Name( 'WeMos D1 Mini ESP32' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduinoESP32_WeMos_D1_Mini_Board : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard
+  
+//    [ArduinoBoard_Add_RemappedChannel( 9,   1,  'TX0' )]
+//    [ArduinoBoard_Add_RemappedChannel( 10,  3,  'RX0' )]
+//    [ArduinoBoard_Add_RemappedChannel( 0,   16, 'Digital' )]
+//    [ArduinoBoard_Add_RemappedChannel( 1,   5,  'Digital' )]
+//    [ArduinoBoard_Add_RemappedChannel( 2,   4,  'Digital' )]
+//    [ArduinoBoard_Add_RemappedChannel( 3,   0,  'Digital' )]
+//    [ArduinoBoard_Add_RemappedChannel( 4,   2,  'Digital(TX1)(LED)' )]
+//    [ArduinoBoard_Add_RemappedChannel( 5,   14, 'Digital(SPI-SCK)' )]
+//    [ArduinoBoard_Add_RemappedChannel( 6,   12, 'Digital(SPI-MISO)' )]
+//    [ArduinoBoard_Add_RemappedChannel( 7,   13, 'Digital(SPI-MOSI)(RX2)' )]
+//    [ArduinoBoard_Add_RemappedChannel( 8,   15, 'Digital(TX2)' )]
+
+    [ArduinoBoard_Add_RemappedChannel(  9,   1,  'TX0' )]
+    [ArduinoBoard_Add_RemappedChannel( 10,   3,  'RX0' )]
+    [ArduinoBoard_Add_RemappedChannel(  0,  22,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel(  1,  21,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel(  2,  17,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel(  3,  16,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel(  4,   5,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel(  5,  23,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel(  6,  19,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel(  7,  18,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel(  8,  26,  'Digital' )]
+    
+    [ArduinoBoard_Add_RemappedChannel( 11,  36,  'Digital' )]
+
+    [ArduinoBoard_Add_RemappedChannel( 12,  15,  'Digital(TD0)' )]
+    [ArduinoBoard_Add_RemappedChannel( 13,   7,  'Digital(SD0)' )]
+    [ArduinoBoard_Add_RemappedChannel( 14,  10,  'Digital(SD3)' )]
+    [ArduinoBoard_Add_RemappedChannel( 15,  13,  'Digital(TCK)' )]
+    
+    [ArduinoBoard_Add_RemappedChannel( 16,  27,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 17,  25,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 18,  32,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 19,  12,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 20,   4,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 21,   0,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 22,   2,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 23,   8,  'Digital(SD1)' )]   
+    [ArduinoBoard_Add_RemappedChannel( 24,   6,  'Digital(CLK)' )]   
+
+    [ArduinoBoard_Add_RemappedChannel( 25,  11,  'Digital(CMD)' )]   
+    [ArduinoBoard_Add_RemappedChannel( 26,   9,  'Digital(SD2)' )]   
+    [ArduinoBoard_Add_RemappedChannel( 27,  14,  'Digital(TMS)' )]   
+    [ArduinoBoard_Add_RemappedChannel( 28,  34,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 29,  33,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 30,  35,  'Digital' )]   
+    [ArduinoBoard_Add_RemappedChannel( 21,  39,  'Digital(SVN)' )]   
+    Digital
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoWeMosMiniESP32Shields
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

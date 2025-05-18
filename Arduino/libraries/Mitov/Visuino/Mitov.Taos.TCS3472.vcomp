@@ -1,0 +1,101 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoColorSensorThaosTCS3472Wait' )]
+  TArduinoColorSensorThaosTCS3472Wait : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateEnable' )]
+    Enabled
+
+    [ValueRange( 2.4, 7368.0 )]
+    [NamePostfix( '(mS)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateWaitTime' )]
+    Period : Single = 2.4
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoColorSensorThaosTCS3472Threshold' )]
+  TArduinoColorSensorThaosTCS3472Threshold : TArduinoCodeEnabledPersistent
+
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateEnable' )]
+    Enabled
+
+    [MaxValue( $FFFF )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateThresholdLow' )]
+    Low : Unsigned = 100
+
+    [MaxValue( $FFFF )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateThresholdHigh' )]
+    High : Unsigned = 1000
+
+    [NamePostfix( '(Samples)' )]
+    [MaxValue( 60 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateThresholdPersistence' )]
+    Persistence : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoColorMeasurementToolbarCategory )]
+  [ArduinoInclude( 'Mitov_ColorSensor_Taos_TCS3472.h' )]
+  [ArduinoClass( 'Mitov::ColorSensorTaosTCS3472' )]
+  [CreateName( 'ColorSensor' )]
+  [ArduinoInit]
+  TArduinoColorSensorThaosTCS3472Basic : TArduinoClockedEnableFlexibleI2CComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStart' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBegin' )]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartThreshold' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginThreshold' )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Red', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Green', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Blue', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Clear', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    ColorOutputPin : TOWArduinoColorSourcePin
+
+    [PropertyListDesignValue( '41' )] // $29
+    [PropertyListDesignValue( '57' )] // $39
+    Address = $29
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnable' )]
+    Enabled
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '60' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateGain' )]
+    Gain : Unsigned = 1
+
+    [ValueRange( 2.4, 700.0 )]
+    [NamePostfix( '(mS)' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateIntegrationTime' )]
+    IntegrationTime : Single = 154.0
+
+    Wait : TArduinoColorSensorThaosTCS3472Wait
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePowerUp' )]
+    PoweredUp : Boolean = True
+
+    ThresholdCleat : TArduinoColorSensorThaosTCS3472Threshold
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color Sensor (Taos TCS34721, TCS34723, TCS34725, TCS34727)' )]
+  +TArduinoColorSensorThaosTCS3472 : TArduinoColorSensorThaosTCS3472Basic;
+//---------------------------------------------------------------------------
+  [Name( 'M5Stack Color Sensor RGB Unit (TCS3472)' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoM5StackColorSensorRGBUnitTCS3472 : TArduinoColorSensorThaosTCS3472Basic;
+//---------------------------------------------------------------------------
+; // Mitov

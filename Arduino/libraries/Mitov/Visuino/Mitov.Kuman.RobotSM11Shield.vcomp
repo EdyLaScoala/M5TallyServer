@@ -1,0 +1,149 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Kuman' )]
+  TArduinoKumanToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '11' )]
+  TArduinoKumanRobotSM11Servo : TArduinoServoShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorInputPin', '2' )]
+  TArduinoKumanRobotSM11InfraredRemoteReceiver : TArduinoInfraredRemoteReceiverShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN_PING', '14' )]
+  [ArduinoTemplateParameter( 'PIN_ECHO', '15' )]
+  TArduinoKumanRobotSM11UltrasonicRanger : TArduinoUltrasonicRangerShieldElement
+
+    Servo : TArduinoKumanRobotSM11Servo
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Left Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '10' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '9' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '8' )]
+  +TArduinoKumanRobotSM11ShieldMotorLeftChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Right Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '5' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '7' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '6' )]
+  +TArduinoKumanRobotSM11ShieldMotorRightChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Left Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '6' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '9' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '8' )]
+  +TArduinoKumanRobotSM11ShieldMotorRemappedLeftChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Right Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '5' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '7' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '10' )]
+  +TArduinoKumanRobotSM11ShieldMotorRemappedRightChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '12' )]
+  TArduinoKumanRobotSM11ShieldBuzzer : TArduinoBasicBuzzerShieldElement;
+//---------------------------------------------------------------------------
+  TArduinoKumanRobotSM11TurnSignals : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [PersistentCollection( TArduinoKumanRobotSM11TurnSignals )]
+  [ArduinoClass( 'Mitov::DirectOuputPin' )]
+  TArduinoKumanRobotSM11TurnSignalItem : TArduinoCodePersistent
+
+    [OWPinGroup( TArduinoKumanRobotSM11TurnSignals )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalOutputSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoExclude]
+    [ArduinoParam]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Left' )]
+  [ArduinoTemplateParameter( 'PIN', '3' )]
+  +TArduinoKumanRobotSM11LeftTurnSignalItem : TArduinoKumanRobotSM11TurnSignalItem;
+//---------------------------------------------------------------------------
+  [Name( 'Right' )]
+  [ArduinoTemplateParameter( 'PIN', '4' )]
+  +TArduinoKumanRobotSM11RightTurnSignalItem : TArduinoKumanRobotSM11TurnSignalItem;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_Left', 'Mitov::TDefinedDigitalInputPin<16>' )]
+  [ArduinoTemplateParameter( '1_Right', 'Mitov::TDefinedDigitalInputPin<17>' )]
+  [ParentImage( TArduinoElegooRobotLineFollowingSensors )]
+  TArduinoKumanRobotSM11LineFollowingSensors : TArduinoLeftRightDigitalSensors;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_Left', 'Mitov::TDefinedDigitalInputPinInverted<18>' )]
+  [ArduinoTemplateParameter( '1_Right', 'Mitov::TDefinedDigitalInputPinInverted<19>' )]
+  [ParentImage( TElegooPenguinBotInfraredDistanceModule )]
+  TArduinoKumanRobotSM11ObstacleAvoidanceSensors : TArduinoInvertedLeftRightDigitalSensors;
+//---------------------------------------------------------------------------
+  [CreateName( 'SM11 Robot' )]
+  [Category( TArduinoKumanToolbarCategory )]
+  [Category( TArduinoRobotsToolbarCategory )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '2', 'IR Receiver' )]
+  [ArduinoShieldPin( '3', 'Turn Signal (L)' )]
+  [ArduinoShieldPin( '4', 'Turn Signal (R)' )]
+  [ArduinoShieldPin( '5', 'Motor (ENB)' )]
+  [ArduinoShieldPin( '7', 'Motor (IN3)' )]
+  [ArduinoShieldPin( '8', 'Motor (IN2)' )]
+  [ArduinoShieldPin( '9', 'Motor (IN1)' )]
+  [ArduinoShieldPin( '11', 'Servo' )]
+  [ArduinoShieldPin( '12', 'Buzzer' )]
+  [ArduinoShieldPin( '13', 'Button(Key 1)', True )]
+  [ArduinoShieldPin( '14', 'Sonic Trig' )]
+  [ArduinoShieldPin( '15', 'Sonic Echo' )]
+  [ArduinoShieldPin( '16', 'Line Tracking (R)' )]
+  [ArduinoShieldPin( '17', 'Line Tracking (L)' )]
+  [ArduinoShieldPin( '18', 'Obstacle Sensor (R)' )]
+  [ArduinoShieldPin( '19', 'Obstacle Sensor (L)' )]
+  *TArduinoKumanRobotSM11BasicShield : TArduinoShield, IStandardShield
+
+    [Name( 'Ultrasonic Ranger' )]
+    UltrasonicRanger : TArduinoKumanRobotSM11UltrasonicRanger
+
+    Buzzer : TArduinoKumanRobotSM11ShieldBuzzer
+
+    [Name( 'Line Following' )]
+    LineFollowing : TArduinoKumanRobotSM11LineFollowingSensors
+
+    [Name( 'Obstacle Avoidance' )]
+    ObstacleAvoidance : TArduinoKumanRobotSM11ObstacleAvoidanceSensors
+
+    [Name( 'Turn Signals' )]
+    [AddItem( TArduinoKumanRobotSM11LeftTurnSignalItem )]
+    [AddItem( TArduinoKumanRobotSM11RightTurnSignalItem )]
+    TurnSignals : TArduinoKumanRobotSM11TurnSignals
+
+    [Name( 'Infrared Remote' )]
+    InfraredRemote : TArduinoKumanRobotSM11InfraredRemoteReceiver
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Kuman Robot SM11 Shield' )]
+  [ArduinoShieldPin( '6', 'Motor (IN4)' )]
+  [ArduinoShieldPin( '10', 'Motor (ENA)' )]
+  +TArduinoKumanRobotSM11Shield : TArduinoKumanRobotSM11BasicShield
+
+    [AddItem( TArduinoKumanRobotSM11ShieldMotorLeftChannel )]
+    [AddItem( TArduinoKumanRobotSM11ShieldMotorRightChannel )]
+    Motors : TArduinoFixedPersistentCollection
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Kuman Robot SM11 Shield (Remapped)' )]
+  [ArduinoShieldPin( '6', 'Motor (ENA)' )]
+  [ArduinoShieldPin( '10', 'Motor (IN4)' )]
+  +TArduinoKumanRobotSM11RemappedShield : TArduinoKumanRobotSM11BasicShield
+
+    [AddItem( TArduinoKumanRobotSM11ShieldMotorRemappedLeftChannel )]
+    [AddItem( TArduinoKumanRobotSM11ShieldMotorRemappedRightChannel )]
+    Motors : TArduinoFixedPersistentCollection
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

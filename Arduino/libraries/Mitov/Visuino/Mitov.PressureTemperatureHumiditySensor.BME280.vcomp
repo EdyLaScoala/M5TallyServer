@@ -1,0 +1,217 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PropertyFixedListDesign]
+  [PropertyListDesignValue( '0' )]
+  [PropertyListDesignValue( '1' )]
+  [PropertyListDesignValue( '2' )]
+  [PropertyListDesignValue( '4' )]
+  [PropertyListDesignValue( '8' )]
+  [PropertyListDesignValue( '16' )]
+//  [ArduinoExclude]
+  ArduinoBME280OversamplingModeAttribute : TAttributeCollectionAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBMP280Oversampling' )]
+  TArduinoBMP280Oversampling : TArduinoCodePersistent
+
+    [ArduinoBME280OversamplingModeAttribute]
+    Pressure : Unsigned = 1
+
+    [ArduinoBME280OversamplingModeAttribute]
+    Temperature : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoBME280Oversampling' )]
+  TArduinoBME280Oversampling : TArduinoBMP280Oversampling
+
+    [ArduinoBME280OversamplingModeAttribute]
+    Humidity : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoInit]
+//  [ArduinoLoopBegin]
+  TArduinoPressureTemperature280Basic : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [Name( 'Pressure(Pa)' )]
+    PressureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    InFahrenheit : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.5' )]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '20' )]
+    [PropertyListDesignValue( '62.5' )]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    InactiveDuration : Single = 0.5
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    IIRFilterCoefficient : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'PressureTemperature' )]
+  [ArduinoWebKeywords( 'BMP280' )]
+//  [ArduinoClass( 'Mitov::BMP280_TemperaturePressure' )]
+  TArduinoPressureTemperatureBMP280Basic : TArduinoPressureTemperature280Basic
+
+    Oversampling : TArduinoBMP280Oversampling
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'PressureTemperatureHumidity' )]
+  [ArduinoWebKeywords( 'BME280' )]
+  TArduinoPressureTemperatureHumidityBME280Basic : TArduinoPressureTemperature280Basic
+
+    [OWPrimaryPin]
+    [Name( 'Humidity(%)' )]
+    HumidityOutputPin : TOWArduinoAnalogSourcePin
+
+    Oversampling : TArduinoBME280Oversampling
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInit]
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_BME280_TemperatureHumidity_I2C.h' )]
+  TArduinoPressureTemperature280Basic_Shield : TArduinoClockEnabledBasicShield
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [Name( 'Pressure(Pa)' )]
+    PressureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    InFahrenheit : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.5' )]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '20' )]
+    [PropertyListDesignValue( '62.5' )]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    InactiveDuration : Single = 0.5
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    IIRFilterCoefficient : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_BME280_TemperatureHumidity_I2C.h' )]
+  [ArduinoClass( 'Mitov::BMP280_TemperaturePressure_I2C' )]
+  [Name( 'Pressure Temperature BMP280 I2C' )]
+  +TArduinoPressureTemperatureBMP280I2C : TArduinoPressureTemperatureBMP280Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [DesignRange( $76, $77 )]
+    Address : TArduinoUInt8 = $76
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BME280_TemperatureHumidity_SPI.h' )]
+  [ArduinoClass( 'Mitov::BMP280_TemperaturePressure_SPI' )]
+  [Name( 'Pressure Temperature BMP280 SPI' )]
+  +TArduinoPressureTemperatureBMP280SPI : TArduinoPressureTemperatureBMP280Basic
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    OutputPin : TOWArduinoSPISourcePin
+
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    SPI3Wire : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_BME280_TemperatureHumidity_I2C.h' )]
+  [ArduinoClass( 'Mitov::BME280_TemperatureHumidity_I2C' )]
+  [Name( 'Pressure Temperature Humidity BME280 I2C' )]
+  +TArduinoPressureTemperatureHumidityBME280I2C : TArduinoPressureTemperatureHumidityBME280Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [DesignRange( $76, $77 )]
+    Address : TArduinoUInt8 = $76
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BME280_TemperatureHumidity_SPI.h' )]
+  [ArduinoClass( 'Mitov::BME280_TemperatureHumidity_SPI' )]
+  [Name( 'Pressure Temperature Humidity BME280 SPI' )]
+  +TArduinoPressureTemperatureHumidityBME280SPI : TArduinoPressureTemperatureHumidityBME280Basic
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+//    [ArduinoSPIInstanceTemplate]
+    OutputPin : TOWArduinoSPISourcePin
+
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    SPI3Wire : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Pressure/Temperature' )]
+  [CreateName( 'Pressure/Temperature' )]
+  [ArduinoWebKeywords( 'BME280' )]
+  [ArduinoClass( 'Mitov::BMP280_TemperaturePressure_I2C' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoPressureTemperatureBMP280Basic_Shield : TArduinoPressureTemperature280Basic_Shield
+
+    Oversampling : TArduinoBMP280Oversampling
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Pressure/Temperature/Humidity' )]
+  [CreateName( 'Pressure/Temperature/Humidity' )]
+  [ArduinoWebKeywords( 'BME280' )]
+  [ArduinoClass( 'Mitov::BME280_TemperatureHumidity_I2C' )]
+  *TArduinoPressureTemperatureHumidityBME280Basic_Shield : TArduinoPressureTemperature280Basic_Shield
+
+    [OWPrimaryPin]
+    [Name( 'Humidity(%)' )]
+    HumidityOutputPin : TOWArduinoAnalogSourcePin
+
+    Oversampling : TArduinoBME280Oversampling
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

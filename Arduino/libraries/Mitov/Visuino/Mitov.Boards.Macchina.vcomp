@@ -1,0 +1,223 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Macchina' )]
+  TMacchinaCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M3' )]
+  [Category( TMacchinaCategory )]
+  [AlternateCategory( TCortexM3Category )]
+  [ParentImage( TCortexM3Category )]
+  TMacchinaCortexM3Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'XBee' )]
+  +TArduinoMacchinaXBEESerial : TArduinoUSARTSerial;
+//---------------------------------------------------------------------------
+  [Name( 'Lin K-Line' )]
+  +TArduinoMacchinaLinKSerial : TArduinoUSARTSerial;
+//---------------------------------------------------------------------------
+  [Name( 'Lin L-Line' )]
+  +TArduinoMacchinaLinLSerial : TArduinoUSARTSerial;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'Button1', 'Button1' )]
+  +TArduinoMacchinaButton1 : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'Button2', 'Button2' )]
+  +TArduinoMacchinaButton2 : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicButtonModule )]
+  +TArduinoMacchinaButtonsModule : TArduinoShield
+
+    [AddItem( TArduinoMacchinaButton1 )]
+    [AddItem( TArduinoMacchinaButton2 )]
+    Buttons : TArduinoFixedPersistentCollection
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMacchinaLEDs : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  TArduinoMacchinaBasicLED : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DirectOuputPin' )]
+  TArduinoMacchinaBasicSingleLED : TArduinoMacchinaBasicLED
+
+    [OWPinGroup( TArduinoBasicAnalogInputPinChannel )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoExclude]
+    [ArduinoParam]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'DS2 (Red)' )]
+  [ArduinoTemplateParameter( 'PIN', 'DS2' )]
+  +TArduinoMacchinaLED_DS2 : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( 'DS3 (Yellow)' )]
+  [ArduinoTemplateParameter( 'PIN', 'DS3' )]
+  +TArduinoMacchinaLED_DS3 : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( 'DS4 (Yellow)' )]
+  [ArduinoTemplateParameter( 'PIN', 'DS4' )]
+  [ParentImage( TArduinoMacchinaLED_DS3 )]
+  +TArduinoMacchinaLED_DS4 : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( 'DS5 (Yellow)' )]
+  [ArduinoTemplateParameter( 'PIN', 'DS5' )]
+  [ParentImage( TArduinoMacchinaLED_DS3 )]
+  +TArduinoMacchinaLED_DS5 : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( 'DS6 (Green)' )]
+  [ArduinoTemplateParameter( 'PIN', 'DS6' )]
+  +TArduinoMacchinaLED_DS6 : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( '(Red)' )]
+  [ArduinoTemplateParameter( 'PIN', 'RGB_RED' )]
+  +TArduinoMacchinaLED_RGB_Red : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( '(Green)' )]
+  [ArduinoTemplateParameter( 'PIN', 'RGB_GREEN' )]
+  +TArduinoMacchinaLED_RGB_Green : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( '(Blue)' )]
+  [ArduinoTemplateParameter( 'PIN', 'RGB_BLUE' )]
+  +TArduinoMacchinaLED_RGB_Blue : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( 'DS7 (RGB)' )]
+  +TArduinoMacchinaLED_RGB : TArduinoMacchinaBasicLED
+
+    [AddItem( TArduinoMacchinaLED_RGB_Red )]
+    [AddItem( TArduinoMacchinaLED_RGB_Green )]
+    [AddItem( TArduinoMacchinaLED_RGB_Blue )]
+    Channels : TArduinoMacchinaLEDs
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoLED )]
+  +TArduinoMacchinaLEDModule : TArduinoShield
+
+    [AddItem( TArduinoMacchinaLED_DS2 )]
+    [AddItem( TArduinoMacchinaLED_DS3 )]
+    [AddItem( TArduinoMacchinaLED_DS4 )]
+    [AddItem( TArduinoMacchinaLED_DS5 )]
+    [AddItem( TArduinoMacchinaLED_DS6 )]
+    [AddItem( TArduinoMacchinaLED_RGB )]
+    Leds : TArduinoMacchinaLEDs
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMacchinaLinChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInclude( 'Mitov_Lin_TJA1027.h' )]
+  [ArduinoClass( 'Mitov::MitovLinTJA1027' )]
+  TArduinoMacchinaLinBasicChannel : TArduinoCodePersistent, TArduinoLinTJA1027_Extender
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Lin K-Line' )]
+  [CreateName( 'Lin K-Line' )]
+  [ArduinoSerialOutput( 2 )]
+  [ArduinoTemplateParameter( 'SleepOutputPin', 'Mitov::DigitalPin_NoImplementation<3>' )]
+  [ArduinoTemplateParameter( '0_SERIAL_TYPE_PIN', 'BoardDeclarations::Types::SerialPort2' )]
+  [ArduinoTemplateParameter( '1_SERIAL_NAME_PIN', 'BoardDeclarations::Instances::SerialPort2' )]
+  +TArduinoMacchinaKLinChannel : TArduinoMacchinaLinBasicChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Lin L-Line' )]
+  [CreateName( 'Lin L-Line' )]
+  [ArduinoSerialOutput( 3 )]
+  [ArduinoTemplateParameter( 'SleepOutputPin', 'Mitov::DigitalPin_NoImplementation<3>' )]
+  [ArduinoTemplateParameter( '0_SERIAL_TYPE_PIN', 'BoardDeclarations::Types::SerialPort3' )]
+  [ArduinoTemplateParameter( '1_SERIAL_NAME_PIN', 'BoardDeclarations::Instances::SerialPort3' )]
+  +TArduinoMacchinaLLinChannel : TArduinoMacchinaLinBasicChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Lin' )]
+  [CreateName( 'Lin' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoMacchinaLinModule : TArduinoShield
+
+    [AddItem( TArduinoMacchinaKLinChannel )]
+    [AddItem( TArduinoMacchinaLLinChannel )]
+    Channels : TArduinoMacchinaLinChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Macchina M2 (Under The Hood)' )]
+  [Category( TMacchinaCortexM3Category )]
+  [ArduinoBoardCompileParams( 'macchina:sam:m2' )]
+  [ArduinoDefine( 'VISUINO_MACCHINA_M2' )]
+  [ParentImage( TMacchinaCategory )]
+  +TArduino_Macchina_M2_Under_The_Hood_Board : TArduino_Sam_BasicBoard
+  
+    [AddItem( TArduinoMacchinaLEDModule )]
+    [AddItem( TArduinoMacchinaButtonsModule )]
+    [AddItem( TArduinoMacchinaPowerSupplyModule )]
+    [AddItem( TArduinoMacchinaLinModule )]
+    Modules
+
+    [AddItem( TArduinoSeparatedUSBSerial )]
+    [AddItem( TArduinoMacchinaXBEESerial )]
+    [AddItem( TArduinoMacchinaLinKSerial )]
+    [AddItem( TArduinoMacchinaLinLSerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Output 1', 'GPIO1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Output 2', 'GPIO2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Output 3', 'GPIO3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Output 4', 'GPIO4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Output 5', 'GPIO5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Output 6', 'GPIO6' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoBasicDigitalInputChannel, 'XBee RTS', 'XBEE_RTS' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoBasicDigitalInputChannel, 'XBee CTS', 'XBEE_CTS' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoBasicDigitalInputChannel, 'XBee RST', 'XBEE_RST' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoBasicDigitalInputChannel, 'XBee STAT', 'XBEE_STAT' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoBasicDigitalInputChannel, 'XBee VRef', 'XBEE_VREF' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoBasicDigitalChannel, 'XBee PWM', 'XBEE_PWM' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoBasicDigitalInputChannel, 'Mult 1', 'XBEE_MULT1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoBasicDigitalInputChannel, 'Mult 2', 'XBEE_MULT2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoBasicDigitalInputChannel, 'Mult 3', 'XBEE_MULT3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoBasicDigitalInputChannel, 'Mult 4', 'XBEE_MULT4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoBasicDigitalInputChannel, 'Mult 5', 'XBEE_MULT5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoBasicDigitalInputChannel, 'Mult 6', 'XBEE_MULT6' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoBasicDigitalInputChannel, 'Lin K-Sleep', 'LIN_KSLP' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoBasicDigitalInputChannel, 'Lin L-Sleep', 'LIN_LSLP' )]
+    Digital : TArduinoDigitalChannels
+
+    [ArduinoBoard_Add_AnalogInputChannel( 0, TArduinoAnalogInputChannel, 'Analog 1', 'ANALOG_1', 'ANALOG_1' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 1, TArduinoAnalogInputChannel, 'Analog 2', 'ANALOG_2', 'ANALOG_2' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 2, TArduinoAnalogInputChannel, 'Analog 3', 'ANALOG_3', 'ANALOG_3' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 3, TArduinoAnalogInputChannel, 'Analog 4', 'ANALOG_4', 'ANALOG_4' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 4, TArduinoAnalogInputChannel, 'Analog 5', 'ANALOG_5', 'ANALOG_5' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 5, TArduinoAnalogInputChannel, 'Analog 6', 'ANALOG_6', 'ANALOG_6' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

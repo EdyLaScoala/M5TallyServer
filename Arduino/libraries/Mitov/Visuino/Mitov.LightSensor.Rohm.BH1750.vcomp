@@ -1,0 +1,49 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoLightSensorRohmBH1750ResolutionMode : Enum
+  
+    rmVeryHigh
+    rmHigh
+    rmLow
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ROHM BH1750 Ambient Light Sensor (I2C)' )]
+  [ArduinoInclude( 'Mitov_Rohm_BH1750.h' )]
+  [ArduinoClass( 'Mitov::LightSensorBH1750' )]
+  [ArduinoWebKeywords( 'BH1750' )]
+  [CreateName( 'LightSensor' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoLightSensorRohmBH1750 : TArduinoCommonClockedAnalogEnableSource
+
+    [ArduinoPinIsConnectedFlag]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    ControlOutputPin : TOWArduinoI2CSourcePin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [PropertyListDesignValue( '35' )] // '$23' )]
+    [PropertyListDesignValue( '92' )] // '$5C' )]
+    Address : TArduinoUInt8 = $23
+
+    ContinuousMode : Boolean = True
+    Resolution : TArduinoLightSensorRohmBH1750ResolutionMode = rmVeryHigh
+
+    [ValueRange( 0.45, 3.68 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateMeasurementTime' )]
+    MeasurementTime : Single = 1.0
+
+    InLumens : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

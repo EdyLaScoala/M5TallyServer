@@ -1,0 +1,156 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoQuaternionSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoQuaternionSetValueElements )]
+  [ArduinoHelpPostfix( '(Quaternion Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicQuaternionSetValueElement : TArduinoBasicSetValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [CreateName( 'QuaternionValue' )]
+  [Name( 'Quaternion Value' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  [Category( TArduinoQuaternionDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoQuaternionValue : TArduinoCommonClockedQuaternionSource, TArduinoValue_Extender
+
+    Value : TArduinoQuaternion
+    Elements : TArduinoQuaternionSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'QuaternionMultiSource' )]
+  [Name( 'Quaternion Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TArduinoQuaternionToolbarCategory )]
+  +TArduinoQuaternionMultiSource : TArduinoCommonQuaternionSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoQuaternionSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoQuaternionSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatQuaternion' )]
+  [Name( 'Repeat Quaternion' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatQuaternion : TArduinoCommonQuaternionFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  [ArduinoContructorParameter( 'Mitov::TQuaternion()' )]
+  [Name( 'Quaternion Toggle Switch' )]
+  [CreateName( 'QuaternionToggleSwitch' )]
+  [Category( TArduinoQuaternionToolbarCategory )]
+  +TArduinoQuaternionToggleSwitch : TArduinoCommonQuaternionSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoQuaternionSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoQuaternionSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Quaternion Toggle Demux' )]
+  [CreateName( 'QuaternionToggleDemux' )]
+  [Category( TArduinoQuaternionToolbarCategory )]
+  +TArduinoQuaternionToggleDemux : TArduinoCommonQuaternionSink, TArduinoToggleDemux_Extender
+  
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoQuaternionSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoQuaternionSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  [Name( 'Quaternion On/Off Switch' )]
+  [CreateName( 'QuaternionSwitch' )]
+  [Category( TArduinoQuaternionToolbarCategory )]
+  +TArduinoQuaternionSwitch : TArduinoCommonQuaternionSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoQuaternionSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  [Name( 'Quaternion Mux(Multi channel Switch)' )]
+  [CreateName( 'QuaternionMux' )]
+  [Category( TArduinoQuaternionToolbarCategory )]
+  +TArduinoQuaternionMux : TArduinoQuaternionMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  [Name( 'Quaternion Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'QuaternionDemux' )]
+  [Category( TArduinoQuaternionToolbarCategory )]
+  +TArduinoQuaternionDemux : TArduinoCommonQuaternionSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoQuaternionSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoQuaternionSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  [ArduinoContructorParameter( 'Mitov::TQuaternion()' )]
+  [Name( 'Compare Quaternion Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoQuaternionToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoQuaternionCompareValue : TArduinoCommonQuaternionSink
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+    Value : TArduinoQuaternion
+
+    [ArduinoTransformImplementation( 'CompareType' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareEqualValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RandomGenerator.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TQuaternion' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomQuaternionImplementation' )]
+  [CreateName( 'RandomQuaternion' )]
+  [Name( 'Random Quaternion' )]
+  [Category( TArduinoQuaternionDataSourcesToolbarCategory )]
+  +TArduinoRandomQuaternion : TArduinoCommonClockedEnabledQuaternionSource
+
+    Min : TArduinoQuaternion
+    Max : TArduinoMaxQuaternion
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TQuaternion' )]
+  [CreateName( 'QuaternionSnapshot' )]
+  [Name( 'Quaternion Snapshot' )]
+  [Category( TArduinoQuaternionToolbarCategory )]
+  +TArduinoQuaternionSnapshot : TArduinoCommonQuaternionFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

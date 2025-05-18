@@ -1,0 +1,86 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Atiny85' )]
+  [Category( TAdafruitCategory )]
+  [AlternateCategory( TAtiny85Category )]
+  [ParentImage( TAtiny85Category )]
+  TAdafruitAtiny85Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TAdafruitCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TAdafruitAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Trinket' )]
+  [Category( TAdafruitCategory )]
+  TAdafruitTrinketCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Trinket Pro' )]
+  [Category( TAdafruitCategory )]
+  TAdafruitTrinketProCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Trinket' )]
+  [ArduinoDefine( 'VISUINO_TRINKET' )]
+  [ArduinoDefine( 'VISUINO_TRINKET_TWO_WIRE' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:trinket5' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:trinket3' )]
+  [Category( TAdafruitTrinketCategory )]
+  [Category( TAdafruitAtiny85Category )]
+  +TArduino_Adafruit_Trinket_Board : TArduino_Basic_ATtiny_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoBasicDigitalPWMI2C0SPI0Channel, 'Digital(I2C-MISO)(SPI-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(I2C-MOSI)(LED)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 2, 1,  1, TArduinoCombinedAnalogNoPullDigitall2C0SPI0PWMChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3, 3,  1, TArduinoCombinedAnalogNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 2,  1, TArduinoCombinedAnalogNoPullDigitalPWMChannel )]
+    [Name('Channels')]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Trinket Pro' )]
+  [ArduinoDefine( 'VISUINO_TRINKET_PRO' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:protrinket3ftdi' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:protrinket3' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:protrinket5ftdi' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:protrinket5' )]
+  [Category( TAdafruitTrinketProCategory )]
+  [Category( TAdafruitAVRCategory )]
+  +TArduino_Adafruit_Trinket_Pro_Board : TArduino_AVR328_BasicBoard
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 2 );
+    [ArduinoBoard_Add_ReservedChannels( 3, 4 );
+    [ArduinoBoard_Add_AllChannelsFrom( 8 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN_DATA', '7' )]
+  [ArduinoTemplateParameter( 'C_PIN_CLOCK', '8' )]
+  +TArduinoAdafruitTrinketM0RGBLedModule : TArduinoAdafruitDotStarSingleRGBLed_Basic_Module;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Trinket M0' )]
+  [ArduinoDefine( 'VISUINO_TRINKET_M0' )]
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_trinket_m0' )]
+  [Category( TAdafruitTrinketCategory )]
+  [Category( TAdafruitCortexM0Category )] 
+  +TArduinoAdafruitTrinketM0Board : TArduinoSamdBasicBoard
+  
+    [AddItem( TArduinoAdafruitTrinketM0RGBLedModule )]
+    [AddItem( TArduinoBasicKeyboardModule )]
+    [AddItem( TArduinoBasicMouseModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 0, 2, 1, TArduinoCombinedAnalogDigitalPullDownPWMI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 1, 0, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel, 'Analog Output[ 0 ]/Digital' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 2, 1, 1, TArduinoCombinedAnalogDigitalPullDownPWMI2C0InterruptChannel, 'Digital(I2C-SCL)(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3, 3, 1, TArduinoCombinedAnalogDigitalPullDownPWMSPI0Serial1InterruptChannel, 'Digital(RX)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 4, 1, TArduinoCombinedAnalogDigitalPullDownPWMSPI0Serial1InterruptChannel, 'Digital(TX)(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalPWMInputChannel, 'Digital(LED)' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

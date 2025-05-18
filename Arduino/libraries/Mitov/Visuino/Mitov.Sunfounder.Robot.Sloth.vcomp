@@ -1,0 +1,76 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'SunFounder' )]
+  TArduinoSunFounderToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_Servo.h' )]
+  [ArduinoClass( 'Mitov::MitovServo' )]
+  TSunFounderSlothBasicServo : TArduinoBasicServoChannel;
+//---------------------------------------------------------------------------
+  TSunFounderSlothLegItems : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  TSunFounderSlothLegServos : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  TSunFounderSlothLegItem : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Left Hip' )]
+  [ArduinoTemplateParameter( 'PIN', '11' )]
+  [ArduinoShieldPin( '11',  'Left Hip' )]
+  +TSunFounderSlothLeftHipServo : TSunFounderSlothBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Left Foot' )]
+  [ArduinoTemplateParameter( 'PIN', '12' )]
+  [ArduinoShieldPin( '12',  'Left Foot' )]
+  +TSunFounderSlothLeftFootServo : TSunFounderSlothBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Left' )]
+  +TSunFounderSlothLeftLegItem : TSunFounderSlothLegItem
+
+    [AddItem( TSunFounderSlothLeftHipServo )]
+    [AddItem( TSunFounderSlothLeftFootServo )]
+    Servos : TSunFounderSlothLegServos
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Right Hip' )]
+  [ArduinoTemplateParameter( 'PIN', '9' )]
+  [ArduinoShieldPin( '9',  'Right Hip' )]
+  +TSunFounderSlothRightHipServo : TSunFounderSlothBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Right Foot' )]
+  [ArduinoTemplateParameter( 'PIN', '10' )]
+  [ArduinoShieldPin( '10',  'Right Foot' )]
+  +TSunFounderSlothRightFootServo : TSunFounderSlothBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Right' )]
+  +TSunFounderSlothRightLegItem : TSunFounderSlothLegItem
+    [AddItem( TSunFounderSlothRightHipServo )]
+    [AddItem( TSunFounderSlothRightFootServo )]
+    Servos : TSunFounderSlothLegServos
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN_PING', '4' )]
+  [ArduinoTemplateParameter( 'PIN_ECHO', '3' )]
+  [ArduinoShieldPin( '4',  'Ping' )]
+  [ArduinoShieldPin( '3',  'Echo' )]
+  TSunFounderSlothUltrasonicRanger : TArduinoUltrasonicRangerShieldElement;
+//---------------------------------------------------------------------------
+  [Name( 'SunFounder Sloth Robot Shield' )]
+  [CreateName( 'Sloth Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TArduinoSunFounderToolbarCategory )]
+  [Category( TArduinoRobotsToolbarCategory )]
+  +TSunFounderSlothShield : TArduinoShield, INanoShield
+
+    [Name( 'Ultrasonic Ranger' )]
+    UltrasonicRanger : TSunFounderSlothUltrasonicRanger
+
+    [AddItem( TSunFounderSlothLeftLegItem )]
+    [AddItem( TSunFounderSlothRightLegItem )]
+    Legs : TSunFounderSlothLegItems
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

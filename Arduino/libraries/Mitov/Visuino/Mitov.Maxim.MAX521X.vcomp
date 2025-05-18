@@ -1,0 +1,41 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoMaximMAX521XShutDownMode : Enum
+  
+    msdmHighImpedance
+    msdm100K
+    msdm1K
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_Maxim_MAX521X.h' )]
+  [ArduinoClass( 'Mitov::Maxim_MAX521X' )]
+  [CreateName( 'DAC' )]
+  [Name( 'Maxim Integrated SPI Digital To Analog Converter (DAC) - MAX5214/MAX5216' )]
+  [ArduinoWebKeywords( 'Maxim MAX5214' )]
+  [ArduinoWebKeywords( 'Maxim MAX5216' )]
+  [Category( TArduinoAnalogOutputToolbarCategory )]
+  +TArduinoMaximMAX521X : TArduinoBasicClockedSPI
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [PropertyListDesignValue( 'MAX5214' )]
+    [PropertyListDesignValue( 'MAX5216' )]
+    [OWExcludeBindings]
+    [ArduinoExclude]
+    [ArduinoEnumTemplateParameter( '2_IMPLEMENTATION_TYPE', 'Mitov::Maxim_', False )]
+    Type : String = 'MAX5216'
+
+    ShutDownMode : TArduinoMaximMAX521XShutDownMode = msdmHighImpedance
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

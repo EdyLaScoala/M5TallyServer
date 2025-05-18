@@ -1,0 +1,141 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Elegoo' )]
+  TElegooCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TElegooCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TElegooAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  TElegooPenguinBotLegItems : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  TElegooPenguinLegServos : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '19' )]
+  +TElegooPenguinBotLEDModule : TArduinoBasicLEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN_PING', '5' )]
+  [ArduinoTemplateParameter( 'PIN_ECHO', '4' )]
+  +TElegooPenguinBotUltrasonicRangerModule : TArduinoUltrasonicRangerModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Elegoo_PenguinBot.h' )]
+  [ParentImage( TArduinoYahboomMicrobitRobotBreakoutObstacleAvoidanceSensor )]
+  [ArduinoClass( 'Mitov::ElegooPenguinBotInfraredDistanceSensors' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [CreateName( 'IR Distance Senosrs' )]
+  +TElegooPenguinBotInfraredDistanceModule : TArduinoShield
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddPin( 'Left', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Elegoo_PenguinBot.h' )]
+  [ArduinoClass( 'Mitov::ElegooPenguinBotBatterySensor' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TElegooPenguinBotBatterySensorModule : TArduinoBasicBatteryAnalogSensorModule;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_Servo.h' )]
+  [ArduinoClass( 'Mitov::MitovServo' )]
+  TElegooPenguinBotBasicServo : TArduinoBasicServoChannel;
+//---------------------------------------------------------------------------
+  TElegooPenguinBotLegItem : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Left Hip' )]
+  [ArduinoTemplateParameter( 'PIN', '10' )]
+  +TElegooPenguinBotLeftHipServo : TElegooPenguinBotBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Left Foot' )]
+  [ArduinoTemplateParameter( 'PIN', '12' )]
+  +TElegooPenguinBotLeftFootServo : TElegooPenguinBotBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Left' )]
+  +TElegooPenguinBotLeftLegItem : TElegooPenguinBotLegItem
+
+    [AddItem( TElegooPenguinBotLeftHipServo )]
+    [AddItem( TElegooPenguinBotLeftFootServo )]
+    Servos : TElegooPenguinLegServos
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Right Hip' )]
+  [ArduinoTemplateParameter( 'PIN', '9' )]
+  +TElegooPenguinBotRightHipServo : TElegooPenguinBotBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Right Foot' )]
+  [ArduinoTemplateParameter( 'PIN', '6' )]
+  +TElegooPenguinBotRightFootServo : TElegooPenguinBotBasicServo;
+//---------------------------------------------------------------------------
+  [Name( 'Right' )]
+  +TElegooPenguinBotRightLegItem : TElegooPenguinBotLegItem
+
+    [AddItem( TElegooPenguinBotRightHipServo )]
+    [AddItem( TElegooPenguinBotRightFootServo )]
+    Servos : TElegooPenguinLegServos
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Legs' )]
+  +TElegooPenguinBotLegsModule : TArduinoShield
+
+    [AddItem( TElegooPenguinBotLeftLegItem )]
+    [AddItem( TElegooPenguinBotRightLegItem )]
+    Legs : TElegooPenguinBotLegItems
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorInputPin', '3' )]
+  +TElegooPenguinBotInfraredRemoteReceiverModule : TArduinoInfraredRemoteReceiverModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SoftwareSerial.h' )]
+  [ArduinoInclude( 'Mitov_StandardSerial.h' )]
+  [ArduinoInclude( 'Mitov_Elegoo_PenguinBot_MP3Serial.h' )]
+  [ArduinoSerialType( 'SoftwareSerial' )]
+  +TElegooPenguinBotSoftwareSerial : TArduinoBasicSpeedSerial;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SoftwareSerial.h' )]
+  [ArduinoInclude( 'Mitov_Elegoo_PenguinBot_MP3Player.h' )]
+  [ArduinoClass( 'Mitov::ElegooPenguinBotMP3Player' )]
+  [ArduinoInit]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoIncludeExcluded( 'Mitov_Elegoo_PenguinBot_MP3Player_Excluded.h' )]
+  [ArduinoClassExcluded( 'Mitov::Mitov_Elegoo_PenguinBot_MP3Player_Excluded' )]
+  [ArduinoSerialOutput( 1 )]
+  [ArduinoTemplateParameter( '0_SERIAL_TYPE_PIN', 'BoardDeclarations::Types::SerialPort1' )]
+  [ArduinoTemplateParameter( '1_SERIAL_NAME_PIN', 'BoardDeclarations::Instances::SerialPort1' )]
+  [ParentImage( TArduinoPlayFrequencyTone )]
+  +TElegooPenguinBotMP3PlayerModule : TArduinoMaiyoutMP3PlayerBasicModule;
+//---------------------------------------------------------------------------
+  [Name( 'Penguin Bot' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_UNO' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:uno' )]
+  [Category( TElegooAVRCategory )]
+  +TElegooPenguinBotBoard : TArduino_AVR328_Basic_Modules_Board
+  
+    [AddItem( TElegooPenguinBotLEDModule )]
+    [AddItem( TElegooPenguinBotUltrasonicRangerModule )]
+    [AddItem( TElegooPenguinBotInfraredDistanceModule )]
+    [AddItem( TElegooPenguinBotBatterySensorModule )]
+    [AddItem( TElegooPenguinBotLegsModule )]
+    [AddItem( TElegooPenguinBotInfraredRemoteReceiverModule )]
+    [AddItem( TElegooPenguinBotMP3PlayerModule )]
+    Modules
+
+    [AddItem( TElegooPenguinBotSoftwareSerial )]
+    Serial
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

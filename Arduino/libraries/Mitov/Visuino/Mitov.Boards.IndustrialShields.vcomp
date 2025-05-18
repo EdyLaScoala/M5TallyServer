@@ -1,0 +1,139 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Industrial Shields' )]
+  TIndustrialShieldsCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TIndustrialShieldsCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TIndustrialShieldsAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'MDUINO.h' )]
+  [ArduinoInclude( 'RS485.h' )]
+  [ArduinoInclude( 'Mitov_IndustrialShields_RS485.h' )]
+  [ArduinoDefine( '_MITOV_SERIAL_SENDING_PIN_' )]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::IndustrialShieldsRS485Module' )]
+  [ArduinoVariable( Boolean, 'FTransmit' )]
+  [CreateName( 'RS485' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoSerialType( 'SoftwareSerial' )]
+  [ArduinoSerialOutputType( 'Mitov::IndustrialShieldsRS48' )]
+  +TIndustrialShieldsRS485Serial : TArduinoBasicSpeedSerial
+
+    [ArduinoPinConnectDefine( '_MITOV_INDUSTRIAL_SHIELDS_RS485_TRANSMIT_PIN_' )]
+    TransmitInputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RS232' )]
+  +TIndustrialShieldsRS232Serial : TArduinoHardwareSerial;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoInclude( 'Ethernet2.h', 'Ethernet2', 'https://github.com/adafruit/Ethernet2' )]
+  [ArduinoInclude( 'Dns.h' )]
+  [Name( 'Ethernet' )]
+  [CreateName( 'Ethernet' )]
+  +TArduinoIndustrialShieldsEthernetModule : TArduinoBasicEthernetModule;
+//---------------------------------------------------------------------------
+  [Name( 'M-DUINO Ethernet 58+' )]
+  [Category( TIndustrialShieldsAVRCategory )]
+  [ParentImage( TIndustrialShieldsCategory )]
+  [ArduinoDefine( 'VISUINO_M_DUINO_ETHERNET_58' )]
+  [ArduinoBoardCompileParams( 'industrialshields:avr:mduino:cpu=mduino58plus' )]
+  +TArduino_M_DUINO_Ethernet_58_Plus_Board : TArduino_AVR2560_Basic_Modules_Board
+  
+    [AddItem( TArduinoIndustrialShieldsEthernetModule )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial, 2 )]
+    [AddItem( TIndustrialShieldsRS232Serial )]
+    [AddItem( TArduinoHardwareSerial )]
+    [AddItem( TIndustrialShieldsRS485Serial )]
+    Serial
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoSimpleDigitalInputOnlyChannel, 'I0.0', 'I0_0' )] // 22
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoSimpleDigitalInputOnlyChannel, 'I0.1', 'I0_1' )] // 23
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoSimpleDigitalInputOnlyChannel, 'I0.2', 'I0_2' )] // 24
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoSimpleDigitalInputOnlyChannel, 'I0.3', 'I0_3' )] // 25
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoSimpleDigitalInputOnlyChannel, 'I0.4', 'I0_4' )] // 26
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoSimpleDigitalInputOnlyInterruptChannel, 'I0.4', 'I0_5' )] // 2
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoSimpleDigitalInputOnlyInterruptChannel, 'I0.6', 'I0_6' )] // 3
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoSimpleDigitalInputOnlyChannel, 'I1.0', 'I1_0' )] // 27
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoSimpleDigitalInputOnlyChannel, 'I1.1', 'I1_1' )] // 28
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoSimpleDigitalInputOnlyChannel, 'I1.2', 'I1_2' )] // 29
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoSimpleDigitalInputOnlyChannel, 'I1.3', 'I1_3' )] // 30
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoSimpleDigitalInputOnlyChannel, 'I1.4', 'I1_4' )] // 31
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoSimpleDigitalInputOnlySerial1InterruptChannel, 'I1.5(RX1)', 'I1_5' )] // 18
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoSimpleDigitalInputOnlySerial1InterruptChannel, 'I1.6(TX1)', 'I1_6' )] // 19
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoSimpleDigitalInputOnlyChannel, 'I2.0', 'I2_0' )] // 32
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoSimpleDigitalInputOnlyChannel, 'I2.1', 'I2_1' )] // 33
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoSimpleDigitalInputOnlyChannel, 'I2.2', 'I2_2' )] // 34
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoSimpleDigitalInputOnlyChannel, 'I2.3', 'I2_3' )] // 35
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoSimpleDigitalInputOnlyI2C0InterruptChannel, 'I2.5(I2C-SDA)', 'I2_5' )] // 20
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoSimpleDigitalInputOnlyI2C0InterruptChannel, 'I2.6(I2C-SCL)', 'I2_6' )] // 21
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoBasicDigitalOutputOnlyChannel, 'Q0.0', 'Q0_0' )] // 36
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoBasicDigitalOutputOnlyChannel, 'Q0.1', 'Q0_1' )] // 37
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoBasicDigitalOutputOnlyChannel, 'Q0.2', 'Q0_2' )] // 38
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoBasicDigitalOutputOnlyChannel, 'Q0.3', 'Q0_3' )] // 39
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoBasicDigitalOutputOnlyChannel, 'Q0.4', 'Q0_4' )] // 40
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q0.5/A0.5', 'Q0_5' )] // 4
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q0.6/A0.6', 'Q0_6' )] // 5
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q0.7/A0.7', 'Q0_7' )] // 6
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoBasicDigitalOutputOnlyChannel, 'Q1.0', 'Q1_0' )] // 41
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoBasicDigitalOutputOnlyChannel, 'Q1.1', 'Q1_1' )] // 42
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoBasicDigitalOutputOnlyChannel, 'Q1.2', 'Q1_2' )] // 43
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoBasicDigitalOutputOnlyChannel, 'Q1.3', 'Q1_3' )] // 44
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoBasicDigitalOutputOnlyChannel, 'Q1.4', 'Q1_4' )] // 45
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q1.5/A1.5', 'Q1_5' )] // 8
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q1.6/A1.6', 'Q1_6' )] // 9
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q1.7/A1.7', 'Q1_7' )] // 7
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 46, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q2.0', 'Q2_0' )] // 46
+    [ArduinoBoard_Add_DigitalAnalogChannel( 47, TArduinoBasicDigitalOutputOnlyChannel, 'Q2.1', 'Q2_1' )] // 47
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoBasicDigitalOutputOnlyChannel, 'Q2.2', 'Q2_2' )] // 48
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoBasicDigitalOutputOnlyChannel, 'Q2.3', 'Q2_3' )] // 49
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q2.5/A2.5', 'Q2_5' )] // 12
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Q2.6/A2.6', 'Q2_6' )] // 13
+    Digital : TArduinoDigitalChannels
+      
+    [ArduinoBoard_Add_AnalogInputChannel( 0, TArduinoAnalogInputChannel, 'I0.7', 'I0_7', 'A0' )] // A0
+    [ArduinoBoard_Add_AnalogInputChannel( 1, TArduinoAnalogInputChannel,  'I0.8', 'I0_8', 'A1' )] // A1
+    [ArduinoBoard_Add_AnalogInputChannel( 2, TArduinoAnalogInputChannel,  'I0.9', 'I0_9', 'A2' )] // A2
+    [ArduinoBoard_Add_AnalogInputChannel( 3, TArduinoAnalogInputChannel,  'I0.10', 'I0_10', 'A3' )] // A3
+    [ArduinoBoard_Add_AnalogInputChannel( 4, TArduinoAnalogInputChannel,  'I0.11', 'I0_11', 'A4' )] // A4
+    [ArduinoBoard_Add_AnalogInputChannel( 5, TArduinoAnalogInputChannel,  'I0.12', 'I0_12', 'A5' )] // A5
+
+    [ArduinoBoard_Add_AnalogInputChannel( 6, TArduinoAnalogInputChannel,  'I1.7', 'I1_7', 'A6' )] // A6
+    [ArduinoBoard_Add_AnalogInputChannel( 7, TArduinoAnalogInputChannel,  'I1.8', 'I1_8', 'A7' )] // A7
+    [ArduinoBoard_Add_AnalogInputChannel( 8, TArduinoAnalogInputChannel,  'I1.9', 'I1_9', 'A8' )] // A8
+    [ArduinoBoard_Add_AnalogInputChannel( 9, TArduinoAnalogInputChannel,  'I1.10', 'I1_10', 'A9' )] // A9
+    [ArduinoBoard_Add_AnalogInputChannel( 10, TArduinoAnalogInputChannel,  'I1.11', 'I1_11', 'A10' )] // A10
+    [ArduinoBoard_Add_AnalogInputChannel( 11, TArduinoAnalogInputChannel,  'I1.12', 'I1_12', 'A11' )] // A11
+
+    [ArduinoBoard_Add_AnalogInputChannel( 12, TArduinoAnalogInputChannel,  'I2.7', 'I2_7', 'A12' )] // A12
+    [ArduinoBoard_Add_AnalogInputChannel( 13, TArduinoAnalogInputChannel,  'I2.8', 'I2_8', 'A13' )] // A13
+    [ArduinoBoard_Add_AnalogInputChannel( 14, TArduinoAnalogInputChannel,  'I2.9', 'I2_9', 'A14' )] // A14
+    [ArduinoBoard_Add_AnalogInputChannel( 15, TArduinoAnalogInputChannel,  'I2.10', 'I2_10', 'A15' )] // A15
+    AnalogInput : TArduinoAnalogInputChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

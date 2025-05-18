@@ -1,0 +1,60 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoLoRaElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLoRaElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(LoRa)' )]
+  TArduinoLoRaElementBasic : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Send Packet' )]
+  [ArduinoClass( 'Mitov::MitovLoRaSendPacket' )]
+  +TArduinoLoRaElementSendPacket : TArduinoLoRaElementBasic
+
+    [OWPinGroup( TArduinoLoRaElementSendPacket )]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+
+    [ValueRange( 0, $FF )]
+    Address : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoLoRaBasicRFM_Extender : Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteCharTextSourcePin
+
+    [ArduinoChangeOnlyPin]
+    SignalStrengthOutputPin : TOWArduinoIntegerSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateFrequency' )]
+    Frequency : Single = 915.0
+
+    [ValueRange( 0, $FF )]
+    MaxSendQueue : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoLoRaBasicRFM : TArduinoComponent, TArduinoLoRaBasicRFM_Extender
+
+    [OWPrimaryPin]
+    InterfaceOutputPin : TOWArduinoSPISourcePin
+
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoExclude]
+    [ArduinoInterruptRaising( '_Interrupt', True, 'InterruptHandler' )]
+    [ArduinoDirectPinTemplate]
+    InterruptInputPin : TOWArduinoDigitalInputOptionalInterruptSinkPin
+
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoSPI( 0 )]
+  *TArduinoLoRaBasicRFMShield : TArduinoShield, TArduinoLoRaBasicRFM_Extender, IStandardShield;
+//---------------------------------------------------------------------------
+; // Mitov

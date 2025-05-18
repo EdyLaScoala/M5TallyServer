@@ -1,0 +1,51 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'DSTIKE' )]
+  TDSTIKECategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TDSTIKECategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TDSTIKEESP8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Category( TDSTIKEESP8266Category )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:nodemcuv2' )]
+  TArduinoESP8266_DSTIKE_D_Duino_Basic_Board : TArduinoESP8266_NodeMCU_BasicAllChannels_Board
+
+    [AddItem( TArduinoESP8266_D_Duino_I2C )]
+    I2CChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<3, uint8_t, 60 >' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DisplaySSD1306NoReset<Mitov::DigitalPin_NoImplementation<55>>' )]
+  +TArduinoESP8266DDuinoSSD1306Display : TArduinoDisplaySSD1306BasicShieldDisplayModuleI2C_Up;
+//---------------------------------------------------------------------------
+  [Name( 'D-Duino V2' )]
+  [ParentImage( TDSTIKECategory )]
+  +TArduinoESP8266_DSTIKE_D_Duino_V2_Board : TArduinoESP8266_DSTIKE_D_Duino_Basic_Board
+
+    [AddItem( TArduinoESP8266DDuinoSSD1306Display )]
+    Modules
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<3, uint8_t, 60 >' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DisplaySSD1306NoReset<Mitov::DigitalPin_NoImplementation<55>>' )]
+  +TArduinoESP8266DDuinoSH1106Display : TArduinoDisplaySH1106BasicShieldDisplayModuleI2C;
+//---------------------------------------------------------------------------
+  [Name( 'D-Duino-B V2' )]
+  +TArduinoESP8266_DSTIKE_D_Duino_B_V2_Board : TArduinoESP8266_DSTIKE_D_Duino_Basic_Board
+
+    [AddItem( TArduinoESP8266DDuinoSH1106Display )]
+    Modules
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,37 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoMQTTTopics )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(MQTT Topics)' )]
+  TArduinoMQTTBasicTopic : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Text Topic' )]
+  [ArduinoClass( 'Mitov::ArduinoMQTTClientTextTopic' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoVariable( Boolean, 'FInitialValueSent' )]
+  [ArduinoVariable( Boolean, 'FSubscribed' )]
+  +TArduinoMQTTTextTopic : TArduinoMQTTBasicTopic
+
+    [OWPinGroup( TArduinoMQTTTextTopic )]
+    InputPin : TOWArduinoStringSinkPin
+
+    [OWPinGroup( TArduinoMQTTTextTopic )]
+    OutputPin : TOWArduinoStringSourcePin
+
+    Enabled : Boolean = True
+    Topic : String = ''
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : String = ''
+
+    Retain : Boolean = True
+    SendDelivery : TArduinoMQTTDelivery = dcOnceOrLess
+
+    [OldName( 'ReciveDelivery' )]
+    ReceiveDelivery : TArduinoMQTTDelivery = dcOnceOrLess
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

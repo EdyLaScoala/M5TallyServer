@@ -1,0 +1,97 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoTexasInstrumentsADS1115Range : Enum
+
+    adsRange_6_144
+    adsRange_4_096
+    adsRange_2_048
+    adsRange_1_024
+    adsRange_0_512
+    adsRange_0_256
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsADS111XComparator' )]
+  TArduinoTexasInstrumentsADS111XComparator : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    Enabled : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    WindowMode : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    Latching : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    ActiveHigh : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [ArduinoUseBindingSetter( 'SetComparatorQueueSize' )]
+    QueueSize : Unsigned = 1
+
+    [ValueRange( -1.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    ThresholdHigh : Single = 0.9
+
+    [ValueRange( -1.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    ThresholdLow : Single = 0.1
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig' )]
+    UseAsReady : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TexasInstruments_ADS1115.h' )]
+  [ArduinoWebKeywords( 'ADS1115' )]
+  [Name( 'Texas Instruments ADC ADS1115 (I2C)' )]
+  [CreateName( 'ADS1115ADC' )]
+  [ArduinoClass( 'Mitov::TexasInstrumentsADS1115' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoTexasInstrumentsADS1115 : TArduinoClockedEnableFlexibleI2CComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [DesignRange( $48, $4B )]
+    Address  = $48
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    Range : TArduinoTexasInstrumentsADS1115Range = adsRange_2_048
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '128' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '475' )]
+    [PropertyListDesignValue( '860' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    SampleRate : Unsigned = 128
+
+    [ValueRange( 0, 3 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    InputIndex : Unsigned = 0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    SingleShot : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    Differential : Boolean = True
+
+    Comparator : TArduinoTexasInstrumentsADS111XComparator
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,132 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'GetDirection' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AValue' )]
+  TArduinoMicrochipMCP23008ChannelGetDirectionCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetPullUp' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AValue' )]
+  TArduinoMicrochipMCP23008ChannelGetPullUpCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetInvert' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AValue' )]
+  TArduinoMicrochipMCP23008ChannelGetInvertCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetValue' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AValue' )]
+  TArduinoMicrochipMCP23008ChannelGetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'SendOutput' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  TArduinoMicrochipMCP23008ChannelSendOutputCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'HasInputs' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  TArduinoMicrochipMCP23008ChannelHasInputsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Microchip_MCP23008_Channel' )]
+  [TArduinoMicrochipMCP23008ChannelGetDirectionCallChain]
+  [TArduinoMicrochipMCP23008ChannelGetPullUpCallChain]
+  [TArduinoMicrochipMCP23008ChannelGetInvertCallChain]
+  [TArduinoMicrochipMCP23008ChannelGetValueCallChain]
+  [TArduinoMicrochipMCP23008ChannelHasInputsCallChain]
+  [TArduinoMicrochipMCP23008ChannelSendOutputCallChain]
+  +TArduinoMicrochipMCP23008Channel : TArduinoMicrochipMCP230XX_Channel_Basic
+
+    [ArduinoVariableIfPinConnected_Parent( 'FModifiedValue' )]
+    InputPin
+    
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue
+    
+    [ArduinoUseBindingCheckSetter( 'Update_IsInverted' )]
+    [ArduinoVariableIfBinding_Parent( 'FModifiedInvertA' )]
+    IsInverted : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_IsOutput' )]
+    [ArduinoVariableIfBinding_Parent( 'FModifiedDirectionA' )]
+    IsOutput
+    
+    [ArduinoUseBindingCheckSetter( 'Update_IsPullUp' )]
+    [ArduinoVariableIfBinding_Parent( 'FModifiedPullUpA' )]
+    IsPullUp
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_MCP23008.h' )]
+  [ArduinoClass( 'Mitov::Microchip_MCP23008' )]
+  [CreateName( 'GPIO' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoLoopUpdateHardware]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedDirection', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedPullUp', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedInvert', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedValue', False )]
+  TArduinoMicrochipMCP23008_Basic : TArduinoComponent
+  
+    [ArduinoProcessChildParentVariables]
+    [AddItem( TArduinoMicrochipMCP23008Channel, 8 )]
+    [TArduinoMicrochipMCP23008ChannelGetDirectionCallChain]
+    [TArduinoMicrochipMCP23008ChannelGetPullUpCallChain]
+    [TArduinoMicrochipMCP23008ChannelGetInvertCallChain]
+    [TArduinoMicrochipMCP23008ChannelGetValueCallChain]
+    [TArduinoMicrochipMCP23008ChannelHasInputsCallChain]
+    [TArduinoMicrochipMCP23008ChannelSendOutputCallChain]
+    Channels : TArduinoDigitalGPIOChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2CNoSetHighBit' )]
+  TArduinoMicrochipMCP2300X_I2C : TArduinoMicrochipMCP23008_Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [DesignRange( $20, $27 )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $20
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP23008 GPIO (I2C)' )]
+  [ArduinoWebKeywords( 'Microchip MCP23008' )]
+  [OldName( 'TArduinoMicrochipMCP23008' )]
+  +TArduinoMicrochipMCP23008_I2C : TArduinoMicrochipMCP2300X_I2C;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_MCP230XX_SPI.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPISpeed_MCP230XX' )]
+  TArduinoMicrochipMCP230S0X_SPI : TArduinoMicrochipMCP23008_Basic
+
+    [OWPrimaryPin]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+
+    [DesignRange( $20, $27 )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $20
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP230S08 GPIO (SPI)' )]
+  [ArduinoWebKeywords( 'Microchip MCP230S08' )]
+  +TArduinoMicrochipMCP230S08_SPI : TArduinoMicrochipMCP230S0X_SPI;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP23009 GPIO (I2C)' )]
+  [ArduinoWebKeywords( 'Microchip MCP23009' )]
+  +TArduinoMicrochipMCP23009_I2C : TArduinoMicrochipMCP2300X_I2C;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP230S09 GPIO (SPI)' )]
+  [ArduinoWebKeywords( 'Microchip MCP230S09' )]
+  +TArduinoMicrochipMCP230S09_SPI : TArduinoMicrochipMCP230S0X_SPI;
+//---------------------------------------------------------------------------
+; // Mitov

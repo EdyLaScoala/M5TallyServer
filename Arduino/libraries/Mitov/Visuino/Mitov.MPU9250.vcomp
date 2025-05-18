@@ -1,0 +1,326 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoMPU9250Thermometer : TArduinoBasicEnabledThermometer
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerManagementReg1' )]
+    Enabled
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU9250FrameSynchronizationLocation : Enum
+
+    fslDisabled
+    fslThermometer
+    fslGyroscopeX
+    fslGyroscopeY
+    fslGyroscopeZ
+    fslAccelerometerX
+    fslAccelerometerY
+    fslAccelerometerZ
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPUFrameSynchronization' )]
+  *TArduinoMPUFrameSynchronization : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfigReg' )]
+    Location : TArduinoMPU9250FrameSynchronizationLocation = fslDisabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatenterruptPinAndBypassConfigRegNormal' )]
+    EnableInterrupt : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatenterruptPinAndBypassConfigRegNormal' )]
+    InterruptOnLowLevel : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU6050LowPowerMode' )]
+  TArduinoMPU9250LowPowerMode : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerManagementReg1' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerODRControlReg' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.24' )]
+    [PropertyListDesignValue( '0.49' )]
+    [PropertyListDesignValue( '0.98' )]
+    [PropertyListDesignValue( '1.95' )]
+    [PropertyListDesignValue( '3.91' )]
+    [PropertyListDesignValue( '7.81' )]
+    [PropertyListDesignValue( '15.63' )]
+    [PropertyListDesignValue( '31.25' )]
+    [PropertyListDesignValue( '62.50' )]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    SampleFrequency : Single = 0.24
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU9250MotionDetect' )]
+  *TArduinoMPU9250MotionDetect : TArduinoCodeEnabledPersistent
+
+    OutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMotionDetectReg' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMotionDetectReg' )]
+    CompareWithPreviousSample : Boolean = False
+
+    [ValueRange( 0, 1020 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMotionThresholdReg' )]
+    Threshold : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPUInterrupt' )]
+  TArduinoMPUInterrupt : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatenterruptPinAndBypassConfigRegNormal' )]
+    Inverted : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatenterruptPinAndBypassConfigRegNormal' )]
+    OpenDrain : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatenterruptPinAndBypassConfigRegNormal' )]
+    Latch : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateInteruptEnableReg' )]
+    OnFrameSync : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateInteruptEnableReg' )]
+    OnRawReady : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU9250Interrupt' )]
+  TArduinoMPU9250Interrupt : TArduinoMPUInterrupt
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateInteruptEnableReg' )]
+    OnMotion : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPUOptionalSelfTestSensor' )]
+  TArduinoMPU9250OptionalSelfTestSensor : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerConfigReg' )]
+    SelfTest : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU9250OptionalSelfTestQueuedSensor : TArduinoMPU9250OptionalSelfTestSensor
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroConfigReg' )]
+    SelfTest
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU9250AccelerometerRange : Enum
+
+    ar2g
+    ar4g
+    ar8g
+    ar16g
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU9250AccelerometerFilter : Enum
+
+      af_AB_1130Hz_AF_4KHz
+      af_AB_460Hz_AF_1KHz
+      af_AB_184Hz_AF_1KHz
+      af_AB_92Hz_AF_1KHz
+      af_AB_41Hz_AF_1KHz
+      af_AB_20Hz_AF_1KHz
+      af_AB_10Hz_AF_1KHz
+      af_AB_5Hz_AF_1KHz
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPUAccelerometer' )]
+  [ParentImage( TArduinoNavigationJY901_Accelerometer )]
+  TArduinoMPUXYZAccelerometer : TArduinoBasicXYZAccelerometerSensor
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerConfigReg' )]
+    FullScaleRange : TArduinoMPU9250AccelerometerRange = ar2g
+
+    X : TArduinoMPU9250OptionalSelfTestSensor
+    Y : TArduinoMPU9250OptionalSelfTestSensor
+    Z : TArduinoMPU9250OptionalSelfTestSensor
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU9250Accelerometer' )]
+  TArduinoMPU9250Accelerometer : TArduinoMPUXYZAccelerometer
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerConfig2Reg' )]
+    Filter : TArduinoMPU9250AccelerometerFilter = af_AB_1130Hz_AF_4KHz
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU9250GyroscopeRange : Enum
+
+    gr250dps
+    gr500dps
+    gr1000dps
+    gr2000dps
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPUGyroscope' )]
+  [ParentImage( TArduinoNavigationJY901_Gyroscope )]
+  TArduinoMPUXYZGyroscope : TArduinoBasicXYZSensor
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateGyroConfigReg' )]
+    FullScaleRange : TArduinoMPU9250GyroscopeRange = gr250dps
+
+    Units : TArduinoAngleUnits = auDegree
+    X : TArduinoMPU9250OptionalSelfTestQueuedSensor
+    Y : TArduinoMPU9250OptionalSelfTestQueuedSensor
+    Z : TArduinoMPU9250OptionalSelfTestQueuedSensor
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU9250Gyroscope' )]
+  TArduinoMPU9250Gyroscope : TArduinoMPUXYZGyroscope
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerManagementReg1' )]
+    Standby : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPUClockSource : Enum
+
+    mcsAutoSelect
+    mcsInternal
+    mcsGyroX
+    mcsGyroY
+    mcsGyroZ
+    mcsExt32K
+    mcsExt19M
+    mcsReset
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU9250GyroscopeThermometerFilter : Enum
+
+      gtf_GB_8800Hz_GF_32KHz_TB_4000Hz
+      gtf_GB_3600Hz_GF_32KHz_TB_4000Hz
+      gtf_GB_250Hz_GF_8KHz_TB_4000Hz
+      gtf_GB_184Hz_GF_1KHz_TB_188Hz
+      gtf_GB_92Hz_GF_1KHz_TB_98Hz
+      gtf_GB_41Hz_GF_1KHz_TB_42Hz
+      gtf_GB_20Hz_GF_1KHz_TB_20Hz
+      gtf_GB_10Hz_GF_1KHz_TB_10Hz
+      gtf_GB_5Hz_GF_1KHz_TB_5Hz
+      gtf_GB_3600Hz_GF_8KHz_TB_4000Hz
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPUAccelerometerGyroscope_Extender : Extender
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateClockSource' )]
+    ClockSource : TArduinoMPUClockSource = mcsAutoSelect
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+//  [ArduinoVariable( TypeInfo(Boolean), 'ClockInputPin_o_IsConnected' )]
+  TArduinoMPUAccelerometerGyroscopeI2C : TArduinoI2CClockedEnableComponent, TArduinoMPUAccelerometerGyroscope_Extender
+
+    [DesignRange( $68, $69 )]
+    Address : TArduinoUInt8 = $68
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU9250CompassMode : Enum
+  
+    cmSingleMeasurement
+    cm8Hz
+    cm100Hz
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU9250Compass' )]
+  [ParentImage( TArduinoNavigationJY901_Compass )]
+  TArduinoMPU9250Compass : TArduinoBasicXYZSensor
+
+    [ArduinoPinCall( 'Compass_ResetInputPin' )]
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    OverflowOutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateCompassControlReg' )]
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateCompassSelfTestReg' )]
+    SelfTest : Boolean = False
+
+    [ArduinoUseBindingSetter( 'SetCompassDirectAccess' )]
+    DirectAccess : Boolean = True
+//    Queue : Boolean                    read FQueue           write FQueue          default False;
+
+    [Name( '16 bit resolution' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateCompassControlReg' )]
+    HighResolution : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateCompassControlReg' )]
+    Mode : TArduinoMPU9250CompassMode = cm100Hz
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU9250_Extender : Extender
+
+    Accelerometer : TArduinoMPU9250Accelerometer
+    Gyroscope : TArduinoMPU9250Gyroscope
+    Compass : TArduinoMPU9250Compass
+    Thermometer : TArduinoMPU9250Thermometer
+    FrameSynchronization : TArduinoMPUFrameSynchronization
+    Interrupt : TArduinoMPU9250Interrupt
+    MotionDetect : TArduinoMPU9250MotionDetect
+    LowPowerMode : TArduinoMPU9250LowPowerMode
+    GyroscopeThermometerFilter : TArduinoMPU9250GyroscopeThermometerFilter = gtf_GB_250Hz_GF_8KHz_TB_4000Hz
+
+    [ValueRange( 1, 256 )]
+    [OWExcludeBindings]
+    SampleRateDivider : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_MPU9250.h' )]
+  [ArduinoClass( 'Mitov::MPU9250I2C' )]
+  [Name( 'Accelerometer Gyroscope Compass MPU9250 I2C' )]
+  [CreateName( 'AccelerometerGyroscopeCompass' )]
+  [ArduinoWebKeywords( 'MPU9250' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoMPU9250I2C : TArduinoMPUAccelerometerGyroscopeI2C, TArduinoMPU9250_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Orientation' )]
+  [CreateName( 'Orientation' )]
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_MPU9250.h' )]
+  [ArduinoClass( 'Mitov::MPU9250I2C' )] // <105, TwoWire, Wire>' )]
+  [ArduinoPinDefinePrefix( '_MITOV_MPU9250' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoBasicGyroscopeAccelerometerCompassModule : TArduinoEnabledShield, TArduinoMPU9250_Extender, TArduinoMPUAccelerometerGyroscope_Extender
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

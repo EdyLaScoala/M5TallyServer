@@ -1,0 +1,71 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Makerfocus' )]
+  TArduinoMakerfocusCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TArduinoMakerfocusCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TArduinoMakerfocusESP8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '16' )]
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  +TArduinoMakerfocus_ESP8266_OLED_Joystick_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '2' )]
+  [Name( 'LED 1' )]
+  [CreateName( 'LED 1' )]
+  +TArduinoMakerfocus_ESP8266_OLED_Joystick_LED1Module : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Makerfocus_ESP8266_OLED_Joystick.h' )]
+  [ArduinoClass( 'Mitov::Makerfocus_ESP8266_OLED_Joystick' )]
+  [ArduinoExcludeUnconnected]
+  [Name( 'Joystick' )]
+  [CreateName( 'Joystick' )]
+  [ParentImage( TArduinoEVIVENavigationModule )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  +TArduinoMakerfocus_ESP8266_OLED_Joystick_Module : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( 'Up', TOWArduinoDigitalInputChangeOnlySourcePin, '12' )]
+    [OWAddArduinoBoardDigitalPin( 'Down', TOWArduinoDigitalInputChangeOnlySourcePin, '13' )]
+    [OWAddArduinoBoardDigitalPin( 'Left', TOWArduinoDigitalInputChangeOnlySourcePin, '0' )]
+    [OWAddArduinoBoardDigitalPin( 'Press', TOWArduinoDigitalInputChangeOnlySourcePin, '14' )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266 OLED Joystick' )]
+  [Category( TArduinoMakerfocusESP8266Category )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:generic:baud=921600' )]
+  [ParentImage( TArduinoMakerfocusCategory )]
+  +TArduinoESP8266_Makerfocus_OLED_Joystick_Board : TArduinoESP8266_Basic_DefaultPins_NoI2C_Board
+
+    [AddItem( TArduinoESP8266DDuinoSSD1306Display )]
+    [AddItem( TArduinoMakerfocus_ESP8266_OLED_Joystick_LEDModule )]
+    [AddItem( TArduinoMakerfocus_ESP8266_OLED_Joystick_LED1Module )]
+    [AddItem( TArduinoMakerfocus_ESP8266_OLED_Joystick_Module )]
+    Modules
+
+    [AddItem( TArduinoESP8266_Generic_Reversed_I2C )]
+    I2CChannels
+
+    [ArduinoBoard_Add_RemappedChannel( 3,   0,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 4,   2,  'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 8,   15, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 9,   3,  'Digital(RX)' )]
+    [ArduinoBoard_Add_RemappedChannel( 10,  1,  'Digital(TX)' )]
+    Digital
+
+    [Name( 'Analog Input' )]
+    [ArduinoBoard_Add_AnalogInputChannels( 0, 1, TArduinoESP8266AnalogInputChannel, 'Analog Input' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

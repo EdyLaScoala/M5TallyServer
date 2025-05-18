@@ -1,0 +1,50 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'RGBDuino' )]
+  TArduinoRGBDuinoCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TArduinoRGBDuinoCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TArduinoRGBDuinoAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'RGB LED1' )]
+  [CreateName( 'RGB LED1' )]
+  [ArduinoTemplateParameter( 'C_PIN', '13' )]
+  TArduinoRGBDuino_RGBLed1 : TArduinoNeoPixelRGBLedBasicGBRLedModule;
+//---------------------------------------------------------------------------
+  [Name( 'RGB LED2' )]
+  [CreateName( 'RGB LED2' )]
+  [ArduinoTemplateParameter( 'C_PIN', '12' )]
+  TArduinoRGBDuino_RGBLed2 : TArduinoNeoPixelRGBLedBasicGBRLedModule;
+//---------------------------------------------------------------------------
+  [Name( 'RGBDuino UNO' )]
+  [Category( TArduinoRGBDuinoAVRCategory )]
+  [ParentImage( TArduinoRGBDuinoCategory )]
+  +TArduino_RGBDuino_UNO_Board : TArduino_AVR328_Basic_UNO_Board
+  
+    [AddItem( TArduinoMakerUnoButtonModule )]
+    [AddItem( TArduinoRGBDuino_RGBLed1 )]
+    [AddItem( TArduinoRGBDuino_RGBLed2 )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 2 )]
+    [ArduinoBoard_Add_ReservedChannel( 2, 'LED2)(Button' )]
+    [ArduinoBoard_Add_ReservedChannel( 3, 'LED3' )]
+    [ArduinoBoard_Add_ReservedChannel( 4, 'LED4' )]
+    [ArduinoBoard_Add_ReservedChannel( 5, 'LED5' )]
+    [ArduinoBoard_Add_ReservedChannel( 6, 'LED6' )]
+    [ArduinoBoard_Add_ReservedChannel( 7, 'LED7' )]
+    [ArduinoBoard_Add_ReservedChannel( 8, 'LED8)(Buzzer' )]
+    [ArduinoBoard_Add_ReservedChannel( 9, 'LED9' )]
+    [ArduinoBoard_Add_ReservedChannel( 10, 'LED10' )]
+    [ArduinoBoard_Add_ReservedChannel( 11, 'LED11)(SPI-MOSI' )]
+    [ArduinoBoard_Add_ReservedChannel( 12, 'RGB2)(SPI-MISO' )]
+    [ArduinoBoard_Add_ReservedChannel( 13, 'RGB1)(SPI-SCK' )]
+    [ArduinoBoard_Add_AllChannelsFrom( 14 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

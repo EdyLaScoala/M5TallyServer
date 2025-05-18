@@ -1,0 +1,315 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M0' )]
+  [Category( TAdafruitCategory )]
+  [AlternateCategory( TCortexM0Category )]
+  [ParentImage( TCortexM0Category )]
+  TAdafruitCortexM0Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M4' )]
+  [Category( TAdafruitCategory )]
+  [AlternateCategory( TCortexM4Category )]
+  [ParentImage( TCortexM4Category )]
+  TAdafruitCortexM4Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Feather' )]
+  [Category( TAdafruitCategory )]
+  TAdafruitFeatherCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TAdafruitCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TAdafruitEPS8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Nordic' )]
+  [Category( TAdafruitCategory )]
+  [AlternateCategory( TNordicCategory )]
+  [ParentImage( TNordicCategory )]
+  TAdafruitNordicCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TAdafruitCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TAdafruitEPS32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ATmega32U4' )]
+  [Category( TAdafruitCategory )]
+  [AlternateCategory( TATmega32U4Category )]
+  [ParentImage( TATmega32U4Category )]
+  TAdafruitATmega32U4Category : TClassCategory;
+//---------------------------------------------------------------------------
+  ['{04F31954-CA63-41D0-8E42-6F5C57198CAE}']
+  IFeatherWingShield : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IFeatherWingShield )]
+  TArduinoAdafruitFeatherWings : TArduinoShields;
+//---------------------------------------------------------------------------
+  [Name( 'Radio' )]
+  [CreateName( 'Radio' )]
+  [ArduinoClass( 'Mitov::MitovLoRaRFM69Shield' )]
+  [ArduinoExcludeUnconnected]
+  TArduinoBasicFeatherM0RFM69Module : TArduinoLoRaRFM69BasicShield;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_PIN_CS', '8' )]
+  [ArduinoTemplateParameter( '1_PIN_RST', '4' )]
+  [ArduinoTemplateParameter( '2_PIN_INT', '3' )]
+  TArduinoFeatherM0RFM9XModule : TArduinoBasicM0RFM9XModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_PIN_CS', '8' )]
+  [ArduinoTemplateParameter( '1_PIN_RST', '4' )]
+  [ArduinoTemplateParameter( '2_PIN_INT', '7' )]
+  TArduinoFeather32u4RFM9XModule : TArduinoBasicM0RFM9XModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_PIN_CS', '8' )]
+  [ArduinoTemplateParameter( '1_PIN_RST', '4' )]
+  [ArduinoTemplateParameter( '2_PIN_INT', '3' )]
+  TArduinoFeatherM0RFM69Module : TArduinoBasicFeatherM0RFM69Module;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_PIN_CS', '8' )]
+  [ArduinoTemplateParameter( '1_PIN_RST', '4' )]
+  [ArduinoTemplateParameter( '2_PIN_INT', '7' )]
+  TArduinoFeather32u4RFM69Module : TArduinoBasicFeatherM0RFM69Module;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitFeather_WingsExtender : Extender
+
+    [ComponentEditorEntryDesign( 'Add &Wings ...' )]
+    [Name( 'Wings' )]
+    Shields : TArduinoAdafruitFeatherWings
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_feather_m0')]
+  [ArduinoDefine( 'VISUINO_FEATHER_M0_BASIC' )]
+  [Category( TAdafruitCortexM0Category )]
+  [Category( TAdafruitFeatherCategory )]
+  [ArduinoInclude( 'Mitov_ShieldPins_AdafruitFeather_Mx.h' )]
+  TArduinoAdafruitFeatherM0_Common_Board : TArduinoSamdBasicBoard, TArduinoAdafruitFeather_WingsExtender
+  
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 0,  1, TArduinoBasicDigitalPWMSerial1InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 1,  1, TArduinoBasicDigitalPWMSerial1InterruptChannel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 5,  2, TArduinoDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 9,  7, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16, 10, 3, TArduinoDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19, 13, 1, TArduinoDigitalPWMInterruptChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 10, 14, 0, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel, 'Analog Output[ 0 ]/Digital' )]
+    
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9, 15, 1, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 8, 16, 2, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 7, 17, 3, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 6, 18, 4, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 5, 19, 5, 1, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 20, 1, TArduinoDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 21, 1, TArduinoDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2, 22, 1, TArduinoDigitalPWMSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3, 23, 1, TArduinoDigitalPWMSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4, 24, 1, TArduinoDigitalPWMSPI0InterruptChannel, 'Digital(SPI-SCK)' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+     
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Feather M0 Basic' )]
+  +TArduinoAdafruitFeatherM0BasicBoard : TArduinoAdafruitFeatherM0_Common_Board;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Feather M0 RFM95/RFM96 LoRa Radio' )]
+  +TArduinoAdafruitFeatherM0_RFM95_RFM96_Board : TArduinoAdafruitFeatherM0_Common_Board
+ 
+    [AddItem( TArduinoFeatherM0RFM9XModule )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+  [OldName( 'Adafruit Feather M0 RFM69 LoRa Radio' )]
+  [Name( 'Adafruit Feather M0 RFM69 Radio' )]
+  +TArduinoAdafruitFeatherM0_RFM69_Board : TArduinoAdafruitFeatherM0_Common_Board
+ 
+    [AddItem( TArduinoFeatherM0RFM69Module )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'adafruit:avr:feather32u4')]
+  [ArduinoDefine( 'VISUINO_FEATHER_32U4_BASIC' )]
+  [Category( TAdafruitATmega32U4Category )]
+  [Category( TAdafruitFeatherCategory )]
+  [ArduinoInclude( 'Mitov_ShieldPins_AdafruitFeather_32u4.h' )]
+  TArduinoAdafruitFeather32u4_Common_Board : TArduino_32u4_BasicHIDBasicBoard, TArduinoAdafruitFeather_WingsExtender
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  0,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 2,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 3,  1, TArduinoDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14, 5,  1, TArduinoDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 6, 7, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 9, 9, 1, TArduinoCombinedAnalogDigitalPWMChannel, 'Digital[ 9 ]/AnalogIn[ 9 ](Battery)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 17, 10, 10, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18, 11, 1, TArduinoDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 12, 11, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20, 13, 1, TArduinoDigitalPWMChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3, 14, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5, 15, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4, 16, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 11, 18, 0, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 10,  19, 1, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9,  20, 2, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 8,  21, 3, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 7,  22, 4, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 6,  23, 5, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Feather 32u4 Basic' )]
+  [ParentImage( TAdafruitFeatherCategory )]
+  +TArduinoAdafruitFeather32u4BasicBoard : TArduinoAdafruitFeather32u4_Common_Board;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Feather 32u4 RFM95/RFM96 LoRa Radio' )]
+  +TArduinoAdafruitFeather32u4_RFM95_RFM96_Board : TArduinoAdafruitFeather32u4_Common_Board
+ 
+    [AddItem( TArduinoFeather32u4RFM9XModule )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+  [OldName( 'Adafruit Feather 32u4 RFM69 LoRa Radio' )]
+  [Name( 'Adafruit Feather 32u4 RFM69 Radio' )]
+  +TArduinoAdafruitFeather32u4_RFM69_Board : TArduinoAdafruitFeather32u4_Common_Board
+ 
+    [AddItem( TArduinoFeather32u4RFM69Module )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Feather HUZZAH ESP8266' )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:huzzah' )]
+  [Category( TAdafruitEPS8266Category )]
+  [Category( TAdafruitFeatherCategory )]
+  [ArduinoInclude( 'Mitov_ShieldPins_AdafruitFeather_ESP8266.h' )]
+  +TArduinoESP8266_Feather_HUZZAH_Board : TArduinoESP8266_Basic_DefaultPins_Analog_Board, TArduinoAdafruitFeather_WingsExtender
+
+    [ArduinoBoard_Add_ReservedChannel(  16,  0,      'Digital(LED)', True )]
+    [ArduinoBoard_Add_ReservedChannel(  1,   1,      'Digital(TX0)', True )]
+    [ArduinoBoard_Add_ReservedChannel(  14,  2,      'Digital(TX1)', True )]
+    [ArduinoBoard_Add_ReservedChannel(   2,  3,      'Digital(RX0)', True )]
+    [ArduinoBoard_Add_ReservedShieldChannels( 12,  4,  1,  'Digital', True )]
+    [ArduinoBoard_Add_ReservedShieldChannels( 13,  5,  1,  'Digital', True )]
+    [ArduinoBoard_Add_ReservedChannel(  3,  12,     'Digital(SPI-MISO)', True )]
+    [ArduinoBoard_Add_ReservedChannel(  4,  13,     'Digital(SPI-MOSI)(RX2)', True )]
+    [ArduinoBoard_Add_ReservedChannel(  5,  14,     'Digital(SPI-SCK)', True )]
+    [ArduinoBoard_Add_ReservedChannel(  17, 15,     'Digital(TX2)', True )]
+    [ArduinoBoard_Add_ReservedChannel(  15, 16,     'Digital', True )]
+    [Name( 'Channels' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TAdafruitEPS32Category )]
+  [Category( TAdafruitFeatherCategory )]
+  [Name( 'Adafruit Feather HUZZAH32' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:featheresp32:FlashFreq=80,UploadSpeed=921600,DebugLevel=none,PartitionScheme=default' )]
+  [ArduinoInclude( 'Mitov_ShieldPins_AdafruitFeather_ESP32.h' )]
+  +TArduinoESP32_Feather_HUZZAH32_Board : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard, TArduinoAdafruitFeather_WingsExtender
+  
+    [ArduinoBoard_Add_ReservedChannel(  6, 4 )]
+    [ArduinoBoard_Add_ReservedChannel(  5, 5 )]
+    [ArduinoBoard_Add_ReservedChannel( 19, 12 )]
+    [ArduinoBoard_Add_ReservedChannel( 20, 13 )]
+    [ArduinoBoard_Add_ReservedChannel( 14, 14 )]
+    [ArduinoBoard_Add_ReservedChannel( 16, 15 )]
+    [ArduinoBoard_Add_ReservedChannel(  2, 16 )]
+    [ArduinoBoard_Add_ReservedChannel(  1, 17 )]
+    [ArduinoBoard_Add_ReservedChannel(  4, 18 )]
+    [ArduinoBoard_Add_ReservedChannel(  3, 19 )]
+    [ArduinoBoard_Add_ReservedChannel(  0, 21 )]
+    [ArduinoBoard_Add_ReservedChannel( 13, 22 )]
+    [ArduinoBoard_Add_ReservedChannel( 12, 23 )]
+    [ArduinoBoard_Add_ReservedChannel( 11, 25 )]
+    [ArduinoBoard_Add_ReservedChannel( 10, 26 )]
+    [ArduinoBoard_Add_ReservedChannel( 18, 27 )]
+    [ArduinoBoard_Add_ReservedChannel( 15, 32 )]
+    [ArduinoBoard_Add_ReservedChannel( 17, 33 )]
+    [ArduinoBoard_Add_ReservedChannel(  9, 34 )]
+    [ArduinoBoard_Add_ReservedChannel(  7, 36 )]
+    [ArduinoBoard_Add_ReservedChannel(  8, 39 )]
+    [Name( 'Channels' )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Feather 328P' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:feather328p' )]
+  [Category( TAdafruitAVRCategory )]
+  [Category( TAdafruitFeatherCategory )]
+  [ArduinoInclude( 'Mitov_ShieldPins_AdafruitFeather_328P.h' )]
+  +TArduino_Feather_328P_Board : TArduino_AVR328_Basic_DigitalChannels_Board, TArduinoAdafruitFeather_WingsExtender
+
+    [ArduinoBoard_Add_ReservedChannel( 0, 7 )]
+    [ArduinoBoard_Add_ReservedChannel( 1, 1 )]
+    [ArduinoBoard_Add_ReservedChannel( 2, 0 )]
+    [ArduinoBoard_Add_ReservedChannel( 3, 12 )]
+    [ArduinoBoard_Add_ReservedChannel( 4, 11 )]
+    [ArduinoBoard_Add_ReservedChannel( 5, 13 )]
+    
+    [ArduinoBoard_Add_AnalogInputChannels( 6, 2, TArduinoAnalogOptionalAsDigitalInputChannel )]
+    
+    [ArduinoBoard_Add_ReservedChannel( 8, 17 )]
+    [ArduinoBoard_Add_ReservedChannel( 9, 16 )]
+    [ArduinoBoard_Add_ReservedChannel( 10, 15 )]
+    [ArduinoBoard_Add_ReservedChannel( 11, 14 )]
+    
+    [ArduinoBoard_Add_ReservedChannel( 12, 18 )]
+    [ArduinoBoard_Add_ReservedChannel( 13, 19 )]
+    [ArduinoBoard_Add_ReservedChannel( 14, 5 )]
+    [ArduinoBoard_Add_ReservedChannel( 15, 6 )]
+    [ArduinoBoard_Add_ReservedChannel( 16, 9 )]
+    [ArduinoBoard_Add_ReservedChannel( 17, 10 )]
+    [ArduinoBoard_Add_ReservedChannel( 18, 2 )]
+    [ArduinoBoard_Add_ReservedChannel( 19, 3 )]
+    [ArduinoBoard_Add_ReservedChannel( 20, 4 )]    
+    [Name( 'Channels' )]
+    Digital
+
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Feather nRF52' )]
+  [ArduinoBoardCompileParams( 'sandeepmistry:nRF5:Generic_nRF52832' )]
+  [Category( TAdafruitNordicCategory )]
+  [Category( TAdafruitFeatherCategory )]
+  [ArduinoInclude( 'Mitov_ShieldPins_AdafruitFeather_RF52.h' )]
+  +TArduino_Feather_RF52_Board : TArduino_Basic_nRF5_Board, TArduinoAdafruitFeather_WingsExtender
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 20, 1, TArduinoBasicDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 6,  1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2, 8,  1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3, 14, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4, 13, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5, 12, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  6, 29, 5, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  7, 28, 4, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  8,  5, 3, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  9,  4, 2, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 10,  3, 1, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 11,  2, 0, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 25, 1, TArduinoBasicDigitalPWMI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 26, 1, TArduinoBasicDigitalPWMI2C0Channel, 'Digital(I2C-SCL)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14, 27, 1, TArduinoBasicDigitalPWMChannel )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  15, 30, 6, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  16, 31, 7, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17, 11, 1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18, 7, 1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19, 15, 1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20, 16, 1, TArduinoBasicDigitalPWMChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+; // Mitov

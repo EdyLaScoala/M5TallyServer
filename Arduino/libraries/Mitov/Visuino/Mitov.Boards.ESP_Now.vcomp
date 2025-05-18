@@ -1,0 +1,270 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'const uint8_t *', 'AMac' )]
+  [ArduinoPopulatedCallChainParameter( 'const uint8_t *', 'AIncomingData' )]
+  [ArduinoPopulatedCallChainParameter( 'int', 'ALen' )]
+  [Name( 'ReceivedMessage' )]
+  TArduino_ESPNow_ReceivedMessage_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'const uint8_t *', 'AMac' )]
+  [ArduinoPopulatedCallChainParameter( 'bool', 'ASuccess' )]
+  [Name( 'DataSent' )]
+  TArduino_ESPNow_DataSent_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ACount' )]
+  [Name( 'GetPeeredCount' )]
+  TArduino_ESPNow_GetPeeredCount_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ACount' )]
+  [Name( 'GetMinCount' )]
+  TArduino_ESPNow_GetMinCount_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ACount' )]
+  [ArduinoPopulatedCallChainParameter( 'bool', 'AIncludeEncrypted' )]
+  [Name( 'ReleaseFirstCount' )]
+  TArduino_ESPNow_ReleaseFirstCount_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'void *', 'AExceptInstance' )]
+  [Name( 'DecreasePairConts' )]
+  TArduino_ESPNow_DecreasePairCont_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'UnpairAll' )]
+  TArduino_ESPNow_UnpairAll_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'UpdateEncryption' )]
+  TArduino_ESPNow_UpdateEncryption_CallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+//  TArduino_ESPNow_Device_Elements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+//  [PersistentCollection( TArduino_ESPNow_Device_Elements )]
+//  [ArduinoDeclaredClass]
+//  [ArduinoOwnerTemplateTypeAndReference]
+//  [ArduinoHelpPostfix( '(ESP-Now)' )]
+//  TArduino_ESPNow_BasicDeviceElement_Basic : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+//  [Name( 'Device Exists' )]
+//  [CreateName( 'Device Exists' )]
+//  [ArduinoClass( 'Mitov::TArduino_ESPNow_BasicDeviceElement_DeviceExists' )]
+//  +TArduino_ESPNow_BasicDeviceElement_DeviceExists : TArduino_ESPNow_BasicDeviceElement_Basic
+  
+//    ClockInputPin : TOWArduinoClockSinkPin
+    
+//    [OWPinGroup( TArduino_ESPNow_BasicDeviceElement_DeviceExists )]
+//    OutputPin : TOWArduinoDigitalSourcePin
+    
+//  ;
+//---------------------------------------------------------------------------
+//  [ArduinoDeclaredClass]
+//  TArduino_ESPNow_BasicMessageElement : TArduino_ESPNow_BasicElement
+
+//    [Name( 'MAC Address' )]
+//    MACAddress : TArduinoMacAddress
+//    ID : Unsigned = 0
+
+//  ;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::TArduino_ESPNow_SendMessageElement' )]
+//  [Name( 'Send Message' )]
+//  [CreateName( 'Send Message' )]
+//  [ParentImage( TArduinoCanBusSendMessageElement )]
+//  +TArduino_ESPNow_SendMessageElement : TArduino_ESPNow_BasicMessageElement
+
+//    [OWPinGroup( TArduino_ESPNow_SendMessageElement]
+//    [OWPrimaryPin]
+//    [ArduinoPinIsConnectedFlag]
+//    ClockInputPin : TOWArduinoClockSinkPin
+
+//    [OWPinGroup( TArduino_ESPNow_SendMessageElement]
+//    MessageInputPin : TOWArduinoByteSinkPin
+
+//    InitialValue : TArduinoBinaryNoBindingPersistent
+
+//  ;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::TArduino_ESPNow_ReceiveMessageElement' )]
+//  [Name( 'Receive Message' )]
+//  [CreateName( 'Receive Message' )]
+//  +TArduino_ESPNow_ReceiveMessageElement : TArduino_ESPNow_BasicMessageElement
+
+//    [OWPinGroup( TArduino_ESPNow_ReceiveMessageElement]
+//    OutputPin : TOWArduinoByteCharTextSourcePin
+    
+//  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduino_ESPNow_Received' )]
+  [ParentImage( TArduinoCanBusReceiveMessageElement )] 
+  *TArduino_ESPNow_Received : TArduinoCodePersistent
+
+    MACAddressOutputPin : TOWArduinoStringSourcePin
+    OutputPin : TOWArduinoByteCharTextSourcePin
+    CompletedOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoHelpPostfix( '(ESP-Now)' )]
+  [TArduino_ESPNow_ReceivedMessage_CallChain]
+  [TArduino_ESPNow_DataSent_CallChain]
+  [TArduino_ESPNow_GetMinCount_CallChain]
+  [TArduino_ESPNow_GetPeeredCount_CallChain]
+  [TArduino_ESPNow_DecreasePairCont_CallChain]
+  [TArduino_ESPNow_ReleaseFirstCount_CallChain]
+  [TArduino_ESPNow_UnpairAll_CallChain]
+  TArduino_ESPNow_Elements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::TArduino_ESPNow_OptionalChannel' )]
+//  TArduino_ESPNow_OptionalChannel : TArduinoCodeDisabledPersistent
+    
+    
+//    Number : Unsigned = 1
+    
+//  ;
+//---------------------------------------------------------------------------
+  [TArduino_ESPNow_DataSent_CallChain]
+  [TArduino_ESPNow_GetMinCount_CallChain]
+  [TArduino_ESPNow_GetPeeredCount_CallChain]
+  [TArduino_ESPNow_DecreasePairCont_CallChain]
+  [TArduino_ESPNow_ReleaseFirstCount_CallChain]
+  [TArduino_ESPNow_UnpairAll_CallChain]
+  [ArduinoOptionalVariable( Unsigned, 5, 'FPairedCount', 0 )]
+  TArduino_ESPNow_DeviceSending_Extender : Extender
+
+    [OWPinGroup( TArduino_ESPNow_Elements )]
+    [ArduinoVariableIfPinConnected( 'FPairedCount' )]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+    
+    [OWPinGroup( TArduino_ESPNow_Elements )]
+    PeeredOutputPin : TOWArduinoDigitalSourcePin
+    
+    SuccededOutputPin : TOWArduinoClockSourcePin
+    FailedOutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduino_ESPNow_Encryption' )]
+  TArduino_ESPNow_Encryption : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateEncryptionProp' )]
+    Enabled
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateEncryptionProp' )]
+    CanDisconnect : Boolean = False
+    
+    [ValueRange( 16, 16 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateEncryptionProp' )]
+    [NamePostfix( '(LMK)' )]
+    Key : TArduinoBinaryPersistent
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduino_ESPNow_DeviceSendiing' )]
+  [ParentImage( TArduinoCanBusSendMessageElement )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoStart]
+  [TArduino_ESPNow_UpdateEncryption_CallChain]
+  TArduino_ESPNow_DeviceSendiing : TArduinoCodeEnabledPersistent, TArduino_ESPNow_DeviceSending_Extender;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduino_ESPNow_Elements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(ESP-Now)' )]
+  TArduino_ESPNow_BasicDevice : TArduinoBasicNamedExludePersistent
+ 
+    Encryption : TArduino_ESPNow_Encryption
+  
+
+//    [OWPinGroup( TArduino_ESPNow_BasicDevice )]
+//    [ArduinoVariableIfPinConnected( 'FPairedCount' )]
+//    [ArduinoSerialPortAdapter]
+//    InputPin : TOWArduinoDataMultiSinkPin
+
+//    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+//    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Device(Peer)' )]
+  [CreateName( 'Device' )]
+  [ArduinoClass( 'Mitov::TArduino_ESPNow_Device' )]
+  [TArduino_ESPNow_ReceivedMessage_CallChain]
+  [TArduino_ESPNow_DataSent_CallChain]
+  [TArduino_ESPNow_GetMinCount_CallChain]
+  [TArduino_ESPNow_GetPeeredCount_CallChain]
+  [TArduino_ESPNow_DecreasePairCont_CallChain]
+  [TArduino_ESPNow_ReleaseFirstCount_CallChain]
+  [TArduino_ESPNow_UnpairAll_CallChain]
+  +TArduino_ESPNow_Device : TArduino_ESPNow_BasicDevice
+
+    [OWPinGroup( TArduino_ESPNow_Device )]
+    OutputPin : TOWArduinoByteCharTextSourcePin
+    
+    Sendiing : TArduino_ESPNow_DeviceSendiing
+    
+    PairedOutputPin : TOWArduinoDigitalSourcePin
+
+    [Name( 'MAC Address' )]
+    [ExtendDisplayName( ' (', ')' )]
+    MACAddress : TArduinoMacAddress
+    
+//    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+//    Elements : TArduino_ESPNow_Device_Elements
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Broadcast' )]
+  [CreateName( 'Broadcast' )]
+  [ArduinoClass( 'Mitov::TArduino_ESPNow_Broadcast' )]
+  +TArduino_ESPNow_Broadcast : TArduino_ESPNow_BasicDevice, TArduino_ESPNow_DeviceSending_Extender;
+//---------------------------------------------------------------------------
+//  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+//  [Name( 'InUsage' )]
+  //Arduino_ESPNowInUsageCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ESPNow.h' )]
+  [ArduinoClass( 'Mitov::TArduino_ESPNow' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+//  [Arduino_ESPNowInUsageCallChain]
+  [ArduinoIsIncluded]
+  [ArduinoInit]
+  *TArduino_Basic_ESPNow : TArduinoCodeEnabledPersistent
+  
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [ValueRange( 16, 16 )]
+    [ArduinoUseBindingCheckSetter( 'UpdatePrimaryKey' )]
+    [NamePostfix( '(PMK)' ))]
+    PrimaryKey : TArduinoBinaryPersistent
+    
+//    [NamePostfix( 'PMK' ))]
+//    PrimaryEncryption : TArduino_ESPNow_Encryption
+
+    Received : TArduino_ESPNow_Received
+    
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+//    [OldName( 'Devices' )]
+    Elements : TArduino_ESPNow_Elements
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduino_ESP32_ESPNow : TArduino_Basic_ESPNow
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart )]
+    VersionOutputPin : TOWArduinoUnsignedSourcePin
+  
+    [ArduinoUseBindingCheckSetter( 'UpdateWakeWindow' )]
+    [MaxValue( $FFFF )]
+    WakeWindow : Unsigned = $FFFF
+  
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'VersionOutputPin', 'Mitov::TypedPin_NoImplementation<112, uint32_t >' )]
+  [ArduinoTemplateParameter( 'WakeWindow', 'Mitov::ConstantProperty<119, uint32_t, 65535 >' )]
+  TArduino_ESP8266_ESPNow : TArduino_Basic_ESPNow;
+//---------------------------------------------------------------------------
+; // Mitov

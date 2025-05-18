@@ -1,0 +1,243 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Fill Screen' )]
+  [ArduinoClass( 'Mitov::GraphicsElementFillScreen' )]
+  +TArduinoMonochromeGraphicsElementFillScreen : TArduinoMonochromeGraphicsElementColored
+
+    Color = tmcBlack
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMonochromeGraphicsPositionedColored : TArduinoMonochromeGraphicsElementColored
+
+    X : Integer = 0
+    Y : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Scroll' )]
+  [ArduinoClass( 'Mitov::GraphicsElementScroll' )]
+  +TArduinoMonochromeGraphicsScroll : TArduinoMonochromeGraphicsPositionedColored
+
+    Color = tmcBlack
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoGraphicsDrawSized_Extender : Extender
+  
+    Width : Unsigned = 40
+    Height : Unsigned = 20
+    Centered : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMonochromeGraphicsDrawSized : TArduinoMonochromeGraphicsPositionedFillColored, TArduinoGraphicsDrawSized_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Rectangle' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawRectangle' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  +TArduinoMonochromeGraphicsDrawRectangle : TArduinoMonochromeGraphicsDrawSized;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Ellipse' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawEllipse' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  TArduinoGraphicsDrawEllipse_Extender : Extender;
+//---------------------------------------------------------------------------
+  +TArduinoMonochromeGraphicsDrawEllipse : TArduinoMonochromeGraphicsDrawSized, TArduinoGraphicsDrawEllipse_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoGraphicsCornerSize' )]
+  TArduinoGraphicsCornerSize : TArduinoCodePersistent
+
+    [ValueRange( 0, 1000 )]
+    X : Unsigned = 10
+
+    [ValueRange( 0, 1000 )]
+    Y : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Round Rectangle' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawRoundRectangle' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  TArduinoGraphicsDrawRoundRectangle_Extender : Extender
+
+    CornerSize : TArduinoGraphicsCornerSize
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Round Rectangle' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawRoundRectangle' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  +TArduinoMonochromeGraphicsDrawRoundRectangle : TArduinoMonochromeGraphicsDrawSized, TArduinoGraphicsDrawRoundRectangle_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Pixel' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawPixel' )]
+  [Category( ArduinoGraphicsPixelsToolbarCategory )]
+  +TArduinoMonochromeGraphicsDrawPixel : TArduinoMonochromeGraphicsPositionedColored;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Angled Line' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawAngledLine' )]
+  [Category( ArduinoGraphicsLinesToolbarCategory )]
+  TArduinoGraphicsDrawAngledLine_Extender : Extender
+
+    Begin : Integer = 0
+    End : Integer = 20
+    Angle : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoMonochromeGraphicsDrawAngledLine : TArduinoMonochromeGraphicsPositionedColored, TArduinoGraphicsDrawAngledLine_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Line' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawLine' )]
+  [Category( ArduinoGraphicsLinesToolbarCategory )]
+  TArduinoGraphicsDrawLine_Extender : Extender
+
+    Width : Unsigned = 40
+    Height : Unsigned = 20
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoMonochromeGraphicsDrawLine : TArduinoMonochromeGraphicsPositionedColored, TArduinoGraphicsDrawLine_Extender;
+//---------------------------------------------------------------------------
+  TArduinoGraphicsBasicPoints_Extender : Extender
+
+    Points : TArduinoGraphicsPoints
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Lines' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawLines' )]
+  [Category( ArduinoGraphicsLinesToolbarCategory )]
+  TArduinoGraphicsDrawLines_Extender : TArduinoGraphicsBasicPoints_Extender;
+//---------------------------------------------------------------------------
+  +TArduinoMonochromeGraphicsDrawLines : TArduinoMonochromeGraphicsPositionedColored, TArduinoGraphicsDrawLines_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Polygon' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawPolygon' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  TArduinoGraphicsDrawPolygon_Extender : TArduinoGraphicsBasicPoints_Extender;
+//---------------------------------------------------------------------------
+  +TArduinoMonochromeGraphicsDrawPolygon : TArduinoMonochromeGraphicsPositionedFillColored, TArduinoGraphicsDrawPolygon_Extender;
+//---------------------------------------------------------------------------
+  [Category( TTextToolbarCategory )]
+  [ArduinoSupportsGraphicsFontInfo]
+  [ArduinoInjectFont]
+//  [ArduinoMakeVariable_Parent( 'FCursorX' )]
+//  [ArduinoMakeVariable_Parent( 'FCursorY' )]
+  TArduinoGraphicsElementText_Extender : Extender
+
+    [ValueRange( 1, 10 )]
+    Size : Unsigned = 1
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoGraphicsTextElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Text' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawText' )]
+  TArduinoGraphicsElementDrawText_Extender : TArduinoGraphicsElementText_Extender
+
+    Text : String = ''
+    Wrap : Boolean = True
+
+    [Name( 'Use Code Page 437 Symbols' )]
+    UseCodePage437Symbols : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text Field' )]
+  [ArduinoClass( 'Mitov::GraphicsElementTextField' )]
+  TArduinoGraphicsElementTextField_Extender : TArduinoGraphicsElementText_Extender
+
+    [ArduinoPinConnectedAddPostfix( '_Clocked' )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoMonochromeGraphicsElementDrawText : TArduinoMonochromeGraphicsPositionedFillColored, TArduinoGraphicsElementDrawText_Extender;
+//---------------------------------------------------------------------------
+  TArduinoGraphicsElementBasicField_Extender : Extender
+
+    X : Integer = 0
+    Y : Integer = 0
+
+    AutoSize : Boolean = True
+    Wrap : Boolean = True
+
+    [Name( 'Use Code Page 437 Symbols' )]
+    UseCodePage437Symbols : Boolean = False
+
+    [ValueRange( 0, 1000 )]
+    Width : Unsigned = 6
+
+    HorizontalAlign : TArduinoTextHorizontalAlign = thaLeft
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMonochromeGraphicsElementBasicField : TArduinoMonochromeGraphicsElementColored, TArduinoGraphicsElementBasicField_Extender
+
+    FillColor : TArduinoMonochromeColor = tmcBlack
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoMonochromeGraphicsElementTextFeld : TArduinoMonochromeGraphicsElementBasicField, TArduinoGraphicsElementTextField_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Check Pixel' )]
+  [CreateName( 'Check Pixel' )]
+  [ArduinoClass( 'Mitov::GraphicsElementCheckPixel' )]
+  [Category( ArduinoGraphicsPixelsToolbarCategory )]
+  TArduinoGraphicsElementCheckPixel_Extender : Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'OPERATIONS', 'Mitov::MonochromeColorOperations' )]
+  [PersistentCollection( TArduinoMonochromeGraphicsElements )]
+  [ArduinoHelpPostfix( '(Monochrome Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_Monochrome.h' )]
+  +TArduinoMonochromeGraphicsElementCheckPixel : TArduinoGraphicsClockedPositionElement, TArduinoGraphicsElementCheckPixel_Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoGraphicsElementDrawGraphics_Extender : Extender
+
+    OutputPin : TOWArduinoGraphicsSourcePin
+
+    X : Integer = 0
+    Y : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Graphics' )]
+  [CreateName( 'Graphics' )]
+  [ArduinoClass( 'Mitov::GraphicsMonochromeElementDrawGraphics' )]
+  [PersistentCollection( TArduinoMonochromeGraphicsElements )]
+  [ArduinoHelpPostfix( '(Monochrome Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics_Monochrome.h' )]
+  +TArduinoMonochromeGraphicsElementDrawGraphics : TArduinoGraphicsClockedPositionElement, TArduinoGraphicsElementDrawGraphics_Extender
+
+    [ValueRange( 0.0, 1.0 )]
+    Threshold : Single = 0.5
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Scene' )]
+  [CreateName( 'Draw Scene' )]
+  [ArduinoClass( 'Mitov::GraphicsElementDrawScene' )]
+  [PersistentCollection( TArduinoMonochromeGraphicsElements )]
+  [ArduinoHelpPostfix( '(Monochrome Graphics)' )]
+  [ArduinoInclude( 'Mitov_Graphics.h' )]
+  [ArduinoSupportsSceneInfo]
+  +TArduinoMonochromeGraphicsElementScene : TArduinoMonochromeGraphicsElementBasicScene;
+//---------------------------------------------------------------------------
+; // Mitov

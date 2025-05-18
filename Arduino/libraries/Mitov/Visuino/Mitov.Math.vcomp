@@ -1,0 +1,1156 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ValueRange' )]
+  TArduinoIntegerValueRange : TArduinoCodePersistent
+
+    Min : Integer = -1000
+    Max : Integer = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ValueRange' )]
+  TArduinoAnalogValueRange : TArduinoCodePersistent
+
+    Min : Single = 0.0
+    Max : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ValueRange' )]
+  TArduinoUnsignedValueRange : TArduinoCodePersistent
+
+    Min : Unsigned = 0
+    Max : Unsigned = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::MinMaxValue' )]
+  [ArduinoVariable( Boolean, 'FPopulated' )]
+  TArduinoMinValue_Extender : Extender
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  TArduinoCommonUnsignedValueFilter : TArduinoCommonUnsignedFilter
+  
+    Value : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  TArduinoCommonValueOneMathFloatFilter : TArduinoCommonAnalogFilter
+
+    Value : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonValueZeroMathFloatFilter : TArduinoCommonValueOneMathFloatFilter
+
+    Value = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  TArduinoBasicAnalogUnaryOperation : TArduinoCommonAnalogFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation' )]
+  [Category( TArduinoIntegerMathFilterToolbarCategory )]
+  TArduinoBasicIntegerUnaryOperation : TArduinoCommonIntegerFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  TArduinoBasicUnsignedUnaryOperation : TArduinoCommonUnsignedFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoIntegerMathFilterToolbarCategory )]
+  TArduinoCommonValueOneMathIntegerFilter : TArduinoCommonIntegerFilter
+
+    Value : Integer = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonValueZeroMathIntegerFilter : TArduinoCommonValueOneMathIntegerFilter
+
+    Value = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  TArduinoCommonValueOneMathUnsignedFilter : TArduinoCommonUnsignedFilter
+
+    Value : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonValueZeroMathUnsignedFilter : TArduinoCommonValueOneMathUnsignedFilter
+    
+    Value = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  TArduinoMinValueBasicAnalog : TArduinoCommonAnalogFilter, TArduinoMinValue_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Category( TArduinoIntegerMathFilterToolbarCategory )]
+  TArduinoMinValueBasicInteger : TArduinoCommonIntegerFilter, TArduinoMinValue_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  TArduinoMinValueBasicUnsigned : TArduinoCommonUnsignedFilter, TArduinoMinValue_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Min Analog Value' )]
+  [CreateName( 'MinValue' )]
+  [ArduinoTemplateParameter( '0_BASE', 'Mitov::CompareType_Implementation_Smaller' )]
+  +TArduinoMinValueAnalog : TArduinoMinValueBasicAnalog;
+//---------------------------------------------------------------------------
+  [Name( 'Max Analog Value' )]
+  [CreateName( 'MaxValue' )]
+  [ArduinoTemplateParameter( '0_BASE', 'Mitov::CompareType_Implementation_Bigger' )]
+  +TArduinoMaxValueAnalog : TArduinoMinValueBasicAnalog;
+//---------------------------------------------------------------------------
+  [Name( 'Min Integer Value' )]
+  [CreateName( 'MinValue' )]
+  [ArduinoTemplateParameter( '0_BASE', 'Mitov::CompareType_Implementation_Smaller' )]
+  +TArduinoMinValueInteger : TArduinoMinValueBasicInteger;
+//---------------------------------------------------------------------------
+  [Name( 'Max Integer Value' )]
+  [CreateName( 'MaxValue' )]
+  [ArduinoTemplateParameter( '0_BASE', 'Mitov::CompareType_Implementation_Bigger' )]
+  +TArduinoMaxValueInteger : TArduinoMinValueBasicInteger;
+//---------------------------------------------------------------------------
+  [Name( 'Min Unsigned Value' )]
+  [CreateName( 'MinValue' )]
+  [ArduinoTemplateParameter( '0_BASE', 'Mitov::CompareType_Implementation_Smaller' )]
+  +TArduinoMinValueUnsigned : TArduinoMinValueBasicUnsigned;
+//---------------------------------------------------------------------------
+  [Name( 'Max Unsigned Value' )]
+  [CreateName( 'MaxValue' )]
+  [ArduinoTemplateParameter( '0_BASE', 'Mitov::CompareType_Implementation_Bigger' )]
+  +TArduinoMaxValueUnsigned : TArduinoMinValueBasicUnsigned;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::Limit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Limit Analog between Min and Max' )]
+  [CreateName( 'Limit' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  +TArduinoLimit : TArduinoCommonAnalogFilter
+
+    Min : Single = 0.0
+    Max : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Inverse<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Inverse Analog (Change Sign)' )]
+  [CreateName( 'Inverse' )]
+  +TArduinoInverse : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Abs<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Absolute Analog Value' )]
+  [CreateName( 'Abs' )]
+  +TArduinoAbs : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Square' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Square Analog' )]
+  [CreateName( 'Square' )]
+  +TArduinoSquareAnalog : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SquareRoot' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Square Root' )]
+  [CreateName( 'SquareRoot' )]
+  +TArduinoSquareRoot : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Log' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Natural Logarithm' )]
+  [CreateName( 'Log' )]
+  +TArduinoLog : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Log2' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Binary (Base-2) Logarithm' )]
+  [CreateName( 'Log2' )]
+  +TArduinoLog2 : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Log10' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Common (Base-10) Logarithm' )]
+  [CreateName( 'Log10' )]
+  +TArduinoLog10 : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Sine' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Sine of angle (Radians)' )]
+  [CreateName( 'Sine' )]
+  +TArduinoSine : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Cosine' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Cosine of angle (Radians)' )]
+  [CreateName( 'Cosine' )]
+  +TArduinoCosine : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::RadToDegrees' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Radians to Degrees' )]
+  [CreateName( 'RadToDegrees' )]
+  +TArduinoRadToDegrees : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::DegreesToRad' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Degrees to Radians' )]
+  [CreateName( 'DegreesToRad' )]
+  +TArduinoDegreesToRad : TArduinoBasicAnalogUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::AddValue<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Add Analog Value' )]
+  [CreateName( 'AddValue' )]
+  +TArduinoAddValue : TArduinoCommonValueZeroMathFloatFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SubtractValue<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+//  [ArduinoTemplateParameter( 'PARAM1', 'float' )]
+//  [ArduinoContructorParameter( '1.0f' )]
+  [Name( 'Subtract Analog Value' )]
+  [CreateName( 'SubtractValue' )]
+  +TArduinoSubtractValue : TArduinoCommonValueOneMathFloatFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SubtractFromValue<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Subtract From Analog Value' )]
+  [CreateName( 'SubtractFromValue' )]
+  +TArduinoSubtractFromValue : TArduinoCommonValueZeroMathFloatFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MultiplyByValue<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Multiply Analog By Value' )]
+  [CreateName( 'MultiplyByValue' )]
+  +TArduinoMultiplyByValue : TArduinoCommonValueOneMathFloatFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::RaiseToPower<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Raise To Power' )]
+  [CreateName( 'RaiseToPower' )]
+  +TArduinoRaiseToPower : TArduinoCommonValueOneMathFloatFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::DivideValue<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Divide Analog Value' )]
+  [CreateName( 'DivideValue' )]
+  +TArduinoDivideValue : TArduinoCommonValueOneMathFloatFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnlyThreshold' )]
+  [ArduinoContructorParameter( '0.0f' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'Analog Change Only' )]
+  [Category( TArduinoAnalogToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'float' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoAnalogChangeOnly : TArduinoCommonAnalogFilter
+
+    [MinValue( 0 )]
+    Threshold : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Inverse<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Inverse Integer (Change Sign)' )]
+  [CreateName( 'Inverse' )]
+  [RegisterComponent]
+  TArduinoIntegerInverse : TArduinoBasicIntegerUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Abs<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Absolute Integer Value' )]
+  [CreateName( 'Abs' )]
+  +TArduinoIntegerAbs : TArduinoBasicIntegerUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::AddValue<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Add Integer Value' )]
+  [CreateName( 'AddValue' )]
+  +TArduinoIntegerAddValue : TArduinoCommonValueZeroMathIntegerFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SubtractValue<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Subtract Integer Value' )]
+  [CreateName( 'SubtractValue' )]
+  +TArduinoIntegerSubtractValue : TArduinoCommonValueOneMathIntegerFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SubtractFromValue<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Subtract Integer From Value' )]
+  [CreateName( 'SubtractFromValue' )]
+  +TArduinoIntegerSubtractFromValue : TArduinoCommonValueZeroMathIntegerFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MultiplyByValue<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Multiply Integer By Value' )]
+  [CreateName( 'MultiplyByValue' )]
+  +TArduinoIntegerMultiplyByValue : TArduinoCommonValueOneMathIntegerFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::DivideValue<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Divide Integer Value' )]
+  [CreateName( 'DivideValue' )]
+  +TArduinoIntegerDivideValue : TArduinoCommonValueOneMathIntegerFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnlyThreshold' )]
+  [ArduinoContructorParameter( '0' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'Integer Change Only' )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'int32_t' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoIntegerChangeOnly : TArduinoCommonIntegerFilter
+
+    Threshold : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::AddValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Add Unsigned Value' )]
+  [CreateName( 'AddValue' )]
+  [RegisterComponent]
+  TArduinoUnsignedAddValue : TArduinoCommonValueZeroMathUnsignedFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SubtractValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Subtract Unsigned Value' )]
+  [CreateName( 'SubtractValue' )]
+  +TArduinoUnsignedSubtractValue : TArduinoCommonValueOneMathUnsignedFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::SubtractFromValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Subtract Unsigned From Value' )]
+  [CreateName( 'SubtractFromValue' )]
+  +TArduinoUnsignedSubtractFromValue : TArduinoCommonValueZeroMathUnsignedFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MultiplyByValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Multiply Unsigned By Value' )]
+  [CreateName( 'MultiplyByValue' )]
+  +TArduinoUnsignedMultiplyByValue : TArduinoCommonValueOneMathUnsignedFilter;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::DivideValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Divide Unsigned Value' )]
+  [CreateName( 'DivideValue' )]
+  +TArduinoUnsignedDivideValue : TArduinoCommonValueOneMathUnsignedFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnlyThreshold' )]
+  [ArduinoContructorParameter( '0' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'Unsigned Change Only' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'uint32_t' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoUnsignedChangeOnly : TArduinoCommonUnsignedFilter
+
+    Threshold : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MinLimit<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Min Limit Analog' )]
+  [CreateName( 'MinLimit' )]
+  [RegisterComponent]
+  TArduinoMinLimit : TArduinoCommonValueZeroMathFloatFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MaxLimit<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Max Limit Analog' )]
+  [CreateName( 'MaxLimit' )]
+  +TArduinoMaxLimit : TArduinoCommonValueOneMathFloatFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::Limit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Limit Integer between Min and Max' )]
+  [CreateName( 'Limit' )]
+  [Category( TArduinoIntegerMathFilterToolbarCategory )]
+  +TArduinoIntegerLimit : TArduinoCommonIntegerFilter
+
+    Min : Integer = -1000
+    Max : Integer = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MinLimit<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Min Limit Integer' )]
+  [CreateName( 'MinLimit' )]
+  +TArduinoIntegerMinLimit : TArduinoCommonValueOneMathIntegerFilter
+
+    Value = -1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MaxLimit<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Max Limit Integer' )]
+  [CreateName( 'MaxLimit' )]
+  +TArduinoIntegerMaxLimit : TArduinoCommonValueOneMathIntegerFilter
+
+    Value = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::Limit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Limit Unsigned between Min and Max' )]
+  [CreateName( 'Limit' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  +TArduinoUnsignedLimit : TArduinoCommonUnsignedFilter
+
+    Min : Unsigned = 0
+    Max : Unsigned = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MinLimit<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Min Limit Unsigned' )]
+  [CreateName( 'MinLimit' )]
+  +TArduinoUnsignedMinLimit : TArduinoCommonValueZeroMathUnsignedFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::UnaryOperation_Param1' )]
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::MaxLimit<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Max Limit Unsigned' )]
+  [CreateName( 'MaxLimit' )]
+  +TArduinoUnsignedMaxLimit : TArduinoCommonValueOneMathUnsignedFilter
+
+    Value = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::AveragePeriod' )]
+  [Name( 'Average Analog Period' )]
+  [CreateName( 'AveragePeriod' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoAveragePeriod : TArduinoCommonAnalogFilter
+
+    [NamePostfix( '(uS)' )]
+    Period : Unsigned = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoClass( 'Mitov::MultiInputMathOperation' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  TArduinoMathAnalogMultiInput : TArduinoCommonClockedAnalogSource
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin  )]
+    [OWAutoManagePinListOwner( TOWArduinoAnalogSinkPin, 2, 2, 200 )]
+    InputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Add<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Add Analog' )]
+  [CreateName( 'Add' )]
+  +TArduinoAdd : TArduinoMathAnalogMultiInput;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Multiply<float>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Multiply Analog' )]
+  [CreateName( 'Multiply' )]
+  +TArduinoMultiply : TArduinoMathAnalogMultiInput;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoIntegerMathFilterToolbarCategory )]
+  [ArduinoClass( 'Mitov::MultiInputMathOperation' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  TArduinoMathIntegerMultiInput : TArduinoCommonClockedIntegerSource
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoIntegerSinkPin  )]
+    [OWAutoManagePinListOwner( TOWArduinoIntegerSinkPin, 2, 2, 200 )]
+    InputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Add<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Add Integer' )]
+  [CreateName( 'Add' )]
+  +TArduinoIntegerAdd : TArduinoMathIntegerMultiInput;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Multiply<int32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Multiply Integer' )]
+  [CreateName( 'Multiply' )]
+  +TArduinoIntegerMultiply : TArduinoMathIntegerMultiInput;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  [ArduinoClass( 'Mitov::MultiInputMathOperation' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  TArduinoMathUnsignedMultiInput : TArduinoCommonClockedUnsignedSource
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoUnsignedSinkPin  )]
+    [OWAutoManagePinListOwner( TOWArduinoUnsignedSinkPin, 2, 2, 200 )]
+    InputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Add<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Add Unsigned' )]
+  [CreateName( 'Add' )]
+  +TArduinoUnsignedAdd : TArduinoMathUnsignedMultiInput;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::Multiply<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Multiply Unsigned' )]
+  [CreateName( 'Multiply' )]
+  +TArduinoUnsignedMultiply : TArduinoMathUnsignedMultiInput;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  TArduinoBasicAnalogMapRange : TArduinoCommonAnalogFilter
+  
+    InputRange : TArduinoAnalogValueRange
+    OutputRange : TArduinoAnalogValueRange
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoClass( 'Mitov::MapRange' )]
+  [Name( 'Map Range Analog' )]
+  [CreateName( 'MapRange' )]
+  +TArduinoMapRange : TArduinoBasicAnalogMapRange;
+//---------------------------------------------------------------------------
+  TArduinoAnalogDeadZone_Extender : Extender
+
+    [Name( 'Input Zone Center Value' )]
+    Value : Single = 0.5
+
+    [Name( 'Input Zone Span(Size)' )]
+    Span : Single = 0.1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoClass( 'Mitov::AnalogDeadZone' )]
+  [Name( 'Dead Zone Analog' )]
+  [CreateName( 'DeadZone' )]
+  [ArduinoStart]
+  +TArduinoAnalogDeadZone : TArduinoCommonAnalogFilter, TArduinoAnalogDeadZone_Extender;
+//---------------------------------------------------------------------------
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoClass( 'Mitov::AnalogDeadZoneScaled' )]
+  [Name( 'Dead Zone Scaled Analog(Map)' )]
+  [CreateName( 'DeadZoneScaled' )]
+  [ArduinoStart]
+  +TArduinoAnalogDeadZoneScaled : TArduinoBasicAnalogMapRange, TArduinoAnalogDeadZone_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::AndValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'And Unsigned Value' )]
+  [CreateName( 'AndValue' )]
+  +TArduinoUnsignedAndValue : TArduinoCommonUnsignedValueFilter;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::OrValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Or Unsigned Value' )]
+  [CreateName( 'OrValue' )]
+  +TArduinoUnsignedOrValue : TArduinoCommonUnsignedValueFilter;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::XorValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Xor Unsigned Value' )]
+  [CreateName( 'XorValue' )]
+  +TArduinoUnsignedXorValue : TArduinoCommonUnsignedValueFilter;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'BASE', 'Mitov::NotValue<uint32_t>' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Not (Invert) Unsigned Value' )]
+  [CreateName( 'NotValue' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  +TArduinoUnsignedNotValue : TArduinoBasicUnsignedUnaryOperation;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DivideByValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Divide Analog By Value' )]
+  [CreateName( 'DivideByValue' )]
+  +TArduinoDivideByValue : TArduinoCommonValueOneMathFloatFilter
+
+    [ReplaceValue(0.0, 0.000001)]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DivideByValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Divide Integer By Value' )]
+  [CreateName( 'DivideByValue' )]
+  +TArduinoIntegerDivideByValue : TArduinoCommonValueOneMathIntegerFilter
+
+    [ReplaceValue(0, 1)]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DivideByValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Divide Unsigned By Value' )]
+  [CreateName( 'DivideByValue' )]
+  +TArduinoUnsignedDivideByValue : TArduinoCommonValueOneMathUnsignedFilter
+
+    [ReplaceValue(0, 1)]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCompareEqualValueType : Enum
+
+    ctEqual
+    ctNotEqual
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCompareValueType : TArduinoCompareEqualValueType 
+    
+    ctBigger
+    ctSmaller
+    ctBiggerOrEqual
+    ctSmallerOrEqual
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [ArduinoContructorParameter( '0.0f' )]
+  [Name( 'Compare Analog Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [ArduinoStart]
+  +TArduinoCompareValue : TArduinoCommonAnalogEnableSink
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingSetter]
+    [ArduinoBindingPostfix( '_Binding' )]
+    Value : Single = 0.0
+
+    [ArduinoTransformImplementation( 'CompareType' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [ArduinoContructorParameter( '0' )]
+  [Name( 'Compare Integer Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoIntegerMathFilterToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [ArduinoStart]
+  +TArduinoIntegerCompareValue : TArduinoCommonIntegerEnableSink
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingSetter]
+    [ArduinoBindingPostfix( '_Binding' )]
+    Value : Integer = 0
+
+    [ArduinoTransformImplementation( 'CompareType' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ArduinoContructorParameter( '0' )]
+  [Name( 'Compare Unsigned Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoUnsignedMathFilterToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoUnsignedCompareValue : TArduinoCommonUnsignedEnableSink
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingSetter]
+    [ArduinoBindingPostfix( '_Binding' )]
+    Value : Unsigned = 0
+
+    [ArduinoTransformImplementation( 'CompareType' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareRange' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [Name( 'Compare Analog Range' )]
+  [CreateName( 'CompareRange' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoAnalogCompareRange : TArduinoCommonAnalogEnableSink
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Range : TArduinoAnalogValueRange
+    IsOutsideRange : Boolean = False
+    IncludeLimits : Boolean = False
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareRange' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [Name( 'Compare Integer Range' )]
+  [CreateName( 'CompareRange' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoIntegerMathFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoIntegerCompareRange : TArduinoCommonIntegerEnableSink
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Range : TArduinoIntegerValueRange
+    IsOutsideRange : Boolean = False
+    IncludeLimits : Boolean = False
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareRange' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [Name( 'Compare Unsigned Range' )]
+  [CreateName( 'CompareRange' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoUnsignedMathFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoUnsignedCompareRange : TArduinoCommonUnsignedEnableSink
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Range : TArduinoUnsignedValueRange
+    IsOutsideRange : Boolean = False
+    IncludeLimits : Boolean = False
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoClass( 'Mitov::Analog2DChangeDistance' )]
+  [Name( '2D Change Distance' )]
+  [CreateName( 'ChangeDistance2D' )]
+  [ArduinoVariable( Unsigned, 2, 'FPopulated' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoLoopBegin]
+  [ArduinoStart]
+  +TArduinoAnalog2DChangeDistance : TArduinoCommonAnalogSource
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'X',  TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Y',  TOWArduinoAnalogSinkPin )]
+    InputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FHasTime' )]
+  TArduinoBasicAccumulateAnalog : TArduinoCommonAnalogFilter
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInitialValue' )]
+    [ArduinoFlexibleVariable]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Accumulate' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [Name( 'Accumulate Analog' )]
+  [CreateName( 'Accumulate' )]
+  +TArduinoAccumulateAnalog : TArduinoBasicAccumulateAnalog;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::Accumulate' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Accumulate Integer' )]
+  [CreateName( 'Accumulate' )]
+  [ArduinoVariable( Boolean, 'FHasTime' )]
+  [Category( TArduinoIntegerMathFilterToolbarCategory )]
+  +TArduinoAccumulateInteger : TArduinoCommonIntegerFilter
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInitialValue' )]
+    [ArduinoFlexibleVariable]
+    InitialValue : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::Accumulate' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Accumulate Unsigned' )]
+  [CreateName( 'Accumulate' )]
+  [ArduinoVariable( Boolean, 'FHasTime' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  +TArduinoAccumulateUnsigned : TArduinoCommonUnsignedFilter
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInitialValue' )]
+    [ArduinoFlexibleVariable]
+    InitialValue : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::AccumulateAngle' )]
+  [Name( 'Accumulate Angle' )]
+  [CreateName( 'AccumulateAngle' )]
+  +TArduinoAccumulateAngle : TArduinoBasicAccumulateAnalog
+  
+    Units : TArduinoAngleUnits = auDegree
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AccelerationToAngle.h' )]
+  [ArduinoClass( 'Mitov::AccelerationToAngle' )]
+  [CreateName( 'AccelerationToAngle' )]
+  [Name( 'Acceleration To Angle' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [ArduinoLoopEnd]
+  [ArduinoVariable( Boolean, 'FChangeOnly' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  +TArduinoAccelerationToAngle : TArduinoComponent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'X', TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Z', TOWArduinoAnalogSinkPin )]
+    InputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'X(Roll)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y(Pitch)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Z(Yaw)', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    ForceOutputPin : TOWArduinoAnalogSourcePin
+
+    Units : TArduinoAngleUnits = auDegree
+    Offsets : TArduinoBasicXYZOffsets
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AmplitudeMeter.h' )]
+  [ArduinoClass( 'Mitov::AmplitudeMeter' )]
+  [CreateName( 'AmplitudeMeter' )]
+  [Name( 'Amplitude Meter' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoAmplitudeMeter : TArduinoCommonAnalogFilter
+
+    [OWPrimaryPin]
+    MinOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    MaxOutputPin : TOWArduinoAnalogSourcePin
+
+    [DesignRange( 1, 1000 )]
+    [MinValue( 1 )]
+    [ NamePostfix( '(mS)' ) ]
+    Period : Integer = 100
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoCallChainExcludeOwnerComplete]
+  TArduinoAnalogBasicValueElement : TArduinoBasicAnalogSetValueElement
+
+    [ExtendDisplayName( ' (', ')' )]
+    Value : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAnalogBasicSetterValueElement : TArduinoAnalogBasicValueElement
+
+    [OWPinGroup( TArduinoAnalogBasicSetterValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  [ParentImage( TArduinoFloatValue )]
+  [PersistentCollection( TArduinoAnalogIteratorSetValueElements )]
+  +TArduinoAnalogSetValueElement : TArduinoAnalogBasicSetterValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoRampToValueAnalogElement' )]
+  [Name( 'Ramp To Value' )]
+  [ArduinoValueRamp]
+  [ArduinoElapsedMicros]
+  [ArduinoLoopBegin( 'SystemLoopBegin( AElapsedMicros )' )]
+  +TArduinoAnalogRampToValueElement : TArduinoAnalogBasicSetterValueElement
+
+    [MinValue( 0 )]
+    [ReplaceValue(0.0, 0.00001)]
+    Slope : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  [ArduinoValueState]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  TArduinoAnalogStateBasicValueElement : TArduinoBasicAnalogSetValueElement
+
+    [OWPinGroup( TArduinoAnalogStateBasicValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [ExtendDisplayName( ' (', ')' )]
+    Value : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [Name( 'Set Value State' )]
+  +TArduinoAnalogStateSetValueElement : TArduinoAnalogStateBasicValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateRampToValueAnalogElement' )]
+  [Name( 'Ramp To Value State' )]
+  [ArduinoValueRamp]
+  [ArduinoElapsedMicros]
+  [ArduinoLoopBegin( 'SystemLoopBegin( AElapsedMicros )' )]
+  +TArduinoAnalogStateRampToValueElement : TArduinoAnalogStateBasicValueElement
+
+    [MinValue( 0 )]
+    [ReplaceValue(0.0, 0.00001)]
+    Slope : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoComplexBasicValueElement : TArduinoBasicComplexSetValueElement
+
+    Value : TArduinoComplex
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoComplexBasicSetterValueElement : TArduinoComplexBasicValueElement
+
+    [OWPinGroup( TArduinoComplexBasicSetterValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [Name( 'Set Value' )]
+  [ParentImage( TArduinoComplexValue )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoComplexSetValueElement : TArduinoComplexBasicSetterValueElement;
+//---------------------------------------------------------------------------
+  TArduinoComplexRamp : TArduinoComplex
+
+    [ReplaceValue(0.0, 0.00001)]
+    Real = 1.0
+
+    [ReplaceValue(0.0, 0.00001)]
+    Imaginary = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoRampToValueComplexElement' )]
+  [Name( 'Ramp To Value' )]
+  [ArduinoValueRamp]
+  [ArduinoElapsedMicros]
+  [ArduinoLoopBegin( 'SystemLoopBegin( AElapsedMicros )' )]
+  +TArduinoComplexRampToValueElement : TArduinoComplexBasicSetterValueElement
+
+    Slope : TArduinoComplexRamp
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  [ArduinoValueState]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  TArduinoComplexStateBasicValueElement : TArduinoBasicComplexSetValueElement
+
+    [OWPinGroup( TArduinoComplexStateBasicValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    Value : TArduinoComplex
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [Name( 'Set Value State' )]
+  +TArduinoComplexStateSetValueElement : TArduinoComplexStateBasicValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateRampToValueComplexElement' )]
+  [Name( 'Ramp To Value State' )]
+  [ArduinoValueRamp]
+  [ArduinoElapsedMicros]
+  [ArduinoLoopBegin( 'SystemLoopBegin( AElapsedMicros )' )]
+  +TArduinoComplexStateRampToValueElement : TArduinoComplexStateBasicValueElement
+
+    Slope : TArduinoComplexRamp
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoQuaternionBasicValueElement : TArduinoBasicQuaternionSetValueElement
+
+    Value : TArduinoQuaternion
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoQuaternionBasicSetterValueElement : TArduinoQuaternionBasicValueElement
+
+    [OWPinGroup( TArduinoQuaternionBasicSetterValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  [ArduinoValueState]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  TArduinoQuaternionStateBasicValueElement : TArduinoBasicQuaternionSetValueElement
+
+    [OWPinGroup( TArduinoQuaternionStateBasicValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    Value : TArduinoQuaternion
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [Name( 'Set Value' )]
+  [ParentImage( TArduinoQuaternionValue )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoQuaternionSetValueElement : TArduinoQuaternionBasicSetterValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [Name( 'Set Value State' )]
+  +TArduinoQuaternionStateSetValueElement : TArduinoQuaternionStateBasicValueElement;
+//---------------------------------------------------------------------------
+; // Mitov

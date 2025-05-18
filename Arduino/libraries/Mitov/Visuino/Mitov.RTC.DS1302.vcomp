@@ -1,0 +1,28 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RTC_DS1302.h' )]
+  [ArduinoClass( 'Mitov::RTC_DS1302' )]
+  [Name( 'Real Time Clock(RTC) DS1302' )]
+  [ArduinoWebKeywords( 'DS1302 RTC' )]
+  [ArduinoInit]
+  +TArduinoRTCDS1302 : TArduinoBasicHaltRTC
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalOutputSourcePin )]
+    [ArduinoExclude]
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    [OWAddPin( 'Data', TOWArduinoDigitalOutputSourcePin )]
+    [OWAddPin( 'Clock', TOWArduinoDigitalOutputSourcePin )]
+    [OWAddPin( 'Enable', TOWArduinoDigitalOutputSourcePin )]
+    ControlOutputPins : TOWArduinoPinList
+
+    [ArduinoUseBindingCheckSetter( 'UpdateWriteProtect' )]
+    WriteProtect : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

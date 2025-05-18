@@ -1,0 +1,330 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoNano33BluetoothLEModuleOperations )]
+  [ArduinoHelpPostfix( '(Nano 33 BLE Operations)' )]
+  [ArduinoDeclaredClass]
+  TArduinoNano33BluetoothLEModuleOperation : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Search Bluetooth Devices' )]
+  [CreateName( 'Search Devices' )]
+  [ArduinoInclude( 'Mitov_ArduinoNano33_BLE_Scan.h' )]
+  [ArduinoClass( 'Mitov::ArduinoNano33ModuleScanBLEOperation' )]
+  [ParentImage( TArduinoESP32BluetoothLEModuleScanOperation )]
+  +TArduinoNano33BluetoothLEModuleScanOperation : TArduinoNano33BluetoothLEModuleOperation
+
+//    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+//    ScanInputPin : TOWArduinoClockSinkPin
+    
+    LocalNameOutputPin : TOWArduinoStringSourcePin
+    DeviceNameOutputPin : TOWArduinoStringSourcePin
+
+    [Name( 'MAC Address' )]
+    MACAddressOutputPin : TOWArduinoStringSourcePin
+
+    SignalStrengthOutputPin : TOWArduinoIntegerSourcePin
+    AppearanceOutputPin : TOWArduinoIntegerSourcePin
+
+    Enabled : Boolean = True
+    
+//    WithDuplicates : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclarationSectionName( 'BoardDeclarations' )]
+  [PersistentCollection( TArduinoNano33BluetoothLERemoteDevices )]
+  [ArduinoHelpPostfix( '(Nano 33 BLE Remote Devices)' )]
+  [ArduinoDeclaredClass]
+  [Name( 'Remote BLE Device' )]
+  [CreateName( 'Remote BLE Device' )]
+  [ArduinoInclude( 'Mitov_ArduinoNano33_BLE_Client.h' )]
+  [ArduinoClass( 'Mitov::ArduinoNano33BluetoothLERemoteDevice' )]
+  [ParentImage( TArduinoESP32BluetoothLERemoteDevice )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  +TArduinoNano33BluetoothLERemoteDevice : TArduinoBasicNamedExludePersistent
+
+    OutputPin : TOWArduinoBLEClientSourcePin
+    DeviceNameOutputPin : TOWArduinoStringSourcePin
+
+    [Name( 'MAC Address' )]
+    MACAddressOutputPin : TOWArduinoStringSourcePin
+
+    [ArduinoTemplateParameterCollectionCount]
+    DeviceIDs : TArduinoNano33BluetoothLERemoteDeviceIDs
+
+    [Name( 'BLE Client Serial' )]
+    Serial : TArduinoBluetoothUartClient
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoNano33DeviceFoundCallChain]
+  TArduinoNano33BluetoothLERemoteDeviceIDs : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoHelpPostfix( '(Nano 33 BLE Remote Device IDs)' )]
+  [PersistentCollection( TArduinoNano33BluetoothLERemoteDeviceIDs )]
+  [Name( 'Device' )]
+  [CreateName( 'Device' )]
+  [ArduinoClass( 'Mitov::ArduinoNano33BluetoothLERemoteDeviceID' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ParentImage( TArduinoESP32BluetoothLERemoteDeviceID )]
+  +TArduinoNano33BluetoothLERemoteDeviceID : TArduinoCodePersistent
+
+    Name : String = ''
+    MACAddress : TArduinoMacAddress
+    ServiceUUID  : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'BLEDevice &', 'ADevice' )]
+  [Name( 'DeviceFound' )]
+  TArduinoNano33DeviceFoundCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'ANeeds' )]
+  [Name( 'NeedsScan' )]
+  TArduinoNano33NeedsScanCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'Nordic' )]
+  [Category( TArduinoCategory )]
+  [AlternateCategory( TNordicCategory )]
+  [ParentImage( TNordicCategory )]
+  TArduinoNordicCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Microphone' )]
+  [CreateName( 'Microphone' )]
+  [ArduinoInclude( 'PDM.h' )]
+  [ArduinoInclude( 'Mitov_Nano33Sense_Microphone.h' )]
+  [ArduinoClass( 'Mitov::MicrophoneNano33Sense' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicAnalogMicrophone )]
+  [ArduinoTemplateParameter( 'SampleRate', 'Mitov::ConstantProperty<33, uint32_t, 16000 >' )]
+  +TArduinoNano33MicrophoneModule : TArduinoEnabledShield
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogArraySourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [ValueRange( 1, 4096 )]
+    [OWExcludeBindings]
+    [ArduinoUseBindingCheckSetter( 'UpdateBufferSize' )]
+    BufferSize : Unsigned = 256
+
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateGain' )]
+    Gain : Single = 0.078
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoNano33DeviceFoundCallChain]
+  [TArduinoNano33NeedsScanCallChain]
+  TArduinoNano33BluetoothLERemoteDevices : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [TArduinoNano33NeedsScanCallChain]
+  [TArduinoNano33DeviceFoundCallChain]
+  TArduinoNano33BluetoothLEModuleOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclarationSectionName( 'BoardDeclarations' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_ArduinoNano33_BLE_Server.h' )]
+  [ArduinoClass( 'Mitov::ArduinoNano33BluetoothLEServer' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoStart]
+//  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoNano33BluetoothLEServer : TArduinoCodeEnabledPersistent
+
+    InputPin : TOWArduinoBLEServerMultiSinkPin
+
+    [Name( 'BLE Server Serial' )]
+    Serial : TArduinoBluetoothUartService
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ArduinoNano33_BLE.h' )]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::ArduinoNano33BluetoothLE' )]
+  [ArduinoInclude( 'ArduinoBLE.h', 'ArduinoBLE' , 'https://github.com/arduino-libraries/ArduinoBLE' )]
+  [ArduinoDefine( 'VISUINO_BLE_NINA' )]
+  [Name( 'Bluetooth Low Energy' )]
+  [CreateName( 'Bluetooth' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoVariable( Boolean, 'FScanning' )]
+  TArduinoNano33BluetoothExtender : Extender
+
+    [Name( 'MAC Address' )]
+    MACAddressOutputPin : TOWArduinoStringSourcePin
+
+    LocalName : String = ''
+    DeviceName : String = ''
+    Server : TArduinoNano33BluetoothLEServer
+
+    [ComponentEditorEntryDesign( 'Add Remote Devices ...' )]
+    RemoteDevices : TArduinoNano33BluetoothLERemoteDevices
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add BLE Operations ...' )]
+    Operations : TArduinoNano33BluetoothLEModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [CollectionItemAssociation( TOWArduinoBLEServerMultiSinkPin )]
+  [ParentImage( TArduinoBluetoothModule )]
+  +TArduinoNano33BluetoothModule : TArduinoShield, TArduinoNano33BluetoothExtender;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 1 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2C<TwoWire, Wire1, Mitov::ConstantProperty<151, uint8_t, 95 > >' )]
+  +TArduinoNano33TemperatureHumidityModule : TArduinoTemperatureHumidityHTS221_I2C_Module;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 1 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', '  Mitov::Interface_LSM9DS1_I2C<'#13#10'      TwoWire, // 0_I2C_TYPE_PIN'#13#10'      Wire1, // 1_I2C_NAME_PIN'#13#10'      Mitov::NestedProperty<4, Mitov::TArduinoLSM9DS1_I2C_Address<'#13#10'    Mitov::ConstantProperty<3, uint8_t, 107 >, //       AccelerometerGyroscope'#13#10'          Mitov::ConstantProperty<4, uint8_t, 30 > // Compass'#13#10'     > > // Address'#13#10'       >' )]
+  +TArduinoNano33OrientationModule : TArduinoLSM9DS1_I2C_Basic_Module;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 1 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2C<TwoWire, Wire1, Mitov::ConstantProperty<151, uint8_t, 92 > >' )]
+  +TArduinoNano33PressureModule : TArduinoLPS22HB_I2C_Module;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 1 )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire1' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<77, uint8_t, 57 >' )]
+  +TArduinoNano33GestureColorProximityModule : TArduinoGestureColorProximityAPDS9960_I2C_Module;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_StandardSerial.h' )]
+  [ArduinoSerialType( 'arduino::UART' )]
+  +TArduinoNano33Serial : TArduinoBasicSpeedSerial;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_mbed_BLE33_SPI_Class.h' )]
+  [ArduinoClass( 'Mitov::Arduino_BLE33_SPI' )]
+  +TArduinoNano33SPI : TArduinoSPI;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_NANO33BLE' )]
+//  [ArduinoBoardArchitecture( 'mbed' )]
+  [ArduinoBoardArchitecture( 'mbed_nano' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_nano:nano33ble' )]
+  [Category( TArduinoNordicCategory )]
+  [AtduinoCountI2CChannels( 2 )]
+  [ArduinoBoardCanReset]
+  TArduinoBasicNano33Board : TArduinoBoardExtendableImplementation
+
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduinoNano33BluetoothModule )]
+    [AddItem( TArduinoNano33OrientationModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoNano33Serial, 2 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoNano33SPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownSerial1Channel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownSerial1Channel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  9, TArduinoAdditionalDigitalPullUpDownPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoAdditionalDigitalPullUpDownPWMSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalPullUpDownPWMSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalPullUpDownPWMSPI0Channel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 4, TArduinoCombinedAnalogDigitalPullDownPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogDigitalPullDownPWMI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogDigitalPullDownPWMI2C0Channel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 2, TArduinoCombinedAnalogDigitalPullDownPWMChannel )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoNanoShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Nano 33 BLE' )]
+  +TArduinoNano33BLE : TArduinoBasicNano33Board;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Nano 33 BLE Sense' )]
+  +TArduinoNano33BLESense : TArduinoBasicNano33Board
+
+    [AddItem( TArduinoNano33MicrophoneModule )]
+    [AddItem( TArduinoNano33TemperatureHumidityModule )]
+    [AddItem( TArduinoNano33PressureModule )]
+    [AddItem( TArduinoNano33GestureColorProximityModule )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 1 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AirLiftShieldInterface' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_INTERFACE', 'SPI1' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_CHIP_SELECT', '24' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_RESET', '27' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_GPIO0', '26' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_BUSY', '28' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.2_INVERT_RESET', 'false' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.UseGPIO0', 'Mitov::ConstantProperty<43, bool, true >' )]
+  [ParentImage( TArduinoAdafruitAirLift_Basic_Module )]
+  [Name( 'Communication' )]
+  [CreateName( 'Communication' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoNano33IOT_AirLiftModule : TArduinoShield, TArduinoAdafruitAirLift_Extender, TArduinoAdafruitAirLiftBLE_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2CNoSetHighBit<TwoWire, Wire, Mitov::ConstantProperty<200, uint8_t, 106 > >' )]
+  +TArduinoNano33IOT_OrientationModule : TArduinoAccelerometerGyroscopeLSM6DS3_I2C_Basic_Module;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Nano 33 IOT' )]
+  [ArduinoBoardCompileParams( 'arduino:samd:nano_33_iot')]
+  [Category( TArduinoM0CategoryCategory )]
+  [ArduinoDefine( 'VISUINO_MKR_ZERO' )]
+  +TArduinoNano33IOT : TArduinoSamdBasic_I2C_Only_Board
+
+    [AddItem( TArduinoNano33IOT_AirLiftModule )]
+    [AddItem( TArduinoNano33IOT_OrientationModule )]
+    Modules
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI, 2 )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [Name( 'I2S Channels' )]
+    [AddItem( TArduinoI2S )]
+    I2SChannels : TArduinoI2SChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoBasicDigitalSerial1InterruptChannel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoBasicDigitalSerial1InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  2, TArduinoDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoBasicDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  2, TArduinoBasicDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  2, TArduinoDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11,  1, TArduinoDigitalPWMSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12,  1, TArduinoDigitalPWMSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13,  1, TArduinoDigitalPWMSPI0InterruptChannel, 'Digital(LED)(SPI-SCK)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 1, TArduinoCombinedAnalogDigitalAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2, 2, TArduinoCombinedAnalogDigitalAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogDigitalAnalogI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogDigitalAnalogI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 2, TArduinoCombinedAnalogDigitalAnalogInterruptChannel )]
+
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoNanoShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

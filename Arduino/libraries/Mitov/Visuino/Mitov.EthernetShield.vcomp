@@ -1,0 +1,94 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoHelpPostfix( '(Ethernet Shield)' )]
+  [PersistentCollection( TArduinoEthernetSockets )]
+  [ArduinoClass( 'Mitov::TCPClientSocket' )] //<Mitov::BasicEthernetShield,EthernetClient>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicTCPClientSocket_Implementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_CLIENT', 'EthernetClient' )]
+  +TArduinoEthernetTCPClientSocket : TArduinoBasicTCPClientSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoEthernetSockets )]
+  [ArduinoHelpPostfix( '(Ethernet Shield)' )]
+  [ArduinoClass( 'Mitov::UDPSocket' )] //<Mitov::BasicEthernetShield,EthernetUDP>' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameter( 'CLIENT', 'EthernetUDP' )]
+  +TArduinoEthernetUDPSocket : TArduinoBasicUDPSocket;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'ChipSelectOutputPin', '4' )]
+  [ArduinoSPI( 0 )]
+  [ArduinoShieldPin( '4', 'Micro SD (CS)' )]
+  TArduinoEthernetShieldMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  TArduinoNetworkShieldOperations : TArduinoBasicNetworkOperations;
+//---------------------------------------------------------------------------
+  *TArduinoBasicNetworkShield : TArduinoEnabledShield, IStandardShield
+
+    Operations : TArduinoNetworkShieldOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_EthernetShield.h' )]
+  [ArduinoClass( 'Mitov::EthernetShield' )]
+  [SingleCollectionInstance]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoVariable( Boolean, 'FIsStarted' )]
+  [ArduinoSPI( 0 )]
+  [ArduinoShieldPin( '10', 'Ethernet (CS)' )]
+  TArduinoBasicEthernetShield : TArduinoBasicNetworkShield
+
+    IPAddress : TArduinoIPV4DNS1Address
+
+    MacAddress : TArduinoMacAddress
+
+    UseDHCP : Boolean = True
+
+    [ArduinoExcludeCollectionItems]
+    Sockets : TArduinoEthernetSockets
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoBasicEthernetModule : TArduinoBasicEthernetShield;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoInclude( 'Ethernet.h', 'Ethernet', 'https://github.com/arduino-libraries/Ethernet' )]
+  [ArduinoInclude( 'Dns.h' )]
+  [Name( 'Ethernet' )]
+  [CreateName( 'Ethernet' )]
+  +TArduinoEthernetModule : TArduinoBasicEthernetModule;
+//---------------------------------------------------------------------------
+  [CreateName( 'Ethernet Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  TArduinoBasicEthernetMicroSDShield : TArduinoBasicEthernetShield
+
+    MicroSD : TArduinoEthernetShieldMicroSDModule
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoInclude( 'Ethernet.h', 'Ethernet', 'https://github.com/arduino-libraries/Ethernet' )]
+  [ArduinoInclude( 'Dns.h' )]
+  [Name( 'Ethernet Shield' )]
+  [ArduinoWebKeywords( 'Arduino Ethernet Shield' )]
+  +TArduinoEthernetShield : TArduinoBasicEthernetMicroSDShield;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoInclude( 'Ethernet2.h', 'Ethernet2', 'https://github.com/adafruit/Ethernet2' )]
+  [ArduinoInclude( 'Dns.h' )]
+  [Name( 'Ethernet Shield V2' )]
+  [ArduinoDefine( '__ETHERNET_SHIELD_2_0__' )]
+  [ArduinoWebKeywords( 'Arduino Ethernet Shield V2' )]
+  [ArduinoSeverSocketNeedsAcessWrapper]
+  +TArduinoEthernetShieldV2 : TArduinoBasicEthernetMicroSDShield;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoInclude( 'EthernetV2_0.h', 'Ethernet_Shield_W5200', 'The Seeed Studio Ethernet Shield V2.0 Library library https://github.com/Seeed-Studio/Ethernet_Shield_W5200 needs to be installed trough the Arduino IDE for this Scetch to compile!' )]
+  [ArduinoInclude( 'DnsV2_0.h' )]
+  [Name( 'Ethernet Shield SesedStudio V2' )]
+  [ArduinoDefine( '__SEED_ETHERNET_SHIELD_2_0__' )]
+  [ArduinoWebKeywords( 'Arduino Ethernet Shield SesedStudio V2' )]
+  +TArduinoSeedStudioEthernetShieldV2 : TArduinoBasicEthernetMicroSDShield;
+//---------------------------------------------------------------------------
+; // Mitov

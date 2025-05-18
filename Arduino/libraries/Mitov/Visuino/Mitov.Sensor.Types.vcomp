@@ -1,0 +1,275 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::DirectOuputPin' )]
+  TArduinoBasicDigitalOutput : TArduinoCodePersistent
+
+    [OWPinGroup( TArduinoBasicDigitalOutput )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoExclude]
+    [ArduinoParam]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoClass( 'Mitov::AnalogInputPinSensor' )]
+  TArduinoBasicAnalogSensor : TArduinoCodeEnabledPersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [ArduinoInit]
+  TArduinoBasicLeftRightAnalogSensors : TArduinoCodePersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Left', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [ArduinoLoopBegin]
+  [ArduinoStart]
+  [ArduinoInit]
+  TArduinoBasicLeftRightDigitalSensors : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TypedInputPins2' )]
+  TArduinoLeftRightDigitalSensors : TArduinoBasicLeftRightDigitalSensors;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TypedInputPins2' )]
+  TArduinoInvertedLeftRightDigitalSensors : TArduinoBasicLeftRightDigitalSensors;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TypedInputPins2' )]
+  TArduinoLeftRightAnalogSensors : TArduinoBasicLeftRightAnalogSensors;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoBasicButtonModule )]
+  TArduinoBasicButtonSensor : TArduinoDirectInputPinNoInterruptShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DigitalInput_Inverted_Flexible' )]
+  TArduinoBasicButtonInvertedSensor : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  *TArduinoBasicDigitalLED : TArduinoBasicDigitalOutput;
+//---------------------------------------------------------------------------
+  *TArduinoBasicLightSensorPersistent : TArduinoBasicAnalogSensor;
+//---------------------------------------------------------------------------
+  *TArduinoBasicPotentiometerPersistent : TArduinoBasicAnalogSensor;
+//---------------------------------------------------------------------------
+  [Name( 'Microphone' )]
+  [CreateName( 'Microphone' )]
+  [ArduinoExcludeUnconnected]
+  *TArduinoBasicAnalogMicrophone : TArduinoBasicAnalogSensor;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoInvertedDigitalPWMModule' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  [ParentImage( TArduinoBasicDigitalLED )]
+  TArduinoBasicPWM_LEDModule : TArduinoShield
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [Name( 'Analog (PWM)' )]
+    [OWPrimaryPin]
+    AnalogInputPin : TOWArduinoAnalogSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoExclude]
+    [ArduinoParam]
+    [ValueRange( 0.0, 1.0 )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DirectMotorDriverForwardChannel' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [Name( 'Motor' )]
+  [CreateName( 'Motor' )]
+  [ParentImage( TArduinoDCMottorsToolbarCategory )]
+  [ArduinoLoopBegin( 'SystemLoopBeginElapsed( AElapsedMicros )' )]
+  [ArduinoElapsedMicros]
+  TArduinoBasicSimpleMotorBasicModule : TArduinoEnabledShield
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [ArduinoFlexibleVariable]
+    [OWExcludeBindings]
+    [ValueRange( 0.0, 1.0 )]
+    InitialValue : Single = 0.0
+
+    [MinValue( 0.0 )]
+    [ArduinoNotDefaultPostfix( '_Slopped' )]
+    SlopeRun : Single = 0.0
+
+    [MinValue( 0.0 )]
+    [ArduinoNotDefaultPostfix( '_Slopped' )]
+    SlopeStop : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  [ParentImage( TArduinoBasicDigitalLED )]
+  TArduinoBasicPWM_LEDElement : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [Name( 'Analog (PWM)' )]
+    [OWPrimaryPin]
+    AnalogInputPin : TOWArduinoAnalogSinkPin
+
+    [OWExcludeBindings]
+    [ValueRange( 0.0, 1.0 )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::ArduinoInvertedDigitalModuleEnableInitialValue' )]
+  [ArduinoInit]
+  TArduinoBasicEnableDigitalOutputModule : TArduinoShield
+
+    [OWPinGroup( TArduinoBasicEnableDigitalOutputModule )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOutput' )]
+    Enabled : Boolean = True
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::DirectOuputPin' )]
+  TArduinoBasicDigitalOutputModule : TArduinoShield
+
+    [OWPinGroup( TArduinoBasicDigitalLED )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoExclude]
+    [ArduinoParam]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Relay' )]
+  [CreateName( 'Relay' )]
+  *TArduinoBasicRelayModule : TArduinoBasicEnableDigitalOutputModule;
+//---------------------------------------------------------------------------
+  [Name( 'Switch' )]
+  [CreateName( 'Switch' )]
+  *TArduinoBasicSwitchModule : TArduinoDirectInputPinNoInterruptModule;
+//---------------------------------------------------------------------------
+  [Name( 'Buzzer' )]
+  [CreateName( 'Buzzer' )]
+  *TArduinoBasicBuzzerModule : TArduinoDirectOutputPinModule;
+//---------------------------------------------------------------------------
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  *TArduinoBasicLEDModule : TArduinoDirectOutputPinModule;
+//---------------------------------------------------------------------------
+  [Name( 'Buzzer' )]
+  [CreateName( 'Buzzer' )]
+  [ParentImage( TArduinoBasicBuzzerModule )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoBasicBuzzerShieldElement : TArduinoDirectOutputPinShieldElement;
+//---------------------------------------------------------------------------
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  [ParentImage( TArduinoBasicLEDModule )]
+  TArduinoBasicLEDShieldElement : TArduinoDirectOutputPinShieldElement;
+//---------------------------------------------------------------------------
+  TArduinoBasicEnabledXYZSensor : TArduinoBasicXYZSensor
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoXYZOffsets' )]
+  TArduinoBasicXYZOffsets : TArduinoCodePersistent
+
+    X : Single = 0.0
+    Y : Single = 0.0
+    Z : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCompassBasic_Extender : Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'X(uT)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y(uT)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Z(uT)', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Compass' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  TArduinoCompass_Extender : TArduinoCompassBasic_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoStart]
+  [ArduinoClass( 'Mitov::AnalogInputPinSensor' )]
+  TArduinoBasicAnalogSensorModule : TArduinoClockEnabledLoopBeginShield
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Battery' )]
+  [CreateName( 'Battery' )]
+  *TArduinoBasicBatteryAnalogSensorModule : TArduinoBasicAnalogSensorModule;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicPotentiometerPersistent )]
+  *TArduinoBasicPotentiometerModule : TArduinoBasicAnalogSensorModule;
+//---------------------------------------------------------------------------
+  [Name( 'Light Sensor' )]
+  [CreateName( 'Light Sensor' )]
+  [ParentImage( TArduinoBasicLightSensorPersistent )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoBasicLightSensorModule : TArduinoBasicAnalogSensorModule;
+//---------------------------------------------------------------------------
+; // Mitov

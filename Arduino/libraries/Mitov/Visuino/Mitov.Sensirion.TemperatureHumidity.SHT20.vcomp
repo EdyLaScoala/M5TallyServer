@@ -1,0 +1,61 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoTemperatureHumiditySHT20_Resolution : Enum
+  
+    Temperature_14_Humidity_12
+    Temperature_12_Humidity_8
+    Temperature_13_Humidity_10
+    Temperature_11_Humidity_11
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTemperatureHumiditySHT20_Extender : Extender
+  
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Humidity(%)' )]
+    HumidityOutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    InFahrenheit : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    Resolution : TArduinoTemperatureHumiditySHT20_Resolution = Temperature_14_Humidity_12
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TemperatureHumiditySHT20.h' )]
+  [ArduinoClass( 'Mitov::TemperatureHumiditySHT20_I2C' )]
+  [Name( 'Humidity and Thermometer Sensirion SHT20' )]
+  [CreateName( 'HumidityThermometer' )]
+  [ArduinoWebKeywords( 'SHT20 Humidity Thermometer' )]
+  [Category( TArduinoMeasurementTemperatureHumidityToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FReadingTemperature' )]
+  [ArduinoVariable( Boolean, 'FReadingHumidity' )]
+  [ArduinoLoopBegin( 'SystemLoopBeginCheck' )]
+  [ArduinoStart( 'SystemStartInit' )]
+  +TArduinoTemperatureHumiditySHT20_I2C : TArduinoI2CAddressSensorPinClockedEnableComponent, TArduinoTemperatureHumiditySHT20_Extender
+
+    Address = $40
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TemperatureHumiditySHT20.h' )]
+  [ArduinoClass( 'Mitov::TemperatureHumiditySHT20_I2C' )]
+  [ArduinoVariable( Boolean, 'FReadingTemperature' )]
+  [ArduinoVariable( Boolean, 'FReadingHumidity' )]
+  [ArduinoLoopBegin( 'SystemLoopBeginCheck' )]
+  [ArduinoStart( 'SystemStartInit' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  *TArduinoTemperatureHumiditySHT20_BasicElement : TArduinoCodeEnabledClockedPersistent, TArduinoTemperatureHumiditySHT20_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

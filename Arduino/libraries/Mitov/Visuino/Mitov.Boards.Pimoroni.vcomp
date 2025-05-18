@@ -1,0 +1,10 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Pimoroni' )]
+  TPimoroniCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Tiny' )]
+  [Category( TPimoroniCategory )]
+  TPimoroniTinyCategory : TClassCategory;
+//---------------------------------------------------------------------------
+; // Mitov

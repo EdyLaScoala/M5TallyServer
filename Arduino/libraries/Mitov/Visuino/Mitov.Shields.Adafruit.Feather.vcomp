@@ -1,0 +1,90 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DisplaySSD1306NoReset<Mitov::DigitalPin_NoImplementation<5>>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<88, uint8_t, 60 >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_BUFFER' , 'Mitov::DisplaySSD1306Buffered<32, 128>' )]
+  [ArduinoTemplateParameter( 'Type', 'Mitov::ConstantProperty<127, Mitov::TArduinoDisplayOLEDType, Mitov::odtSSD1306>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+//  [ArduinoTemplateParameter( 'Height', '32' )]
+//  [ArduinoTemplateParameter( 'Width', '128' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoI2C( 0 )]
+  TArduinoFeatherOLEDShieldDisplay : TArduinoDisplaySSD1306BasicShieldDisplayElementI2C;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoClass( 'Mitov::TypedInputPins3' )]
+  [ArduinoTemplateParameter( 'A', 'Mitov::TDefinedDigitalInputPinPullUpInverted<FEATHER_PIN_9>' )]
+  [ArduinoTemplateParameter( 'B', 'Mitov::TDefinedDigitalInputPinPullUpInverted<FEATHER_PIN_6>' )]
+  [ArduinoTemplateParameter( 'C', 'Mitov::TDefinedDigitalInputPinPullUpInverted<FEATHER_PIN_5>' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoDeclaredClass]
+  [ParentImage( TArduinoBasicButtonModule )]
+  TArduinoFeatherOLEDShieldButtonsModule : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalInputInterruptChangeOnlySourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( 'A', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, 'FEATHER_PIN_9' )]
+    [OWAddArduinoBoardDigitalPin( 'B', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, 'FEATHER_PIN_6' )]
+    [OWAddArduinoBoardDigitalPin( 'C', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, 'FEATHER_PIN_5' )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'OLED Feather Wing' )]
+  [CreateName( 'Display' )]
+  [ArduinoWebKeywords( 'Adafruit OLED Feather Wing' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  +TArduinoFeatherOLEDShield : TArduinoShield, IFeatherWingShield
+
+    Display : TArduinoFeatherOLEDShieldDisplay
+    Buttons : TArduinoFeatherOLEDShieldButtonsModule
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', 'Mitov::FEATHER_SHIELD_PIN_17' )] // 10
+  [ArduinoShieldPinIndex( 16, 'Chip Select' )]
+  [ArduinoSPI( 0 )]
+  TArduinoFeatherMicroSDShieldElement : TArduinoBasicMicroSDShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  TArduinoFeatherRTCPCF8523ShieldElement : TArduinoRTCPCF8523ShieldElement;
+//---------------------------------------------------------------------------
+  [Name( 'Adalogger Feather Wing (RTC and MicroSD)' )]
+  [CreateName( 'Adalogger' )]
+  [ArduinoWebKeywords( 'Adafruit Adalogger Feather Wing' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  +TArduinoFeatherAdaloggerFeatherWingPCF8523Shield : TArduinoShield, IFeatherWingShield
+
+    RealTimeClock : TArduinoFeatherRTCPCF8523ShieldElement
+    MicroSD : TArduinoFeatherMicroSDShieldElement
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoShieldPinIndex( 17,  'GPIO0' )]
+  [ArduinoShieldPinIndex( 18,  'Busy' )]
+  [ArduinoShieldPinIndex( 19,  'Reset' )]
+  [ArduinoShieldPinIndex( 20,  'Chip Select' )]
+  [ArduinoSPI( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AirLiftShieldInterface' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_INTERFACE', 'SPI' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_CHIP_SELECT', 'Mitov::FEATHER_SHIELD_PIN_20' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_RESET', 'Mitov::FEATHER_SHIELD_PIN_19' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_GPIO0', 'Mitov::FEATHER_SHIELD_PIN_17' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_BUSY', 'Mitov::FEATHER_SHIELD_PIN_18' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.2_INVERT_RESET', 'false' )]
+  [ParentImage( TArduinoAdafruitAirLift_Basic_Module )]
+  [Name( 'Adafruit AirLift FeatherWing - ESP32 WiFi/BLE Co-Processor' )]
+  [CreateName( 'AirLift (WiFi/BLE)' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoFeatherAdaloggerFeatherWingAirLiftShield : TArduinoShield, IFeatherWingShield, TArduinoAdafruitAirLift_LED_UseGPIO0_Shield_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

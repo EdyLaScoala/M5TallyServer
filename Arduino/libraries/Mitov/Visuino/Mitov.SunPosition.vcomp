@@ -1,0 +1,11 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SunPosition.h' )]
+  [ArduinoClass( 'Mitov::SunPosition' )]
+  [Category( TArduinoAstronomyToolbarCategory )]
+  [Name( 'Compute Sun Position' )]
+  [CreateName( 'SunPosition' )]
+  [ArduinoStart]
+  +TArduinoSunPosition : TArduinoBasicCelestialBodyPosition;
+//---------------------------------------------------------------------------
+; // Mitov

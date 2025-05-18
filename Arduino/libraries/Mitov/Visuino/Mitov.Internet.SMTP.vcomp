@@ -1,0 +1,139 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoSMTPAccounts : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoSMTPAccounts )]
+  [Name( 'Account' )]
+  [ArduinoHelpPostfix( '(E-Mail Accounts)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::SMTPEMailAccount' )]
+  +TArduinoSMTPAccount : TArduinoBasicNamedExludePersistent
+
+    [OWPrimaryPin]
+    MessageInputPin : TOWArduinoMailMessageMultiSinkPin
+
+    ClientID : String = ''
+    UserName : String = ''
+    Password : String = ''
+
+    [ValueRange( 0, $FFFF )]
+    [MinValue( 0 )]
+    [ NamePostfix( '(mS)' ) ]
+    Timeout : Unsigned = 5000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::SMTPClientBasic *', 'AClient' )]
+  [ArduinoPopulatedCallChainParameter( 'Mitov::SMTPEMail_::TEMailTransaction *', 'ATransaction' )]
+  [Name( 'ProcessTransaction' )]
+  TArduinoSMTPEMailAddressesElementProcessTransactionCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::String &', 'ALine' )]
+  [Name( 'PrepareAddressList' )]
+  TArduinoSMTPEMailAddressesElementPrepareAddressListCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'Address' )]
+  [ArduinoClass( 'Mitov::TArduinoSMTPEMailAddress' )]
+  TArduinoSMTPEMailBasicAddress : TArduinoCodePersistent
+
+    Name : String = ''
+    Address : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoSMTPEMailAddressesElementProcessTransactionCallChain]
+  [TArduinoSMTPEMailAddressesElementPrepareAddressListCallChain]
+  TArduinoSMTPEMailAddresses : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoSMTPEMailAddresses )]
+  [ArduinoDeclaredClass]
+  [ParentImage( TArduinoInfraredThermometerMLX90614SetAddressElement )]
+  +TArduinoSMTPEMailAddress : TArduinoSMTPEMailBasicAddress;
+//---------------------------------------------------------------------------
+  [DynamicElement]
+  TArduinoSMTPEMessageBasic : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Text Message' )]
+  [Default]
+  [ArduinoClass( 'Mitov::SMTPEMailMessageText' )]
+  [ParentImage( TArduinoMonochromeGraphicsElementTextFeld )]
+  +TArduinoSMTPEMessageText : TArduinoSMTPEMessageBasic
+
+    [MultiLine]
+    Text : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'HTML Message' )]
+  [ArduinoClass( 'Mitov::SMTPEMailMessageHTML' )]
+  +TArduinoSMTPEMessageHTML : TArduinoSMTPEMessageBasic
+
+    [MultiLine]
+    Text : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Multipart Message (Text/THML)' )]
+  [ArduinoClass( 'Mitov::SMTPEMailMessageTextTHML' )]
+  +TArduinoSMTPEMessageMultipart : TArduinoSMTPEMessageBasic
+
+    [Name( 'Boundary (Separator)' )]
+    Boundary : String = ''
+
+    [MultiLine]
+    PlainText : String = ''
+
+    [MultiLine]
+    HTMLText : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SMTP_Client.h' )]
+  [ArduinoClass( 'Mitov::SMTPEMail' )]
+  [Name( 'E-Mail' )]
+  [CreateName( 'EMail' )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoSMTPEMail : TArduinoComponent
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    MessageOutputPin : TOWArduinoMailMessageSourcePin
+
+    From : TArduinoSMTPEMailBasicAddress
+
+    [ComponentEditorEntryDesign( 'Edit &To ...', True )]
+    [ArduinoTemplateParameterCollectionCount]
+    To : TArduinoSMTPEMailAddresses
+
+    [ComponentEditorEntryDesign( 'Edit &CC ...' )]
+    [ArduinoTemplateParameterCollectionCount]
+    CC : TArduinoSMTPEMailAddresses
+
+    [ComponentEditorEntryDesign( 'Edit &BCC ...' )]
+    [ArduinoTemplateParameterCollectionCount]
+    BCC : TArduinoSMTPEMailAddresses
+
+    Subject : String = ''
+    Message : TArduinoSMTPEMessageBasic
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SMTP_Client.h' )]
+  [ArduinoClass( 'Mitov::SMTPClient' )]
+  [Name( 'SMTP Mail Client' )]
+  [CreateName( 'MailClient' )]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoSMTP : TArduinoCommonByteFilter
+
+    ConnectedInputPin : TOWArduinoDigitalSinkPin
+    ConnectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ComponentEditorEntryDesign( 'Edit &Accounts ...', True )]
+    Accounts : TArduinoSMTPAccounts
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

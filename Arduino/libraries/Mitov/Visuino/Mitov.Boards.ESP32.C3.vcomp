@@ -1,0 +1,140 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ESP32 C3' )]
+  TESP32_C3_Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoBoardIndex( 'https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json' )]
+  [ArduinoBoardArchitecture( 'esp32' )]
+  ArduinoBoardArchitecture_ESP32_C3Attribute : TAttributeCollectionAttribute;
+//---------------------------------------------------------------------------
+//esp32:esp32:esp32c3
+  [ArduinoDefine( 'VISUINO_ESP32_C3' )]
+  [ArduinoBoardArchitecture_ESP32]
+  [ArduinoInclude( 'Arduino.h' )]
+  [ArduinoInclude( 'Mitov_ESP32.h' )]
+  TArduinoEssentialESP32_C3_Board : TArduinoBoardExtendableImplementation;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_StandardSerial.h' )]
+//  [ArduinoSerialType( 'Serial_' )]
+//  [ArduinoSerialOutputType( 'SerialUSB' )]
+  [Name( 'USB' )]
+  +TArduinoEssentialESP32_C3_USBSerial : TArduinoBasicSpeedSerial;
+//---------------------------------------------------------------------------
+  TArduinoEssentialESP32_C3_ReservedDigitalChannelsBoard : TArduinoEssentialESP32_C3_Board
+
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    SPIChannels : TArduinoSPIChannels
+
+    [Name( 'Channels' )]
+    [ArduinoBoardDefaultChannelName( 'GPIO' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels(  0,  4, TArduinoCombinedPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels(  4,  1, TArduinoCombinedPullDownAnalogDigitalInterruptSPI0Channel, 'GPIO(SPI-SCK)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels(  5,  1, TArduinoCombinedPullDownAnalogDigitalInterruptSPI0Channel, 'GPIO(SPI-MISO)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels(  6,  1, TArduinoCombinedPullDownDigitalInterruptSPI0Channel, 'GPIO(SPI-MOSI)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels(  7,  1, TArduinoCombinedPullDownDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels(  8,  1, TArduinoCombinedPullDownDigitalInterruptI2CChannel, 'GPIO(I2C-SDA)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels(  9,  1, TArduinoCombinedPullDownDigitalInterruptI2CChannel, 'GPIO(I2C-SCL)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 10,  1, TArduinoCombinedPullDownDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 18,  2, TArduinoCombinedPullDownDigitalInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 20,  1, TArduinoCombinedPullDownDigitalInterruptSerial1Channel, 'GPIO(RX1)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 21,  1, TArduinoCombinedPullDownDigitalInterruptSerial1Channel, 'GPIO(TX1)' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoEssentialESP32_C3_Serial_ChannelsBoard : TArduinoEssentialESP32_C3_ReservedDigitalChannelsBoard
+
+    [AddItem( TArduinoEssentialESP32_C3_USBSerial )]
+    [AddItem( TArduinoHardwareSerial )]
+    Serial
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoEssentialESP32_C3_SPI_I2C_ChannelsBoard : TArduinoEssentialESP32_C3_Serial_ChannelsBoard
+
+    [AddItem( TArduinoI2C )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI )]
+    SPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TESP32_C3_Category )]
+  [Category( TESP32_C3_Category )]
+  [Name( 'Generic ESP32 C3' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32c3' )]
+  +TArduinoESP32_C3_Generic_Board : TArduinoEssentialESP32_C3_SPI_I2C_ChannelsBoard
+  
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'HWCDC' )]
+  +TArduinoESP32_C3_Seeed_XIAO_USBSerial : TArduinoEssentialESP32_C3_USBSerial;
+//---------------------------------------------------------------------------
+//  [ParentImage( TESP32Category )]
+  [Name( 'Seeed XIAO ESP32 C3' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:XIAO_ESP32C3' )]
+  [Category( TESP32_C3_Category )]
+  [Category( TSeeeduinoCategory )]
+  +TArduinoESP32_C3_Seeed_XIAO_Board : TArduinoEssentialESP32_C3_ReservedDigitalChannelsBoard, TArduinoAdafruitQT_PyShieldsExtender
+
+    [AddItem( TArduinoESP32WiFiModule )]
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduinoESP32ProcessorModule )]
+//    [AddItem( TArduinoESP32HallSensorModule )]
+    [AddItem( TArduinoESP32BluetoothLEModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoESP32_C3_Seeed_XIAO_USBSerial )]
+    [AddItem( TArduinoHardwareSerial )]
+    Serial
+    
+    [AddItem( TArduinoI2C )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI )]
+    SPIChannels
+
+//	[ArduinoBoard_Add_RemappedChannel(  0,  2,      'Digital/Analog' )]
+//	[ArduinoBoard_Add_RemappedChannel(  1,  3,      'Digital/Analog')]
+//	[ArduinoBoard_Add_RemappedChannel(  2,  4,      'Digital/Analog')]
+//	[ArduinoBoard_Add_RemappedChannel(  3,  5,      'Digital/Analog')]
+    
+//	[ArduinoBoard_Add_RemappedChannel(  4,  6,      'Digital(I2C-SDA)' )]
+//	[ArduinoBoard_Add_RemappedChannel(  5,  7,      'Digital(I2C-SCL)' )]
+
+//	[ArduinoBoard_Add_RemappedChannel(  6, 21,      'Digital(TX1)' )]
+//	[ArduinoBoard_Add_RemappedChannel(  7, 20,      'Digital(RX1)' )]
+    
+//	[ArduinoBoard_Add_RemappedChannel(  8,  8,      'Digital(SPI-SCK)' )]
+//	[ArduinoBoard_Add_RemappedChannel(  9,  9,      'Digital(SPI-MISO)' )]
+//	[ArduinoBoard_Add_RemappedChannel( 10, 10,      'Digital(SPI-MOSI)' )]
+
+
+    [ArduinoBoard_Add_DigitalAnalogChannel(  0, TArduinoCombinedPullDownAnalogDigitalInterruptChannel, 'Digital/Analog[ 0 ]', 'D0' )] // '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel(  1, TArduinoCombinedPullDownAnalogDigitalInterruptChannel, 'Digital/Analog[ 1 ]', 'D1' )] // '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel(  2, TArduinoCombinedPullDownAnalogDigitalInterruptChannel, 'Digital/Analog[ 2 ]', 'D2' )] // '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel(  3, TArduinoCombinedPullDownAnalogDigitalInterruptChannel, 'Digital/Analog[ 3 ]', 'D3' )] // '5' )]
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  4, TArduinoCombinedPullDownDigitalInterruptI2CChannel, 'Digital[ 4 ](I2C-SDA)', 'D4' )] // '6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel(  5, TArduinoCombinedPullDownDigitalInterruptI2CChannel, 'Digital[ 5 ](I2C-SCL)', 'D5' )] // '7' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel(  6, TArduinoCombinedPullDownDigitalInterruptSerial1Channel, 'Digital[ 6 ](TX1)', 'D6' )] // '21' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel(  7, TArduinoCombinedPullDownDigitalInterruptSerial1Channel, 'Digital[ 7 ](RX1)', 'D7' )] // '20' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel(  8, TArduinoCombinedPullDownDigitalInterruptSPI0Channel, 'Digital[ 8 ](SPI-SCK)', 'D8' )] // '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel(  9, TArduinoCombinedPullDownDigitalInterruptSPI0Channel, 'Digital[ 9 ](SPI-MISO)', 'D9' )] // '9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoCombinedPullDownDigitalInterruptSPI0Channel, 'Digital[ 10 ](SPI-MOSI)', 'D10' )] // '10' )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

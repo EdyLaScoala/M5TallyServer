@@ -1,0 +1,316 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoColorSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoColorSetValueElements )]
+  [ArduinoHelpPostfix( '(Color Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicColorSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [CreateName( 'ColorValue' )]
+  [Name( 'Color Value' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+  +TArduinoColorValue : TArduinoCommonClockedColorSource, TArduinoValue_Extender
+
+    Value  : TColor = Black
+    Elements : TArduinoColorSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [ArduinoContructorParameter( 'Mitov::TColor()' )]
+  [Name( 'Compare Color Value' )]
+  [CreateName( 'CompareValue' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoColorCompareValue : TArduinoCommonColorSink
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingSetter]
+    [ArduinoBindingPostfix( '_Binding' )]
+    Value : TColor = Black
+
+    [ArduinoTransformImplementation( 'CompareType' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [ArduinoContructorParameter( 'Mitov::TColor()' )]
+  [Name( 'Color Toggle Switch' )]
+  [CreateName( 'ColorToggleSwitch' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoColorToggleSwitch : TArduinoCommonColorSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoColorSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color Toggle Demux' )]
+  [CreateName( 'ColorToggleDemux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoColorToggleDemux : TArduinoCommonColorSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoColorSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [Name( 'Color On/Off Switch' )]
+  [CreateName( 'ColorSwitch' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoColorSwitch : TArduinoCommonColorSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [Name( 'Color Mux(Multi channel Switch)' )]
+  [CreateName( 'ColorMux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoColorMux : TArduinoColorMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnly' )]
+  [ArduinoContructorParameter( '''\0''' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'Color Change Only' )]
+  [Category( TColorToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TColor' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoColorChangeOnly : TArduinoCommonColorFilter;
+//---------------------------------------------------------------------------
+  TArduinoBasicColorSource : TArduinoCommonColorSource
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    [ArduinoFullColor]
+    InitialValue : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::AnalogToColor' )]
+  [CreateName( 'AnalogToColor' )]
+  [Name( 'Analog To Color' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoAnalogToColor : TArduinoBasicColorSource
+
+    [OWPrimaryPin]
+    RedInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    GreenInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    BlueInputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::ColorToAnalog' )]
+  [CreateName( 'ColorToAnalog' )]
+  [Name( 'Color To Analog' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  +TArduinoColorToAnalog : TArduinoCommonColorSink
+
+    [OWPrimaryPin]
+    RedOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    GreenOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    BlueOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Color.h' )]
+  [ArduinoClass( 'Mitov::CommonRandomGenerator' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TColor' )]
+  [ArduinoTemplateParameter( '1_BASE', 'Mitov::RandomColorImplementation' )]
+  [CreateName( 'RandomColor' )]
+  [Name( 'Random Color' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+  +TArduinoRandomColor : TArduinoCommonClockedEnableColorSource
+
+    [ArduinoFullColor]
+    Min : TColor = Black
+
+    [ArduinoFullColor]
+    Max : TColor = White
+
+    Seed : Integer = 0
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'ColorMultiSource' )]
+  [Name( 'Color Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoColorMultiSource : TArduinoCommonColorSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoColorSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoColorSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatColor' )]
+  [Name( 'Repeat Color' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatColor : TArduinoCommonColorFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RampToValue.h' )]
+  [ArduinoClass( 'Mitov::RampToColorValue' )]
+  [CreateName( 'RampToValue' )]
+  [Name( 'Ramp To Color Value' )]
+  [Category( TArduinoColorFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoRampToColorValue : TArduinoCommonColorFilter
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInitialValue' )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    [ArduinoFullColor]
+    InitialValue : TColor = Black
+
+    [MinValue( 0 )]
+    [ReplaceValue(0.0, 0.00001)]
+    Slope : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color Multi-Source Merger' )]
+  [CreateName( 'ColorMultiMerger' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoColorMultiMerger : TArduinoColorMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'Mitov::TColor' )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TColor' )]
+  [CreateName( 'RememberColor' )]
+  [Name( 'Remember Color Value' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoRememberColor : TArduinoCommonColorFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( TColor, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TColor' )]
+  [ArduinoContructorParameter( 'Mitov::TColor()' )]
+  [CreateName( 'ColorSnapshot' )]
+  [Name( 'Color Snapshot' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoColorSnapshot : TArduinoCommonColorFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+  TArduinoColorBasicValueElement : TArduinoBasicColorSetValueElement
+
+    Value : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [ParentImage( TArduinoColorValue )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoColorSetValueElement : TArduinoColorBasicValueElement
+
+    [OWPinGroup( TArduinoColorSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoColorStateSetValueElement : TArduinoColorBasicValueElement
+
+    [OWPinGroup( TArduinoColorStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [Name( 'Color Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'ColorDemux' )]
+  [Category( TColorToolbarCategory )]
+  +TArduinoColorDemux : TArduinoCommonColorSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoColorSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoColorSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::TColor &', 'AValue' )]
+  [Name( 'GetValue' )]
+  [ArduinoCallChainIndex]
+  ArduinoColorValueArrayGetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'Mitov::TColor *', 'AValue' )]
+  [Name( 'ApplyValues' )]
+  ArduinoColorValueArrayApplyValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoColorValueArrayGetValueCallChain]
+  [ArduinoColorValueArrayApplyValueCallChain]
+  TArduinoColorValueElements : TArduinoColorValueBasicElements;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [Name( 'Color Array' )]
+  [Category( TArduinoColorDataSourcesToolbarCategory )]
+  +TArduinoColorValueArray : TArduinoCommonClockedColorSource, TArduinoValueArray_Extender
+
+    Elements : TArduinoColorValueElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

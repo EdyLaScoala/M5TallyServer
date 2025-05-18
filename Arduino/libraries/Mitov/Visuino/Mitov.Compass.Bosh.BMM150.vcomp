@@ -1,0 +1,79 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Bosh_BMM150.h' )]
+  [ArduinoClass( 'Mitov::BoshBMM150' )]
+  [Name( 'Compass' )]
+  [ArduinoStart( 'SystemStartCommon' )]
+  TArduinoCompassBoshBMM150_Extender : Extender
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'X (uT)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y (uT)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Z (uT)', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '6' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '15' )]
+    [PropertyListDesignValue( '20' )]
+    [PropertyListDesignValue( '25' )]
+    [PropertyListDesignValue( '30' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateOperationMode' )]
+    SamplingRate : Unsigned = 10
+
+    [ValueRange( 1, 513 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateRepetitionsXY' )]
+    [Name( 'Repeat X/Y' )]
+    RepeatXY : Unsigned = 4
+
+    [ValueRange( 1, 256 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateRepetitionsZ' )]
+    [Name( 'Repeat Z' )]
+    RepeatZ : Unsigned = 14
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  TArduinoCompassBoshBMM150_Component_Extender : TArduinoCompassBoshBMM150_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [Name( 'Bosh BMM150 Compass(I2C)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2CNoSetHighBit' )]
+  +TArduinoCompassBoshBMM150_I2C : TArduinoI2CAddressSensorPinClockedEnableComponent, TArduinoCompassBoshBMM150_Component_Extender
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin
+
+    [DesignRange( $10, $13 )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address = $10
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [Name( 'Bosh BMM150 Compass(SPI)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPI' )]
+  +TArduinoCompassBoshBMM150_SPI : TArduinoClockedEnableComponent, TArduinoCompassBoshBMM150_Component_Extender
+
+    [OWPrimaryPin]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCompassBoshBMM150_BasicElement : TArduinoCodeEnabledClockedPersistent, TArduinoCompassBoshBMM150_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

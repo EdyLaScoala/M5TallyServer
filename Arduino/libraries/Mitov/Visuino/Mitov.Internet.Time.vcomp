@@ -1,0 +1,55 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Internet_Time.h' )]
+  [ArduinoClass( 'Mitov::TArduinoTimeDaylightOffset' )]
+  TArduinoTimeDaylightOffset : TArduinoCodeDisabledPersistent
+  
+    [NamePostfix( '(H)' )]
+    Offset : Single = -1.0
+    
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoDateTimeDataSourcesToolbarCategory )]
+  TArduinoBasicNetworkTime : TArduinoCommonEnableClockedDateTimeSource
+
+    SetPort : Boolean = True
+    BaseDate : TDateTime = 2.0
+    
+    DaylightOffset : TArduinoTimeDaylightOffset
+
+    [ValueRange( -12.0, 12.0 )]
+    [ NamePostfix( '(H)' ) ]
+    TimeZoneOffset : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Internet_Time.h' )]
+  [ArduinoClass( 'Mitov::InternetTime' )]
+  [Name( 'Internet Time Protocol' )]
+  [CreateName( 'InternetTime' )]
+  [ArduinoVariable( Unsigned, 3, 'FIndex' )]
+  +TArduinoInternetTime : TArduinoBasicNetworkTime
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoPopulateSocket( SetPort, 'Port' )]
+    [ArduinoPopulateSocket( SetPort, 'RemotePort' )]
+    SocketOutputPin : TOWArduinoUDP_TCPClientSocketSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Network_Time.h' )]
+  [ArduinoClass( 'Mitov::NetworkTime' )]
+  [Name( 'Network Time Protocol' )]
+  [CreateName( 'NetworkTime' )]
+  +TArduinoNetworkTime : TArduinoBasicNetworkTime
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoPopulateSocket( SetPort, 'Port' )]
+    [ArduinoPopulateSocket( SetPort, 'RemotePort' )]
+    SocketOutputPin : TOWArduinoUDPSocketSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

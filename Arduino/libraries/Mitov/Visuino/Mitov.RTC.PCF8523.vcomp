@@ -1,0 +1,213 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoPCF8523ClockOutFrequency : Enum
+
+    pcf23co32768Hz
+    pcf23co16384Hz
+    pcf23co8192Hz
+    pcf23co4096Hz
+    pcf23co1024Hz
+    pcf23co32Hz
+    pcf23co1Hz
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoPCF8523ClockOutElement' )]
+  TArduinoPCF8523ClockOutElement : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClockOut' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClockOut' )]
+    Frequency : TArduinoPCF8523ClockOutFrequency = pcf23co32768Hz
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoPCF8523TimerClockFrequency : Enum
+
+    pcf23t4096Hz
+    pcf23t64Hz
+    pcf23t1Hz
+    pcf23t1_60th_Hz
+    pcf23t1_3600th_Hz
+    pcf23tAuto 
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPinDefinePrefix( '_MITOV_PCF8523' )]
+  *TArduinoPCF8523BasicTimerElement : TArduinoCodeEnabledPersistent
+
+    [ArduinoPinConnectDefine( '_RTC_TIMER_CLOCK_PIN_' )]
+    TimerOutputPin : TOWArduinoClockSourcePin
+
+    ClockFrequency : TArduinoPCF8523TimerClockFrequency = pcf23tAuto
+
+    [ValueRange( 0, 15300 )]
+    [ NamePostfix( '(S)' ) ]
+    Period : Single = 1.0
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClockOut' )]
+    PulseInterruptEnabled : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl2' )]
+    InterruptEnabled : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoPCF8523SecondAndTimerAElement' )]
+  TArduinoPCF8523SecondAndTimerAElement : TArduinoPCF8523BasicTimerElement
+
+    [ArduinoPinConnectDefine( '_RTC_SECOND_CLOCK_PIN_' )]
+    SecondClockOutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimerA' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimerA' )]
+    ClockFrequency
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimerA' )]
+    Period
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClockOut' )]
+    IsWatchdog : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl1' )]
+    SecondInterruptEnabled : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoPCF8523TimerBElement' )]
+  TArduinoPCF8523TimerBElement : TArduinoPCF8523BasicTimerElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimerB' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimerB' )]
+    ClockFrequency
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimerB' )]
+    Period
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimerB' )]
+    [ValueRange( 46.875, 218.750 )]
+    [ NamePostfix( '(mS)' ) ]
+    LowPulseWidth : Single = 46.875
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoRTCPCF8523Offset' )]
+  TArduinoRTCPCF8523Offset : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateOffset' )]
+    PerMinute : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateOffset' )]
+    [ValueRange( -64, 63 )]
+    Value : Integer = 0
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl1' )]
+    CorrectionInterruptEnabled : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCPCF8523PowerSwitchMode : Enum
+
+    rtc23psmStandard
+    rtc23psmDirect
+    rtc23psmSinglePower
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPinDefinePrefix( '_MITOV_PCF8523' )]
+  [ArduinoClass( 'Mitov::TArduinoRTCPCF8523PowerManagement' )]
+  *TArduinoRTCPCF8523PowerManagement : TArduinoCodePersistent
+
+    [ArduinoPinConnectDefine( '_RTC_LOW_VOLTAGE_PIN_' )]
+    [ArduinoChangeOnlyPin]
+    BatteryLowOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoPinConnectDefine( '_RTC_POWER_SWITCHED_PIN_' )]
+    PowerSwitchedOutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl3' )]
+    SwitchMode : TArduinoRTCPCF8523PowerSwitchMode = rtc23psmSinglePower
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl3' )]
+    BatteryLowInterruptEnabled : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl3' )]
+    PowerSwitchInterruptEnabled : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCPCF8523_Extender : Extender
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [ArduinoPinConnectDefine( '_RTC_INTEGRITY_PIN_' )]
+    IntegrityCompromisedOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoPinConnectDefine( '_RTC_ALARM_PIN_' )]
+    AlarmOutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateControl1' )]
+    Capacitor12_6 : Boolean = False
+
+    Offset : TArduinoRTCPCF8523Offset
+    Alarm : TArduinoRTCPCF8563Alarm
+    SecondAndTimerA : TArduinoPCF8523SecondAndTimerAElement
+    TimerB : TArduinoPCF8523TimerBElement
+    ClockOut : TArduinoPCF8523ClockOutElement
+    PowerManagement : TArduinoRTCPCF8523PowerManagement
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RTC_PCF8523.h' )]
+  [ArduinoClass( 'Mitov::RTC_PCF8523' )]
+  [Name( 'Real Time Alarm Clock(RTC) PCF8523' )]
+  [ArduinoWebKeywords( 'PCF8523 RTC' )]
+  [ArduinoPinDefinePrefix( '_MITOV_PCF8523' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  +TArduinoRTCPCF8523 : TArduinoRTC_I2C, TArduinoRTCPCF8523_Extender
+
+    [DesignRange( $68, $68 )]
+    Address : TArduinoUInt8 = $68
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_RTC_PCF8523.h' )]
+  [ArduinoClass( 'Mitov::RTC_PCF8523' )]
+  [ArduinoPinDefinePrefix( '_MITOV_PCF8523' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<5, uint8_t, 104 >' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicRTCModule )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  TArduinoRTCPCF8523ShieldElement : TArduinoCodePersistent, TArduinoRTCPCF8523_Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+    [ArduinoPinConnectDefine( '_RTC_CLOCK_PIN_' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [ArduinoPinConnectDefine( '_RTC_SET_PIN_' )]
+    SetInputPin : TOWArduinoDateTimeSinkPin
+
+    Enabled : Boolean = True
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoRTCElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

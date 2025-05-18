@@ -1,0 +1,127 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Digistump' )]
+  TDigistumpCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Atiny85' )]
+  [Category( TDigistumpCategory )]
+  [AlternateCategory( TAtiny85Category )]
+  [ParentImage( TAtiny85Category )]
+  TDigistumpAtiny85Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Atiny167' )]
+  [Category( TDigistumpCategory )]
+  [AlternateCategory( TAtiny167Category )]
+  [ParentImage( TAtiny167Category )]
+  TDigistumpATtiny167Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Pemi Technology (Picoduino)' )]
+  TPicoduinoCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Atiny85' )]
+  [Category( TPicoduinoCategory )]
+  [AlternateCategory( TAtiny85Category )]
+  [ParentImage( TAtiny85Category )]
+  TPicoduinoAtiny85Category : TClassCategory;
+//---------------------------------------------------------------------------
+  TArduino_Digispark_Type_Basic_Board : TArduino_Basic_ATtiny_Board
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 5, 0,  1, TArduinoCombinedAnalogNoPullDigitalChannel, 'Digital(Reset)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 2,  1, TArduinoCombinedAnalogNoPullDigitalPWMChannel, 'Digital(USB-)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3, 3,  1, TArduinoCombinedAnalogNoPullDigitalChannel, 'Digital(USB+)' )]
+    [Name('Channels')]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_DIGISPARK' )]
+  [ArduinoBoardCompileParams( 'digistump:avr:digispark-tiny' )]
+  [ArduinoBoardCompileParams( 'digistump:avr:digispark-tiny16' )]
+  [ArduinoBoardCompileParams( 'digistump:avr:digispark-tiny1' )]
+  [ArduinoBoardCompileParams( 'digistump:avr:digispark-tiny8' )]
+  [Category( TDigistumpAtiny85Category )]
+  TArduino_Digispark_Basic_Board : TArduino_Digispark_Type_Basic_Board
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 2, 1,  1, TArduinoCombinedAnalogNoPullDigitall2C0SPI0PWMChannel, 'Digital(I2C-SCL)' )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digispark (Model A)' )]
+  +TArduino_Digispark_A_Board : TArduino_Digispark_Basic_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(I2C-MISO)(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 1, TArduinoBasicDigitalPWMI2C0SPI0Channel, 'Digital(I2C-MOSI)(I2C-SDA)' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digispark (Model B)' )]
+  +TArduino_Digispark_B_Board : TArduino_Digispark_Basic_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(I2C-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 1, TArduinoBasicDigitalPWMI2C0SPI0Channel, 'Digital(I2C-MOSI)(I2C-SDA)(LED)' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digispark Pro' )]
+  [ParentImage( TDigistumpCategory )]
+  [ArduinoDefine( 'VISUINO_DIGISPARK_PRO' )]
+  [Category( TDigistumpATtiny167Category )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'digistump:avr:digispark-pro' )]
+  [ArduinoBoardCompileParams( 'digistump:avr:digispark-pro32' )] 
+  [ArduinoBoardCompileParams( 'digistump:avr:digispark-pro64' )]
+  +TArduino_Digispark_Pro_Board : TArduinoBoardExtendableImplementation
+  
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+  
+    [AddItem( TArduinoEEPROMModule )]
+    Modules : TArduinoModules
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [AddItem( TArduinoHardwareSerial )]
+    Serial : TArduinoSerials
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 1, TArduinoBasicDigitalPWMI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2, 1, TArduinoBasicDigitalPWMI2C0Channel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  3,  3,  1, TArduinoCombinedAnalogNoPullDigitalPWMChannel, 'Digital(USB+)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4, 1, TArduinoBasicDigitalPWMChannel, 'Digital(USB-)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  5,  5,  1, TArduinoCombinedAnalogNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  6,  6,  1, TArduinoCombinedAnalogNoPullDigitalSerial0Channel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  7,  7,  1, TArduinoCombinedAnalogNoPullDigitalSerial0Channel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  8,  8,  1, TArduinoCombinedAnalogNoPullDigitalPWMSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels(  9,  9,  1, TArduinoCombinedAnalogNoPullDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 10, 10,  1, TArduinoCombinedAnalogNoPullDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 11, 11,  1, TArduinoCombinedAnalogNoPullDigitalSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 12, 12,  1, TArduinoCombinedAnalogNoPullDigitalChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+  
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Picoduino' )]
+  [ArduinoDefine( 'VISUINO_DIGISPARK' )]
+  [ArduinoBoardCompileParams( 'digistump:avr:digispark-tiny' )]
+  [Category( TPicoduinoAtiny85Category )]
+  [ParentImage( TPicoduinoAtiny85Category )]
+  +TArduino_Picoduino_Board : TArduino_Digispark_Type_Basic_Board
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 2, 1,  1, TArduinoCombinedAnalogNoPullDigitall2C0SPI0PWMChannel, 'Digital(I2C-SCL)(BLUE)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(I2C-MISO)(GREEN)(Relay)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 1, TArduinoBasicDigitalPWMI2C0SPI0Channel, 'Digital(I2C-MOSI)(I2C-SDA)(RED)' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

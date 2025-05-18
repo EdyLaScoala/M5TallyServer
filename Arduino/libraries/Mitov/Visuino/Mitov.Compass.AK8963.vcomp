@@ -1,0 +1,41 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoCompassAK8963Mode : TArduinoMPU9250CompassMode
+    
+    cmExternalTrigger
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_Compass_AK8963.h' )]
+  [ArduinoClass( 'Mitov::CompassAK8963' )]
+  [Name( 'Compass AK8963 I2C' )]
+  [ArduinoWebKeywords( 'AK8963' )]
+  [ArduinoStart]
+  +TArduinoCompassAK8963 : TArduinoI2CClockedEnableComponent, TArduinoCompass_Extender
+
+    [ArduinoUseBindingCheckSetter( 'UpdateCompassControlReg' )]
+    Enabled
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+    OverflowOutputPin : TOWArduinoClockSourcePin
+
+    [DesignRange( $0C, $0F )]
+    Address : TArduinoUInt8 = $0C
+
+    [ArduinoUseBindingCheckSetter( 'UpdateCompassSelfTestReg' )]
+    SelfTest : Boolean = False
+
+    [Name( '16 bit resolution' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateCompassControlReg' )]
+    HighResolution : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateCompassControlReg' )]
+    Mode : TArduinoCompassAK8963Mode = cm100Hz
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

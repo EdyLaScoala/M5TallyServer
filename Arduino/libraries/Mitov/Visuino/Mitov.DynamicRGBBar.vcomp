@@ -1,0 +1,53 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DynamicRGBBar.h' )]
+  [ArduinoClass( 'Mitov::MitovDynamicRGBBar' )]
+  [CreateName( 'RGBBarDisplay' )]
+  [Name( 'Dynamic RGB LED Bar Display' )]
+  [Category( TArduinoDigitalDisplaysToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  +TArduinoDynamicRGBBar : TArduinoComponent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Red', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Green', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Blue', TOWArduinoAnalogSourcePin )]
+    ColorOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoColorSinkPin )]
+    [OWResizeProperty( 'CountPixels' )]
+    [OWAutoManagePinList( TOWArduinoColorSinkPin )]
+    InputPins : TOWArduinoDynamicPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWResizeProperty( 'CountPixels' )]
+    [OWAutoManagePinList( TOWArduinoDigitalSourcePin )]
+    PixelOutputPins : TOWArduinoDynamicPinList
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInverted' )]
+    Enabled : Boolean = True
+
+    [OWExcludeBindings]
+    [ArduinoExclude]
+    [ArduinoTemplateParameterConst]
+    [ValueRange( 1, 4000 )]
+    CountPixels : Unsigned = 8
+
+    [OWExcludeBindings]
+    [ArduinoParam]
+    [ArduinoExclude]
+    InitialValue : TColor = Black
+
+    [ NamePostfix( '(uS)' ) ]
+    RefreshInterval : Unsigned = 1000
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInverted' )]
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

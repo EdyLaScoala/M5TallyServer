@@ -1,0 +1,333 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoCommonOrientation3DSource : TArduinoComponent
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoOrientation3DSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonOrientation3DSink : TArduinoComponent
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoOrientation3DSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonOrientation3DFilter : TArduinoCommonOrientation3DSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoOrientation3DSinkPin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicOrientation3DSource : TArduinoCommonOrientation3DSource
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TArduino3DOrientation = Up
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnly' )]
+  [ArduinoContructorParameter( 'Mitov::TArduino3DOrientation::Up' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( '3D Orientation Change Only' )]
+  [Category( T3DToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TArduino3DOrientation::TArduino3DOrientation' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoOrientation3DChangeOnly : TArduinoCommonOrientation3DFilter;
+//---------------------------------------------------------------------------
+  [CreateName( 'Orientation3DMultiSource' )]
+  [Name( '3D Orientation Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( T3DToolbarCategory )]
+  +TArduinoOrientation3DMultiSource : TArduinoCommonOrientation3DSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoOrientation3DSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoOrientation3DSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Repeat3DOrientation' )]
+  [Name( 'Repeat 3D Orientation' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatOrientation3D : TArduinoCommonOrientation3DFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'Mitov::TArduino3DOrientation::TArduino3DOrientation' )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TArduino3DOrientation::TArduino3DOrientation' )]
+  [CreateName( 'RememberOrientation3D' )]
+  [Name( 'Remember 3D Orientation Value' )]
+  [Category( T3DToolbarCategory )]
+  +TArduinoRememberOrientation3D : TArduinoCommonOrientation3DFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( TArduino3DOrientation, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TArduino3DOrientation = Up
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TArduino3DOrientation::TArduino3DOrientation' )]
+  [ArduinoContructorParameter( 'Mitov::TArduino3DOrientation::Up' )]
+  [CreateName( 'Orientation3DSnapshot' )]
+  [Name( '3D Orientation Snapshot' )]
+  [Category( T3DToolbarCategory )]
+  +TArduinoOrientation3DSnapshot : TArduinoCommonOrientation3DFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+  TArduinoCommonOrientation2DSource : TArduinoComponent
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoOrientation2DSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonOrientation2DSink : TArduinoComponent
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoOrientation2DSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonOrientation2DFilter : TArduinoCommonOrientation2DSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoOrientation2DSinkPin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicOrientation2DSource : TArduinoCommonOrientation2DSource
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TArduinoGraphicsOrientation = goUp
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnly' )]
+  [ArduinoContructorParameter( 'Mitov::goUp' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( '2D Orientation Change Only' )]
+  [Category( T2DToolbarCategory )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TArduinoGraphicsOrientation' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoOrientation2DChangeOnly : TArduinoCommonOrientation2DFilter;
+//---------------------------------------------------------------------------
+  [CreateName( 'Orientation2DMultiSource' )]
+  [Name( '2D Orientation Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( T2DToolbarCategory )]
+  +TArduinoOrientation2DMultiSource : TArduinoCommonOrientation2DSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoOrientation2DSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoOrientation2DSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Repeat2DOrientation' )]
+  [Name( 'Repeat 2D Orientation' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatOrientation2D : TArduinoCommonOrientation2DFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'Mitov::TArduinoGraphicsOrientation' )]
+  [ArduinoTemplateParameter( 'DATA', 'Mitov::TArduinoGraphicsOrientation' )]
+  [CreateName( 'RememberOrientation2D' )]
+  [Name( 'Remember 2D Orientation Value' )]
+  [Category( T2DToolbarCategory )]
+  +TArduinoRememberOrientation2D : TArduinoCommonOrientation2DFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( TArduinoGraphicsOrientation, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : TArduinoGraphicsOrientation = goUp
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::TArduinoGraphicsOrientation' )]
+  [ArduinoContructorParameter( 'Mitov::goUp' )]
+  [CreateName( 'Orientation2DSnapshot' )]
+  [Name( '2D Orientation Snapshot' )]
+  [Category( T2DToolbarCategory )]
+  +TArduinoOrientation2DSnapshot : TArduinoCommonOrientation2DFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoOrientation2DSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoOrientation2DSetValueElements )]
+  [ArduinoHelpPostfix( '(2D Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicOrientation2DSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoOrientation2DBasicValueElement : TArduinoBasicOrientation2DSetValueElement
+
+    Value : TArduinoGraphicsOrientation = goUp
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  [ParentImage( TArduinoOrientation2DValue )]
+  +TArduinoOrientation2DSetValueElement : TArduinoOrientation2DBasicValueElement
+
+    [OWPinGroup( TArduinoOrientation2DSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoOrientation2DStateSetValueElement : TArduinoOrientation2DBasicValueElement
+
+    [OWPinGroup( TArduinoOrientation2DStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TArduinoGraphicsOrientation' )]
+  [CreateName( 'Orientation2DValue' )]
+  [Name( '2D Orientation Value' )]
+  [Category( TArduino2DDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoOrientation2DValue : TArduinoCommonOrientation2DSource, TArduinoValue_Extender
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    Value : TArduinoGraphicsOrientation = goUp
+    Elements : TArduinoOrientation2DSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoOrientation3DSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoOrientation3DSetValueElements )]
+  [ArduinoHelpPostfix( '(3D Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicOrientation3DSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoOrientation3DBasicValueElement : TArduinoBasicOrientation3DSetValueElement
+
+    Value : TArduino3DOrientation = Up
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  [ParentImage( TArduinoOrientation3DValue )]
+  +TArduinoOrientation3DSetValueElement : TArduinoOrientation3DBasicValueElement
+
+    [OWPinGroup( TArduinoOrientation3DSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoOrientation3DStateSetValueElement : TArduinoOrientation3DBasicValueElement
+
+    [OWPinGroup( TArduinoOrientation3DStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TArduino3DOrientation::TArduino3DOrientation' )]
+  [CreateName( 'Orientation3DValue' )]
+  [Name( '3D Orientation Value' )]
+  [Category( TArduino3DDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoOrientation3DValue : TArduinoCommonOrientation3DSource, TArduinoValue_Extender
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    Value : TArduino3DOrientation = Up
+    Elements : TArduinoOrientation3DSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToOrientation3D' )]
+  [Name( 'Digital To 3D Orientation' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToOrientation3D : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoOrientation3DSourcePin
+
+    TrueValue : TArduino3DOrientation = Down
+    FalseValue : TArduino3DOrientation = Up
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToOrientation2D' )]
+  [Name( 'Digital To 2D Orientation' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToOrientation2D : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoOrientation2DSourcePin
+
+    TrueValue : TArduinoGraphicsOrientation = goDown
+    FalseValue : TArduinoGraphicsOrientation = goUp
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Orientation3DTo2D' )]
+  [Name( '3D To 2D Orientation' )]
+  [Category( T2DToolbarCategory )]
+  [Category( T3DToolbarCategory )]
+  [ArduinoClass( 'Mitov::Orientation3DTo2D' )]
+  [ArduinoStart]
+  +TArduinoOrientation3DTo2D : TArduinoCommonOrientation2DSource
+  
+    [OWPrimaryPin]
+    InputPin : TOWArduinoOrientation3DSinkPin
+
+    [OWExcludeBindings]
+//    [ArduinoFlexibleVariable]
+    InitialValue : TArduinoGraphicsOrientation = goUp
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

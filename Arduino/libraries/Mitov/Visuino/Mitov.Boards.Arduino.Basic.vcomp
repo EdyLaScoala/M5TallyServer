@@ -1,0 +1,58 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  TArduinoProcessorModuleBasicOperation : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoProcessorModuleBasicCommonClockedOperation : TArduinoProcessorModuleBasicOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicProcessorModuleOperations )]
+  [ArduinoHelpPostfix( '(Arduino Processor Operations)' )]
+  TArduinoProcessorModuleBasicClockedOperation : TArduinoProcessorModuleBasicCommonClockedOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Reset' )]
+  [CreateName( 'Reset' )]
+  [ArduinoInclude( 'Mitov_Arduino_Processor.h' )]
+  [ArduinoClass( 'Mitov::ArduinoProcessorReset' )]
+  +TArduinoProcessorModuleResetOperation : TArduinoProcessorModuleBasicClockedOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Get Available RAM' )]
+  [CreateName( 'Available RAM' )]
+  [ArduinoInclude( 'Mitov_Arduino_Processor.h' )]
+  [ArduinoClass( 'Mitov::GetArduinoAvailableRAM' )]
+  +TArduinoProcessorAvailableRAMOperation : TArduinoProcessorModuleBasicClockedOperation
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Get Unique ID' )]
+  [CreateName( 'Get Unique ID' )]
+  [ArduinoInclude( 'ArduinoUniqueID.h', 'ArduinoUniqueID', 'https://github.com/ricaun/ArduinoUniqueID' )]
+  [ArduinoInclude( 'Mitov_ProcessorModuleGetIDOperation.h' )]
+  [ArduinoClass( 'Mitov::TArduinoProcessorModuleGetIDOperation' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoESP32BluetoothLERemoteDeviceID )]
+  *TArduinoProcessorModuleBasicGetIDOperation : TArduinoProcessorModuleBasicCommonClockedOperation
+  
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    OutputPin : TOWArduinoByteSourcePin
+    
+    Enabled : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

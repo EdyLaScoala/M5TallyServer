@@ -1,0 +1,181 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'SetValue' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  TArduino_TinyLab_Leonardo_SetButtonsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x68>' )]
+  [ArduinoI2C( 0 )]
+  +TArduino_TinyLab_Leonardo_RTCDS1307Module : TArduinoRTCDS1307BasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<88, uint8_t, 0x20 >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.BacklightPositive', 'Mitov::ConstantProperty<483, bool, true >' )]
+  [ArduinoTemplateParameter( 'Columns', 'Mitov::ConstantProperty<115, uint32_t, 16>' )]
+  [ArduinoTemplateParameter( 'Rows', 'Mitov::ConstantProperty<116, uint32_t, 2>' )]
+  [ArduinoVariable( Unsigned, 2, 'FCursorLine' )]
+  [ArduinoVariable( Unsigned, 5, 'FCursorPos' )]
+  [ArduinoI2C( 0 )]
+  [Name( 'Display (LCD) - I2C' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduino_TinyLab_Leonardo_BackpackLiquidCrystalDisplayModule : TArduinoAdafruitBackpackLiquidCrystalDisplay_BasicModule_I2C;
+//---------------------------------------------------------------------------
+  [Name( 'Display (LED) - SPI' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInclude( 'Mitov_TinyLab_Leonardo_LEDDisplay.h' )]
+  [ArduinoClass( 'Mitov::TinyLab_MaximLedController' )]
+  [ArduinoTemplateParameter( '0_SPI_TYPE_PIN', '::Mitov::TinyLab::Types::DisplaySoftwareSPI' )]
+  [ArduinoTemplateParameter( '1_SPI_NAME_PIN', '::Mitov::TinyLab::Instances::DisplaySoftwareSPI' )]
+  [ArduinoTemplateParameter( 'ChipSelectOutputPin', '  Mitov::DigitalPin_DirectBoardPinImplementation<11>' )]
+  [ArduinoShieldPin( '10' )]
+  [ArduinoShieldPin( '11' )]
+  [ArduinoShieldPin( '12' )]
+  +TArduino_TinyLab_Leonardo_MaximLedDisplay7SegmentModule : TArduinoMaximLedBasic7SegmentModule;  
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '4' )]
+  [ArduinoShieldPin( '4' )]
+  +TArduino_TinyLab_Leonardo_MicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( 'ChipEnableOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<9>' )]
+  [ArduinoTemplateParameter( 'ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<8>' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoShieldPin( '9' )]
+  [ArduinoShieldPin( '8' )]
+  [ArduinoSPI( 0 )]
+  +TArduino_TinyLab_Leonardo_NRF24L01Module : TArduinoNRF24L01BasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x50>' )]
+  [ArduinoI2C( 0 )]
+  [CreateName( 'EEPROM (I2C)' )]
+  +TArduino_TinyLab_Leonardo_EEPROMI2CModule : TArduinoEEPROMI2CBasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TinyLab_Leonardo_Modules.h' )]
+  [ArduinoClass( 'Mitov::TinyLab_Leonardo_RotaryEncoderSensor_Module' )]
+  [ArduinoTemplateParameter( '0_B_0_TYPE', 'BoardDeclarations::Types::ArduinoAnalogInputChannel_AsDigital_7' )]
+  [ArduinoTemplateParameter( '0_B_1_NAME', 'BoardDeclarations::Instances::ArduinoAnalogInputChannel_AsDigital_7' )]
+  [ArduinoAddInterruptHandler( '7', 'InterruptHandlerA', True, True )]
+  [ArduinoUseBoardChannelOutput( '6' )]
+  [ArduinoShieldPin( '6' )]
+  [ArduinoShieldPin( '7' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [TArduino_TinyLab_Leonardo_SetButtonsCallChain]
+  +TArduino_TinyLab_Leonardo_RotaryEncoderSensor_Module : TArduinoRotaryEncoderSensorInterrupt_BasicModule
+  
+    PressOutputPin : TOWArduinoDigitalSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '15' )]
+  [ArduinoShieldPin( '15' )]
+  +TArduino_TinyLab_Leonardo_BuzzerModule : TArduinoBasicBuzzerModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '0' )]
+  +TArduino_TinyLab_Leonardo_PotentiometerModule : TArduinoBasicPotentiometerModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TinyLab_Leonardo_Modules.h' )]
+  [ArduinoClass( 'Mitov::TArduino_TinyLab_Leonardo_LightSensorModule' )]
+  +TArduino_TinyLab_Leonardo_LightSensorModule : TArduinoBasicLightSensorModule
+  
+    InLux : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '14' )]
+  [ArduinoTemplateParameter( 'C_RANGE', 'PWMRANGE' )]
+  +TArduino_TinyLab_Leonardo_MotorModule : TArduinoBasicSimpleMotorBasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TinyLab_Leonardo_Modules.h' )]
+  [ArduinoClass( 'Mitov::TArduino_TinyLab_Leonardo_ButtonsModule' )]
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoTemplateParameter( 'Button1', 'Mitov::TDefinedDigitalInputPin<9>' )]
+  [ArduinoTemplateParameter( 'Button2', 'Mitov::TDefinedDigitalInputPin<8>' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoEVIVEButtonsModule )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [TArduino_TinyLab_Leonardo_SetButtonsCallChain]
+  +TArduino_TinyLab_Leonardo_ButtonsModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( 'Button S1', TOWArduinoDigitalInputSourcePin, '9' )]
+    [OWAddArduinoBoardDigitalPin( 'Button S2', TOWArduinoDigitalInputSourcePin, '8' )]
+    [OWAddPin( 'Button S3', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'Button S4', TOWArduinoDigitalSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TexasInstruments_Thermometer_Module' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoTemplateParameter( 'C_PIN', '3' )]
+  +TArduino_TinyLab_Leonardo_ThermometerLM35_Module : TArduinoThermometerLM35_BasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '18' )]
+//  [CreateName( 'Relay(Red LED)' )]
+  [ArduinoClass( 'Mitov::ArduinoDigitalModuleEnableInitialValue' )]
+  +TArduino_TinyLab_Leonardo_RelayModule : TArduinoBasicRelayModule;
+//---------------------------------------------------------------------------
+  [Name( 'TinyLab' )]
+  [Category( TATmega32U4Category )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:leonardo' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_TinyLab_Leonardo_Modules.h' )]
+  [ArduinoClass( 'Mitov::TArduino_TinyLab_Leonardo_Board' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduino_TinyLab_Leonardo_Board : TArduino_Basic_32u4_ReservedDigitalPins_Shield_Board
+  
+    [AddItem( TArduino_TinyLab_Leonardo_RTCDS1307Module )]
+    [AddItem( TArduino_TinyLab_Leonardo_BackpackLiquidCrystalDisplayModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_MaximLedDisplay7SegmentModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_MicroSDModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_NRF24L01Module)]
+    [AddItem( TArduino_TinyLab_Leonardo_EEPROMI2CModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_RotaryEncoderSensor_Module )]
+    [AddItem( TArduino_TinyLab_Leonardo_BuzzerModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_PotentiometerModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_ButtonsModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_ThermometerLM35_Module )]
+    [AddItem( TArduino_TinyLab_Leonardo_LightSensorModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_MotorModule )]
+    [AddItem( TArduino_TinyLab_Leonardo_RelayModule )]
+    [TArduino_TinyLab_Leonardo_SetButtonsCallChain]
+    Modules
+  
+    [ArduinoBoard_Add_ReservedChannels( 0, 4 )]
+    
+    [ArduinoBoard_Add_ReservedChannel(  4, 'Micro SD' )]
+    [ArduinoBoard_Add_ReservedChannel(  5, 'DC Motor' )]
+    [ArduinoBoard_Add_ReservedChannel(  6, 'Rotary Encoder' )]
+    [ArduinoBoard_Add_ReservedChannel(  7, 'Rotary Encoder' )]
+    [ArduinoBoard_Add_ReservedChannel(  8, 'Btn. S2)(24L01' )]
+    [ArduinoBoard_Add_ReservedChannel(  9, 'Btn. S1)(24L01' )]
+    [ArduinoBoard_Add_ReservedChannel( 10, 'LED4)(LED Disp.' )]
+    [ArduinoBoard_Add_ReservedChannel( 11, 'LED3)(LED Disp.' )]
+    [ArduinoBoard_Add_ReservedChannel( 12, 'LED2)(LED Disp.' )]
+    [ArduinoBoard_Add_ReservedChannel( 13, 'LED1' )]
+    
+    [ArduinoBoard_Add_ReservedChannel( 14, 'Potentiometer' )]
+    [ArduinoBoard_Add_ReservedChannel( 15, 'Buzzer' )]
+    [ArduinoBoard_Add_ReservedChannel( 16, 'Light' )]
+    [ArduinoBoard_Add_ReservedChannel( 17, 'Temperature' )]
+    [ArduinoBoard_Add_ReservedChannel( 18, 'Relay' )]
+    [ArduinoBoard_Add_ReservedChannel( 19, 'Btn. S3/S4/Enc.' )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

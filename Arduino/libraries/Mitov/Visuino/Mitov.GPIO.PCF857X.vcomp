@@ -1,0 +1,74 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'SendOutput' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t', 'AValue' )]
+  TArduinoPCF857X_ElementSendOutputCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetCurrentValue' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t &', 'AValue' )]
+  TArduinoPCF857X_ElementGetCurrentValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'HasInputs' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  TArduinoPCF857X_ElementHasInputsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GPIO_PCF857X_Channel' )]
+  [TArduinoPCF857X_ElementSendOutputCallChain]
+  [TArduinoPCF857X_ElementGetCurrentValueCallChain]
+  [TArduinoPCF857X_ElementHasInputsCallChain]
+  +TArduinoPCF857XChannel : TArduinoBasicDigitalGPIOChannel
+  
+    [ArduinoVariableIfPinConnected_Parent( 'FModified' )]
+    InputPin
+    
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue = True
+    
+    [ArduinoVariableIfBinding_Parent( 'FModified' )]
+    IsOutput
+    
+  ; // Used by other files!
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GPIO_PCF857X.h' )]
+  [CreateName( 'GPIO' )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoOptionalVariable( Boolean, 'FModified', False )]
+  TArduinoPCF857X : TArduinoI2CGPIO
+
+    [DesignRange( 0, $7F )]  // Note that PCF8574A has different adresses than PCF8574
+    Address = $38
+
+    [ArduinoProcessChildParentVariables]
+    [TArduinoPCF857X_ElementSendOutputCallChain]
+    [TArduinoPCF857X_ElementGetCurrentValueCallChain]
+    [TArduinoPCF857X_ElementHasInputsCallChain]
+    Channels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GPIO_PCF8574' )]
+  [Name( 'PCF8574/PCF8574A GPIO' )]
+  [ArduinoWebKeywords( 'PCF8574/PCF8574A' )]
+  +TArduinoPCF8574 : TArduinoPCF857X
+  
+    [AddIndexedNamedItem( TArduinoPCF857XChannel, 'Channel', 8 )]
+    Channels
+  
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GPIO_PCF8575' )]
+  [Name( 'PCF8575 GPIO' )]
+  [ArduinoWebKeywords( 'PCF8575' )]
+  +TArduinoPCF8575 : TArduinoPCF857X
+
+    [AddIndexedNamedItem( TArduinoPCF857XChannel, 'Channel', 16 )]
+    Channels
+    
+    Address = $20
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

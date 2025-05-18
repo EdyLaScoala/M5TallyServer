@@ -1,0 +1,62 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AnalogDevices_AD9850.h' )]
+  [CreateName( 'Synthesizer' )]
+  [ArduinoWebKeywords( 'AD9850' )]
+  [Category( TArduinoAnalogOutputToolbarCategory )]
+  TArduinoAnalogDevicesAD9850Basic : TArduinoEnableComponent
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    WordLoadClockOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    FrequencyUpdateOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [MinValue( 0.0001 )]
+    [ NamePostfix( '(Hz)' ) ]
+    [ArduinoUseBindingCheckSetter( 'UpdateFrequency' )]
+    ReferenceClockFrequency : Single = 125000000.0
+
+    [MinValue( 0.0 )]
+    [ NamePostfix( '(Hz)' ) ]
+    [ArduinoUseBindingCheckSetter( 'UpdateFrequency' )]
+    Frequency : Single = 200.0
+
+    [ValueRange( 0, 1 )]
+    [ArduinoUseBindingCheckSetter( 'UpdatePhase' )]
+    Phase : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Devices Serial DDS Synthesizer (Signal Generator) - AD9850' )]
+  [ArduinoClass( 'Mitov::AnalogDevices_AD9850_Serial' )]
+  [ArduinoStart]
+  +TArduinoAnalogDevicesAD9850Serial : TArduinoAnalogDevicesAD9850Basic
+
+    [OWPrimaryPin]
+    DataOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Devices Parallel DDS Synthesizer (Signal Generator) - AD9850' )]
+  [ArduinoClass( 'Mitov::AnalogDevices_AD9850_Parallel' )]
+  [ArduinoStart]
+  +TArduinoAnalogDevicesAD9850Parallel : TArduinoAnalogDevicesAD9850Basic
+
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPins( 'Data', 0, 8, TOWArduinoDigitalSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

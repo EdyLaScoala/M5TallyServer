@@ -1,0 +1,49 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '10' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoAdafruitMotorDriverShieldServo1 : TArduinoServoShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '9' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoAdafruitMotorDriverShieldServo2 : TArduinoServoShieldElement;
+//---------------------------------------------------------------------------
+  [Name( 'Direct Control' )]
+  [ArduinoClass( 'Mitov::AdafruitMotorDriverDirectControl' )]
+  [ParentImage( TArduinoInputOutputToolbarCategory )]
+  +TArduinoAdafruitMotorDriverShieldV1DirectControl : TArduinoAdafruitMotorDriverShieldV1Basic4WireMotor
+
+    [AddItem( TArduinoTexasInstrumentsShiftRegister74595Channel, 4 )]
+    Channels : TArduinoBasicDigitalGPIOChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoServos : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit V1.2 Shield' )]
+  [CreateName( 'Adafruit V1.2 Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '3',  'PWM2B Motor 2' )]
+  [ArduinoShieldPin( '4',  'Clock' )]
+  [ArduinoShieldPin( '5',  'PWM0B Motor 3' )]
+  [ArduinoShieldPin( '6',  'PWM0A Motor 4' )]
+  [ArduinoShieldPin( '7',  'Enable' )]
+  [ArduinoShieldPin( '8',  'Data' )]
+  [ArduinoShieldPin( '9',  'Servo 2' )]
+  [ArduinoShieldPin( '10', 'Servo 1' )]
+  [ArduinoShieldPin( '11', 'PWM2A Motor 1' )]
+  [ArduinoShieldPin( '12', 'Latch' )]
+  [Category( TArduinoServoMottorsToolbarCategory )]
+  [Category( TArduinoStepperMottorsToolbarCategory )]
+  [Category( TArduinoDCMottorsToolbarCategory )]
+  +TArduinoAdafruitMotorDriverShieldV1 : TArduinoShield, IStandardShield
+
+    [AddItem( TArduinoAdafruitMotorDriverShieldServo1 )]
+    [AddItem( TArduinoAdafruitMotorDriverShieldServo2 )]
+    Servos : TArduinoServos
+
+    Motors : TArduinoAdafruitMotorDriverShieldV1MotorDrivers
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

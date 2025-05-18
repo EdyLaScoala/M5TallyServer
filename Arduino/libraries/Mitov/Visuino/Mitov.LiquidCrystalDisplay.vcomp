@@ -1,0 +1,265 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Analog Field' )]
+  [CreateName( 'AnalogField' )]
+  [ArduinoClass( 'Mitov::LiquidCrystalElementAnalogField' )]
+  [ParentImage( TArduinoBasicAnalogValueElement )]
+  +TArduinoLiquidCrystalElementAnalogField : TArduinoLiquidCrystalElementBasicPositionedWidthField
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [DesignRange( 1, 20 )]
+    [ValueRange( 1, 30 )]
+    MinWidth : Unsigned = 1
+
+    [DesignRange( 0, 20 )]
+    [ValueRange( 0, 30 )]
+    Precision : Unsigned = 3
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital Field' )]
+  [CreateName( 'DigitalField' )]
+  [ArduinoClass( 'Mitov::LiquidCrystalElementDigitalField' )]
+  [ParentImage( TArduinoMemoryDigitalElement )]
+  +TArduinoLiquidCrystalElementDigitalField : TArduinoLiquidCrystalElementBasicPositionedWidthField
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    TrueValue  : String = 'true'
+    FalseValue : String = 'false'
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Field' )]
+  [CreateName( 'IntegerField' )]
+  [ArduinoClass( 'Mitov::LiquidCrystalElementIntegerField' )]
+  [ParentImage( TArduinoMemoryIntegerElement )]
+  [ArduinoStart]
+  +TArduinoLiquidCrystalElementIntegerField : TArduinoLiquidCrystalElementBasicPositionedWidthField
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [ValueRange( 2, 36 )]
+    Base : Integer = 10
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned Field' )]
+  [CreateName( 'UnsignedField' )]
+  [ArduinoClass( 'Mitov::LiquidCrystalElementUnsignedField' )]
+  [ParentImage( TArduinoMemoryUnsignedElement )]
+  [ArduinoStart]
+  +TArduinoLiquidCrystalElementUnsignedField : TArduinoLiquidCrystalElementBasicPositionedWidthField
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [ValueRange( 2, 36 )]
+    Base : Integer = 10
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Define Custom Character' )]
+  [CreateName( 'DefineCustomCharacter' )]
+  [ArduinoClass( 'Mitov::LiquidCrystalElementDefineCustomCharacter' )]
+  +TArduinoLiquidCrystalElementDefineCustomCharacter : TArduinoLiquidCrystalElementBasic
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceInit )]
+    ClockInputPin
+
+    [MaxValue( 7 )]
+    Index : Unsigned = 0
+
+    Pattern : TArduinoLiquidCrystalCustomCharacter
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Custom Character Field' )]
+  [CreateName( 'CustomCharacterField' )]
+  [ArduinoClass( 'Mitov::LiquidCrystalElementCustomCharacterField' )]
+  [OldName( 'TArduinoLiquidCrystalElementCutomCharacterField' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  +TArduinoLiquidCrystalElementCustomCharacterField : TArduinoLiquidCrystalElementBasicPositionedField
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    ClockInputPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateIndex' )]
+    [MaxValue( $FF )] // Allow max 255 so it can display Ascii as well as special characters
+    Index : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicFlexibleLiquidCrystalDisplay_Backlight : TArduinoBasicFlexibleLiquidCrystalDisplay
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBacklight' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    BacklightPositive : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBacklight' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Backlight : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AdafruitBackpack_LCD_I2C.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AdafruitBackpack_LCD_I2C' )]
+  TArduinoAdafruitBackpackLiquidCrystalDisplay_BasicModule_I2C : TArduinoBasicLiquidCrystalDisplayBasicModule
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBacklight' )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Backlight : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_LiquidCrystalDisplay_I2C.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::LiquidCrystalDisplayI2C' )]
+  [Name( 'Liquid Crystal Display (LCD) - I2C' )]
+  [ArduinoWebKeywords( 'I2C Character lcd display' )]
+  +TArduinoLiquidCrystalDisplayI2C : TArduinoBasicFlexibleLiquidCrystalDisplay_Backlight
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $27
+
+    [ArduinoExclude]
+    [HiddenDesign]
+    Lines : TArduinoLiquidCrystalDisplayI2CLines
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_AdafruitBackpack_LCD_I2C.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AdafruitBackpack_LCD_I2C' )]
+  [Name( 'Adafruit Backpack Liquid Crystal Display (LCD) - I2C' )]
+  [ArduinoWebKeywords( 'Adafruit Backpack lcd display' )]
+  +TArduinoAdafruitBackpackLiquidCrystalDisplay_I2C : TArduinoBasicFlexibleLiquidCrystalDisplay_Backlight
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $27
+
+//    [ArduinoUseBindingCheckSetter( 'UpdateBacklight' )]
+//    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+//    BacklightPositive : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AdafruitBackpack_LCD_SPI.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AdafruitBackpack_LCD_SPI' )]
+  [Name( 'Adafruit Backpack Liquid Crystal Display (LCD) - SPI' )]
+  [ArduinoWebKeywords( 'Adafruit Backpack lcd display' )]
+  +TArduinoAdafruitBackpackLiquidCrystalDisplay_SPI : TArduinoBasicFlexibleLiquidCrystalDisplay_Backlight
+
+    [OWPrimaryPin]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'Columns', 'Mitov::ConstantProperty<115, uint32_t, 16 >' )]
+  [ArduinoTemplateParameter( 'Rows', 'Mitov::ConstantProperty<116, uint32_t, 2 >' )]
+  [ArduinoVariable( Unsigned, 2, 'FCursorLine' )]
+  [ArduinoVariable( Unsigned, 5, 'FCursorPos' )]
+  [ArduinoWebKeywords( 'JHD1214' )]
+  TArduinoLiquidCrystalDisplay_JHD1214_I2C_Basic : TArduinoBasicLiquidCrystalDisplay
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $3E
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_LiquidCrystalDisplay_JHD1214_I2C.h' )]
+  [Name( 'Liquid Crystal Display (LCD) JHD1214 (I2C)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::LiquidCrystalDisplay_JHD1214_I2C' )]
+  +TArduinoLiquidCrystalDisplay_JHD1214_I2C : TArduinoLiquidCrystalDisplay_JHD1214_I2C_Basic;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::TArduinoLiquidCrystalDisplay_Grove_RGB_Backlight' )]
+  [ArduinoStart]
+  TArduinoLiquidCrystalDisplay_Grove_RGB_Backlight : TArduinoCodePersistent
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateColor' )]
+    Color : TColor = White
+  
+    Blink : TArduinoRGBLedControl_PCA9633_Blink
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateBrightness' )]
+    [ValueRange( 0.0, 1.0 )]
+    Brightness : Single = 1.0
+    
+    Address : TArduinoUInt8 = $62
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_LiquidCrystalDisplay_Grove_RGB_I2C.h' )]
+  [Name( 'RGB Liquid Crystal Display (LCD) Grive (I2C)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::TArduinoLiquidCrystalDisplay_Grove_RGB_I2C' )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoLiquidCrystalDisplay_Grove_RGB_I2C : TArduinoLiquidCrystalDisplay_JHD1214_I2C_Basic
+  
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Backlight : TArduinoLiquidCrystalDisplay_Grove_RGB_Backlight
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

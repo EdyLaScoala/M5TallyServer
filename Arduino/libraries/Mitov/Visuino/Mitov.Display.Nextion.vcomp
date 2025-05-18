@@ -1,0 +1,630 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Render' )]
+  TArduinoDisplayNextionElementRenderCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'SendRequest' )]
+  TArduinoDisplayNextionElementSendRequestCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ActivatePageNo' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'APageNo' )]
+  TArduinoDisplayNextionElementActivatePageNoCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ResetEvent' )]
+  TArduinoDisplayNextionElementResetEventCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'TryProcessEvent' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t *', 'ABuffer' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AProcessed' )]
+  TArduinoDisplayNextionElementTryProcessEventCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoDisplayNextionElementRenderCallChain]
+  [TArduinoDisplayNextionElementSendRequestCallChain]
+  [TArduinoDisplayNextionElementActivatePageNoCallChain]
+  TArduinoDisplayNextionElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [AutoManage]
+  [TArduinoDisplayNextionElementResetEventCallChain]
+  [TArduinoDisplayNextionElementTryProcessEventCallChain]
+  TArduinoDisplayNextionElementModifiers : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoDisplayNextionElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Nextion Display)' )]
+  TArduinoDisplayNextionElementBasic : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementClocked : TArduinoDisplayNextionElementBasic
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementColored : TArduinoDisplayNextionElementClocked
+
+    [ArduinoFullColor]
+    Color : TColor = Red
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementDrawPositioned : TArduinoDisplayNextionElementColored
+
+    X : Integer = 0
+    Y : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementDrawSized : TArduinoDisplayNextionElementDrawPositioned
+
+    Width : Unsigned = 100
+    Height : Unsigned = 100
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionTextBackgroundMode : Enum
+  
+    bmClear
+    bmColor
+    bmPictureCrop
+    bmPicture
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDisplayNextionTextBackground' )]
+  TArduinoDisplayNextionTextBackground : TArduinoCodePersistent
+
+    [ArduinoFullColor]
+    Color : TColor = Black
+
+    PictureIndex : Unsigned = 0
+    Mode : TArduinoDisplayNextionTextBackgroundMode = bmClear
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Text' )]
+  [CreateName( 'Draw Text' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementDrawText' )]
+//  [ParentImage( TArduinoTVOutRCAElementTextAt )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoDisplayNextionElementDrawText : TArduinoDisplayNextionElementDrawSized
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoAnyDataMultiSinkPin
+
+    Height = 20
+
+    Background : TArduinoDisplayNextionTextBackground
+    FontIndex : Unsigned = 0
+    HorizontalAlign : TArduinoTextHorizontalAlign = thaCenter
+    VerticalAlign : TArduinoTextVerticalAlign = tvaCenter
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoDisplayNextionElementResetEventCallChain]
+  [TArduinoDisplayNextionElementTryProcessEventCallChain]
+  TArduinoDisplayNextionEventElements : TArduinoDisplayNextionElements;
+//---------------------------------------------------------------------------
+  [TArduinoDisplayNextionElementRenderCallChain]
+  [TArduinoDisplayNextionElementSendRequestCallChain]
+  [TArduinoDisplayNextionElementActivatePageNoCallChain]
+  [TArduinoDisplayNextionElementResetEventCallChain]
+  [TArduinoDisplayNextionElementTryProcessEventCallChain]
+  TArduinoDisplayNextionPageElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoDisplayNextionPageElements )]
+  [PersistentCollection( TArduinoDisplayNextionElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Nextion Display)' )]
+  TArduinoDisplayNextionPageElementBasic : TArduinoBasicNamedExludePersistent
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Modifiers ...' )]
+    Modifiers : TArduinoDisplayNextionElementModifiers
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoVariable( Boolean, 'Identified' )]
+  [ArduinoVariable( Boolean, 'PageIdentified' )]
+  TArduinoDisplayNextionElementNamed : TArduinoDisplayNextionPageElementBasic
+
+    [OWExcludeBindings]
+    ElementName : String = ''
+
+//    [ArduinoExclude]
+//    [ArduinoParam]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    PageIndex : Integer = -1
+
+//    [ArduinoExclude]
+//    [ArduinoParam]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    ElementID : Integer = -1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Slider' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementSlider' )]
+  [ParentImage( TArduinoRemoteXYSliderElement )]
+  [ArduinoVariable( Boolean, 'FPressed' )]
+  [PersistentCollection( TArduinoDisplayNextionEventElements )]
+  +TArduinoDisplayNextionElementSlider : TArduinoDisplayNextionElementNamed
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    ElementName = 'h0'
+
+    Min : Unsigned = 0
+    Max : Unsigned = 100
+
+    [ NamePostfix( '(mS)' ) ]
+    [ArduinoNotDefaultAddCodeEntry( ceLoopBegin )]
+    [ArduinoNotDefaultDefine( '__NEXTION_SCAN_SLIDER__' )]
+    PressedScanPeriod : Unsigned = 0
+
+  ;
+//--------------------------------------------------------------------------
+  [Name( 'Fill Screen' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementFillScreen' )]
+  [ParentImage( TArduinoTVOutRCAElementFill )]
+  +TArduinoDisplayNextionElementFill : TArduinoDisplayNextionElementColored
+    
+    Color = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Picture' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementDrawPicture' )]
+  [ParentImage( TArduinoTVOutRCAElementDrawBitmap )]
+  +TArduinoDisplayNextionElementDrawPicture : TArduinoDisplayNextionElementClocked
+
+    X : Integer = 0
+    Y : Integer = 0
+    Width : Unsigned = 100
+    Height : Unsigned = 100
+    PictureIndex : Unsigned = 0
+    Crop : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Activate Page' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementActivatePage' )]
+  [ArduinoTemplateParameter( 'ElementID', 'Mitov::VariableProperty<20, int32_t, -1>' )]
+  [ArduinoTemplateParameter( 'PageIndex', 'Mitov::VariableProperty<29, int32_t, -1>' )]
+  [ArduinoVariable( Boolean, 'Identified' )]
+  [ArduinoVariable( Boolean, 'PageIdentified' )]
+  +TArduinoDisplayNextionElementActivatePage : TArduinoDisplayNextionElementClocked
+
+    [OldName( 'Page' )]
+    [OWExcludeBindings]
+    ElementName : String = 'page0'
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add C&ontrols ...' )]
+    Controls : TArduinoDisplayNextionPageElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'QRCode' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementText' )]
+  [ArduinoVariable( Boolean, 'FHasData' )]
+  [ArduinoVariable( Boolean, 'FUpdatedOnce' )]
+  +TArduinoDisplayNextionElementQRCode : TArduinoDisplayNextionElementNamed
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+    ElementName = 'qr0'
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementBasicVariable : TArduinoDisplayNextionElementNamed
+
+    ElementName = 'va0'
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Variable' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementIntegerVariable' )]
+  [ArduinoVariable( Boolean, 'FHasData' )]
+  [ArduinoVariable( Boolean, 'FUpdatedOnce' )]
+  +TArduinoDisplayNextionElementIntegerVariable : TArduinoDisplayNextionElementBasicVariable
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoIntegerSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text Variable' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementText' )]
+  [ArduinoVariable( Boolean, 'FHasData' )]
+  [ArduinoVariable( Boolean, 'FUpdatedOnce' )]
+  +TArduinoDisplayNextionElementTextVariable : TArduinoDisplayNextionElementBasicVariable
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage(TArduinoTimer)]
+  [Name( 'Timer' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementTimer' )]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  +TArduinoDisplayNextionElementTimer : TArduinoDisplayNextionElementNamed
+
+    EnabledInputPin : TOWArduinoDigitalSinkPin
+
+    ElementName = 'tm0'
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementNamedAnalog : TArduinoDisplayNextionElementNamed
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDisplayNextionAnalogGaugeMinValue' )]
+  TArduinoDisplayNextionAnalogGaugeMinValue : TArduinoCodePersistent
+
+    Value : Single = 0.0
+
+    [ValueRange( -360, 360 )]
+    Angle : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionAnalogGaugeMaxValue : TArduinoDisplayNextionAnalogGaugeMinValue
+
+    Value = 1.0
+    Angle = 180
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Gauge' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementAnalogGauge' )]
+  [ArduinoVariable( Boolean, 'FHasData' )]
+  [ArduinoVariable( Boolean, 'FUpdatedOnce' )]
+  +TArduinoDisplayNextionElementAnalogGauge : TArduinoDisplayNextionElementNamedAnalog
+
+    ElementName = 'z0'
+
+    Min : TArduinoDisplayNextionAnalogGaugeMinValue
+    Max : TArduinoDisplayNextionAnalogGaugeMaxValue
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Progress Bar' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementAnalogProgressBar' )]
+  [ArduinoVariable( Boolean, 'FHasData' )]
+  [ArduinoVariable( Boolean, 'FUpdatedOnce' )]
+  +TArduinoDisplayNextionElementAnalogProgressBar : TArduinoDisplayNextionElementNamedAnalog
+
+    ElementName = 'j0'
+
+    Min : Single = 0.0
+    Max : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementText' )]
+  [ArduinoVariable( Boolean, 'FHasData' )]
+  [ArduinoVariable( Boolean, 'FUpdatedOnce' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoDisplayNextionElementText : TArduinoDisplayNextionElementNamed
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+    ElementName = 't0'
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Number' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementNumber' )]
+  [ArduinoVariable( Boolean, 'FHasData' )]
+  [ArduinoVariable( Boolean, 'FUpdatedOnce' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoDisplayNextionElementNumber : TArduinoDisplayNextionElementNamed
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    ElementName = 'n0'
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionScopeChannels : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoDisplayNextionScopeChannels )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoHelpPostfix( '(Nextion Display Scope)' )]
+  [Name( 'Channel' )]
+  [ArduinoClass( 'Mitov::DisplayNextionScopeChannel' )]
+  +TArduinoDisplayNextionScopeChannel : TArduinoBasicNamedExludePersistent
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoDisplayNextionScopeChannel )]
+    InputPin  : TOWArduinoAnalogSinkPin
+
+    ClearInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Scope(Wave)' )]
+  [CreateName( 'Scope' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementScope' )]
+  [ParentImage( TArduinoViSiGenieScope )]
+  [ArduinoVariable( Boolean, 'Ready' )]
+  +TArduinoDisplayNextionElementScope : TArduinoDisplayNextionElementNamed
+
+    ElementName = 's0'
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add Cha&nnels ...' )]
+    Channels : TArduinoDisplayNextionScopeChannels
+
+    ClearInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementDigital : TArduinoDisplayNextionElementNamed
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementButtonEvents : Enum
+  
+    nbeBoth
+    nbeDown
+    nbeUp
+    
+   ;
+//---------------------------------------------------------------------------
+  [Name( 'Button' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementButton' )]
+  [ParentImage( TArduinoViSiGenieWinButton )]
+  [PersistentCollection( TArduinoDisplayNextionEventElements )]
+  +TArduinoDisplayNextionElementButton : TArduinoDisplayNextionElementDigital
+
+    ElementName = 'b0'
+
+    Events : TArduinoDisplayNextionElementButtonEvents = nbeBoth
+
+  ;
+//--------------------------------------------------------------------------
+  [Name( 'Check Box' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementCheckBox' )]
+  [PersistentCollection( TArduinoDisplayNextionEventElements )]
+  +TArduinoDisplayNextionElementCheckBox : TArduinoDisplayNextionElementDigital
+
+    ElementName = 'c0'
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+  ;
+//--------------------------------------------------------------------------
+  TArduinoDisplayNextionElementDrawSizedInteger : TArduinoDisplayNextionElementDrawPositioned
+
+    Width : Integer = 100
+    Height : Integer = 100
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementCircle : TArduinoDisplayNextionElementDrawPositioned
+
+    X = 50
+    Y = 50
+
+    Radius : Unsigned  = 50
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Fill Rectangle' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementFillRectangle' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  +TArduinoDisplayNextionElementFillRectangle : TArduinoDisplayNextionElementDrawSized;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Rectangle' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementDrawRectangle' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  +TArduinoDisplayNextionElementDrawRectangle : TArduinoDisplayNextionElementDrawSized;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Line' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementDrawLine' )]
+  [ParentImage( TArduinoTVOutRCAElementDrawLine )]
+  [Category( ArduinoGraphicsLinesToolbarCategory )]
+  +TArduinoDisplayNextionElementDrawLine : TArduinoDisplayNextionElementDrawSizedInteger;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Angled Line' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementDrawAngledLine' )]
+  [ParentImage( TArduinoMonochromeGraphicsDrawAngledLine )]
+  [Category( ArduinoGraphicsLinesToolbarCategory )]
+  +TArduinoDisplayNextionElementDrawAngledLine : TArduinoDisplayNextionElementDrawPositioned
+
+    Begin : Integer = 0
+    End : Integer = 20
+    Angle : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Fill Circle' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementFillCircle' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  +TArduinoDisplayNextionElementFillCircle : TArduinoDisplayNextionElementCircle;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Circle' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementDrawCircle' )]
+  [Category( ArduinoGraphicsShapesToolbarCategory )]
+  +TArduinoDisplayNextionElementDrawCircle : TArduinoDisplayNextionElementCircle;
+//---------------------------------------------------------------------------
+  [Name( 'Draw Scene' )]
+  [CreateName( 'Draw Scene' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementDrawScene' )]
+  [ParentImage( TArduinoTVOutRCAElementScene )]
+  +TArduinoDisplayNextionElementScene : TArduinoDisplayNextionElementClocked
+
+    X : Integer = 0
+    Y : Integer = 0
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoDisplayNextionEventElements
+
+  ;
+//---------------------------------------------------------------------------
+    [ArduinoCallChainExcludeOwnerComplete]
+  TArduinoDisplayNextionElementCommandBasic : TArduinoDisplayNextionElementClocked
+
+    Command : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Command' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementCommand' )]
+  +TArduinoDisplayNextionElementCommand : TArduinoDisplayNextionElementCommandBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Get String' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementGetterCommandString' )]
+  [ArduinoVariable( Boolean, 'FRequested' )]
+  +TArduinoDisplayNextionElementGetterCommandString : TArduinoDisplayNextionElementCommandBasic
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Get Integer' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementGetterCommandInteger' )]
+  [ArduinoVariable( Boolean, 'FRequested' )]
+  +TArduinoDisplayNextionElementGetterCommandInteger : TArduinoDisplayNextionElementCommandBasic
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoDisplayNextionElementModifiers )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Nextion Display)' )]
+  TArduinoDisplayNextionElementModifier : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementModifierBasicProperty : TArduinoDisplayNextionElementModifier
+
+    PropertyName : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementModifierPropertyClockedAccessBasic : TArduinoDisplayNextionElementModifierBasicProperty
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set String' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementModifierPropertySetterString' )]
+  [ParentImage( TArduinoTextSetValueElement )]
+  +TArduinoDisplayNextionElementModifierPropertySetterString : TArduinoDisplayNextionElementModifierPropertyClockedAccessBasic
+
+    Value : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Integer' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementModifierPropertySetterInteger' )]
+  [ParentImage( TArduinoIntegerSetValueElement )]
+  +TArduinoDisplayNextionElementModifierPropertySetterInteger : TArduinoDisplayNextionElementModifierPropertyClockedAccessBasic
+
+    Value : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Get String' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementModifierPropertyGetterString' )]
+  [ParentImage( TArduinoDisplayNextionElementGetterCommandString )]
+  [ArduinoVariable( Boolean, 'FRequested' )]
+  +TArduinoDisplayNextionElementModifierPropertyGetterString : TArduinoDisplayNextionElementModifierPropertyClockedAccessBasic
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Get Integer' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementModifierPropertyGetterInteger' )]
+  [ParentImage( TArduinoDisplayNextionElementGetterCommandInteger )]
+  [ArduinoVariable( Boolean, 'FRequested' )]
+  +TArduinoDisplayNextionElementModifierPropertyGetterInteger : TArduinoDisplayNextionElementModifierPropertyClockedAccessBasic
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Pressed' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementModifierPressedState' )]
+  +TArduinoDisplayNextionElementModifierPressedState : TArduinoDisplayNextionElementModifier
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoDisplayNextionElementModifierBasicEvent : TArduinoDisplayNextionElementModifier
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Press' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementModifierPressEvent' )]
+  +TArduinoDisplayNextionElementModifierPressEvent : TArduinoDisplayNextionElementModifierBasicEvent;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Release' )]
+  [ArduinoClass( 'Mitov::DisplayNextionElementModifierReleaseEvent' )]
+  +TArduinoDisplayNextionElementModifierReleaseEvent : TArduinoDisplayNextionElementModifierBasicEvent;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Display_Nextion.h' )]
+  [ArduinoClass( 'Mitov::DisplayNextion' )]
+  [CreateName( 'DisplayNextion' )]
+  [Name( 'Nextion Display' )]
+  [ArduinoWebKeywords( 'Nextion' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [ArduinoDefine( '__32BIT_GRAPHICS_COORDINATES__' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoDisplayNextion : TArduinoSharedSerialComponent
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoDisplayNextionEventElements
+
+    ResetDisplay : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

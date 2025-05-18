@@ -1,0 +1,167 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'GetDirection' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t &', 'AValue' )]
+  TArduinoMicrochipMCP23017ChannelGetDirectionCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetPullUp' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t &', 'AValue' )]
+  TArduinoMicrochipMCP23017ChannelGetPullUpCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetInvert' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t &', 'AValue' )]
+  TArduinoMicrochipMCP23017ChannelGetInvertCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetValue' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t &', 'AValue' )]
+  TArduinoMicrochipMCP23017ChannelGetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'SendOutput' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t', 'AValue' )]
+  TArduinoMicrochipMCP23017ChannelSendOutputCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'HasInputs' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValueA' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValueB' )]
+  TArduinoMicrochipMCP23017ChannelHasInputsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  TArduinoMicrochipMCP230XX_Channel_Basic : TArduinoBasicDigitalPullUpGPIOChannel
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue
+    
+    [ArduinoUseBindingCheckSetter( 'Update_IsInverted' )]
+    IsInverted : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_IsOutput' )]
+    IsOutput
+    
+    [ArduinoUseBindingCheckSetter( 'Update_IsPullUp' )]
+    IsPullUp
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Microchip_MCP23017_Channel' )]
+  [TArduinoMicrochipMCP23017ChannelGetDirectionCallChain]
+  [TArduinoMicrochipMCP23017ChannelGetPullUpCallChain]
+  [TArduinoMicrochipMCP23017ChannelGetInvertCallChain]
+  [TArduinoMicrochipMCP23017ChannelGetValueCallChain]
+  [TArduinoMicrochipMCP23017ChannelHasInputsCallChain]
+  [TArduinoMicrochipMCP23017ChannelSendOutputCallChain]
+  TArduinoMicrochipMCP23017Channel_Basic : TArduinoMicrochipMCP230XX_Channel_Basic;
+//---------------------------------------------------------------------------
+  +TArduinoMicrochipMCP23017ChannelA : TArduinoMicrochipMCP23017Channel_Basic
+
+    [ArduinoVariableIfPinConnected_Parent( 'FModifiedValueA' )]
+    InputPin
+    
+    [ArduinoVariableIfBinding_Parent( 'FModifiedDirectionA' )]
+    IsOutput
+    
+    [ArduinoVariableIfBinding_Parent( 'FModifiedInvertA' )]
+    IsInverted
+    
+    [ArduinoVariableIfBinding_Parent( 'FModifiedPullUpA' )]
+    IsPullUp
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoMicrochipMCP23017ChannelB : TArduinoMicrochipMCP23017Channel_Basic
+
+    [ArduinoVariableIfPinConnected_Parent( 'FModifiedValueB' )]
+    InputPin
+
+    [ArduinoVariableIfBinding_Parent( 'FModifiedDirectionB' )]
+    IsOutput
+    
+    [ArduinoVariableIfBinding_Parent( 'FModifiedInvertB' )]
+    IsInverted
+
+    [ArduinoVariableIfBinding_Parent( 'FModifiedPullUpB' )]
+    IsPullUp
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_MCP23017.h' )]
+  [ArduinoClass( 'Mitov::Microchip_MCP23017' )]
+  [CreateName( 'GPIO' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoLoopUpdateHardware]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedDirectionA', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedDirectionB', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedPullUpA', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedPullUpB', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedInvertA', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedInvertB', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedValueA', False )]
+  [ArduinoOptionalVariable( Boolean, 'FModifiedValueB', False )]
+  TArduinoMicrochipMCP2301X_Basic : TArduinoComponent
+  
+    [ArduinoProcessChildParentVariables]
+    [AddIndexedNamedItem( TArduinoMicrochipMCP23017ChannelA, 'A', 8 )]
+    [AddIndexedStartNamedItem( TArduinoMicrochipMCP23017ChannelB, 0, 'B', 8 )]
+    [TArduinoMicrochipMCP23017ChannelGetDirectionCallChain]
+    [TArduinoMicrochipMCP23017ChannelGetPullUpCallChain]
+    [TArduinoMicrochipMCP23017ChannelGetInvertCallChain]
+    [TArduinoMicrochipMCP23017ChannelGetValueCallChain]
+    [TArduinoMicrochipMCP23017ChannelHasInputsCallChain]
+    [TArduinoMicrochipMCP23017ChannelSendOutputCallChain]
+    Channels : TArduinoDigitalGPIOChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2CNoSetHighBit' )]
+  TArduinoMicrochipMCP2301X_Basic_I2C : TArduinoMicrochipMCP2301X_Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [DesignRange( $20, $27 )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $20
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP23017 GPIO (I2C)' )]
+  [ArduinoWebKeywords( 'Microchip MCP23017' )]
+  [OldName( 'TArduinoMicrochipMCP23017' )]
+  +TArduinoMicrochipMCP23017_I2C : TArduinoMicrochipMCP2301X_Basic_I2C;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP23018 GPIO (I2C)' )]
+  [ArduinoWebKeywords( 'Microchip MCP23018' )]
+  +TArduinoMicrochipMCP23018_I2C : TArduinoMicrochipMCP2301X_Basic_I2C;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_MCP230XX_SPI.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPISpeed_MCP230XX' )]
+  TArduinoMicrochipMCP230S1X_Basic_SPI : TArduinoMicrochipMCP2301X_Basic
+
+    [OWPrimaryPin]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+
+    [DesignRange( $20, $27 )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $20
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP230S17 GPIO (SPI)' )]
+  [ArduinoWebKeywords( 'Microchip MCP230S17' )]
+  +TArduinoMicrochipMCP230S17_SPI : TArduinoMicrochipMCP230S1X_Basic_SPI;
+//---------------------------------------------------------------------------
+  [Name( 'Microchip MCP230S18 GPIO (SPI)' )]
+  [ArduinoWebKeywords( 'Microchip MCP230S18' )]
+  +TArduinoMicrochipMCP230S18_SPI : TArduinoMicrochipMCP230S1X_Basic_SPI;
+//---------------------------------------------------------------------------
+; // Mitov

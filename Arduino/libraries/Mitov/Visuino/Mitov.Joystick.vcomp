@@ -1,0 +1,96 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoJoystickChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoExclude]
+  [ArduinoDeclaredClass]
+  TArduinoJoystickAnalogChannel : TArduinoBasicAnalogInputPinNamedChannel
+
+    [ArduinoPassTroughPin( 'OutputPin' )]
+    InputPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Axis X' )]
+  +TArduinoJoystickChannelX : TArduinoJoystickAnalogChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Axis Y' )]
+  +TArduinoJoystickChannelY : TArduinoJoystickAnalogChannel;
+//---------------------------------------------------------------------------
+  [ArduinoExclude]
+  [ArduinoDeclaredClass]
+  TArduinoJoystickDigitalChannel : TArduinoBasicDigitalInputPinNamedChannel
+
+    [ArduinoPassTroughPin( 'OutputPin' )]
+    InputPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Button' )]
+  [ParentImage( TArduinoButton )]
+  +TArduinoJoystickButtonChannel : TArduinoJoystickDigitalChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Joystick' )]
+  [CreateName( 'Joystick' )]
+  [ArduinoExclude]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoJoystick : TArduinoComponent
+
+    [AddItem( TArduinoJoystickChannelX )]
+    [AddItem( TArduinoJoystickChannelY )]
+    [AddItem( TArduinoJoystickButtonChannel )]
+    Channels : TArduinoJoystickChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoJoystick )]
+  TArduinoBasicJoystickElement : TArduinoCodePersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'X', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogChangeOnlySourcePin )]
+    AxesOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    ButtonOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ParentImage( TArduinoBasicJoystickElement )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoBasicJoystickModule : TArduinoShield
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'X', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogChangeOnlySourcePin )]
+    AxesOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    ButtonOutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov
+//---------------------------------------------------------------------------

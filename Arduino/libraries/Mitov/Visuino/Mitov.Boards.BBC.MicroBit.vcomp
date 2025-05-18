@@ -1,0 +1,70 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IMicroBitCarrier )]
+  TArduinoMicroBitShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [Name( 'BBC Micro:Bit' )]
+  [Category( TNordicCategory )]
+  [ArduinoBoardCanReset]
+  [ArduinoBoardArchitecture( 'nRF5' )]
+  [ArduinoBoardCompileParams( 'sandeepmistry:nRF5:BBCmicrobit' )]
+  [ArduinoDefine( 'VISUINO_BBC_MICRO_BIT' )]
+  +TArduino_BBC_Micro_Bit_Board : TArduinoBoardExtendableImplementation
+  
+//    Modules : TArduinoModules
+
+    [AddItem( TArduinoHardwareSerial )]
+    Serial : TArduinoSerials
+    
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+    
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 0, 0, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 1, 1, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 2, 2, 1, TArduinoCombinedAnalogDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3, 3, 1, TArduinoCombinedAnalogDigitalChannel, 'Digital(LED Col 1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 4, 1, TArduinoCombinedAnalogDigitalChannel, 'Digital(LED Col 2)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoAdditionalDigitalChannel, 'Digital(Button A)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,  1, TArduinoAdditionalDigitalChannel, 'Digital(LED Col 9)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalChannel, 'Digital(LED Col 8)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoAdditionalDigitalChannel, 'Digital(LED Col 7)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 10, 10, 1, TArduinoCombinedAnalogDigitalChannel, 'Digital(LED Col 3)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11,  1, TArduinoAdditionalDigitalChannel, 'Digital(Button B)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12,  1, TArduinoAdditionalDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,  1, TArduinoAdditionalDigitalChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19,  1, TArduinoAdditionalDigitalI2C0Channel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20,  1, TArduinoAdditionalDigitalI2C0Channel, 'Digital(I2C-SDA)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 23,  1, TArduinoBasicDigitalInputChannel, 'Digital(LED Col 4)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 24,  1, TArduinoBasicDigitalInputChannel, 'Digital(LED Col 5)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25,  1, TArduinoBasicDigitalInputChannel, 'Digital(LED Col 6)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26,  1, TArduinoBasicDigitalInputChannel, 'Digital(LED Row 1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 27,  1, TArduinoBasicDigitalInputChannel, 'Digital(LED Row 2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 28,  1, TArduinoBasicDigitalInputChannel, 'Digital(LED Row 3)' )]
+    Digital : TArduinoDigitalChannels
+    
+    [ComponentEditorEntryDesign( 'Add Carrier &Boards ...' )]
+    [Name( 'Carrier Boards' )]
+    Shields : TArduinoMicroBitShields
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

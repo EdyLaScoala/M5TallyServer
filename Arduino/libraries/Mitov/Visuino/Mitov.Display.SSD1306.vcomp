@@ -1,0 +1,261 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoDisplayOLEDType : Enum
+  
+    odtSSD1306
+    odtSH1106
+    odtSSD1315
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoDisplaySSD1306PreChargePeriod' )]
+  TArduinoDisplaySSD1306PreChargePeriod : TArduinoCodePersistent
+
+    [ValueRange( 1, 15 )]
+    Phase1 : Unsigned = 1
+
+    [ValueRange( 1, 15 )]
+    Phase2 : Unsigned = 15
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DisplaySSD1306' )]
+  [CreateName( 'DisplayOLED' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [ArduinoWebKeywords( 'SSD1306' )]
+  [ArduinoWebKeywords( 'SSD1315' )]
+  [ArduinoWebKeywords( 'SH1106' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorY', 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_BUFFER' , 'Mitov::DisplaySSD1306Buffered' )]
+  TArduinoDisplaySSD1306 : TArduinoComponent
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+//    [ArduinoPinConnectDefine( '_MITOV_SSD1306_RESET_PIN_' )]
+    [ArduinoAddPinWrapper( 'Mitov::DisplaySSD1306ResetPin', 'Mitov::DisplaySSD1306NoReset' )]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    RefreshInputPin : TOWArduinoClockSinkPin
+
+    [PropertyListDesignValue( '96' )]
+    [PropertyListDesignValue( '128' )]
+    [ArduinoExclude]
+    [OWExcludeBindings]
+    [ArduinoTemplateParameterConst]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION_BUFFER' )]
+    Width : Unsigned = 128
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '64' )]
+    [ArduinoExclude]
+    [OWExcludeBindings]
+    [ArduinoTemplateParameterConst]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION_BUFFER' )]
+    Height : Unsigned = 64
+
+//    [ArduinoExclude]
+//    [OWExcludeBindings]
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMonochromeGraphicsElements
+
+    UseChargePump : Boolean = False
+
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateContrast' )]
+    Contrast : Single = 0.812
+
+    [Name( 'Pre-charge Period' )]
+    PreChargePeriod : TArduinoDisplaySSD1306PreChargePeriod
+
+    BackgroundColor : TArduinoMonochromeColor = tmcBlack
+    Text : TArduinoMonochromeGraphicsTextSettings
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePowerOn' )]
+    PowerOn : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Display_SSD1306_I2C.h' )]
+  [ArduinoDefine( '_MITOV_DISPLAY_SSD1306_I2C' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Display_odtSSD_I2C' )]
+  TArduinoDisplaySSD1306I2C_Basic : TArduinoDisplaySSD1306
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoI2CSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::DisplaySSD1306I2C' )]
+  [Name( 'SSD1306/SSD1315/SH1106 OLED Display (I2C)' )]
+//  [ArduinoTemplateParameter( '0x12' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+  +TArduinoDisplaySSD1306I2C : TArduinoDisplaySSD1306I2C_Basic
+
+    Type : TArduinoDisplayOLEDType = odtSSD1306
+
+    [DesignRange( $1, $FF )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $3C
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Display_SSD1306_SPI.h' )]
+  [Name( 'SSD1306/SSD1315/SH1106 OLED Display (SPI)' )]
+//  [ArduinoTemplateParameter( '0x12' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Display_odtSSD_SPI' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+  +TArduinoDisplaySSD1306SPI : TArduinoDisplaySSD1306
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+//    [ArduinoSPIInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWRequiredPin]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    DataCommandOutputPin : TOWArduinoDigitalSourcePin
+
+    Type : TArduinoDisplayOLEDType = odtSSD1306
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DisplaySSD1306' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorY', 0 )]
+  TArduinoDisplaySSD1306BasicShieldDisplayElement : TArduinoCodePersistent
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    RefreshInputPin : TOWArduinoClockSinkPin
+
+//    [ArduinoExclude]
+//    [OWExcludeBindings]
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMonochromeGraphicsElements
+
+    UseChargePump : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePowerOn' )]
+    PowerOn : Boolean = True
+
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateContrast' )]
+    Contrast : Single = 0.812
+
+    [Name( 'Pre-charge Period' )]
+    PreChargePeriod : TArduinoDisplaySSD1306PreChargePeriod
+
+    BackgroundColor : TArduinoMonochromeColor = tmcBlack
+    Text : TArduinoMonochromeGraphicsTextSettings
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Display_SSD1306_SPI.h' )]
+  [ParentImage( TArduinoDisplaySSD1306SPI )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Display_odtSSD_SPI' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+  TArduinoDisplaySSD1306BasicShieldDisplayElementSPI : TArduinoDisplaySSD1306BasicShieldDisplayElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_Display_SSD1306_I2C.h' )]
+  [ParentImage( TArduinoDisplaySSD1306I2C )]
+//  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Display_odtSSD1306_I2C' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Display_odtSSD_I2C' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoDisplaySSD1306BasicShieldDisplayElementI2C : TArduinoDisplaySSD1306BasicShieldDisplayElement;
+//---------------------------------------------------------------------------
+  [Name( 'Display' )]
+  [CreateName( 'Display' )]
+  [ArduinoClass( 'Mitov::DisplaySSD1306' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorY', 0 )]
+  *TArduinoDisplaySSD1306BasicShieldDisplayModule : TArduinoEnabledShield
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    RefreshInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPropertyName( 'PowerOn' )]
+    Enabled
+
+//    [ArduinoExclude]
+//    [OWExcludeBindings]
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMonochromeGraphicsElements
+
+    UseChargePump : Boolean = False
+
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateContrast' )]
+    Contrast : Single = 0.812
+
+    [Name( 'Pre-charge Period' )]
+    PreChargePeriod : TArduinoDisplaySSD1306PreChargePeriod
+
+    BackgroundColor : TArduinoMonochromeColor = tmcBlack
+    Text : TArduinoMonochromeGraphicsTextSettings
+
+//    [ArduinoUseBindingCheckSetter( 'UpdatePowerOn' )]
+//    PowerOn : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Display_SSD1306_SPI.h' )]
+  [ParentImage( TArduinoDisplaySSD1306SPI )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Display_odtSSD_SPI' )]
+  [ArduinoTemplateParameter( 'Type', 'Mitov::ConstantProperty<127, Mitov::TArduinoDisplayOLEDType, Mitov::odtSSD1306>' )]
+  *TArduinoDisplaySSD1306BasicShieldDisplayModuleSPI : TArduinoDisplaySSD1306BasicShieldDisplayModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_Display_SSD1306_I2C.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Display_odtSSD_I2C' )]
+  [ParentImage( TArduinoDisplaySSD1306I2C )]
+  *TArduinoDisplaySSDBasicShieldDisplayModuleI2C : TArduinoDisplaySSD1306BasicShieldDisplayModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'Type', 'Mitov::ConstantProperty<127, Mitov::TArduinoDisplayOLEDType, Mitov::odtSSD1306>' )]
+  TArduinoDisplaySSD1306BasicShieldDisplayModuleI2C : TArduinoDisplaySSDBasicShieldDisplayModuleI2C;
+//---------------------------------------------------------------------------
+//  [ArduinoTemplateParameter( 'Width', '128' )]
+//  [ArduinoTemplateParameter( 'Height', '32' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_BUFFER' , 'Mitov::DisplaySSD1306Buffered<64, 128>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+  TArduinoDisplaySSD1306BasicShieldDisplayModuleI2C_Up : TArduinoDisplaySSD1306BasicShieldDisplayModuleI2C;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'Type', 'Mitov::ConstantProperty<127, Mitov::TArduinoDisplayOLEDType, Mitov::odtSH1106>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_BUFFER' , 'Mitov::DisplaySSD1306Buffered<64, 128>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+  TArduinoDisplaySH1106BasicShieldDisplayModuleI2C : TArduinoDisplaySSDBasicShieldDisplayModuleI2C;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,246 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoMMA845XQAccelerometerFilterFrequency : Enum
+
+    Low    
+    MediulLow
+    MediulHigh
+    High
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerMode' )]
+  TArduinoMMA845XQAccelerometerMode : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG2' )]
+    LowPower : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG2' )]
+    HighResolution : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerSleepMode' )]
+  TArduinoMMA845XQAccelerometerSleepMode : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfigReg1' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1.56' )]
+    [PropertyListDesignValue( '6.25' )]
+    [PropertyListDesignValue( '12.5' )]
+    [PropertyListDesignValue( '50.0' )]
+    SampleFrequency : Single = 50.0
+
+    Mode : TArduinoMMA845XQAccelerometerMode
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG2' )]
+    AutoSleep : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerPulseProcessing' )]
+  TArduinoMMA845XQAccelerometerPulseProcessing : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_HP_FILTER_CUTOFF' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_HP_FILTER_CUTOFF' )]
+    Bypass : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerOrientationDetection' )]
+  TArduinoMMA845XQAccelerometerOrientationDetection : TArduinoCodeEnabledPersistent
+
+    OutputPin : TOWArduinoOrientation2DSourcePin
+    FrontDownOutputPin : TOWArduinoDigitalSourcePin
+    LockoutOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PL_CFG' )]
+    ResetCounter : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerFilter' )]
+  TArduinoMMA845XQAccelerometerFilter : TArduinoCodeDisabledPersistent
+
+    PulseProcessing : TArduinoMMA845XQAccelerometerPulseProcessing
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_HP_FILTER_CUTOFF' )]
+    CutoffFrequency : TArduinoMMA845XQAccelerometerFilterFrequency = High
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'GetThreshold' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AThreshold' )]
+  [ArduinoCallChainIndex]
+  TArduinoMMA845XQAccelerometerTapChannelGetThresholdCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetTapsEnabled' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ATapsEnabled' )]
+  TArduinoMMA845XQAccelerometerTapChannelGetTapsEnabledCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ProcessOutputs' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'ARegisterValue' )]
+  TArduinoMMA845XQAccelerometerTapChannelProcessOutputsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoAccelerometerLIS3DHTap )]
+  [TArduinoMMA845XQAccelerometerTapChannelGetThresholdCallChain]
+  [TArduinoMMA845XQAccelerometerTapChannelGetTapsEnabledCallChain]
+  [TArduinoMMA845XQAccelerometerTapChannelProcessOutputsCallChain]
+  TArduinoMMA845XQAccelerometerTapChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerTapChannel' )]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  TArduinoMMA845XQAccelerometerTapChannel : TArduinoCodePersistent
+
+    [OWAddPin( 'Up', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Down', TOWArduinoClockSourcePin )]
+    SingleOutputPins : TOWArduinoPinList
+
+    [OWAddPin( 'Up', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Down', TOWArduinoClockSourcePin )]
+    DoubleOutputPins : TOWArduinoPinList
+
+    [ValueRange( 0.0, 1.0 )]
+    Threshold : Single = 0.063
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'X' )]
+  TArduinoMMA845XQAccelerometerTapChannelX : TArduinoMMA845XQAccelerometerTapChannel
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PULSE_THSX' )]
+    Threshold
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Y' )]
+  TArduinoMMA845XQAccelerometerTapChannelY : TArduinoMMA845XQAccelerometerTapChannel
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PULSE_THSY' )]
+    Threshold
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Z' )]
+  TArduinoMMA845XQAccelerometerTapChannelZ : TArduinoMMA845XQAccelerometerTapChannel
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PULSE_THSZ' )]
+    Threshold
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerTapIgnoreInterval' )]
+  TArduinoMMA845XQAccelerometerTapIgnoreInterval : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PULSE_LTCY' )]
+    [ValueRange( 0.0, 81.6 )]
+    [NamePostfix( '(S)' )]
+    Interval : Single = 0.2
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PULSE_CFG' )]
+    DoubleTap : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerTap' )]
+  [ParentImage( TArduinoAccelerometerADXL345Tap )]
+  *TArduinoMMA845XQAccelerometerTap : TArduinoCodePersistent
+
+    [AddItem( TArduinoMMA845XQAccelerometerTapChannelX )]
+    [AddItem( TArduinoMMA845XQAccelerometerTapChannelY )]
+    [AddItem( TArduinoMMA845XQAccelerometerTapChannelZ )]
+    Axes : TArduinoMMA845XQAccelerometerTapChannels
+
+    IgnoreInterval : TArduinoMMA845XQAccelerometerTapIgnoreInterval
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PULSE_TMLT' )]
+    [ValueRange( 0.0, 81.6 )]
+    [NamePostfix( '(S)' )]
+    MaxTapDuration : Single = 0.03
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PULSE_WIND' )]
+    [ValueRange( 0.0, 81.6 )]
+    [NamePostfix( '(S)' )]
+    MaxDoubleClickInterval : Single = 81.6
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMMA845XQAccelerometerOffsets : TArduinoBasicXYZOffsets
+
+    [NamePostfix( '(mg)' )]
+    [ValueRange( -256, 255 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_OFF_X' )]
+    X
+
+    [NamePostfix( '(mg)' )]
+    [ValueRange( -256, 255 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_OFF_Y' )]
+    Y
+
+    [NamePostfix( '(mg)' )]
+    [ValueRange( -256, 255 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_OFF_Z' )]
+    Z
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Accelerometer_MMA845X.h' )]
+  [ArduinoClass( 'Mitov::AccelerometerMMA845X' )]
+  [Name( 'Accelerometer MMA845X I2C' )]
+  [CreateName( 'Accelerometer' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoMMA845XQAccelerometer_I2C : TArduinoI2CClockedEnableComponent
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartInit' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartGenerate' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'X(G)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y(G)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Z(G)', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [DesignRange( $1C, $1D )]
+    Address : TArduinoUInt8 = $1D
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfigReg1' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1.56' )]
+    [PropertyListDesignValue( '6.25' )]
+    [PropertyListDesignValue( '12.5' )]
+    [PropertyListDesignValue( '50.0' )]
+    [PropertyListDesignValue( '100.0' )]
+    [PropertyListDesignValue( '200.0' )]
+    [PropertyListDesignValue( '400.0' )]
+    [PropertyListDesignValue( '800.0' )]
+    SampleFrequency : Single = 800.0
+
+    [ArduinoUseBindingCheckSetter( 'Update_XYZ_DATA_CFG' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [NamePostfix( '(G)' )]
+    FullScaleRange : Unsigned = 2
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfigReg1' )]
+    Standby : Boolean = False
+
+    ReducedNoise : Boolean = False
+    
+    Filter : TArduinoMMA845XQAccelerometerFilter
+    SleepMode : TArduinoMMA845XQAccelerometerSleepMode
+    Orientation : TArduinoMMA845XQAccelerometerOrientationDetection
+    Tap : TArduinoMMA845XQAccelerometerTap
+    Mode : TArduinoMMA845XQAccelerometerMode
+    Offsets : TArduinoMMA845XQAccelerometerOffsets
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,28 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Lynxmotion' )]
+  TArduinoLynxmotionCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TArduinoLynxmotionCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TArduinoLynxmotionAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Lynxmotion BotBoarduino' )]
+  [Category( TArduinoLynxmotionCategory )]
+  [ParentImage( TArduinoLynxmotionCategory )]
+  +TArduino_Lynxmotion_BotBoarduino_Board : TArduino_AVR328_Basic_UNO_Board
+  
+    [ArduinoBoard_Add_ReservedChannels( 0, 5 )]
+    [ArduinoBoard_Add_ReservedChannel( 5, 'Buzzer' )]
+    [ArduinoBoard_Add_ReservedChannel( 6 )]
+    [ArduinoBoard_Add_ReservedChannel( 7, 'Red LED)(Button A' )]
+    [ArduinoBoard_Add_ReservedChannel( 8, 'Green LED)(Button B' )]
+    [ArduinoBoard_Add_ReservedChannel( 9, 'Yellow LED)(Button C' )]
+    [ArduinoBoard_Add_AllChannelsFrom( 10 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

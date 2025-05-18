@@ -1,0 +1,39 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Header_ID.h' )]
+  [Category( TCommunicationToolbarCategory )]
+  TArduinoBasicHeaderID : TArduinoCommonEnabledComponent
+
+//    ID : TArduinoConstMemBinaryPersistent
+    ID : TArduinoBinaryPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::AddPacketHeaderID' )]
+  [CreateName( 'AddPacketHeaderID' )]
+  [Name( 'Add Packet Header ID' )]
+  +TArduinoAddPacketHeaderID : TArduinoBasicHeaderID
+
+    [OWPrimaryPin]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DetectPacketHeaderID' )]
+  [CreateName( 'DetectPacketHeaderID' )]
+  [Name( 'Detect Packet Header ID' )]
+  +TArduinoDetectPacketHeaderID : TArduinoBasicHeaderID
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoByteSinkPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteCharTextSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

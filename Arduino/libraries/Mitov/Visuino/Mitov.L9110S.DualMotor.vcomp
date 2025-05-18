@@ -1,0 +1,55 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoL9110SDualMotorDriverChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_L9110SDualMotorDriver.h' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoL9110SDualMotorDriverBasicChannel : TArduinoBasicMotorChannel;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::L9110SDualMotorDriverChannel' )]
+  [ArduinoStart]
+  +TArduinoL9110SDualMotorDriverChannel : TArduinoL9110SDualMotorDriverBasicChannel
+
+    [OWPrimaryPin]
+    [Name( 'Direction(B)' )]
+    DirectionOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Speed(A)' )]
+    SpeedOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::L9110SDualMotorDriverPWMChannel' )]
+  [ArduinoStart]
+  +TArduinoL298NDualMotorDriverPWMChannel : TArduinoL9110SDualMotorDriverBasicChannel
+
+    [OWPrimaryPin]
+    ForwardOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    ReverseOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'DualMotorDriver' )]
+  [Name( 'Dual DC Motor Driver Digital and PWM Pins Bridge (L9110S, L298N)' )]
+  [Category( TArduinoDCMottorsToolbarCategory )]
+  +TArduinoL9110SDualMotorDriver : TArduinoComponent
+
+    [AddItem( TArduinoL9110SDualMotorDriverChannel, 2 )]
+    Motors : TArduinoL9110SDualMotorDriverChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'DualMotorDriver' )]
+  [Name( 'Dual DC Motor Driver 2 PWM Pins Bridge (L9110S, L298N, AM1016A, BTN7960/BTS7960)' )]
+  [Category( TArduinoDCMottorsToolbarCategory )]
+  +TArduinoL298NDualMotorPWMDriver : TArduinoComponent
+
+    [AddItem( TArduinoL298NDualMotorDriverPWMChannel, 2 )]
+    Motors : TArduinoL9110SDualMotorDriverChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

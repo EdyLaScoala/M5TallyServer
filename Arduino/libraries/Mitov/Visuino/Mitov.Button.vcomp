@@ -1,0 +1,40 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Button.h' )]
+  [ArduinoClass( 'Mitov::AutoRepeatButton' )]
+  [CreateName( 'RepeatButton' )]
+  [Name( 'Auto Repeat Button' )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FFirstTimePassed' )]
+  [ArduinoVariable( Boolean, 'FCurrentValue' )]
+  [ArduinoVariable( Boolean, 'FAfterInitialDelay' )]
+  +TArduinoAutoRepeatButton : TArduinoCommonBooleanFilter
+
+    [ NamePostfix( '(mS)' ) ]
+    InitialDelay : Unsigned  = 1000
+
+    [ NamePostfix( '(Hz)' ) ]
+    [DesignRange( 0.0001, 1000 )]
+    [MinValue( 0.00001 )]
+    RepeatFrequency : Single = 5.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Button.h' )]
+  [ArduinoClass( 'Mitov::Button' )]
+  [CreateName( 'Button' )]
+  [Name( 'Debounce Button' )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FLastValue' )]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  +TArduinoButton : TArduinoCommonDirectBooleanFilter
+
+    [ NamePostfix( '(mS)' ) ]
+    DebounceInterval : Unsigned = 50
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

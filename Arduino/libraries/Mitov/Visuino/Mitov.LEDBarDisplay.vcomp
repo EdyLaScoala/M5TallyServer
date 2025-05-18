@@ -1,0 +1,57 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LEDBarDisplay.h' )]
+  [ArduinoClass( 'Mitov::LEDBarDisplayInteger' )]
+  [CreateName( 'LEDBarDisplay' )]
+  [Name( 'LED Bar Display' )]
+  [Category( TArduinoDigitalDisplaysToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoLEDBarDisplay : TArduinoCommonIntegerSink
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoTemplatePinListSize]
+    [OWAutoManagePinListOwner( TOWArduinoDigitalSourcePin, 10, 1, 200 )]
+    BarsOutputPins : TOWPinListOwner
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDisplay' )]
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDisplay' )]
+    [DesignRange( 0,200 )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Integer = 0
+
+    InvertedBars : Boolean = False
+    SingleBar : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LEDBarDisplay.h' )]
+  [ArduinoClass( 'Mitov::LEDBarDisplayAnalog' )]
+  [CreateName( 'LEDBarAnalogDisplay' )]
+  [Name( 'LED Bar Analog Display' )]
+  [Category( TArduinoAnalogDisplaysToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoLEDBarAnalogDisplay : TArduinoCommonAnalogSink
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoDigitalSourcePin, 10, 1, 200 )]
+    [ArduinoTemplatePinListSize]
+    BarsOutputPins : TOWPinListOwner
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDisplay' )]
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDisplay' )]
+    [DesignRange( 0,1 )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+    InvertedBars : Boolean = False
+    SingleBar : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

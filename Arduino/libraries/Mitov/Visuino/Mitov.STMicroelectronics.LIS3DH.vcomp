@@ -1,0 +1,184 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::STMicroelectronicsLIS3DHAccelerometer' )]
+  [ParentImage( TArduinoMPUXYZAccelerometer )]
+  TArduinoAccelerometerLIS3DHAccelerometer : TArduinoBasicXYZAccelerometerSensor
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig4' )]
+    FullScaleRange : TArduinoMPU9250AccelerometerRange = ar2g
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfig4' )]
+    HighResolution : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::STMicroelectronicsLIS3DHADC' )]
+  *TArduinoAccelerometerLIS3DHAnalogInputs : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPins( '', 0, 3, TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerLIS3DHTapTiming' )]
+  TArduinoAccelerometerLIS3DHTapTiming : TArduinoCodePersistent
+
+    [MaxValue( 255 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimeLimit' )]
+    Limit : Unsigned = 10
+
+    [MaxValue( 255 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimeLatency' )]
+    Latency : Unsigned = 20
+
+    [MaxValue( 255 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimeWindow' )]
+    Window : Unsigned = 255
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerLIS3DHTap' )]
+  [ParentImage( TArduinoAccelerometerADXL345Tap )]
+  TArduinoAccelerometerLIS3DHTap : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Positive', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Negative', TOWArduinoClockSourcePin )]
+    XOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Positive', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Negative', TOWArduinoClockSourcePin )]
+    YOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Positive', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Negative', TOWArduinoClockSourcePin )]
+    ZOutputPins : TOWArduinoPinList
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClickConfig' )]
+    DoubleTap : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClickConfig' )]
+    SingleTap : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateThresholdConfig' )]
+    [ValueRange( 0.0, 1.0 )]
+    Threshold : Single = 0.1
+
+    Timing : TArduinoAccelerometerLIS3DHTapTiming
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoAccelerometerLIS3DHDataRate : Enum
+
+      Normal_1_Hz
+      Normal_10_Hz
+      Normal_25_Hz
+      Normal_50_Hz
+      Normal_100_Hz
+      Normal_200_Hz
+      Normal_400_Hz_LowPower_1_60_kHz
+      Normal_1_344_kHz_LowPower_5_376_kHz
+      
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAccelerometerLIS3DH_Extender : Extender
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    Accelerometer : TArduinoAccelerometerLIS3DHAccelerometer
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig1' )]
+    PowerDown : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig1' )]
+    LowPower : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig1' )]
+    DataRate : TArduinoAccelerometerLIS3DHDataRate = Normal_1_344_kHz_LowPower_5_376_kHz
+
+    Tap : TArduinoAccelerometerLIS3DHTap
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig0' )]
+    EnablePullUp : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_STMicroelectronics_LIS3DH.h' )]
+  [ArduinoClass( 'Mitov::STMicroelectronicsLIS3DH' )]
+  [CreateName( 'Accelerometer' )]
+  [ArduinoWebKeywords( 'LIS3DH' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoStart( 'SystemLoopStart' )]
+  [ArduinoLoopBegin( 'SystemLoopBeginTap' )]
+  TArduinoAccelerometerLIS3DH_Basic : TArduinoClockedEnableComponent, TArduinoAccelerometerLIS3DH_Extender
+
+    AnalogInputs : TArduinoAccelerometerLIS3DHAnalogInputs
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2C' )]
+  TArduinoAccelerometerLIS3DH_I2C_Basic : TArduinoAccelerometerLIS3DH_Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'STMicroelectronics LIS3DH Accelerometer(I2C)' )]
+  +TArduinoAccelerometerLIS3DH_I2C : TArduinoAccelerometerLIS3DH_I2C_Basic
+
+    [DesignRange( $18, $19 )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $18
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [Name( 'STMicroelectronics LIS3DH Accelerometer(SPI)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPI' )]
+  +TArduinoAccelerometerLIS3DH_SPI : TArduinoAccelerometerLIS3DH_Basic
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_STMicroelectronics_LIS3DH.h' )]
+  [ArduinoClass( 'Mitov::STMicroelectronicsLIS3DH' )]
+  [Name( 'Accelerometer' )]
+  [CreateName( 'Accelerometer' )]
+  [ParentImage( TArduinoBasicGyroscopeAccelerometerCompassModule )]
+  [ArduinoTemplateParameter( 'AnalogInputs', 'Mitov::NestedProperty<16, Mitov::STMicroelectronicsLIS3DHADC<Mitov::AnalogPin_NoImplementation<14>, Mitov::AnalogPin_NoImplementation<15>, Mitov::AnalogPin_NoImplementation<16> > >' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoStart( 'SystemStartTap' )]
+  [ArduinoLoopBegin( 'SystemLoopBeginTap' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoAccelerometerLIS3DH_BasicModule : TArduinoClockEnabledBasicShield, TArduinoAccelerometerLIS3DH_Extender
+
+//    [ArduinoUseBindingCheckSetter( 'UpdateConfig0' )]
+//    EnablePullUp : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

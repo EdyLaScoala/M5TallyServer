@@ -1,0 +1,33 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Real Time Alarm Clock(RTC) DS3231' )]
+  [ArduinoWebKeywords( 'DS3231 RTC' )]
+  [ArduinoWebKeywords( 'ZS-042 RTC' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  +TArduinoRTCDS3231 : TArduinoRTC_I2C, TArduinoRTCDS3231_Extender
+
+    [DesignRange( $68, $68 )]
+    Address : TArduinoUInt8 = $68
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ZS-042 Real Time Alarm Clock(RTC) DS3231 and EEPROM' )]
+  [CreateName( 'RealTimeClock' )]
+  [ArduinoWebKeywords( 'DS3231 RTC' )]
+  [ArduinoWebKeywords( 'ZS-042 RTC' )]
+  [Category( TArduinoDateTimeGeneratorsToolbarCategory )]
+  [Category( TMemoryToolbarCategory )]
+  +TArduinoRTCZS042 : TArduinoComponent
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    Clock : TArduinoRTCDS3231Element
+    EEPROM : TArduinoEEPROMI2CElemet
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

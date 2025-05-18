@@ -1,0 +1,147 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t *', 'AResponseArray' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'ASize' )]
+  [ArduinoPopulatedCallChainParameter( 'bool', 'AError' )]
+  [Name( 'SendResponse' )]
+  [ArduinoCallChainIndex]
+  TArduinoLinBusSendResponseCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'HandleResponse' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AID' )]
+  TArduinoLinBusHandleResponseCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'HandleReceive' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AID' )]
+  TArduinoLinBusHandleReceiveCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'SendPacket' )]
+  [ArduinoCallChainIndex]
+  TArduinoLinBusSendPacketCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoLinBusSendResponseCallChain]
+  [TArduinoLinBusHandleResponseCallChain]
+  [TArduinoLinBusHandleReceiveCallChain]
+  [TArduinoLinBusSendPacketCallChain]
+  TArduinoLinBusElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLinBusElements )]
+  [ArduinoDeclaredClass]
+  [ArduinoHelpPostfix( '(Lin Bus Elements)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoCallChainExcludeOwnerComplete]
+  TArduinoLinBusBasicElement : TArduinoBasicNamedExludePersistent
+
+    [MaxValue( $FF )]
+    ID : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoLinBusBasicClockElement : TArduinoLinBusBasicElement
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Master Read Raw Data' )]
+  [CreateName( 'Master Read Raw Data' )]
+  [ArduinoClass( 'Mitov::TArduinoLinBusReadRawElement' )]
+  [Category( TMasterToolbarCategory )]
+  [TArduinoLinBusSendResponseCallChain]
+  [TArduinoLinBusSendPacketCallChain]
+  +TArduinoLinBusReadRawElement : TArduinoLinBusBasicClockElement
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin
+
+    ErrorOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Master Write Raw Data' )]
+  [CreateName( 'Master Write Raw Data' )]
+  [ArduinoClass( 'Mitov::TArduinoLinBusWriteRawElement' )]
+  [Category( TMasterToolbarCategory )]
+  [TArduinoLinBusSendPacketCallChain]
+  +TArduinoLinBusWriteRawElement : TArduinoLinBusBasicClockElement
+
+    [OWPrimaryPin]
+//    [ArduinoPinConnectedAddPostfix( '_Variable' )]
+    InputPin : TOWArduinoByteSinkPin
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : TArduinoBinaryNoBindingPersistent
+//    InitialValue : TArduinoBinaryBlockPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoLinBusHandleResponseCallChain]
+  TArduinoLinBusDataResponseBasicElement : TArduinoLinBusBasicElement;
+//---------------------------------------------------------------------------
+  [Name( 'Slave Raw Data Response' )]
+  [CreateName( 'Slave Raw Data Response' )]
+  [ArduinoClass( 'Mitov::TArduinoLinBusRawDataResponseElement' )]
+  [Category( TSlaveToolbarCategory )]
+  +TArduinoLinBusRawDataResponseElement : TArduinoLinBusDataResponseBasicElement
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoByteSinkPin
+
+    InitialValue : TArduinoBinaryNoBindingPersistent
+//    InitialValue : TArduinoBinaryBlockPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoLinBusHandleReceiveCallChain]
+  TArduinoLinBusDataReceiveBasicElement : TArduinoLinBusBasicElement;
+//---------------------------------------------------------------------------
+  [Name( 'Slave Raw Data Receive' )]
+  [CreateName( 'Slave Raw Data Receive' )]
+  [ArduinoClass( 'Mitov::TArduinoLinBusRawDataReceiveElement' )]
+  [Category( TSlaveToolbarCategory )]
+  +TArduinoLinBusRawDataReceiveElement : TArduinoLinBusDataReceiveBasicElement
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Lin_TJA1027.h' )]
+  [ArduinoClass( 'Mitov::MitovLinTJA1027' )]
+  [ArduinoVariable( Unsigned, 4, 'FReadIndex' )]
+  [ArduinoVariable( Unsigned, 4, 'FSize' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  TArduinoLinTJA1027_Extender : Extender
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoLinBusElements
+
+    [NamePostfix( ' (uS)' )]
+    Delay : Unsigned = 1248 // 96 * 13;
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Lin TJA1027' )]
+  [CreateName( 'Lin' )]
+  [ArduinoWebKeywords( 'TJA1027' )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoLinTJA1027 : TArduinoCommonEnabledComponent, TArduinoLinTJA1027_Extender
+
+    [ArduinoExclude]
+    [ArduinoSerialInstanceTemplate]
+    ControlOutputPin : TOWArduinoSharedSerialSourcePin
+
+    [ArduinoComponentDependancyPin]
+    SleepOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

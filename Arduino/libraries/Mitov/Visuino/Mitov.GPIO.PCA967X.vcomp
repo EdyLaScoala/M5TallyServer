@@ -1,0 +1,38 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GPIO_PCF857X.h' )]
+  [CreateName( 'GPIO' )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoLoopUpdateHardware]
+  TArduinoPCA967X : TArduinoI2CGPIO
+
+    [DesignRange( 0, $7F )]  // Note that PCF8574A has different adresses than PCF8574
+    Address = $38
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GPIO_PCF8574' )]
+  [Name( 'PCA9674/PCA9674A GPIO (I2C)' )]
+  [ArduinoWebKeywords( 'PCA9674/PCA9674A' )]
+  +TArduinoPCA9674 : TArduinoPCA967X
+  
+    [AddIndexedNamedItem( TArduinoPCF857XChannel, 'Channel', 8 )]
+    Channels
+  
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GPIO_PCF8575' )]
+  [Name( 'PCA9675 GPIO (I2C)' )]
+  [ArduinoWebKeywords( 'PCA9675' )]
+  +TArduinoPCA9675 : TArduinoPCA967X
+
+    [AddIndexedNamedItem( TArduinoPCF857XChannel, 'Channel', 16 )]
+    Channels
+    
+    Address = $20
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

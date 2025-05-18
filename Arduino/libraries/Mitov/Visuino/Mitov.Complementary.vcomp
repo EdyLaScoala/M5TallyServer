@@ -1,0 +1,67 @@
+Mitov
+//---------------------------------------------------------------------------
+// http://robottini.altervista.org/tag/complementary-filter
+// http://www.rcgroups.com/forums/attachment.php?attachmentid=2477096
+// "2nd Order Comp Filter Simulation.pdf"
+//---------------------------------------------------------------------------
+  [Category( TArduinoAnalogMathFilterToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FHasTime' )]
+  TArduinoBasicComplementaryTypeFilter : TArduinoCommonAnalogFilter
+
+    [Name( 'Rate of Change' )]
+    RateInputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ComplementaryFilter.h' )]
+  TArduinoBasicComplementary : TArduinoBasicComplementaryTypeFilter;
+//---------------------------------------------------------------------------
+  TArduinoBasicFirstOrderComplementary : TArduinoBasicComplementary
+
+    [MinValue( 0 )]
+    [Name( 'Time Constant (tau)' )]
+    TimeConstant : Single = 0.075
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicSecondOrderComplementary : TArduinoBasicComplementary
+
+    [MinValue( 0 )]
+    [Name( 'Coefficient (K)' )]
+    Coefficient : Single = 10.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ComplementaryAnalog' )]
+  [Name( 'Complementary Analog Filter' )]
+  [CreateName( 'Complementary' )]
+  [ArduinoLoopEnd]
+  +TArduinoComplementary : TArduinoBasicFirstOrderComplementary;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ComplementaryAngle' )]
+  [Name( 'Complementary Angle Filter' )]
+  [CreateName( 'ComplementaryAngle' )]
+  [ArduinoLoopEnd]
+  +TArduinoComplementaryAngle : TArduinoBasicFirstOrderComplementary
+
+    Units : TArduinoAngleUnits = auDegree
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Complementary2' )]
+  [Name( 'Second Order Complementary Analog Filter' )]
+  [CreateName( 'ComplementarySecond' )]
+  [ArduinoLoopEnd]
+  +TArduinoComplementarySecondOrder : TArduinoBasicSecondOrderComplementary;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ComplementaryAngle2' )]
+  [Name( 'Second Order Complementary Angle Filter' )]
+  [CreateName( 'ComplementarySecondAngle' )]
+  [ArduinoLoopEnd]
+  +TArduinoComplementaryAngleSecondOrder : TArduinoBasicSecondOrderComplementary
+
+    Units : TArduinoAngleUnits = auDegree
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

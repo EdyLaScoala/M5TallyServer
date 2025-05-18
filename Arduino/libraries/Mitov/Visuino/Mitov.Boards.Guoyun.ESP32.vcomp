@@ -1,0 +1,124 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Guoyun Technology' )]
+  TGuoyunTechnologyCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TGuoyunTechnologyCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TGuoyunTechnologyESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IGuoyunESP32FShield )]
+  TArduinoGuoyunESP32FShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_Guoyun_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 39 )]
+    SDA = 15
+
+    [ValueRange( 0, 39 )]
+    SCL = 14
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_Guoyun_SPI1 : TArduinoESP32_Generic_SPI1
+
+    [ValueRange( 0, 39 )]
+    MOSI = 21
+
+    [ValueRange( 0, 39 )]
+    MISO = 12
+
+    [ValueRange( 0, 39 )]
+    SCK  = 22
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_Red', '27' )] // Red
+  [ArduinoTemplateParameter( 'C_Green', '33' )] // Green
+  [ArduinoTemplateParameter( 'C_Blue', '32' )] // Blue
+  [ArduinoShieldPin( '27', 'Red' )]
+  [ArduinoShieldPin( '33', 'Green' )]
+  [ArduinoShieldPin( '32', 'Blue' )]
+  +TGuoyunESP32FRGBLEDModule : TArduinoBasicInvertedRGBLEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'ChipSelectOutputPin', '5' )]
+  [ArduinoShieldPin( '5', 'MicroSD' )]
+  +TGuoyunESP32FMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [Name( 'Display SSD1306' )]
+  [CreateName( 'Display SSD1306' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<88, uint8_t, 60 >' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DisplaySSD1306ResetPin<Mitov::DigitalPin_DirectBoardPinImplementation<16>>' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  +TGuoyunESP32FDisplaySSD1306Module : TArduinoDisplaySSD1306BasicShieldDisplayModuleI2C_Up, IGuoyunESP32FShield;
+//---------------------------------------------------------------------------
+  [Name( 'Display ST7735' )]
+  [CreateName( 'Display ST7735' )]
+  [ArduinoClass( 'Mitov::DisplayST77XXBrightness' )]
+  
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.SPISpeed', 'Mitov::ConstantProperty<220, uint32_t, 8000000 >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<26>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.RegisterSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<17>' )]
+  
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+  
+  [ArduinoTemplateParameter( 'OverridePixelOffset', 'Mitov::NestedProperty<325, Mitov::TArduinoDisplayST7735PixelOffset< Mitov::ConstantProperty<322, bool, false >, Mitov::ConstantProperty<323, uint8_t, 0 >, Mitov::ConstantProperty<324, uint8_t, 0> > >' )]
+  
+  [ArduinoTemplateParameter( '2_BRIGHTNESS_PIN', '13' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<16>' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoSPI( 0 )]
+  [ArduinoShieldPin( '13', 'Display Brightness' )]
+  [ArduinoShieldPin( '16', 'Display RST' )]
+  [ArduinoShieldPin( '17', 'Display D/C' )]
+  [ArduinoShieldPin( '26', 'Display CS' )]
+  [ArduinoDoNotExclude]
+  [ArduinoInclude( 'Mitov_Display_ST7735R_GreenTab_144.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_TYPE', 'Mitov::Display_ST7735R_GreenTab_144' )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorY', 0 )]
+  +TGuoyunESP32FDisplayST7735Module : TArduinoBasicBrightnessDisplayST7735Module, IGuoyunESP32FShield;
+//---------------------------------------------------------------------------
+  [Name( 'Guoyun ESP32F Dev. KIT' )]
+  [Category( TGuoyunTechnologyESP32Category )]
+  [ParentImage( TGuoyunTechnologyCategory )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduinoGuoyun_ESP32F_Dev_KIT_Board : TArduinoBasicESP32Digital_Serial_ChannelsBoard
+
+    [AddItem( TGuoyunESP32FRGBLEDModule )]
+    [AddItem( TGuoyunESP32FMicroSDModule )]
+    Modules
+
+    [AddItem( TArduinoESP32_Guoyun_I2C )]
+    [AddItem( TArduinoESP32_Generic_I2C_2 )]
+    I2CChannels
+
+    [AddItem( TArduinoESP32_Generic_SPI )]
+    [AddItem( TArduinoESP32_Guoyun_SPI1 )]
+    SPIChannels
+
+    [ArduinoBoard_Add_ReservedChannels( 0,  2 )]
+    [ArduinoBoard_Add_ReservedChannel(  2, 'Touch 2' )]
+    [ArduinoBoard_Add_ReservedChannel(  3 )]
+    [ArduinoBoard_Add_ReservedChannel(  4, 'Touch 1' )]
+    [ArduinoBoard_Add_ReservedChannels( 6, 14 )]
+    [ArduinoBoard_Add_ReservedChannels( 21, 3 )]
+    [ArduinoBoard_Add_ReservedChannel(  25, 'Buzzer' )]
+    [ArduinoBoard_Add_ReservedChannels( 26, 2 )]
+    [ArduinoBoard_Add_ReservedChannels( 32, 3 )]
+    [ArduinoBoard_Add_ReservedChannel(  39 )]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add &Expansion Modules ...' )]
+    [Name( 'Expansion Modules' )]
+    Shields : TArduinoGuoyunESP32FShields
+
+  ;
+; // Mitov

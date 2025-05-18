@@ -1,0 +1,95 @@
+Mitov
+//---------------------------------------------------------------------------
+// Uses http://www.thinksrs.com/downloads/programs/Therm%20Calc/NTCCalibrator/NTCcalculator.htm
+//---------------------------------------------------------------------------
+  [CreateName( 'Thermistor' )]
+  [ArduinoInclude( 'Mitov_Thermistor.h' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  TArduinoThermistorBasic : TArduinoCommonAnalogFilter
+
+    [Name( 'Fixed Resistor (Ohms)' )]
+    [MinValue( 0.00001 )]
+    FixedResistor : Single = 10000.0
+
+    InFahrenheit : Boolean = False
+    ThermistorToGround : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ThermistorSteinhartHart' )]
+  [Name( 'Thermistor Steinhart Hart' )]
+  +TArduinoThermistorSteinhartHart : TArduinoThermistorBasic
+
+    A : Single = 1.131836368e-3
+    B : Single = 2.337064764e-4
+    C : Single = 0.8916215763e-7
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'float *', 'AResistance' )]
+  [ArduinoPopulatedCallChainParameter( 'float *', 'ATemperature' )]
+  [Name( 'GetTableValues' )]
+  [ArduinoReversed]
+  TArduinoThermistorGetValueCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [FixedCollection]
+  [HideEmpty]
+  [TArduinoThermistorGetValueCallChain]
+  TArduinoThermistorPoints : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDontMakeInstance]
+  [PersistentCollection( TArduinoThermistorPoints )]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoThermistorPoint' )]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  TArduinoThermistorBasicPoint : TArduinoCodePersistent
+
+    [Name( 'Resistance (Ohms)' )]
+    Resistance : Single
+
+    Temperature : Single
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoThermistorPoint1 : TArduinoThermistorBasicPoint
+
+    Resistance = 25395.0
+    Temperature = 5.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoThermistorPoint2 : TArduinoThermistorBasicPoint
+
+    Resistance = 10000.0
+    Temperature = 25.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoThermistorPoint3 : TArduinoThermistorBasicPoint
+
+    Resistance = 4366.0
+    Temperature = 45.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoThermistorPointsSettings' )]
+  TArduinoThermistorPointsSettings : TArduinoCodePersistent
+
+    [AddItem( TArduinoThermistorPoint1 )]
+    [AddItem( TArduinoThermistorPoint2 )]
+    [AddItem( TArduinoThermistorPoint3 )]
+    Points : TArduinoThermistorPoints
+
+    InFahrenheit : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ThermistorSteinhartHart3Points' )]
+  [Name( 'Thermistor Steinhart Hart - 3 Points' )]
+  +TArduinoThermistorSteinhartHart3Points : TArduinoThermistorBasic
+
+    Table : TArduinoThermistorPointsSettings
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

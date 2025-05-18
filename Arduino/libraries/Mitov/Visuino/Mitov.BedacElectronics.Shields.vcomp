@@ -1,0 +1,120 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '8' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoPLCLABServo : TArduinoServoShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '7' )]
+  TArduinoPLCLABLightSensorModule : TArduinoBasicLightSensorPersistent;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '6' )]
+  TArduinoPLCLABPotentiometerModule : TArduinoBasicPotentiometerModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorInputPin', '2' )]
+  TArduinoPLCLABInfraredRemoteReceiver : TArduinoInfraredRemoteReceiverShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::LiquidCrystalDisplay' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_PINS', 'Mitov::LiquidCrystalDisplayParallel4DataPins<Mitov::DigitalPin_DirectBoardPinImplementation<6>, Mitov::DigitalPin_DirectBoardPinImplementation<7>, Mitov::DigitalPin_DirectBoardPinImplementation<5>, Mitov::DigitalPin_DirectBoardPinImplementation<4>>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_PINS_0', 'Mitov::DigitalPin_DirectBoardPinImplementation<12>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_PINS_1', 'Mitov::DigitalPin_NoImplementation<23>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_PINS_2', 'Mitov::DigitalPin_DirectBoardPinImplementation<11>' )]
+  [ArduinoTemplateParameter( 'Columns', 'Mitov::ConstantProperty<115, uint32_t, 16 >' )]
+  [ArduinoTemplateParameter( 'Rows', 'Mitov::ConstantProperty<116, uint32_t, 2 >' )]
+  [ArduinoVariable( Unsigned, 5, 'FCursorPos' )]
+  [ArduinoVariable( Unsigned, 2, 'FCursorLine' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoPLCLABLCDDisplay : TArduinoBasicLiquidCrystalDisplayPersistent;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', 'A0' )]
+  +TArduinoPLCLABButton1 : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', 'A1' )]
+  +TArduinoPLCLABButton2 : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', 'A2' )]
+  +TArduinoPLCLABButton3 : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', 'A3' )]
+  +TArduinoPLCLABButton4 : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '4' )]
+  +TArduinoPLCLABDigitalLED1 : TArduinoBasicDigitalLED;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '5' )]
+  +TArduinoPLCLABDigitalLED2 : TArduinoBasicDigitalLED;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '6' )]
+  +TArduinoPLCLABDigitalLED3 : TArduinoBasicDigitalLED;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '7' )]
+  +TArduinoPLCLABDigitalLED4 : TArduinoBasicDigitalLED;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '10' )]
+  TArduinoPLCLABShieldBuzzer : TArduinoBasicBuzzerShieldElement;
+//---------------------------------------------------------------------------
+  [Name( 'EEPROM' )]
+  [CreateName( 'EEPROM' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_Generic_I2C_EEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericEEPROM_I2C' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x50 >' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoI2C( 0 )]
+  TArduinoABIOMA01EEPROM : TArduinoCodeEnabledPersistent
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoPROMMemoryElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'PLC-LAB Breakout' )]
+  [CreateName( 'PLC-LAB' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoShieldPin( '2',  'IR Receiver' )]
+  [ArduinoShieldPin( '3',  'IR Transmitter' )]
+  [ArduinoShieldPin( '4',  'LCD/LED 0' )]
+  [ArduinoShieldPin( '5',  'LCD/LED 1' )]
+  [ArduinoShieldPin( '6',  'LCD/LED 2' )]
+  [ArduinoShieldPin( '7',  'LCD/LED 3' )]
+  [ArduinoShieldPin( '8',  'Servo' )]
+  [ArduinoShieldPin( '10', 'Speaker' )]
+  [ArduinoShieldPin( '11', 'LCD' )]
+  [ArduinoShieldPin( '12', 'LCD' )]
+  [ArduinoShieldPin( 'A0', 'Button 0' )]
+  [ArduinoShieldPin( 'A1', 'Button 1' )]
+  [ArduinoShieldPin( 'A2', 'Button 2' )]
+  [ArduinoShieldPin( 'A3', 'Button 3' )]
+  [ArduinoShieldPin( 'A6', 'Potentiometer' )]
+  [ArduinoShieldPin( 'A7', 'Ligth Sensor' )]
+  +TArduinoPLCLABBreakoutShield : TArduinoShield, INanoShield
+
+    [AddItem( TArduinoPLCLABButton1 )]
+    [AddItem( TArduinoPLCLABButton2 )]
+    [AddItem( TArduinoPLCLABButton3 )]
+    [AddItem( TArduinoPLCLABButton4 )]
+    Buttons : TArduinoFixedPersistentCollection
+
+    [AddItem( TArduinoPLCLABDigitalLED1 )]
+    [AddItem( TArduinoPLCLABDigitalLED2 )]
+    [AddItem( TArduinoPLCLABDigitalLED3 )]
+    [AddItem( TArduinoPLCLABDigitalLED4 )]
+    LEDs : TArduinoFixedPersistentCollection
+
+    Servo : TArduinoPLCLABServo
+    Thermometer : TArduinoMicrochipTCN75APersistent
+    EEPROM : TArduinoABIOMA01EEPROM
+    LightSensor : TArduinoPLCLABLightSensorModule
+    Potentiometer : TArduinoPLCLABPotentiometerModule
+    InfraredReceiver : TArduinoPLCLABInfraredRemoteReceiver
+    InfraredTransmitter : TArduinoInfraredRemoteTransmitterPersistent
+    Buzzer : TArduinoPLCLABShieldBuzzer
+    Display : TArduinoPLCLABLCDDisplay
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

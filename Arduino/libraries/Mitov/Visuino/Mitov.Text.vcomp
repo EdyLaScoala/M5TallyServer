@@ -1,0 +1,609 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+//  [ArduinoClass( 'Mitov::MultiSource' )]
+  [CreateName( 'TextMultiSource' )]
+  [Name( 'Text Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoTextMultiSource : TArduinoCommonTextSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoStringSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoStringSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatText' )]
+  [Name( 'Repeat Text' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatText : TArduinoCommonTextFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonMux.h' )]
+  [ArduinoClass( 'Mitov::TextMux' )]
+  [Name( 'Text Mux(Multi channel Switch)' )]
+  [CreateName( 'TextMux' )]
+  [Category( TTextToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  +TArduinoTextMux : TArduinoTextMultiInputSource
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoUnsignedSinkPin
+
+    [OWExcludeBindings]
+    [ValueRange( 0, 4000 )]
+    [ArduinoFlexibleVariable]
+    InitialChannel : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonDemux.h' )]
+  [ArduinoClass( 'Mitov::TextDemux' )]
+  [Name( 'Text Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'TextDemux' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoTextDemux : TArduinoCommonTextSink
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoUnsignedSinkPin
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoStringSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoStringSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+    [OWExcludeBindings]
+    [ValueRange( 0, 4000 )]
+    [ArduinoFlexibleVariable]
+    InitialChannel : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [Category( TArduinoTextMeasurementToolbarCategory )]
+  TArduinoCommonTextMeasure : TArduinoCommonTextEnableSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TextLength' )]
+  [CreateName( 'TextLength' )]
+  [Name( 'Measure Text Length' )]
+  +TArduinoTextLength : TArduinoCommonTextMeasure;
+//---------------------------------------------------------------------------
+  TArduinoCommonTextCardinalMeasure : TArduinoCommonTextMeasure
+
+    [MultiLine]
+    Text : String = ''
+
+    IgnoreCase : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::FindTextPosition' )]
+  [CreateName( 'FindTextPosition' )]
+  [Name( 'Find Text Position' )]
+  +TArduinoSubTextPosition : TArduinoCommonTextCardinalMeasure;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::FindLastTextPosition' )]
+  [CreateName( 'FindLastTextPosition' )]
+  [Name( 'Find Last Text Position' )]
+  +TArduinoLastSubTextPosition : TArduinoCommonTextCardinalMeasure;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [Category( TArduinoTextMeasurementToolbarCategory )]
+  TArduinoCommonTextDigitalMeasure : TArduinoCommonTextEnableSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [MultiLine]
+    Text : String = ''
+
+    IgnoreCase : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ContainsText' )]
+  [CreateName( 'ContainsText' )]
+  [Name( 'Contains Text' )]
+  +TArduinoContainsText : TArduinoCommonTextDigitalMeasure;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TextStartsWith' )]
+  [CreateName( 'TextStartsWith' )]
+  [Name( 'Text Starts With' )]
+  // RENAME!
+  [OldName( 'TArduinoTextStartsWidth' )]
+  +TArduinoTextStartsWith : TArduinoCommonTextDigitalMeasure;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TextEndsWith' )]
+  [CreateName( 'TextEndsWith' )]
+  [Name( 'Text Ends With' )]
+  [OldName( 'TArduinoTextEndsWidth' )]
+  +TArduinoTextEndsWith : TArduinoCommonTextDigitalMeasure;
+//---------------------------------------------------------------------------
+  TArduinoCommonTextLengthFilter : TArduinoCommonTextFilter
+  
+    Length : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonTextPositionLengthFilter : TArduinoCommonTextLengthFilter
+
+    Position : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::SubText' )]
+  [CreateName( 'SubText' )]
+  [Name( 'Extract Sub Text' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoSubText : TArduinoCommonTextPositionLengthFilter
+  
+//    [ArduinoNotDefaultClassName( 'Mitov::SubText_WrapAround' )]
+    WrapAround : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::LeftSubText' )]
+  [CreateName( 'LeftSubText' )]
+  [Name( 'Extract Left Sub Text' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoLeftSubText : TArduinoCommonTextLengthFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::RightSubText' )]
+  [CreateName( 'RightSubText' )]
+  [Name( 'Extract Right Sub Text' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoRightSubText : TArduinoCommonTextLengthFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::DeleteSubText' )]
+  [CreateName( 'DeleteSubText' )]
+  [Name( 'Delete Sub Text' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoDeleteSubText : TArduinoCommonTextPositionLengthFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::DeleteLeftSubText' )]
+  [CreateName( 'DeleteLeftText' )]
+  [Name( 'Delete Left Sub Text' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoDeleteLeftSubText : TArduinoCommonTextLengthFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::DeleteRightSubText' )]
+  [CreateName( 'DeleteRightText' )]
+  [Name( 'Delete Right Sub Text' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoDeleteRightSubText : TArduinoCommonTextLengthFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::ToUpperCase' )]
+  [CreateName( 'ToUpperCase' )]
+  [Name( 'Text To Upper Case' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoTextToUpperCase : TArduinoCommonTextFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::ToLowerCase' )]
+  [CreateName( 'ToLowerCase' )]
+  [Name( 'Text To Lower Case' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoTextToLowerCase : TArduinoCommonTextFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::TrimText' )]
+  [CreateName( 'Trim' )]
+  [Name( 'Trim Text Begin/End Spaces' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoTrimText : TArduinoCommonTextFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ChangeOnly.h' )]
+  [ArduinoClass( 'Mitov::ChangeOnlyText' )]
+  [ArduinoContructorParameter( '""' )]
+  [CreateName( 'ChangeOnly' )]
+  [Name( 'Text Change Only' )]
+  [Category( TTextToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoTextChangeOnly : TArduinoCommonTextFilter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Math.h' )]
+  [ArduinoClass( 'Mitov::CompareTextValue' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::String' )]
+  [Name( 'Compare Text Value' )]
+  [CreateName( 'CompareValue' )]
+  [ArduinoContructorParameter( 'Mitov::String()' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TTextToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoTextCompareValue : TArduinoCommonTextSink
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    Enabled : Boolean = True
+
+    [MultiLine]
+    [ArduinoUseBindingSetter]
+    [ArduinoBindingPostfix( '_Binding' )]
+    Value : String = ''
+
+    [ArduinoTransformImplementation( 'CompareTypeString' )]
+    [ArduinoExclude]
+    CompareType : TArduinoCompareValueType = ctEqual
+
+    OnlyChanged : Boolean = True
+    IgnoreCase : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::ReplaceText' )]
+  [CreateName( 'ReplaceText' )]
+  [Name( 'Replace Text' )]
+  [Category( TArduinoTextFilterToolbarCategory )]
+  +TArduinoReplaceText : TArduinoCommonTextFilter
+
+    [MultiLine]
+    FromValue : String = ''
+
+    [MultiLine]
+    ToValue : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::String' )]
+  [Name( 'Text Toggle Switch' )]
+  [CreateName( 'TextToggleSwitch' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoTextToggleSwitch : TArduinoCommonTextSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoStringSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoStringSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::String' )]
+  [Name( 'Text On/Off Switch' )]
+  [CreateName( 'TextSwitch' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoTextSwitch : TArduinoCommonTextSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text Toggle Demux' )]
+  [CreateName( 'TextToggleDemux' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoTextToggleDemux : TArduinoCommonTextSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoStringSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text Multi-Source Merger' )]
+  [CreateName( 'TextMultiMerger' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoTextMultiMerger : TArduinoTextMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'Mitov::String' )]
+  [ArduinoTemplateParameter( 'DATA', 'char' )]
+  [CreateName( 'RememberText' )]
+  [Name( 'Remember Text Value' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoRememberText : TArduinoCommonTextFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( String, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreValuesText' )]
+  [Name( 'Ignore Text Values' )]
+  [CreateName( 'IgnoreTextValues' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoIgnoreTextValues : TArduinoCommonTextFilter
+
+    Value : String = ''
+    IgnoreCase : Boolean = False
+    PassValuesBellow : Boolean = False
+    PassEqualValues : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'Mitov::String' )]
+  [CreateName( 'TextSnapshot' )]
+  [Name( 'Text Snapshot' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoTextSnapshot : TArduinoCommonTextFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Element' )]
+  [CreateName( 'IntegerElement' )]
+  [ArduinoClass( 'Mitov::FormattedTextElementInteger' )]
+  [ParentImage( TArduinoIntegerBinaryPacketElement )]
+  [ArduinoStart]
+  +TArduinoFormattedTextElementInteger : TArduinoFormattedTextLengthElement
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoFormattedTextElementInteger )]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [ValueRange( 2, 36 )]
+    Base : Integer = 10
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned Element' )]
+  [CreateName( 'UnsignedElement' )]
+  [ArduinoClass( 'Mitov::FormattedTextElementUnsigned' )]
+  [ParentImage( TArduinoUnsignedBinaryPacketElement )]
+  [ArduinoStart]
+  +TArduinoFormattedTextElementUnsigned : TArduinoFormattedTextLengthElement
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoFormattedTextElementUnsigned )]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [ValueRange( 2, 36 )]
+    Base : Integer = 10
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Element' )]
+  [CreateName( 'AnalogElement' )]
+  [ArduinoClass( 'Mitov::FormattedTextElementAnalog' )]
+  [ParentImage( TArduinoAnalogBinaryPacketElement )]
+  [ArduinoStart]
+  +TArduinoFormattedTextElementAnalog : TArduinoFormattedTextLengthElement
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoFormattedTextElementAnalog )]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [DesignRange( 1, 20 )]
+    [ValueRange( 1, 30 )]
+    MinWidth : Unsigned = 1
+
+    [OldName( 'Prcision' )]
+    [DesignRange( 0, 20 )]
+    [ValueRange( 0, 30 )]
+    Precision : Unsigned = 3
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital Element' )]
+  [CreateName( 'DigitalElement' )]
+  [ArduinoClass( 'Mitov::FormattedTextElementDigital' )]
+  [ParentImage( TArduinoDigitalBinaryPacketElement )]
+  [ArduinoStart]
+  +TArduinoFormattedTextElementDigital : TArduinoFormattedTextLengthElement
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoFormattedTextElementDigital )]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [MultiLine]
+    TrueValue : String = 'true'
+
+    [MultiLine]
+    FalseValue : String = 'false'
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Boolean
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoTextSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTextSetValueElements )]
+  [ArduinoHelpPostfix( '(Text Set Values)' )]
+  [ArduinoDeclaredClass]
+//  [ArduinoOwnerReference]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicTextSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoTextBasicValueElement : TArduinoBasicTextSetValueElement
+
+    [MultiLine]
+    Value : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetTextValueElement' )]
+  [ParentImage( TArduinoTextValue )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoTextSetValueElement : TArduinoTextBasicValueElement
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoTextSetValueElement )]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetTextValueElement' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  +TArduinoTextStateSetValueElement : TArduinoTextBasicValueElement
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Text.h' )]
+  [ArduinoClass( 'Mitov::TextValue' )]
+  [CreateName( 'TextValue' )]
+  [Name( 'Text Value' )]
+  [Category( TArduinoTextDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoTextValue : TArduinoCommonTextSource, TArduinoValue_BasicSateActiveExtender
+
+    ClockInputPin  : TOWArduinoClockSinkPin
+
+    [MultiLine]
+    [ArduinoUseBindingCheckSetter( 'UpdateValue' )]
+    [ArduinoFlexibleVariableIfCollectionElements( Elements )]
+    Value : String = ''
+
+    Elements : TArduinoTextSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoCharSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoCharSetValueElements )]
+  [ArduinoHelpPostfix( '(Char Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicCharSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoCharBasicValueElement : TArduinoBasicCharSetValueElement
+
+    Value : AnsiChar = ' '
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [ParentImage( TArduinoCharValue )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoCharSetValueElement : TArduinoCharBasicValueElement
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  +TArduinoCharStateSetValueElement : TArduinoCharBasicValueElement
+
+    [OWPinGroup( TArduinoCharStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text Element' )]
+  [CreateName( 'TextElement' )]
+  [ArduinoClass( 'Mitov::SplitTextElementText' )]
+  [ParentImage( TArduinoFormattedTextElementText )]
+  [ArduinoDataType( 'Mitov::String' )]
+  +TArduinoSplitTextElementText : TArduinoSplitTextElementBasic
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoSplitTextElementText )]
+    OutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned Element' )]
+  [CreateName( 'UnsignedElement' )]
+  [ArduinoClass( 'Mitov::SplitTextElementUnsigned' )]
+  [ParentImage( TArduinoUnsignedValueElement )]
+  [ArduinoDataType( 'uint32_t' )]
+  +TArduinoSplitTextElementUnsigned : TArduinoSplitTextElementBasic
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoSplitTextElementUnsigned )]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Element' )]
+  [CreateName( 'IntegerElement' )]
+  [ArduinoClass( 'Mitov::SplitTextElementInteger' )]
+  [ParentImage( TArduinoIntegerValueElement )]
+  [ArduinoDataType( 'int32_t' )]
+  +TArduinoSplitTextElementInteger : TArduinoSplitTextElementBasic
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoSplitTextElementInteger )]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Element' )]
+  [CreateName( 'AnalogElement' )]
+  [ArduinoClass( 'Mitov::SplitTextElementAnalog' )]
+  [ParentImage( TArduinoBasicAnalogValueElement )]
+  [ArduinoDataType( 'float' )]
+  +TArduinoSplitTextElementAnalog : TArduinoSplitTextElementBasic
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoSplitTextElementAnalog )]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital Element' )]
+  [CreateName( 'DigitalElement' )]
+  [ArduinoClass( 'Mitov::SplitTextElementDigital' )]
+  [ParentImage( TArduinoDigitalValueElement )]
+  [ArduinoDataType( 'bool' )]
+  +TArduinoSplitTextElementDigital : TArduinoSplitTextElementBasic
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoSplitTextElementDigital )]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [MultiLine]
+    TrueValue  : String = 'true'
+
+    [MultiLine]
+    FalseValue : String = 'false'
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

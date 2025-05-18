@@ -1,0 +1,48 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'TCP/IP Secure Client (SSL)' )]
+  [CreateName( 'TCP Secure Client' )]
+  [CollectionItemAssociation( TArduinoBasicTCPClientSocket )]
+  *TArduinoBasicTCPSecureClientSocket : TArduinoBasicTCPClientSocket
+
+    [MultiLine]
+    Certificate : String
+
+    [MultiLine]
+    PrivateKey : String
+
+    Port = 443
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicTCPSecureClientCACertSocket : TArduinoBasicTCPSecureClientSocket
+
+    [MultiLine]
+    CACert : String
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicNetworkOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicNetworkOperations )]
+  [ArduinoHelpPostfix( '(Basic Network Operations)' )]
+  [Name( 'Get Host IP' )]
+  [CreateName( 'Get Host IP' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::TArduinoNetworkGetHostIPOperation' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoNetworkGetHostIPOperation : TArduinoCodePersistent
+  
+    ClockInputPin : TOWArduinoClockSinkPin
+    AddressOutputPin : TOWArduinoStringSourcePin
+    FailedOutputPin : TOWArduinoClockSourcePin
+
+
+    Enabled : Boolean = True
+    Host : String = ''
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

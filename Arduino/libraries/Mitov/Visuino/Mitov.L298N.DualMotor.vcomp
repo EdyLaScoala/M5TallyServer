@@ -1,0 +1,32 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoL298NDualMotorDriverChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_L298NDualMotorDriver.h' )]
+  [ArduinoClass( 'Mitov::L298NDualMotorDriverChannel' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  +TArduinoL298NDualMotorDriverChannel : TArduinoBasicMotorChannel
+
+    [OWPrimaryPin]
+    ForwardOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    ReverseOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    SpeedOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'DualMotorDriver' )]
+  [Name( 'Dual DC Motor Driver 3 Pin Bridge(L298N/TB6612FNG)' )]
+  [Category( TArduinoDCMottorsToolbarCategory )]
+  +TArduinoL298NDualMotorDriver : TArduinoComponent
+  
+    [AddItem( TArduinoL298NDualMotorDriverChannel, 2 )]
+    Motors : TArduinoL298NDualMotorDriverChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

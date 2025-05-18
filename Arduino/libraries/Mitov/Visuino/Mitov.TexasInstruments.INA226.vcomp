@@ -1,0 +1,58 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TexasInstruments_INA226.h' )]
+  [ArduinoWebKeywords( 'INA226' )]
+  [ArduinoWebKeywords( 'INA230' )]
+  [ArduinoWebKeywords( 'INA231' )]
+  [Name( 'Texas Instruments INA226/INA230/INA231 Voltage/Current/Power (I2C)' )]
+  [CreateName( 'VoltageCurrentPower' )]
+  [ArduinoClass( 'Mitov::TexasInstrumentsINA226' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoTexasInstrumentsINA226 : TArduinoClockedEnableFlexibleI2CComponent
+  
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Power (mW)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Bus Voltage (V)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Current (mA)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Shunt Voltage (mV)', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    ResetInputPin : TOWArduinoClockSinkPin
+    
+    [DesignRange( $40, $4F )]
+    Address = $40
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    SingleShot : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '128' )]
+    [PropertyListDesignValue( '256' )]
+    [PropertyListDesignValue( '512' )]
+    [PropertyListDesignValue( '1024' )]
+    Averaging : Unsigned = 1
+    
+    Alerts : TArduinoTexasInstrumentsINA260Alerts
+
+    ConversionTime : TArduinoTexasInstrumentsINAConversionTime
+
+    [Name( 'Shunt Resistor (Ohms)' )]
+    [MinValue( 0.000001 )]
+    ShuntResistor : Single = 0.1
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    PowerDown : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

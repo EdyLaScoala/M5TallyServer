@@ -1,0 +1,80 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::PlayFrequencyToneSetValueElement' )]
+  [Name( 'Play Tone' )]
+  +TArduinoPlayFrequencyToneSetValueElement : TArduinoPlayFrequencyToneBasicElement
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoPlayFrequencyToneElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoPlayFrequencyToneElements )]
+  [ArduinoHelpPostfix( '(Play Tone)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoCallChainExcludeOwnerComplete]
+  TArduinoPlayFrequencyToneBasicElement : TArduinoBasicNamedExludePersistent
+
+    [ NamePostfix( '(Hz)' ) ]
+    Frequency : Single = 1000.0
+
+    [ NamePostfix( '(mS)' ) ]
+    Duration : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::PlayFrequencyToneStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Play Tone State' )]
+  [ArduinoValueState]
+  [ArduinoSetValueTryActiveCallChain]
+  +TArduinoPlayFrequencyToneStateSetValueElement : TArduinoPlayFrequencyToneBasicElement
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoPlayFrequencyToneStateSetValueElement )]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoIncludeDefine( '#ifdef SEEEDUINO_WIO_TERMINAL' )]
+//  [ArduinoInclude( 'Tone.h' )]
+//  [ArduinoIncludeDefine( '#endif' )]
+  [ArduinoInclude( 'Mitov_PlayFrequencyTone.h' )]
+  [ArduinoClass( 'Mitov::PlayFrequencyTone' )]
+  [Name( 'Play Frequency Tone' )]
+  [CreateName( 'PlayFrequency' )]
+  [Category( TArduinoAudioOutputToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+//  [ArrayValueSourceComponent]
+  [ArduinoVariable( Boolean, 'FPlaying' )]
+  +TArduinoPlayFrequencyTone : TArduinoCommonAnalogEnableSink
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoDirectPinTemplate]
+    [OWRequiredPin]
+    OutputPin : TOWArduinoDigitalOutputSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [OWExcludeBindings]
+    [NamePostfix( '(Hz)' ) ]
+    [ArduinoFlexibleVariableIfCollectionElements( Elements )]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialFrequency : Single = 0.0
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    [ArduinoNotDefaultClassName( 'Mitov::PlayFrequencyToneDuration' )]
+    [ArduinoAddPostfixIfElementHasAttribute( ArduinoValueStateAttribute, 'State' )]
+    Elements : TArduinoPlayFrequencyToneElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

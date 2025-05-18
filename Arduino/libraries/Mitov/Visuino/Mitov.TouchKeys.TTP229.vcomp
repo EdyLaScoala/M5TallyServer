@@ -1,0 +1,56 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TouchKeys_TTP229.h' )]
+  [CreateName( 'TouchKeys' )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  TArduinoTouchKeysTTP229_Extender : Extender
+
+    [OWAddPin( '0', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '1', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '2', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '3', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '4', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '5', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '6', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '7', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '8', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '9', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '10', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '11', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '12', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '13', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '14', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '15', TOWArduinoDigitalSourcePin )]
+    OutputPins : TOWArduinoChainCallPinList
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'TTP229 Keys Touch Pad (I2C)' )]
+  [ArduinoClass( 'Mitov::TArduinoTouchKeysTTP229_I2C' )]
+  +TArduinoTouchKeysTTP229_I2C : TArduinoEnableFlexibleI2CComponent, TArduinoTouchKeysTTP229_Extender
+  
+    [DesignRange( $50, $57 )]
+    Address = $57
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'TTP229/TTP229-BSF Keys Touch Pad (Serial)' )]
+  [ArduinoClass( 'Mitov::TArduinoTouchKeysTTP229_Serial' )]
+  +TArduinoTouchKeysTTP229_Serial : TArduinoCommonEnabledComponent, TArduinoTouchKeysTTP229_Extender
+
+    ClockOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    DataInputPin : TOWArduinoDigitalInputSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

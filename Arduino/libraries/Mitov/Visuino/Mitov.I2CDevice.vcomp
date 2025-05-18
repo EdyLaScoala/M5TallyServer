@@ -1,0 +1,113 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoI2CDeviceOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoI2CDeviceOperations )]
+  [ArduinoDeclaredClass]
+  [ArduinoHelpPostfix( '(I2C)' )]
+  TArduinoI2CDeviceOperation : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Request' )]
+  [CreateName( 'Request' )]
+  [ArduinoClass( 'Mitov::I2CDeviceRequest' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoI2CDeviceRequest : TArduinoI2CDeviceOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+    OutputPin : TOWArduinoByteSourcePin
+
+    Size : TArduinoUInt8 = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'I2C Device' )]
+  [CreateName( 'I2CDevice' )]
+  [ArduinoInclude( 'Mitov_Basic_I2C.h' )]
+  [ArduinoClass( 'Mitov::I2CDevice' )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoI2CDevice : TArduinoComponent
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+
+    [ValueRange( $1, $FF )]
+    Address : Unsigned = $1
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add O&perations ...' )]
+    Operations : TArduinoI2CDeviceOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'I2C Scan' )]
+  [CreateName( 'I2C Scan' )]
+  [ArduinoInclude( 'Mitov_I2CScaner.h' )]
+  [ArduinoClass( 'Mitov::I2CScaner' )]
+  +TArduinoI2CElementScan : TArduinoI2CElement
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ScanInputPin : TOWArduinoClockSinkPin
+
+    ScanningOutputPin : TOWArduinoDigitalSourcePin
+    ScanningAddressOutputPin : TOWArduinoUnsignedSourcePin
+    AddressOutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  TArduinoI2CControlPin_Extender : Extender
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    ControlOutputPin : TOWArduinoI2CSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  TArduinoI2CSensorPin_Extender : Extender
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoI2CControlPinClockedEnableComponent : TArduinoClockedEnableComponent, TArduinoI2CControlPin_Extender;
+//---------------------------------------------------------------------------
+  TArduinoI2CControlPinEnableComponent : TArduinoEnableComponent, TArduinoI2CControlPin_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  TArduinoI2CSensorPinClockedEnableComponent : TArduinoClockedEnableComponent, TArduinoI2CSensorPin_Extender;
+//---------------------------------------------------------------------------
+  TArduinoI2CAddressSensorPinClockedEnableComponent : TArduinoI2CSensorPinClockedEnableComponent
+
+    Address : TArduinoUInt8
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoI2CAddressSensorPinEnableComponent : TArduinoEnableComponent, TArduinoI2CSensorPin_Extender
+
+    Address : TArduinoUInt8
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoClockedEnableFlexibleI2CComponent : TArduinoClockedEnableComponent, TArduinoI2CControlPin_Extender
+
+    Address : TArduinoUInt8
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoI2CAddressControlPinComponent : TArduinoComponent, TArduinoI2CControlPin_Extender
+
+    Address : TArduinoUInt8
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

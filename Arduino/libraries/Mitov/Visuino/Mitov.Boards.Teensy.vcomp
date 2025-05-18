@@ -1,0 +1,712 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'PJRC (Teensy)' )]
+  TTeensyCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TeensySerial.h' )]
+  [ArduinoClass( 'Mitov::TeensySerialPort' )]
+  TArduinoBasicTeensyHardwareSerial : TArduinoBasicHardwareSerial
+
+    Parity : TArduinoStandardSerialParity = spNone
+    InvertedRX : Boolean = False
+    InvertedTX : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TeensyUSBSerial.h' )]
+  [ArduinoSerialType( 'usb_serial_class' )]
+  [ArduinoClass( 'Mitov::TeensyUSBPort' )]
+  +TArduinoUSBSpeedSerial : TArduinoBasicSpeedSerial
+
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin )]
+    ConnectedOutputPin : TOWArduinoDigitalSourcePin
+    
+    WaitForConnection : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'HardwareSerial' )]
+  +TArduinoTeensyHardwareSerial : TArduinoBasicTeensyHardwareSerial;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'HardwareSerial2' )]
+  +TArduinoTeensyHardwareSerial2 : TArduinoBasicTeensyHardwareSerial;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'HardwareSerial3' )]
+  +TArduinoTeensyHardwareSerial3 : TArduinoBasicTeensyHardwareSerial;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'HardwareSerial4' )]
+  +TArduinoTeensyHardwareSerial4 : TArduinoBasicTeensyHardwareSerial;
+//---------------------------------------------------------------------------
+  [ArduinoSerialType( 'HardwareSerial5' )]
+  +TArduinoTeensyHardwareSerial5 : TArduinoBasicTeensyHardwareSerial;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', 'BUILTIN_SDCARD' )]
+  +TArduinoTeensyMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'TimeLib.h' )]
+  [ArduinoInclude( 'Mitov_Teensy_3_RTC.h' )]
+  [Name( 'Real Time Clock' )]
+  [CreateName( 'Real Time Clock' )]
+  [ArduinoClass( 'Mitov::Teensy3RTC' )]
+  [ArduinoPinDefinePrefix( '_MITOV_TEENSY' )]
+  [ArduinoInit]
+  +TArduinoTeensyRTCModule : TArduinoBasicRTCModule
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [ValueRange( -0.5, 0.5 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateCompensate' )]
+    Compensate : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Input Settings' )]
+  [CreateName( 'Analog Input Settings' )]
+  [ArduinoInit]
+//  [ArduinoExcludeUnconnectedAndDefault]
+//  [ArduinoInclude( 'Mitov_Teensy_AnalogInputSettings.h' )]
+//  [ArduinoClass( 'Mitov::TArduinoTeensyAnalogResolution' )]
+  TArduinoTeensyResolutionAnalogInputSettingsModule : TArduinoShield
+
+    [ValueRange( 8, 16 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateResolution' )]
+    Resolution : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Teensy_AnalogInputSettings.h' )]
+  [ArduinoClass( 'Mitov::TeensyAnalogInputSettings' )]
+  +TArduinoTeensyAnalogInputSettingsModule : TArduinoTeensyResolutionAnalogInputSettingsModule
+
+    [ValueRange( 1, 32 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateAveraging' )]
+    Averaging : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTeensyProcessorModuleOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTeensyProcessorModuleOperations )]
+  [ArduinoHelpPostfix( '(Teensy Processor Operations)' )]
+  TArduinoTeensyProcessorModuleBasicOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  TArduinoTeensyProcessorModuleBasicOperation : TArduinoCodePersistent, TArduinoTeensyProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  TArduinoTeensyProcessorModuleBasicClockedOperation : TArduinoTeensyProcessorModuleBasicOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Restart' )]
+  [CreateName( 'Restart' )]
+  [ArduinoInclude( 'Mitov_Teensy_Processor.h' )]
+  [ArduinoClass( 'Mitov::TeensyProcessorRestart' )]
+  [ParentImage( TArduinoProcessorModuleResetOperation )]
+  +TArduinoTeensyProcessorModuleResetOperation : TArduinoTeensyProcessorModuleBasicClockedOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Reboot' )]
+  [CreateName( 'Reboot' )]
+  [ArduinoInclude( 'Mitov_Teensy_Processor.h' )]
+  [ArduinoClass( 'Mitov::TeensyProcessorReboot' )]
+  +TArduinoTeensyProcessorModuleRebootOperation : TArduinoTeensyProcessorModuleBasicClockedOperation;
+//---------------------------------------------------------------------------
+  +TArduinoTeensyProcessorModuleGetIDOperation : TArduinoProcessorModuleBasicGetIDOperation, TArduinoTeensyProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Processor' )]
+  [CreateName( 'Processor' )]
+  [ParentImage( TArduinoProcessorModule )]
+  +TArduinoTeensyProcessorModule : TArduinoShield
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    Operations : TArduinoTeensyProcessorModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TTeensyCategory )]
+  [ArduinoBoardCanReset]
+  [ArduinoBoardArchitecture( 'teensy' )]
+  TArduinoTeensy_Basic_2_0_Modules_Board : TArduinoBoardExtendableImplementation
+
+    [ArduinoExclude]
+    AnalogInputReference : TArduinoAnalogInputReference = Default
+
+    [AddItem( TArduinoTeensyProcessorModule )]
+    [AddItem( TArduinoEEPROMModule )]
+    Modules : TArduinoModules
+    
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    SPIChannels : TArduinoSPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTeensy_Basic_Board : TArduinoTeensy_Basic_2_0_Modules_Board
+
+    [AddItem( TArduinoTeensyAnalogInputSettingsModule )]
+    Modules
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTeensy_Basic_Modules_Board : TArduinoTeensy_Basic_Board
+  
+    [AddItem( TArduinoBasicKeyboardModule )]
+    [AddItem( TArduinoBasicMouseModule )]
+    [AddItem( TArduinoTeensyRTCModule )]
+    Modules
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTeensy_Basic_Serial_Board : TArduinoTeensy_Basic_Modules_Board
+  
+    [AddItem( TArduinoUSBSpeedSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial2 )]
+    [AddItem( TArduinoTeensyHardwareSerial3 )]
+    Serial
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 3.0' )]
+  [ArduinoDefine( 'VISUINO_TEENSY_3_0' )]
+  [ArduinoDefine( 'VISUINO_TEENSY' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensy30:usb=serial,speed=96,opt=o2std,keys=en-us' )]
+  +TArduinoTeensy_3_0_Board : TArduinoTeensy_Basic_Serial_Board
+
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI )]
+    SPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoTouchDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoTouchDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoDigitalPullDownOpenDrainInterruptChannel )] //TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  4, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoDigitalPullDownOpenDrainSerial3InterruptChannel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoDigitalPullDownOpenDrainSerial3InterruptChannel, 'Digital(TX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 3, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedTouchPullDownAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedTouchPullDownAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 2, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 22, 8, 2, TArduinoCombinedTouchAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 24, 1, TArduinoDigitalPullDownOpenDrainInterruptChannel )] //TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25, 1, TArduinoTouchDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26, 6, TArduinoDigitalPullDownOpenDrainInterruptChannel )] //TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 32, 2, TArduinoTouchDigitalInterruptChannel )]
+    Digital : TArduinoDigitalChannels
+    
+    [ArduinoBoard_Add_AnalogInputChannels( 10, 4, TArduinoAnalogInputChannel )]
+    [Name( 'Analog Input' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_TEENSY_3_1' )]
+  [ArduinoDefine( 'VISUINO_TEENSY' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensy31:usb=serial,speed=96,opt=o2std,keys=en-us' )]
+  TArduinoTeensy_Basic_3_1_2_Board : TArduinoTeensy_Basic_Serial_Board
+  
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI )]
+    SPIChannels
+
+    [ArduinoBoard_Add_AnalogInputChannels( 10, 4, TArduinoAnalogInputChannel )]
+    [ArduinoBoard_Add_AnalogInputChannels( 14, 1, TArduinoAnalogInputAnalogOutputChannel )]
+    [Name( 'Analog' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoTouchDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoTouchDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoDigitalPullDownOpenDrainInterruptChannel )] //TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  4, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoDigitalPullDownOpenDrainSerial3InterruptChannel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoDigitalPullDownOpenDrainSerial3InterruptChannel, 'Digital(TX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 3, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedTouchPullDownAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedTouchPullDownAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 2, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 22, 8, 2, TArduinoCombinedTouchAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 24, 1, TArduinoDigitalPullDownOpenDrainInterruptChannel )] //TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25, 1, TArduinoCombinedTouchDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 26, 15, 6, TArduinoCombinedPullDownAnalogDigitalNoAnalogChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 32, 1, TArduinoCombinedTouchDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 33, 1, TArduinoTouchDigitalInterruptChannel )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 3.1' )]
+  +TArduinoTeensy_3_1_Board : TArduinoTeensy_Basic_3_1_2_Board;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 3.2' )]
+  [OldName( 'Teensy 3.1/3.2' )]
+  +TArduinoTeensy_3_2_Board : TArduinoTeensy_Basic_3_1_2_Board;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_TEENSY' )]
+  TArduinoTeensy_3_5_6_Basic_Board : TArduinoTeensy_Basic_Serial_Board
+  
+    [AddItem( TArduinoTeensyMicroSDModule )]
+    Modules
+
+    [AddItem( TArduinoTeensyHardwareSerial4 )]
+    [AddItem( TArduinoTeensyHardwareSerial5 )]
+    Serial
+  
+    [AddItem( TArduinoI2C, 4 )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI )]
+    SPIChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 6 )]
+  [ArduinoInterruptPin]
+  +TArduinoDigitalPullDownOpenDrainSerial6InterruptChannel : TArduinoDigitalPullDownOpenDrainChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 2 )]
+  [ArduinoInterruptPin]
+  +TArduinoDigitalPullDownOpenDrainSPI2InterruptChannel : TArduinoDigitalPullDownOpenDrainChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 5 )]
+  +TArduinoCombinedAnalogDigitalPWMSerial5Channel : TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  +TArduinoCombinedPullDownAnalogDigitalNoAnalogI2C0InterruptChannel : TArduinoCombinedPullDownAnalogDigitalNoAnalogChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 3 )]
+  [ArduinoInterruptPin]
+  +TArduinoDigitalPullDownOpenDrainPWMSerial3InterruptChannel : TArduinoDigitalPullDownOpenDrainPWMChannel;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 2 )]
+  [ArduinoInterruptPin]
+  +TArduinoDigitalPullDownOpenDrainPWMI2C2InterruptChannel : TArduinoDigitalPullDownOpenDrainPWMChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 1 )]
+  [ArduinoSPI( 1 )]
+  +TArduinoDigitalPullDownOpenDrainSerial1SPI1InterruptChannel : TArduinoDigitalPullDownOpenDrainInterruptChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 3.5' )]
+  [ArduinoDefine( 'VISUINO_TEENSY_3_5' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensy35:usb=serial,speed=120,opt=o2std,keys=en-us' )]
+  +TArduinoTeensy_3_5_Board : TArduinoTeensy_3_5_6_Basic_Board
+  
+    [ArduinoBoard_Add_AnalogInputChannels( 10, 2, TArduinoAnalogInputChannel )]
+    [ArduinoBoard_Add_AnalogInputChannel( 12, TArduinoAnalogInputAnalogOutputChannel, 'Analog Input[ 21 ]/Analog Output[ 0 ]', '21' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 13, TArduinoAnalogInputAnalogOutputChannel, 'Analog Input[ 22 ]/Analog Output[ 1 ]', '22' )]
+    [ArduinoBoard_Add_AnalogInputChannels( 25, 2, TArduinoAnalogInputChannel )]
+    [Name( 'Analog' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoDigitalPullDownOpenDrainSerial1SPI1InterruptChannel, 'Digital(RX1)(SPI-MOSI1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoDigitalPullDownOpenDrainSerial1SPI1InterruptChannel, 'Digital(TX1)(SPI-MISO1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoDigitalPullDownOpenDrainPWMI2C2InterruptChannel, 'Digital(I2C-SCL2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoDigitalPullDownOpenDrainPWMI2C2InterruptChannel, 'Digital(I2C-SDA2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoDigitalPullDownOpenDrainPWMSerial3InterruptChannel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoDigitalPullDownOpenDrainPWMSerial3InterruptChannel, 'Digital(TX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI-MOSI0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI-MISO0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(LED)(SPI-SCK0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 3, TArduinoCombinedPullDownAnalogDigitalNoAnalogChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedPullDownAnalogDigitalNoAnalogI2C0InterruptChannel, 'Digital(I2C-SDA0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedPullDownAnalogDigitalNoAnalogI2C0InterruptChannel, 'Digital(I2C-SCL0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 2, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 22, 8, 2, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 24, 5, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 29, 2, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 31, 12,  1, TArduinoCombinedAnalogDigitalPWMSerial4Channel, 'Digital(RX4)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 32, 13,  1, TArduinoCombinedAnalogDigitalPWMSerial4SPI1Channel, 'Digital(TX4)(SPI-SCK1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 33, 14,  1, TArduinoCombinedAnalogDigitalPWMSerial5Channel, 'Digital(RX5)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 34, 15,  1, TArduinoCombinedAnalogDigitalPWMSerial5Channel, 'Digital(TX5)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 35, 16,  2, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 37, 18, 1, TArduinoCombinedAnalogDigitalPWMI2C1Channel, 'Digital(I2C-SDA1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 38, 19, 1, TArduinoCombinedAnalogDigitalPWMI2C1Channel, 'Digital(I2C-SCL1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 39, 20, 1, TArduinoCombinedPullDownAnalogDigitalNoAnalogChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 40, 4, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 44, 1, TArduinoDigitalPullDownOpenDrainSPI2InterruptChannel, 'Digital(SPI-MOSI2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 45, 1, TArduinoDigitalPullDownOpenDrainSPI2InterruptChannel, 'Digital(SPI-MISO2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 46, 1, TArduinoDigitalPullDownOpenDrainSPI2InterruptChannel, 'Digital(SPI-SCL2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 47, 1, TArduinoDigitalPullDownOpenDrainSerial6InterruptChannel, 'Digital(RX6)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 48, 1, TArduinoDigitalPullDownOpenDrainSerial6InterruptChannel, 'Digital(TX6)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 49, 23, 2, TArduinoCombinedPullDownAnalogDigitalNoAnalogChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 51, 7, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 3 )]
+  +TArduinoDigitalPullDownOpenDrainI2C3InterruptChannel : TArduinoDigitalPullDownOpenDrainInterruptChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 3.6' )]
+  [ArduinoDefine( 'VISUINO_TEENSY_3_6' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us' )]
+  +TArduinoTeensy_3_6_Board : TArduinoTeensy_3_5_6_Basic_Board
+  
+    [ArduinoBoard_Add_AnalogInputChannels( 10, 2, TArduinoAnalogInputChannel )]
+    [ArduinoBoard_Add_AnalogInputChannel( 12, TArduinoAnalogInputAnalogOutputChannel, 'Analog Input[ 21 ]/Analog Output[ 0 ]', '21' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 13, TArduinoAnalogInputAnalogOutputChannel, 'Analog Input[ 22 ]/Analog Output[ 1 ]', '22' )]
+    [Name( 'Analog' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoCombinedTouchDigitalSerial1SPI1InterruptChannel, 'Digital(RX1)(SPI-MOSI1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoCombinedTouchDigitalSerial1SPI1InterruptChannel, 'Digital(TX1)(SPI-MISO1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoDigitalPullDownOpenDrainPWMI2C2InterruptChannel, 'Digital(I2C-SCL2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoDigitalPullDownOpenDrainPWMI2C2InterruptChannel, 'Digital(I2C-SDA2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoDigitalPullDownOpenDrainPWMSerial3InterruptChannel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoDigitalPullDownOpenDrainPWMSerial3InterruptChannel, 'Digital(TX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI-MOSI0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI-MISO0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(LED)(SPI-SCK0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2, 2, TArduinoCombinedTouchAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedTouchPullDownAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SDA0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedTouchPullDownAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SCL0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 2, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 22, 8, 2, TArduinoCombinedTouchAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 24, 5, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 29, 2, TArduinoTouchDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 31, 12,  1, TArduinoCombinedAnalogDigitalPWMSerial4InterruptChannel, 'Digital(RX4)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 32, 13,  1, TArduinoCombinedAnalogDigitalPWMSerial4SPI1InterruptChannel, 'Digital(TX4)(SPI-SCK1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 33, 14,  1, TArduinoCombinedAnalogDigitalPWMSerial5InterruptChannel, 'Digital(RX5)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 34, 15,  1, TArduinoCombinedAnalogDigitalPWMSerial5InterruptChannel, 'Digital(TX5)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 35, 16,  2, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 37, 18, 1, TArduinoCombinedAnalogDigitalPWMI2C1InterruptChannel, 'Digital(I2C-SDA1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 38, 19, 1, TArduinoCombinedAnalogDigitalPWMI2C1InterruptChannel, 'Digital(I2C-SCL1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 39, 20, 1, TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 40, 4, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 44, 1, TArduinoDigitalPullDownOpenDrainSPI2InterruptChannel, 'Digital(SPI-MOSI2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 45, 1, TArduinoDigitalPullDownOpenDrainSPI2InterruptChannel, 'Digital(SPI-MISO2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 46, 1, TArduinoDigitalPullDownOpenDrainSPI2InterruptChannel, 'Digital(SPI-SCL2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 47, 1, TArduinoDigitalPullDownOpenDrainSerial6InterruptChannel, 'Digital(RX6)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 48, 1, TArduinoDigitalPullDownOpenDrainSerial6InterruptChannel, 'Digital(TX6)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 49, 23, 2, TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 51, 5, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 56, 1, TArduinoDigitalPullDownOpenDrainI2C3InterruptChannel, 'Digital(I2C-SDA3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 57, 1, TArduinoDigitalPullDownOpenDrainI2C3InterruptChannel, 'Digital(I2C-SCL3)' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 2 )]
+  +TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI2InterruptChannel : TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 0 )]
+  +TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI0InterruptChannel : TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 3 )]
+  +TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMSerial3InterruptChannel : TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 4 )]
+  [ArduinoI2C( 1 )]
+  +TArduinoCombinedPullDownNoAnalogDigitalI2C1Serial4InterruptChannel : TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 7 )]
+  +TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSerial7InterruptChannel : TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 6 )]
+  [ArduinoI2C( 2 )]
+  +TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMI2C2Serial6InterruptChannel : TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 5 )]
+  [ArduinoI2C( 1 )]
+  +TArduinoCombinedPullDownNoAnalogDigitalI2C1Serial5InterruptChannel : TArduinoCombinedAnalogDigitalPullDownOpenDrainAnalogInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  +TArduinoCombinedPullDownNoAnalogDigitalI2C0InterruptChannel : TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 1 )]
+  +TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSerial1InterruptChannel : TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_TEENSY' )]
+  TArduinoTeensy_Basic_4_X_Board : TArduinoTeensy_Basic_Modules_Board
+
+    [AddItem( TArduinoI2C, 3 )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI, 3 )]
+    SPIChannels
+
+    [AddItem( TArduinoUSBSpeedSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    [AddItem( TArduinoTeensyHardwareSerial )]
+    Serial
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  5, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  2, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI0InterruptChannel, 'Digital(SPI-MOSI0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI0InterruptChannel, 'Digital(SPI-MISO0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI0InterruptChannel, 'Digital(LED)(SPI-SCK0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0,  1, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMSerial3InterruptChannel, 'Digital(TX3)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1,  1, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMSerial3InterruptChannel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2,  1, TArduinoCombinedPullDownNoAnalogDigitalI2C1Serial4InterruptChannel, 'Digital(RX4)(I2C-SCL1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 17, 3,  1, TArduinoCombinedPullDownNoAnalogDigitalI2C1Serial4InterruptChannel, 'Digital(TX4)(I2C-SDA1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4,  1, TArduinoCombinedPullDownNoAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SDA0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5,  1, TArduinoCombinedPullDownNoAnalogDigitalI2C0InterruptChannel, 'Digital(I2C-SCL0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6,  1, TArduinoCombinedPullDownNoAnalogDigitalI2C1Serial5InterruptChannel, 'Digital(TX5)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 21, 7,  1, TArduinoCombinedPullDownNoAnalogDigitalI2C1Serial5InterruptChannel, 'Digital(RX5)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 22, 8,  2, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 24, 10, 1, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMI2C2Serial6InterruptChannel, 'Digital(TX6)(I2C-SCL2)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 25, 11, 1, TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMI2C2Serial6InterruptChannel, 'Digital(RX6)(I2C-SDA2)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 26, 12, 1, TArduinoCombinedPullDownNoAnalogDigitalSPI1Channel, 'Digital(SPI-MOSI1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 27, 13, 1, TArduinoCombinedPullDownNoAnalogDigitalSPI1Channel, 'Digital(SPI-SCK1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 28,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSerial7InterruptChannel, 'Digital(RX7)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 29,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSerial7InterruptChannel, 'Digital(TX7)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 30,  3, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 33,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', 'BUILTIN_SDCARD' )]
+  +TArduinoTeensy_4_0_MicroSDModule : TArduinoBasicCommonBoardMicroSDModule, TArduinoMicroSDCard_NoLibrary_Extender;
+//---------------------------------------------------------------------------
+  ['{A5C80300-F5F4-4CDC-8E03-6D62B224A9E2}']
+  ITeensy4_0Shield : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( ITeensy4_0Shield )]
+  TTeensy4_0Shields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 4.0' )]
+  [ArduinoDefine( 'VISUINO_TEENSY_4_0' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensy40:usb=serial,speed=600,opt=o2std,keys=en-us' )]
+  +TArduinoTeensy_4_0_Board : TArduinoTeensy_Basic_4_X_Board
+
+    [AddItem( TArduinoTeensy_4_0_MicroSDModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 34, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI2InterruptChannel, 'Digital(DAT1)(SPI-MISO2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 35, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI2InterruptChannel, 'Digital(DAT0)(SPI-MOSI2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 36, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel, 'Digital(CLK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 37, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI0InterruptChannel, 'Digital(CMD)(SPI-SCK2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 38, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel, 'Digital(DAT3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 39, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel, 'Digital(DAT2)' )]
+    Digital
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TTeensy4_0Shields
+  
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 2 )]
+  +TArduinoDigitalPWMSPI2InterruptChannel : TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 8 )]
+  +TArduinoDigitalPullDownOpenDrainSerial8InterruptChannel : TArduinoDigitalPullDownOpenDrainInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '44' )]
+  +TArduinoTeensy4_1MicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 4.1' )]
+  [ArduinoDefine( 'VISUINO_TEENSY_4_1' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensy41:usb=serial,speed=600,opt=o2std,keys=en-us' )]
+  +TArduinoTeensy_4_1_Board : TArduinoTeensy_Basic_4_X_Board
+  
+    [AddItem( TArduinoTeensy4_1MicroSDModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 34, 1, TArduinoDigitalPullDownOpenDrainSerial8InterruptChannel, 'Digital(RX8)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 35, 1, TArduinoDigitalPullDownOpenDrainSerial8InterruptChannel, 'Digital(TX8)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 36, 2, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 38, 14,  4, TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 42, 1, TArduinoDigitalPWMSPI2InterruptChannel, 'Digital(DAT1)(SPI-MISO2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 43, 1, TArduinoDigitalPWMSPI2InterruptChannel, 'Digital(DAT0)(SPI-MOSI2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 44, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel, 'Digital(CLK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 45, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMSPI0InterruptChannel, 'Digital(CMD)(SPI-SCK2)' )]    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 46, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel, 'Digital(DAT3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 47, 1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel, 'Digital(DAT2)' )]
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 48,  3, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 51,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 52,  1, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 53,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 54,  1, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    Digital
+  
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTeensy_2_0_Basic_Board : TArduinoTeensy_Basic_2_0_Modules_Board
+
+    [AddItem( TArduinoUSBSpeedSerial )]
+    Serial
+
+    [AddItem( TArduinoI2C )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI )]
+    SPIChannels
+
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 2.0' )]
+  [ArduinoDefine( 'VISUINO_TEENSY_2_0' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensy2:usb=serial,speed=16,keys=en-us' )]
+  +TArduinoTeensy_2_0_Board : TArduinoTeensy_2_0_Basic_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  2, TArduinoDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 11, 10, 1, TArduinoCombinedAnalogDigitalChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 12, 9,  1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 13, 8,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 7,  1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 6,  1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 5,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 17, 4,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 3,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 2,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 1,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 22, 11, 1, TArduinoCombinedAnalogDigitalChannel )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy 2.0++' )]
+  [ArduinoDefine( 'VISUINO_TEENSY_2_0_PP' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensypp2:usb=serial,speed=16,keys=en-us' )]
+  +TArduinoTeensy_2_0_PP_Board : TArduinoTeensy_2_0_Basic_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1,  TArduinoDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1,  TArduinoDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalSerial0InterruptChannel, 'Digital(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoAdditionalDigitalSerial0InterruptChannel, 'Digital(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  2, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,  1, TArduinoAdditionalDigitalChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  7, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14, 3,  TArduinoDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17, 1,  TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18, 2,  TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20, 1,  TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 21, 1,  TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI0-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22, 1,  TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI0-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 23, 1,  TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI0-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 24, 4,  TArduinoDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 28, 8, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 36, 2, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 38, 0, 8, TArduinoCombinedAnalogDigitalChannel )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInterruptPin]
+  +TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel : TArduinoCombinedPullDownAnalogDigitalNoAnalogChannel;
+//---------------------------------------------------------------------------
+//  [ArduinoInterruptPin]
+//  +TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel : TArduinoCombinedAnalogDigitalAnalogOutputChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 4 )]
+  +TArduinoCombinedAnalogDigitalPWMSerial4Channel : TArduinoCombinedPullUpDownOpenDrainAnalogDigitalPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInterruptPin]
+  +TArduinoCombinedAnalogDigitalPWMSerial4InterruptChannel : TArduinoCombinedAnalogDigitalPWMSerial4Channel;
+//---------------------------------------------------------------------------
+  [ArduinoInterruptPin]
+  +TArduinoCombinedAnalogDigitalPWMSerial5InterruptChannel : TArduinoCombinedAnalogDigitalPWMSerial5Channel;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 1 )]
+  +TArduinoCombinedAnalogDigitalPWMI2C1Channel : TArduinoCombinedAnalogDigitalPWMChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInterruptPin]
+  +TArduinoCombinedAnalogDigitalPWMI2C1InterruptChannel : TArduinoCombinedAnalogDigitalPWMI2C1Channel;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 1 )]
+  +TArduinoCombinedAnalogDigitalPWMSerial4SPI1Channel : TArduinoCombinedAnalogDigitalPWMSerial4Channel;
+//---------------------------------------------------------------------------
+  [ArduinoInterruptPin]
+  +TArduinoCombinedAnalogDigitalPWMSerial4SPI1InterruptChannel : TArduinoCombinedAnalogDigitalPWMSerial4SPI1Channel;
+//---------------------------------------------------------------------------
+  [Name( 'Teensy LC' )]
+  [ArduinoDefine( 'VISUINO_TEENSY_LC' )]
+  [ArduinoDefine( 'VISUINO_TEENSY' )]
+  [ArduinoBoardCompileParams( 'teensy:avr:teensyLC:usb=serial,speed=48,opt=osstd,keys=en-us' )]
+  +TArduinoTeensy_LC_Board : TArduinoTeensy_Basic_Serial_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoCombinedTouchDigitalSerial1SPI1InterruptChannel, 'Digital(RX1)(SPI1-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoCombinedTouchDigitalSerial1SPI1InterruptChannel, 'Digital(TX1)(SPI1-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  2, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoDigitalPullDownOpenDrainInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,  1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoDigitalPullDownOpenDrainSerial3InterruptChannel, 'Digital(RX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoDigitalPullDownOpenDrainSerial3InterruptChannel, 'Digital(TX3)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoDigitalPullDownOpenDrainPWMSerial2InterruptChannel, 'Digital(TX2)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI0-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(SPI0-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoDigitalPullDownOpenDrainSPI0InterruptChannel, 'Digital(LED)(SPI0-SCK)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 1, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2, 2, TArduinoCombinedTouchAnalogDigitalPWMInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedTouchPullDownAnalogDigitalI2C0InterruptChannel, 'Digital(I2C0-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedTouchPullDownAnalogDigitalI2C0InterruptChannel, 'Digital(I2C0-SCL)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 20, 6, 1, TArduinoCombinedTouchAnalogDigitalPWMSPI1InterruptChannel, 'Digital(SPI1-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 21, 7, 1, TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 22, 8, 1, TArduinoCombinedTouchAnalogDigitalPWMI2C1InterruptChannel, 'Digital(I2C1-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 23, 9, 1, TArduinoCombinedTouchAnalogDigitalPWMI2C1InterruptChannel, 'Digital(I2C1-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 24, 10, 2, TArduinoCombinedPullDownAnalogDigitalNoAnalogInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 26, 12, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainAnalogInterruptChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

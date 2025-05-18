@@ -1,0 +1,324 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  TArduino_M5Stack_StickC_BasicHat : TArduinoShield, IM5StackStickHat;
+//---------------------------------------------------------------------------
+  [Name( 'Joystick Hat' )]
+  [CreateName( 'Joystick' )]
+  [ArduinoInclude( 'Mitov_M5Stack_JoystickUnit.h' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoClass( 'Mitov::M5StackJoystickHatI2C' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  +TArduino_M5Stack_StickC_JoystickHat : TArduinoBasicJoystickModule, IM5StackStickHat;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  [ArduinoInclude( 'Mitov_M5Stack_JoyC.h' )]
+  [ArduinoClass( 'Mitov::M5Stack_JoyCLEDColor' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+//  [ArduinoTemplateParameterCollectionItemIndex]
+//  [ArduinoTemplateParameter( '::Declarations::YahboomMicrobit::YahboomMicrobitNeoPixels, ::Declarations::YahboomMicrobit::NeoPixels' )]
+  [ParentImage( TArduinoBasicRGBLEDModule )]
+  TArduino_M5Stack_JoyC_RGBColor : TArduinoBasicColorInitialValueInputPinChannel;
+//---------------------------------------------------------------------------
+  [Name( 'UpdateButtons' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'bool', 'AChangeOnly' )]
+  TArduino_M5Stack_StickC_JoyCElementUpdateButtonsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'NeedsUpdateButtons' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  TArduino_M5Stack_StickC_JoyCElementNeedsUpdateButtonsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduino_M5Stack_StickC_JoyCElementNeedsUpdateButtonsCallChain]
+  [TArduino_M5Stack_StickC_JoyCElementUpdateButtonsCallChain]
+  TArduino_M5Stack_StickC_JoyCJoysticks : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::M5Stack_JoyCJoystick' )]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  TArduino_M5Stack_StickC_JoyCJoystickBasic : TArduinoBasicJoystickElement;
+//---------------------------------------------------------------------------
+  [Name( 'Left' )]
+  +TArduino_M5Stack_StickC_JoyCJoystickLeft : TArduino_M5Stack_StickC_JoyCJoystickBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Right' )]
+  +TArduino_M5Stack_StickC_JoyCJoystickRight : TArduino_M5Stack_StickC_JoyCJoystickBasic;
+//---------------------------------------------------------------------------
+  [Name( 'JoyC Hat' )]
+  [CreateName( 'JoyC' )]
+  [ArduinoInclude( 'Mitov_M5Stack_JoyC.h' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoClass( 'Mitov::M5StackJoyCI2C' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduino_M5Stack_StickC_JoyCHat : TArduino_M5Stack_StickC_BasicHat
+
+    LEDs : TArduino_M5Stack_JoyC_RGBColor
+
+    [AddItem( TArduino_M5Stack_StickC_JoyCJoystickLeft )]
+    [AddItem( TArduino_M5Stack_StickC_JoyCJoystickRight )]
+    Joysticks : TArduino_M5Stack_StickC_JoyCJoysticks
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Speaker Hat' )]
+  [CreateName( 'Speaker' )]
+  [ArduinoInclude( 'Mitov_M5Stack_StickC_Speaker_Hat.h' )]
+  [ArduinoClass( 'Mitov::M5Stack_StickC_Speaker_Hat' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoInit]
+  [ArduinoShieldPin( '26', 'Speaker' )]
+  [ArduinoShieldPin( '0', 'Speaker Enable' )]
+  [ArduinoTemplateParameter( 'PIN', '26' )]
+  +TArduino_M5Stack_StickC_SpeakerHat : TArduinoBasicBuzzerModule, IM5StackStickHat
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_M5Stack_8ServosHat.h' )]
+  [ArduinoClass( 'Mitov::M5Stack8ServosHatServo' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  +TArduino_M5Stack_StickC_8ServosChannel : TArduinoBasicServoChannel;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoBasicServoChannel )]
+  TArduino_M5Stack_StickC_8ServosChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [Name( '8 Servos Hat' )]
+  [CreateName( '8 Servos Hat' )]
+  [ArduinoInclude( 'Mitov_M5Stack_8ServosHat.h' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoClass( 'Mitov::M5Stack8ServosHatI2C' )]
+  +TArduino_M5Stack_StickC_8ServosHat : TArduino_M5Stack_StickC_BasicHat
+
+    LED : TArduino_M5Stack_JoyC_RGBColor
+
+    [AddItem( TArduino_M5Stack_StickC_8ServosChannel, 8 )]
+    Servos : TArduino_M5Stack_StickC_8ServosChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<55, uint8_t, 72 >' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoI2C( 0 )]
+  [Name( 'ADC Hat' )]
+  [CreateName( 'ADC' )]
+  +TArduino_M5Stack_StickC_ADC_ADS1100_Hat : TArduinoTexasInstrumentsADS1100BasicShield, IM5StackStickHat;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<55, uint8_t, 96 >' )]
+  [ArduinoI2C( 0 )]
+  [Name( 'DAC Hat' )]
+  [CreateName( 'DAC' )]
+  +TArduino_M5Stack_StickC_DAC_MCP4725_Hat : TArduinoMicrochipMCP4725BasicShield, IM5StackStickHat;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<77, uint8_t, 90 >' )]
+  [ArduinoI2C( 0 )]
+  [Name( 'NCIR Infrared Thermometer Hat' )]
+  [CreateName( 'Infrared Thermometer' )]
+  +TArduino_M5Stack_StickC_InfraredThermometer_MLX90614_Hat : TArduinoInfraredThermometerMLX90614BasicShield, IM5StackStickHat;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [Name( 'Time Of Flight Laser Ranger' )]
+  [CreateName( 'Laser Ranger' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoI2C( 0 )]
+  +TArduino_M5Stack_StickC_RangingUnit_VL53L0X_Hat : TArduinoLaserRangerVL53L0XBasicShield, IM5StackStickHat;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_M5Stack_KeyboardUnit.h' )]
+  [ArduinoClass( 'Mitov::M5StackKeyboardUnitI2C' )]
+  [Name( 'Card Keyboard Hat' )]
+  [CreateName( 'Keyboard' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<22, uint8_t, 95 >' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoBasicKeyboardModule )]
+  +TArduino_M5Stack_StickC_CardKeyboard_Hat : TArduino_M5Stack_StickC_BasicHat
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoCharSourcePin
+
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  [ArduinoInclude( 'Mitov_M5Stack_Yun.h' )]
+  [ArduinoInclude( 'Mitov_M5Stack_RGBLEDs.h' )]
+  [ArduinoClass( 'Mitov::M5StackIndexedLEDElement' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ParentImage( TArduinoLEDRGB )]
+  +TArduino_M5Stack_StickC_RGBLedElement : TArduinoBasicColorInitialValueInputPinChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Left' )]
+  +TArduino_M5Stack_StickC_RGBLedElementLeft : TArduino_M5Stack_StickC_RGBLedElement;
+//---------------------------------------------------------------------------
+  [Name( 'Right' )]
+  +TArduino_M5Stack_StickC_RGBLedElementRight : TArduino_M5Stack_StickC_RGBLedElement;
+//---------------------------------------------------------------------------
+//  [ArduinoInclude( 'Mitov_Yahboom_Microbit_Robot_Breakout.h' )]
+  [ArduinoClass( 'Mitov::M5StackBugCIndexedMotorElement' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  TArduino_M5Stack_StickC_BugC_MotorChannel : TArduinoBasicNamedL9110SNMotorShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_COEFFICIENT', '200' )]
+  TArduino_M5Stack_StickC_BugC_LeftMotorChannel : TArduino_M5Stack_StickC_BugC_MotorChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_COEFFICIENT', '-200' )]
+  TArduino_M5Stack_StickC_BugC_RightMotorChannel : TArduino_M5Stack_StickC_BugC_MotorChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Front Left' )]
+  +TArduino_M5Stack_StickC_BugC_FrontLeftMotorChannel : TArduino_M5Stack_StickC_BugC_LeftMotorChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Front Right' )]
+  +TArduino_M5Stack_StickC_BugC_FrontRightMotorChannel : TArduino_M5Stack_StickC_BugC_RightMotorChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Back Left' )]
+  +TArduino_M5Stack_StickC_BugC_BackLeftMotorChannel : TArduino_M5Stack_StickC_BugC_LeftMotorChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Back Right' )]
+  +TArduino_M5Stack_StickC_BugC_BackRightMotorChannel : TArduino_M5Stack_StickC_BugC_RightMotorChannel;
+//---------------------------------------------------------------------------
+  [Name( 'BugC Hat' )]
+  [CreateName( 'BugC' )]
+  [ArduinoInclude( 'Mitov_M5Stack_BugC.h' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoClass( 'Mitov::M5StackBugCI2C' )]
+  +TArduino_M5Stack_StickC_BugCHat : TArduino_M5Stack_StickC_BasicHat
+
+    [AddItem( TArduino_M5Stack_StickC_RGBLedElementLeft )]
+    [AddItem( TArduino_M5Stack_StickC_RGBLedElementRight )]
+    LEDs : TArduino_M5Stack_StickC_RGBLedElements
+
+    [AddItem( TArduino_M5Stack_StickC_BugC_FrontLeftMotorChannel )]
+    [AddItem( TArduino_M5Stack_StickC_BugC_FrontRightMotorChannel )]
+    [AddItem( TArduino_M5Stack_StickC_BugC_BackLeftMotorChannel )]
+    [AddItem( TArduino_M5Stack_StickC_BugC_BackRightMotorChannel )]
+    Motors : TArduinoFixedPersistentCollection
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<58, uint8_t, 64 >' )]
+  TArduino_M5Stack_StickC_Yun_TemperatureHumiditySHT20 : TArduinoTemperatureHumiditySHT20_BasicElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoInclude( 'Mitov_M5Stack_Yun.h' )]
+  [ArduinoClass( 'Mitov::M5StackYunLightI2C' )]
+  [ArduinoDeclaredClass]
+  *TArduino_M5Stack_StickC_YunHatLightElement : TArduinoBasicLightSensorPersistent;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoLEDRGB )]
+  TArduino_M5Stack_StickC_RGBLedElements : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoInclude( 'Mitov_M5Stack_Yun.h' )]
+  [ArduinoClass( 'Mitov::M5StackYunLEDsI2C' )]
+  [ArduinoDeclaredClass]
+  TArduino_M5Stack_StickC_RGBLeds : TArduinoCodePersistent
+
+    [AddItem( TArduino_M5Stack_StickC_RGBLedElement, 14 )]
+    LEDs : TArduino_M5Stack_StickC_RGBLedElements
+
+    [OWPrimaryPin]
+    AllInputPin : TOWArduinoColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Yun Hat' )]
+  [CreateName( 'Yun' )]
+  +TArduino_M5Stack_StickC_YunHat : TArduino_M5Stack_StickC_BasicHat
+
+    Light : TArduino_M5Stack_StickC_YunHatLightElement
+    LEDs : TArduino_M5Stack_StickC_RGBLeds
+    TemperatureHumidity : TArduino_M5Stack_StickC_Yun_TemperatureHumiditySHT20
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoTemplateParameter( '0_INTERFACE', 'Mitov::InterfaceI2CNoSetHighBit<'#13#10'      TwoWire, // 0_I2C_TYPE_PIN'#13#10'      Wire, // 1_I2C_NAME_PIN'#13#10'      Mitov::ConstantProperty<3, uint8_t, 16 > // Address'#13#10'        >, // 0_INTERFACE' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoI2C( 0 )]
+  *TArduino_M5Stack_StickC_CompassElement : TArduinoCompassBoshBMM150_BasicElement;
+//---------------------------------------------------------------------------
+  [Name( 'Environmental Hat' )]
+  [CreateName( 'Environmental' )]
+  +TArduino_M5Stack_StickC_EnvironmentHat : TArduino_M5Stack_StickC_BasicHat
+
+    Environment : TArduino_M5Stack_StickC_EnvironmentElement
+    Compass : TArduino_M5Stack_StickC_CompassElement
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_M5Stack_EnvironmentalUnit.h' )]
+  [ArduinoClass( 'Mitov::M5StackEnvironmentalUnitI2C' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoI2C( 0 )]
+  +TArduino_M5Stack_StickC_EnvironmentElement : TArduinoCodeEnabledClockedPersistent
+
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Humidity(%)' )]
+    HumidityOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Pressure(Pa)' )]
+    [ArduinoPinConnectedAddCodeEntry( ceInit )]
+    PressureOutputPin : TOWArduinoAnalogSourcePin
+
+//    [ArduinoPinIsConnectedFlag]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    InFahrenheit : Boolean = False
+    Oversampling : TArduinoBMP280Oversampling
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.5' )]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '20' )]
+    [PropertyListDesignValue( '62.5' )]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    InactiveDuration : Single = 0.5
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    IIRFilterCoefficient : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

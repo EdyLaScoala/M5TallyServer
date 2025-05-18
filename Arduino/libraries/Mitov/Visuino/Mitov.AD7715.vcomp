@@ -1,0 +1,79 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAD7715Calibration' )]
+  [ArduinoOptionalVariable( Boolean, 'FInCalibration', False )]
+  *TArduinoAD7715Calibration : TArduinoCodePersistent
+
+    [ArduinoPinCall( 'Calibration_SelfInputPin' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginCalibration' )]
+    [ArduinoVariableIfPinConnected( 'FInCalibration' )]
+    SelfInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinCall( 'Calibration_ZeroScaleInputPin' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginCalibration' )]
+    [ArduinoVariableIfPinConnected( 'FInCalibration' )]
+    ZeroScaleInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinCall( 'Calibration_FullScaleInputPin' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginCalibration' )]
+    [ArduinoVariableIfPinConnected( 'FInCalibration' )]
+    FullScaleInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AnalogDevices_AD7715.h' )]
+  [ArduinoClass( 'Mitov::AnalogDevicesAD7715' )]
+  [Name( 'Analog Devices AD7715 ADC (SPI)' )]
+  [CreateName( 'ADC' )]
+  [ArduinoWebKeywords( 'AD7715' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoAD7715 : TArduinoCommonSpeedEnabledSPI
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBegin' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    SPISpeed = 10000
+
+    [ArduinoUseBindingCheckSetter( 'Update_REG_COMM' )]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '128' )]
+    [ValueRange( 1, 128 )]
+    Gain : Unsigned = 1
+
+    [ArduinoUseBindingCheckSetter( 'Update_REG_COMM' )]
+    Standby : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_REG_SETUP' )]
+    Buffer   : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_REG_SETUP' )]
+    Bipolar   : Boolean = True
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '20' )]
+    [PropertyListDesignValue( '25' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '60' )]
+    [PropertyListDesignValue( '100' )]
+    [PropertyListDesignValue( '200' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [ArduinoUseBindingCheckSetter( 'Update_REG_SETUP' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Unsigned = 60
+
+    Calibration : TArduinoAD7715Calibration
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

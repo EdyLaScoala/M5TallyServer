@@ -1,0 +1,258 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1Thermometer' )]
+  TArduinoLSM9DS1Thermometer : TArduinoBasicThermometer;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1AccelerometerFilter' )]
+  TArduinoLSM9DS1AccelerometerFilter : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG7_XL' )]
+    HighResolution : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '9' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '100' )]
+    [PropertyListDesignValue( '400' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG7_XL' )]
+    CutoffFrequencyDivider : Unsigned = 50
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1Accelerometer' )]
+  [ParentImage( TArduinoMPUXYZAccelerometer )]
+  TArduinoLSM9DS1Accelerometer : TArduinoBasicXYZAccelerometerSensor
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG6_XL' )]
+    PowerDown : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '119' )]
+    [PropertyListDesignValue( '238' )]
+    [PropertyListDesignValue( '476' )]
+    [PropertyListDesignValue( '952' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG6_XL' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Unsigned = 119
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG6_XL' )]
+    [NamePostfix( '(G)' )]
+    FullScaleRange : Unsigned = 4
+
+    Filter : TArduinoLSM9DS1AccelerometerFilter
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoLSM9DS1GyroscopeBandwidth : Enum
+  
+    Lowest
+    Lower 
+    Higher 
+    Highest
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1Gyroscope' )]
+  [ParentImage( TArduinoMPUXYZGyroscope )]
+  TArduinoLSM9DS1Gyroscope : TArduinoBasicXYZSensor
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_G' )]
+    PowerDown : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '14.9' )]
+    [PropertyListDesignValue( '59.5' )]
+    [PropertyListDesignValue( '119.0' )]
+    [PropertyListDesignValue( '238.0' )]
+    [PropertyListDesignValue( '476.0' )]
+    [PropertyListDesignValue( '952.0' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_G' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Single = 119.0
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_G' )]
+    Bandwidth : TArduinoLSM9DS1GyroscopeBandwidth = Highest
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '245' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '2000' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_G' )]
+    [NamePostfix( '(dps)' )]
+    FullScaleRange : Unsigned = 2000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1Compass' )]
+  [ParentImage( TArduinoMPU9250Compass )]
+  TArduinoLSM9DS1Compass : TArduinoBasicXYZSensor
+
+    [ArduinoPinCall( 'Compass_ResetInputPin' )]
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartCompassClock' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartCompass' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginCompass' )]
+    [ArduinoPinCall( 'Compass_ClockInputPin' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.625' )]
+    [PropertyListDesignValue( '1.25' )]
+    [PropertyListDesignValue( '2.5' )]
+    [PropertyListDesignValue( '5.0' )]
+    [PropertyListDesignValue( '10.0' )]
+    [PropertyListDesignValue( '20.0' )]
+    [PropertyListDesignValue( '40.0' )]
+    [PropertyListDesignValue( '80.0' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_M' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Single = 20.0
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_M' )]
+    FastRate : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_M' )]
+    SelfTest : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_M' )]
+    TemperatureCompensation : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_M' )]
+    XYPerformanceMode : TArduinoLIS3MDLCompassPerformanceMode = Medium
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '12' )]
+    [PropertyListDesignValue( '16' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG2_M' )]
+    [NamePostfix( '(Gauss)' )]
+    FullScaleRange : Unsigned = 4
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG3_M' )]
+    LowPowerMode : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG3_M' )]
+    PowerDown : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG4_M' )]
+    ZPerformanceMode : TArduinoLIS3MDLCompassPerformanceMode = Medium
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1AccelerometerGyroscope' )]
+  TArduinoLSM9DS1AccelerometerGyroscope : TArduinoCodePersistent
+
+    [ArduinoPinCall( 'AccelerometerGyroscope_ResetInputPin' )]
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartClock' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartAccelerometerGyroscope' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginAccelerometerGyroscope' )]
+    [ArduinoPinCall( 'AccelerometerGyroscope_ClockInputPin' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    Accelerometer : TArduinoLSM9DS1Accelerometer
+    Gyroscope : TArduinoLSM9DS1Gyroscope
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    Decimation : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LSM9DS1.h' )]
+  [ArduinoClass( 'Mitov::LSM9DS1' )]
+  [CreateName( 'AccelerometerGyroscopeCompass' )]
+  [ArduinoWebKeywords( 'LSM9DS1' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoInit]
+  TArduinoLSM9DS1_Extender : Extender
+
+    Compass : TArduinoLSM9DS1Compass
+
+    [Name( 'Accelerometer/Gyroscope' )]
+    AccelerometerGyroscope : TArduinoLSM9DS1AccelerometerGyroscope
+
+    Thermometer : TArduinoLSM9DS1Thermometer
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1_I2C_Address' )]
+  TArduinoLSM9DS1_I2C_Address : TArduinoCodePersistent
+
+    [DesignRange( $6A, $6B )]
+    AccelerometerGyroscope : TArduinoUInt8 = $6B
+
+    [PropertyListDesignValue( '28' )] // $1C
+    [PropertyListDesignValue( '30' )] // $1E
+    Compass : TArduinoUInt8 = $1E
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Accelerometer Gyroscope Compass LSM9DS1(I2C)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Interface_LSM9DS1_I2C' )]
+  +TArduinoLSM9DS1_I2C : TArduinoEnableComponent, TArduinoLSM9DS1_Extender
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoLSM9DS1_I2C_Address
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LSM9DS1_SPI.h' )]
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1_SPI_Settings' )]
+  TArduinoLSM9DS1_SPI_Settings : TArduinoCodePersistent
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Accelerometer Gyroscope Compass LSM9DS1(SPI)' )]
+  [ArduinoInclude( 'Mitov_Arduino_SPI.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::Interface_LSM9DS1_SPI' )]
+  +TArduinoLSM9DS1_SPI : TArduinoEnableComponent, TArduinoLSM9DS1_Extender
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    AccelerometerGyroscopeSPI : TArduinoLSM9DS1_SPI_Settings
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    CompassSPI : TArduinoLSM9DS1_SPI_Settings
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [Name( 'Orientation' )]
+  [CreateName( 'Orientation' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicGyroscopeAccelerometerCompassModule )]
+  TArduinoLSM9DS1_I2C_Basic_Module : TArduinoEnabledShield, TArduinoLSM9DS1_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

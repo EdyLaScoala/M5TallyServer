@@ -1,0 +1,468 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'GetDoubleTapsEnabled' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AEnabled' )]
+  TArduinoLSM6DS3AccelerometerTapChannelGetDoubleTapsEnabledCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'GetAnyTapsEnabled' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AEnabled' )]
+  TArduinoLSM6DS3AccelerometerTapChannelGetAnyTapsEnabledCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ProcessTaps' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  TArduinoLSM6DS3AccelerometerTapChannelProcessTapsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoLSM6DS3GyroscopeOrientationAxes : Enum
+  
+    XYZ
+    XZY
+    YXZ
+    YZX
+    ZXY
+    ZYX
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3GyroscopeOrientation' )]
+  TArduinoLSM6DS3GyroscopeOrientation : TArduinoCodePersistent
+  
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_ORIENT_CFG_G' )]
+    Axes : TArduinoLSM6DS3GyroscopeOrientationAxes = XYZ
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_ORIENT_CFG_G' )]
+    InvertX : Boolean
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_ORIENT_CFG_G' )]
+    InvertY : Boolean
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_ORIENT_CFG_G' )]
+    InvertZ : Boolean
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3GyroscopeHighPassFilter' )]
+  TArduinoLSM6DS3GyroscopeHighPassFilter : TArduinoCodeDisabledPersistent
+  
+    [ArduinoPinCall( 'GyroscopeHighPassFilter_ResetInputPin' )]
+    ResetInputPin : TOWArduinoClockSinkPin
+  
+    [PropertyListDesignValue( '0.0081' )]
+    [PropertyListDesignValue( '0.0324' )]
+    [PropertyListDesignValue( '2.07' )]
+    [PropertyListDesignValue( '16.32' )]
+    [NamePostfix( '(Hz)' )]
+    CutoffFrequency : Single = 0.0081
+  
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1Gyroscope' )]
+  [ParentImage( TArduinoMPUXYZGyroscope )]
+  TArduinoLSM6DS3Gyroscope : TArduinoBasicXYZSensor
+  
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL2_G' )]
+    PowerDown : Boolean = False
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL4_C' )]
+    Sleep : Boolean = False
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL2_G' )]
+    Orientation : TArduinoLSM6DS3GyroscopeOrientation
+
+//    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '12.5' )]
+    [PropertyListDesignValue( '26.0' )]
+    [PropertyListDesignValue( '52.0' )]
+    [PropertyListDesignValue( '104.0' )]
+    [PropertyListDesignValue( '208.0' )]
+    [PropertyListDesignValue( '416.0' )]
+    [PropertyListDesignValue( '833.0' )]
+    [PropertyListDesignValue( '1660.0' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL2_G' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Single = 1660.0
+
+//    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1_G' )]
+//    Bandwidth : TArduinoLSM9DS1GyroscopeBandwidth = Highest
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL7_G' )]
+    HighPerformance : Boolean = False
+
+//    [PropertyFixedListDesign]
+    [ValueRange( 125, 2000 )]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    [PropertyListDesignValue( '2000' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL2_G' )]
+    [NamePostfix( '(dps)' )]
+    FullScaleRange : Unsigned = 2000
+    
+    HighPassFilter : TArduinoLSM6DS3GyroscopeHighPassFilter
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3AccelerometerAntiAliasingFilter' )]
+  TArduinoLSM6DS3AccelerometerAntiAliasingFilter : TArduinoCodeDisabledPersistent
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL4_C' )]
+    Enabled
+  
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL1_XL' )]
+    Bandwidth : Single = 400
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3Accelerometer' )]
+  [ParentImage( TArduinoMPUXYZAccelerometer )]
+  TArduinoLSM6DS3Accelerometer : TArduinoBasicXYZAccelerometerSensor
+
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL2_G' )]
+    PowerDown : Boolean = False
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL6_C' )]
+    HighPerformance : Boolean = False
+
+    [PropertyListDesignValue( '12.5' )]
+    [PropertyListDesignValue( '26.0' )]
+    [PropertyListDesignValue( '52.0' )]
+    [PropertyListDesignValue( '104.0' )]
+    [PropertyListDesignValue( '208.0' )]
+    [PropertyListDesignValue( '416.0' )]
+    [PropertyListDesignValue( '833.0' )]
+    [PropertyListDesignValue( '1660.0' )]
+    [PropertyListDesignValue( '3330.0' )]
+    [PropertyListDesignValue( '6660.0' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL1_XL' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Single = 1660.0
+
+    [ValueRange( 2, 16 )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL1_XL' )]
+    [NamePostfix( '(G)' )]
+    FullScaleRange : Unsigned = 2
+    
+    AntiAliasingFilter : TArduinoLSM6DS3AccelerometerAntiAliasingFilter
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoLSM6DS3Thermometer : TArduinoBasicEnabledThermometer;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3PedometerDebounce' )]
+  TArduinoLSM6DS3PedometerDebounce : TArduinoCodePersistent
+  
+    [NamePostfix( '(mS)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PEDO_DEB_REG' )]
+    [MaxValue( 2560 )]
+    Time : Unsigned = 1040
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PEDO_DEB_REG' )]
+    [MaxValue( 7 )]
+    Threshold : Unsigned = 6
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3Pedometer' )]
+  TArduinoLSM6DS3Pedometer : TArduinoCodeEnabledPersistent
+
+    CountOutputPin : TOWArduinoUnsignedSourcePin
+    StepOutputPin : TOWArduinoDigitalSourcePin
+    OverflowOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoPinCall( 'Pedometer_ResetInputPin' )]
+    ResetInputPin : TOWArduinoClockSinkPin
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_TAP_CFG__CTRL10_C__CTRL9_XL' )]
+    Enabled
+    
+//    [ArduinoUseBindingCheckSetter_Parent( 'Update_PEDO_THS_REG' )]
+//    UseMaxScale4G : Boolean = False
+    
+    [NamePostfix( '(mg)' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PEDO_THS_REG' )]
+    [MaxValue( 1024 )]
+    MinThreshold : Unsigned = 256
+    
+    Debounce : TArduinoLSM6DS3PedometerDebounce
+    
+//    [ArduinoUseBindingCheckSetter_Parent( 'Update_STEP_COUNT_DELTA' )]
+//    [NamePostfix( '(S)' )]
+//    DeltaTime : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoMMA845XQAccelerometerTapChannelGetTapsEnabledCallChain]
+  [TArduinoLSM6DS3AccelerometerTapChannelGetAnyTapsEnabledCallChain]
+  [TArduinoLSM6DS3AccelerometerTapChannelGetDoubleTapsEnabledCallChain]
+  [TArduinoLSM6DS3AccelerometerTapChannelProcessTapsCallChain]
+  TArduinoLSM6DS3TapChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3TapChannel' )]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoLSM6DS3TapChannel : TArduinoCodeEnabledPersistent
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_TAP_CFG' )]
+    Enabled
+
+    [OWAddPin( 'Up', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Down', TOWArduinoClockSourcePin )]
+    SingleOutputPins : TOWArduinoPinList
+
+    [OWAddPin( 'Up', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Down', TOWArduinoClockSourcePin )]
+    DoubleOutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'X' )]
+  TArduinoLSM6DS3TapChannelX : TArduinoLSM6DS3TapChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Y' )]
+  TArduinoLSM6DS3TapChannelY : TArduinoLSM6DS3TapChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Z' )]
+  TArduinoLSM6DS3TapChannelZ : TArduinoLSM6DS3TapChannel;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3DoubleTap' )]
+  TArduinoLSM6DS3DoubleTap : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_WAKE_UP_THS' )]
+    Enabled
+        
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_INT_DUR2' )]
+//    [ValueRange( 2.4, 39.68 )]
+//    [ NamePostfix( '(mS)' ) ]
+    [ValueRange( 0.0, 1.0 )]
+    MaxGapDuration : Single = 0.5333333 //9.6
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3TapDuration' )]
+  TArduinoLSM6DS3TapDuration : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_INT_DUR2' )]
+    //[ValueRange( 0.3, 1.12 )]
+//    [ NamePostfix( '(mS)' ) ]
+    [ValueRange( 0.0, 1.0 )]
+    Quiet : Single = 0.0
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_INT_DUR2' )]
+    //[ValueRange( 0.6, 8.4 )]
+//    [ NamePostfix( '(mS)' ) ]
+    [ValueRange( 0.0, 1.0 )]
+    Shock : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMMA845XQAccelerometerTap' )]
+  [ParentImage( TArduinoAccelerometerADXL345Tap )]
+  *TArduinoLSM6DS3Tap : TArduinoCodePersistent
+
+    [AddItem( TArduinoLSM6DS3TapChannelX )]
+    [AddItem( TArduinoLSM6DS3TapChannelY )]
+    [AddItem( TArduinoLSM6DS3TapChannelZ )]
+    Axes : TArduinoLSM6DS3TapChannels
+    
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_TAP_THS_6D' )]
+    Threshold : Single = 0.258
+    
+    DoubleTap : TArduinoLSM6DS3DoubleTap
+
+    Duration : TArduinoLSM6DS3TapDuration
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3SleepDuration' )]
+  TArduinoLSM6DS3SleepDuration : TArduinoCodePersistent
+
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_WAKE_UP_DUR' )]
+    Wake : Single = 0.666667
+
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_WAKE_UP_DUR' )]
+    Sleep : Single = 0.13333
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3Sleep' )]
+  [ParentImage( TArduinoAccelerometerADXL345Sleep )]
+  *TArduinoLSM6DS3Sleep : TArduinoCodeEnabledPersistent
+  
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+    
+    [OWAddPin( 'X', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Z', TOWArduinoClockSourcePin )]
+    WakeUpOutputPins : TOWArduinoPinList
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_WAKE_UP_THS__CTRL9_XL' )]
+    Enabled
+    
+    Duration : TArduinoLSM6DS3SleepDuration
+    
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_WAKE_UP_THS' )]
+    Threshold : Single = 0.031746
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_TAP_CFG' )]
+    UseHighPassFilter : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3FreeFall' )]
+  [ParentImage( TArduinoAccelerometerADXL345FreeFall )]
+  *TArduinoLSM6DS3FreeFall : TArduinoCodeEnabledPersistent
+
+    OutputPin : TOWArduinoDigitalSourcePin
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL9_XL' )]
+    Enabled
+    
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_WAKE_UP_DUR__FREE_FALL' )]
+    Duration : Single = 0.095238
+    
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_FREE_FALL' )]
+    Threshold : Single = 0.42857
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM6DS3OrientationDetection' )]
+  TArduinoLSM6DS3OrientationDetection : TArduinoCodeEnabledPersistent
+  
+    OutputPin : TOWArduinoOrientation3DSourcePin
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL9_XL' )]
+    Enabled
+    
+    [Name( '2D Mode' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_TAP_THS_6D' )]
+    Mode2D : Boolean = False
+
+    [ValueRange( 50, 80 )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '60' )]
+    [PropertyListDesignValue( '70' )]
+    [PropertyListDesignValue( '80' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_TAP_THS_6D' )]
+    Threshold : Unsigned = 80
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_STMicroelectronics_LSM6DS3.h' )]
+  [ArduinoClass( 'Mitov::STMicroelectronicsLSM6DS3' )]
+  [ArduinoInit]
+  [ArduinoStart( 'SystemStartFunctions' )]
+  [ArduinoLoopBegin( 'SystemLoopBeginFunctions' )]
+  TArduinoAccelerometerGyroscopeLSM6DS3_Extender : Extender
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    RebootMemoryInputPin : TOWArduinoClockSinkPin
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    Gyroscope : TArduinoLSM6DS3Gyroscope
+    Accelerometer : TArduinoLSM6DS3Accelerometer
+    Thermometer : TArduinoLSM6DS3Thermometer
+    
+    Pedometer : TArduinoLSM6DS3Pedometer
+    Tap : TArduinoLSM6DS3Tap
+    Sleep : TArduinoLSM6DS3Sleep    
+    FreeFall : TArduinoLSM6DS3FreeFall
+    Orientation : TArduinoLSM6DS3OrientationDetection
+    
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL4_C' )]
+    DataReadyMaskEnabled : Boolean
+    
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'AccelerometerGyroscope' )]
+  [ArduinoWebKeywords( 'LSM6DS3' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  TArduinoAccelerometerGyroscopeLSM6DS3_Basic : TArduinoClockedEnableComponent, TArduinoAccelerometerGyroscopeLSM6DS3_Extender
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2CNoSetHighBit' )]
+  TArduinoAccelerometerGyroscopeLSM6DS3_I2C_Basic : TArduinoAccelerometerGyroscopeLSM6DS3_Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'STMicroelectronics LSM6DS3 Accelerometer Gyroscope(I2C)' )]
+  [ArduinoTemplateParameter( 'SPI3Wire', 'Mitov::ConstantProperty<155, bool, false >' )]
+  [ArduinoTemplateParameter( 'DisableI2C', 'Mitov::ConstantProperty<156, bool, false >' )]
+  +TArduinoAccelerometerGyroscopeLSM6DS3_I2C : TArduinoAccelerometerGyroscopeLSM6DS3_I2C_Basic
+
+    [DesignRange( $6A, $6B )]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $6A
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LSM9DS1_SPI.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPISpeed' )]
+  +TArduinoAccelerometerGyroscopeLSM6DS3_SPI : TArduinoAccelerometerGyroscopeLSM6DS3_Basic
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    OutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL3_C' )]
+    SPI3Wire : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL4_C' )]
+    DisableI2C : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [Name( 'Orientation' )]
+  [CreateName( 'Orientation' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicGyroscopeAccelerometerCompassModule )]
+  [ArduinoTemplateParameter( 'SPI3Wire', 'Mitov::ConstantProperty<155, bool, false >' )]
+  [ArduinoTemplateParameter( 'DisableI2C', 'Mitov::ConstantProperty<156, bool, false >' )]
+  TArduinoAccelerometerGyroscopeLSM6DS3_I2C_Basic_Module : TArduinoClockEnabledBasicShield, TArduinoAccelerometerGyroscopeLSM6DS3_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Orientation' )]
+  [CreateName( 'Orientation' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicGyroscopeAccelerometerCompassModule )]
+  [ArduinoTemplateParameter( 'SPI3Wire', 'Mitov::ConstantProperty<155, bool, false >' )]
+  [ArduinoTemplateParameter( 'DisableI2C', 'Mitov::ConstantProperty<156, bool, true >' )]
+  TArduinoAccelerometerGyroscopeLSM6DS3_SPI_Basic_Module : TArduinoClockEnabledBasicShield, TArduinoAccelerometerGyroscopeLSM6DS3_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

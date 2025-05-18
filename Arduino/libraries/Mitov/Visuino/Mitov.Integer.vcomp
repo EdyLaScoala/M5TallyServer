@@ -1,0 +1,254 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoIntegerSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoIntegerSetValueElements )]
+  [ArduinoHelpPostfix( '(Integer Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicIntegerSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoIntegerBasicValueElement : TArduinoBasicIntegerSetValueElement
+
+    [ExtendDisplayName( ' (', ')' )]
+    Value : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoIntegerBasicClockedValueElement : TArduinoIntegerBasicValueElement
+
+    [OWPinGroup( TArduinoIntegerBasicClockedValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [ParentImage( TArduinoIntegerValue )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  [OldName( 'TArduinoCounterSetValueElement' )]
+  [PersistentCollection( TArduinoCounterElements )]
+  +TArduinoIntegerSetValueElement : TArduinoIntegerBasicClockedValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  [ArduinoSetValueTryActiveCallChain]
+  +TArduinoIntegerStateSetValueElement : TArduinoIntegerBasicValueElement
+
+    [OWPinGroup( TArduinoIntegerStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [CreateName( 'IntegerValue' )]
+  [Name( 'Integer Value' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Category( TArduinoIntegerDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoIntegerValue : TArduinoCommonClockedIntegerSource, TArduinoValue_Extender
+
+    Value : Integer = 0
+    Elements : TArduinoIntegerSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'IntegerMultiSource' )]
+  [Name( 'Integer Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  +TArduinoIntegerMultiSource : TArduinoCommonIntegerSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoIntegerSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoIntegerSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatInteger' )]
+  [Name( 'Repeat Integer' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatInteger : TArduinoCommonIntegerFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Integer Mux(Multi channel Switch)' )]
+  [CreateName( 'IntegerMux' )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  +TArduinoIntegerMux : TArduinoIntegerMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Integer Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'IntegerDemux' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoIntegerDemux : TArduinoCommonIntegerSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoIntegerSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoIntegerSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Integer Toggle Switch' )]
+  [CreateName( 'IntegerToggleSwitch' )]
+  [ArduinoContructorParameter( '0' )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  +TArduinoIntegerToggleSwitch : TArduinoCommonIntegerSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin    : TOWArduinoIntegerSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin   : TOWArduinoIntegerSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [ArduinoContructorParameter( '0' )]
+  [Name( 'Integer On/Off Switch' )]
+  [CreateName( 'IntegerSwitch' )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  +TArduinoIntegerSwitch : TArduinoCommonIntegerSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoIntegerSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Toggle Demux' )]
+  [CreateName( 'IntegerToggleDemux' )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  +TArduinoIntegerToggleDemux : TArduinoCommonIntegerSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoIntegerSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Multi-Source Merger' )]
+  [CreateName( 'IntegerMultiMerger' )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  +TArduinoIntegerMultiMerger : TArduinoIntegerMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SchmittTrigger.h' )]
+  [ArduinoClass( 'Mitov::SchmittTrigger' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [Name( 'Integer Schmitt Trigger (Hysteresis)' )]
+  [CreateName( 'SchmittTrigger' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoIntegerMathFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoIntegerSchmittTrigger : TArduinoCommonIntegerEnableSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Value : Integer = 0
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Threshold : Unsigned = 25
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'int32_t' )]
+  [ArduinoTemplateParameter( 'DATA', 'int32_t' )]
+  [CreateName( 'RememberInteger' )]
+  [Name( 'Remember Integer Value' )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  +TArduinoRememberInteger : TArduinoCommonIntegerFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( Integer, 32, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreValues' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'int32_t' )]
+  [Name( 'Ignore Integer Values' )]
+  [CreateName( 'IgnoreIntegerValues' )]
+  [Category( TArduinoIntegerMathFilterToolbarCategory )]
+  +TArduinoIgnoreIntegerValues : TArduinoCommonIntegerFilter
+
+    Value : Integer = 0
+    PassValuesBellow : Boolean = False
+    PassEqualValues : Boolean  = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'int32_t &', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AExclude' )]
+  [Name( 'Exclude' )]
+  TArduinoIgnoreIntegerValuesExcludeCallChain : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoIgnoreIntegerValuesExcludeCallChain]
+  TArduinoIntegerRangeElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Ranges)' )]
+  [ArduinoClass( 'Mitov::IgnoreRangeElement' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'int32_t' )]
+  [Name( 'Range' )]
+  [CreateName( 'Range' )]
+  [PersistentCollection( TArduinoIntegerRangeElements )]
+  +TArduinoIntegerRangeElement : TArduinoBasicRangeElement
+
+    Min : Integer = 0
+    Max : Integer = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreRanges' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'int32_t' )]
+  [Name( 'Ignore Integer Ranges' )]
+  [CreateName( 'IgnoreIntegerRanges' )]
+  [Category( TArduinoIntegerMathFilterToolbarCategory )]
+  +TArduinoIgnoreIntegerRanges : TArduinoCommonIntegerFilter
+
+    IgnoredOutputPin : TOWArduinoDigitalSourcePin
+
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoIntegerRangeElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'int32_t' )]
+  [ArduinoContructorParameter( '0' )]
+  [CreateName( 'IntegerSnapshot' )]
+  [Name( 'Integer Snapshot' )]
+  [Category( TArduinoIntegerToolbarCategory )]
+  +TArduinoIntegerSnapshot : TArduinoCommonIntegerFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

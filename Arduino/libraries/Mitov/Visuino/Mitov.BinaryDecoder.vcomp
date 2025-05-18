@@ -1,0 +1,26 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BinaryDecoder.h' )]
+  [ArduinoClass( 'Mitov::BinaryDecoder' )]
+  [Name( 'Priority Binary Decoder' )]
+  [CreateName( 'BinaryDecoder' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoBinaryDecoder : TArduinoCommonUnsignedSink
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoTemplatePinListSize]
+    [OWAutoManagePinListOwner( TOWArduinoDigitalSourcePin, 2, 2, 200 )]
+    OutputPins : TOWPinListOwner
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Unsigned = 0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateValueBar' )]
+    ValueBar : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

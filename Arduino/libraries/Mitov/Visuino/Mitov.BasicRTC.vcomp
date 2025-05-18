@@ -1,0 +1,278 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoRTCElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRTCElements )]
+  [ArduinoHelpPostfix( '(Set Time)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoInclude( 'Mitov_SetTimeElements.h' )]
+  TArduinoRTCBasicElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoRTCBasicSetElement : TArduinoRTCBasicElement
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    Value : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCBasicSetIncrementElement : TArduinoRTCBasicSetElement
+
+    AddValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoRTCAlarmElement' )]
+  TArduinoRTCAlarmElement : TArduinoCodeDisabledPersistent
+
+    Value : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement100 : TArduinoRTCAlarmElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMilliSecondAlarm' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMilliSecondAlarm' )]
+    [ValueRange( 0, 99 )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElementYear : TArduinoRTCAlarmElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateYearAlarm' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateYearAlarm' )]
+    Value = 2022
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement60 : TArduinoRTCAlarmElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMinuteAlarm' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMinuteAlarm' )]
+    [ValueRange( 0, 59 )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement60Enabled : TArduinoRTCAlarmElement60
+
+    Enabled = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement24 : TArduinoRTCAlarmElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateHourAlarm' )]
+    Enabled
+
+    [ValueRange( 0, 23 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateHourAlarm' )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement12 : TArduinoRTCAlarmElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMonthAlarm' )]
+    Enabled
+
+    [ValueRange( 1, 12 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMonthAlarm' )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement24Enabled : TArduinoRTCAlarmElement24
+
+    Enabled = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement31 : TArduinoRTCAlarmElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateDayAlarm' )]
+    Enabled
+
+    [ValueRange( 1, 31 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateDayAlarm' )]
+    Value = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement7 : TArduinoRTCAlarmElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateWeekDayAlarm' )]
+    Enabled
+
+    [ValueRange( 0, 6 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateWeekDayAlarm' )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Second' )]
+  [ArduinoClass( 'Mitov::RTCSetSecond' )]
+  +TArduinoRTCSetSecondElement : TArduinoRTCBasicSetIncrementElement
+
+    [DesignRange( -59, 59 )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Minute' )]
+  [ArduinoClass( 'Mitov::RTCSetMinute' )]
+  +TArduinoRTCSetMinuteElement : TArduinoRTCBasicSetIncrementElement
+
+    [DesignRange( -59, 59 )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Hour' )]
+  [ArduinoClass( 'Mitov::RTCSetHour' )]
+  +TArduinoRTCSetHourElement : TArduinoRTCBasicSetIncrementElement
+
+    [DesignRange( -23, 23 )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Day' )]
+  [ArduinoClass( 'Mitov::RTCSetDay' )]
+  +TArduinoRTCSetDayElement : TArduinoRTCBasicSetIncrementElement
+
+    [DesignRange( -30, 31 )]
+    Value  = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Week Day' )]
+  [ArduinoClass( 'Mitov::RTCSetWeekDay' )]
+  +TArduinoRTCSetWeekDayElement : TArduinoRTCBasicSetElement
+
+    [ValueRange( 0, 6 )]
+    Value
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Month' )]
+  [ArduinoClass( 'Mitov::RTCSetMonth' )]
+  +TArduinoRTCSetMonthElement : TArduinoRTCBasicSetIncrementElement
+
+    [DesignRange( -11, 12 )]
+    Value = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Year' )]
+  [ArduinoClass( 'Mitov::RTCSetYear' )]
+  +TArduinoRTCSetYearElement : TArduinoRTCBasicSetIncrementElement
+
+    Value = 2017
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCAlarmElement7Enabled : TArduinoRTCAlarmElement7
+
+    Enabled = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicRTC_Extender : Extender
+
+//    [ArduinoPinConnectDefine( '_RTC_MODULE_CLOCK_PIN_' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+//    [ArduinoPinConnectDefine( '_RTC_MODULE_SET_PIN_' )]
+    SetInputPin : TOWArduinoDateTimeSinkPin
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoRTCElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Real Time Alarm Clock' )]
+  [CreateName( 'Real Time Alarm Clock(RTC)' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoBasicRTCModule : TArduinoEnabledShield, TArduinoBasicRTC_Extender
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  *TArduinoBasicHaltRTCModule : TArduinoBasicRTCModule
+
+    [ArduinoUseBindingCheckSetter( 'UpdateHalt' )]
+    Halt : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RealTimeClock' )]
+  [Category( TArduinoDateTimeGeneratorsToolbarCategory )]
+  TArduinoBasicRTC : TArduinoCommonEnableDateTimeSource, TArduinoBasicRTC_Extender
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoBasicHaltRTCModule )]
+  [ArduinoDeclaredClass]
+  *TArduinoBasicRTCPersistent : TArduinoCodeEnabledPersistent, TArduinoBasicRTC_Extender
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBasicHaltRTC : TArduinoBasicRTC
+
+    [ArduinoUseBindingCheckSetter( 'UpdateHalt' )]
+    Halt : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTC_I2C : TArduinoBasicRTC
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    ControlOutputPin : TOWArduinoI2CSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  *TArduinoBasicAlarm : TArduinoCodeDisabledPersistent
+
+    AlarmOutputPin : TOWArduinoClockSourcePin
+
+    [ValueRange( 0, 59 )]
+    Minute : Unsigned = 0
+
+    [ValueRange( 0, 23 )]
+    Hour : Unsigned = 0
+
+    [ValueRange( 1, 31 )]
+    Date : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoWeeklyBasicAlarm : TArduinoBasicAlarm
+
+    [ValueRange( 0, 6 )]
+    WeekDay : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

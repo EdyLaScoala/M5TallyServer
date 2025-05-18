@@ -1,0 +1,254 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Elegoo' )]
+  TArduinoElegooToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  TArduinoElegooRobotMotorShieldChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [Name( 'Left Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '6' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '8' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '9' )]
+  +TArduinoElegooRobotMotorV2_LeftShieldChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Right Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '5' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '7' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '11' )]
+  +TArduinoElegooRobotMotorV2_RightShieldChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+
+  [Name( 'Left Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '11' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '8' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '9' )]
+  +TArduinoElegooRobotMotorV2_Remapped_LeftShieldChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Right Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '5' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '7' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '6' )]
+  +TArduinoElegooRobotMotorV2_Remapped_RightShieldChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Left Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '5' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '8' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '7' )]
+  +TArduinoElegooRobotMotorV3_LeftShieldChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Right Motor' )]
+  [ArduinoTemplateParameter( 'PIN_ENABLE', '6' )]
+  [ArduinoTemplateParameter( 'PIN_FORWARD', '9' )]
+  [ArduinoTemplateParameter( 'PIN_REVERSE', '11' )]
+  +TArduinoElegooRobotMotorV3_RightShieldChannel : TArduinoBasicDualMotorLeftRightShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '3' )]
+  TArduinoElegooRobotServo : TArduinoServoShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN_PING', '19' )]
+  [ArduinoTemplateParameter( 'PIN_ECHO', '18' )]
+  TArduinoElegooRobotUltrasonicRanger : TArduinoUltrasonicRangerShieldElement
+
+    Servo : TArduinoElegooRobotServo
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Elegoo_Robot_Shield.h' )]
+  [ArduinoClass( 'Mitov::ElegooRobotLineFollowingSensors' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoYahboomMicrobitRobotBreakoutLineFollowingSensors)]
+  TArduinoElegooRobotLineFollowingSensors : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Center', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorInputPin', '12' )]
+  TArduinoElegooRobotInfraredRemoteReceiver : TArduinoInfraredRemoteReceiverShieldElement;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '3', 'Servo' )]
+  [ArduinoShieldPin( '10', 'Line Tracking (L)' )]
+  [ArduinoShieldPin( '4', 'Line Tracking (C)' )]
+  [ArduinoShieldPin( '2', 'Line Tracking (R)' )]
+  [ArduinoShieldPin( '12', 'IR Receiver' )]
+  [ArduinoShieldPin( '18', 'Sonic Echo' )]
+  [ArduinoShieldPin( '19', 'Sonic Trig' )]
+  [ArduinoShieldPin( '5', 'Motor (ENA)' )]
+  [Category( TArduinoElegooToolbarCategory )]
+  [Category( TArduinoRobotsToolbarCategory )]
+  TArduinoElegooRobotBasicShield : TArduinoShield, IStandardShield
+
+    [Name( 'Ultrasonic Ranger' )]
+    UltrasonicRanger : TArduinoElegooRobotUltrasonicRanger
+
+    [Name( 'Line Following' )]
+    LineFollowing : TArduinoElegooRobotLineFollowingSensors
+
+    [Name( 'Infrared Remote' )]
+    InfraredRemote : TArduinoElegooRobotInfraredRemoteReceiver
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Elegoo Robot V2 Shield' )]
+  *TArduinoElegooRobotBasicShieldV2 : TArduinoElegooRobotBasicShield;
+//---------------------------------------------------------------------------
+  [Name( 'Elegoo Robot V2 Shield' )]
+  [ArduinoShieldPin( '11', 'Motor (ENB)' )]
+  [ArduinoShieldPin( '9', 'Motor (IN4)' )]
+  [ArduinoShieldPin( '8', 'Motor (IN3)' )]
+  [ArduinoShieldPin( '7', 'Motor (IN2)' )]
+  [ArduinoShieldPin( '6', 'Motor (IN1)' )]
+  +TArduinoElegooRobotShieldV2 : TArduinoElegooRobotBasicShieldV2
+
+    [AddItem( TArduinoElegooRobotMotorV2_LeftShieldChannel )]
+    [AddItem( TArduinoElegooRobotMotorV2_RightShieldChannel )]
+    Motors : TArduinoElegooRobotMotorShieldChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Elegoo Robot V2 Shield (Remapped)' )]
+  [ArduinoDefine( '__MITOV_ELEGOO_MOTOR_SHIELD_V2_REMAPPED__' )]
+  [ArduinoShieldPin( '9', 'Motor (IN4)' )]
+  [ArduinoShieldPin( '8', 'Motor (IN3)' )]
+  [ArduinoShieldPin( '7', 'Motor (IN2)' )]
+  [ArduinoShieldPin( '11', 'Motor (IN1)' )]
+  [ArduinoShieldPin( '6', 'Motor (ENB)' )]
+  +TArduinoElegooRobotRemappedShieldV2 : TArduinoElegooRobotBasicShieldV2
+
+    [AddItem( TArduinoElegooRobotMotorV2_Remapped_LeftShieldChannel )]
+    [AddItem( TArduinoElegooRobotMotorV2_Remapped_RightShieldChannel )]
+    Motors : TArduinoElegooRobotMotorShieldChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( '__MITOV_ELEGOO_MOTOR_SHIELD_V3__' )]
+  [Name( 'Elegoo Robot V3 Shield' )]
+  [CreateName( 'Elegoo Robot V3 Shield' )]
+  [ArduinoShieldPin( '11', 'Motor (IN4)' )]
+  [ArduinoShieldPin( '9', 'Motor (IN3)' )]
+  [ArduinoShieldPin( '8', 'Motor (IN2)' )]
+  [ArduinoShieldPin( '7', 'Motor (IN1)' )]
+  [ArduinoShieldPin( '6', 'Motor (ENB)' )]
+  +TArduinoElegooRobotShieldV3 : TArduinoElegooRobotBasicShield
+
+    [AddItem( TArduinoElegooRobotMotorV3_LeftShieldChannel )]
+    [AddItem( TArduinoElegooRobotMotorV3_RightShieldChannel )]
+    Motors : TArduinoElegooRobotMotorShieldChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '10' )]
+  TArduinoElegooRobotV4Servo : TArduinoServoShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN_PING', '13' )]
+  [ArduinoTemplateParameter( 'PIN_ECHO', '12' )]
+  TArduinoElegooRobotV4UltrasonicRanger : TArduinoUltrasonicRangerShieldElement
+
+    Servo : TArduinoElegooRobotV4Servo
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_LEFT', '2' )]
+  [ArduinoTemplateParameter( 'C_CENTER', '1' )]
+  [ArduinoTemplateParameter( 'C_RIGHT', '0' )]
+  [ArduinoInclude( 'Mitov_Elegoo_Robot_Shield.h' )]
+  [ArduinoClass( 'Mitov::ElegooRobotAnalogLineFollowingSensors' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoYahboomMicrobitRobotBreakoutLineFollowingSensors)]
+  TArduinoElegooRobotV4LineFollowingSensors : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Left', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Center', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Right', TOWArduinoAnalogChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorInputPin', '9' )]
+  TArduinoElegooRobotV4InfraredRemoteReceiver : TArduinoInfraredRemoteReceiverShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::NeoPixelSingleLEDModule_GRBAdapter' )]
+  [ArduinoTemplateParameter( 'C_PIN', '4' )]
+  TArduinoElegooRobotV4LedElement : TArduinoNeoPixelRGBLedBasicLedElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '2' )]
+  TArduinoElegooRobotV4Button : TArduinoBasicButtonInvertedSensor;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoDCMottorsToolbarCategory )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInclude( 'Mitov_Elegoo_Robot_Shield.h' )]
+  [ArduinoClass( 'Mitov::MotorShieldDirectionSpeedChannel' )]
+  [ArduinoStart]
+  *TArduinoBasicMotorSpeedDirectionShieldChannel : TArduinoBasicNamedMotorShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN_DIRECTION', '8' )]
+  [ArduinoTemplateParameter( 'PIN_SPEED', '6' )]
+  [CreateName( 'Left' )]
+  +TArduinoElegooRobotMotorV4_LeftShieldChannel : TArduinoBasicMotorSpeedDirectionShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN_DIRECTION', '7' )]
+  [ArduinoTemplateParameter( 'PIN_SPEED', '5' )]
+  [CreateName( 'Right' )]
+  +TArduinoElegooRobotMotorV4_RightShieldChannel : TArduinoBasicMotorSpeedDirectionShieldChannel;
+//---------------------------------------------------------------------------
+  [ArduinoShieldPin( '10', 'Servo' )]
+  [ArduinoShieldPin( '16', 'Line Tracking (L)' )] // A2
+  [ArduinoShieldPin( '15', 'Line Tracking (C)' )] // A1
+  [ArduinoShieldPin( '14', 'Line Tracking (R)' )] // A0
+  [ArduinoShieldPin( '9', 'IR Receiver' )]  
+  [ArduinoShieldPin( '12', 'Sonic Echo' )]
+  [ArduinoShieldPin( '13', 'Sonic Trig' )]
+  [ArduinoShieldPin( '4', 'RGB Led' )]
+  [ArduinoShieldPin( '2', 'Button' )]
+  
+  [ArduinoShieldPin( '3', 'Enable Motors' )]
+  [ArduinoShieldPin( '5', 'Left (Speed)' )]
+  [ArduinoShieldPin( '7', 'Left (Direction)' )]
+  [ArduinoShieldPin( '6', 'Right (Speed)' )]
+  [ArduinoShieldPin( '8', 'Right (Direction)' )]
+  [Name( 'Elegoo Robot V4 WiFi Shield' )]
+  [CreateName( 'Elegoo Robot V4 WiFi Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TArduinoElegooToolbarCategory )]
+  [Category( TArduinoRobotsToolbarCategory )]
+  +TArduinoElegooRobotShieldV4 : TArduinoShield, IStandardShield
+
+    [Name( 'Ultrasonic Ranger' )]
+    UltrasonicRanger : TArduinoElegooRobotV4UltrasonicRanger
+
+    [Name( 'Line Following' )]
+    LineFollowing : TArduinoElegooRobotV4LineFollowingSensors
+
+    [Name( 'Infrared Remote' )]
+    InfraredRemote : TArduinoElegooRobotV4InfraredRemoteReceiver
+
+    [Name( 'Accelerometer & Gyroscope' )]
+    Orientation : TArduinoMPU6050I2CPersistent
+    
+    [Name( 'RGB Led' )]
+    RGBLed : TArduinoElegooRobotV4LedElement
+    
+    Button : TArduinoElegooRobotV4Button
+    
+    [AddItem( TArduinoElegooRobotMotorV4_LeftShieldChannel )]
+    [AddItem( TArduinoElegooRobotMotorV4_RightShieldChannel )]
+    Motors : TArduinoElegooRobotMotorShieldChannels
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

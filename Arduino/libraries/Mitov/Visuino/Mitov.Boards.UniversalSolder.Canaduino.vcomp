@@ -1,0 +1,324 @@
+Mitov
+//---------------------------------------------------------------------------
+  ['{2E3A5B74-6626-43F6-82A3-A6F8C696757D}']  
+  IArduinoCanaduinoPLC300Modules : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IArduinoCanaduinoPLC300Modules )]
+  TArduino_Canaduino_PLC_300_24_Shields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [Name( 'Universal-Solder' )]
+  TArduinoUniversalSolderToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 104 >' )]
+  [ArduinoI2C( 0 )]
+  +TArduinoCanaduino_RTCDS1307Module : TArduinoRTCDS1307BasicModule;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  TArduino_CanaduinoPLC300_BasicModule : TArduinoShield, IArduinoCanaduinoPLC300Modules;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x68 >' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  TArduinoCanaduinoRTCDS3231Element : TArduinoRTCDS3231BasicElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '53' )]
+  TArduinoCanaduinoMicroSDModuleElement : TArduinoBasicMicroSDShieldElement;
+//---------------------------------------------------------------------------
+  [Name( 'RTC + MicroSD' )]
+  +TArduino_CanaduinoPLC300_RTCModule : TArduino_CanaduinoPLC300_BasicModule
+
+    Clock : TArduinoCanaduinoRTCDS3231Element
+    MicroSD : TArduinoCanaduinoMicroSDModuleElement
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'LED' )]
+  [ArduinoClass( 'Mitov::DirectOuputPin<38>' )]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoMacchinaLED_DS6 )]
+  +TArduino_CanaduinoPLC300_LEDModule : TArduinoShield
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Slide Switch' )]
+  [CreateName( 'Slide Switch' )]
+  [ArduinoClass( 'Mitov::DigitalInputInvertedPullUp_Flexible' )]
+  [ArduinoTemplateParameter( 'C_PIN', '39' )]
+  TArduino_CanaduinoPLC300_SlideSwitchModule : TArduinoBasicSwitchModule;
+//---------------------------------------------------------------------------
+  [Name( 'Canaduino PLC MEGA328' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_NANO' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:nano' )]
+  [Category( TArduinoUniversalSolderToolbarCategory )]
+  [ParentImage( TArduinoUniversalSolderToolbarCategory )]
+  +TArduino_Canaduino_PLC_MEGA328_Board : TArduino_AVR328_Basic_Modules_Board
+
+    [AddItem( TArduinoCanaduino_RTCDS1307Module )]
+    Modules
+    
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input 1', '7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input 2', '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input 3', '12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input 4', '13' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoBasicDigitalOutputOnlyChannel, 'Relay 1', '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoBasicDigitalOutputOnlyChannel, 'Relay 2', '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoBasicDigitalOutputOnlyChannel, 'Relay 3', '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoBasicDigitalOutputOnlyChannel, 'Relay 4', '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoBasicDigitalOutputOnlyChannel, 'Relay 5', '16' )] // A2
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoBasicDigitalOutputOnlyChannel, 'Relay 6', '17' )] // A3
+    Digital : TArduinoDigitalChannels
+
+    [ArduinoBoard_Add_AnalogInputChannel( 0, TArduinoAnalogInputChannel, 'Input 1', '0', 'A0' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 1, TArduinoAnalogInputChannel, 'Input 2', '1', 'A1' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 2, TArduinoAnalogInputChannel, 'Input 3', '6', 'A6' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 3, TArduinoAnalogInputChannel, 'Input 4', '7', 'A7' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+    [ArduinoBoard_Add_AnalogOutputChannel( 0, TArduinoStandardAnalogOutputChannel, 'Output 1', '6' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 1, TArduinoStandardAnalogOutputChannel, 'Output 2', '9' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 2, TArduinoStandardAnalogOutputChannel, 'Output 3', '10' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 3, TArduinoStandardAnalogOutputChannel, 'Output 4', '11' )]
+    AnalogOutput : TArduinoAnalogOutputChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Canaduino PLC 300-24' )]
+  [Category( TArduinoUniversalSolderToolbarCategory )]
+  [ArduinoBoardCompileParams( 'arduino:avr:mega' )]
+  +TArduino_Canaduino_PLC_300_24_Board : TArduino_AVR2560_Basic_Modules_Board
+  
+    [AddItem( TArduino_CanaduinoPLC300_LEDModule )]
+    [AddItem( TArduino_CanaduinoPLC300_SlideSwitchModule )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial, 3 )]
+    Serial
+  
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D1',  '22' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D2',  '23' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D3',  '24' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D4',  '25' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D5',  '26' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D6',  '27' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D7',  '28' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D8',  '29' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D9',  '30' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D10', '31' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D11', '32' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D12', '33' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D13', '34' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D14', '35' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D15', '36' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D16', '37' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q1',  '42' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q2',  '41' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q3',  '40' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q4',  '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q5',  '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q6',  '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q7',  '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q8',  '49' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q9',  '48' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 47, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q10', '47' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 46, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q11', '46' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q12', '45' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q13', '44' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoBasicDigitalOutputOnlyChannel, 'Relay Q14', '43' )]
+    Digital : TArduinoDigitalChannels    
+
+    [ArduinoBoard_Add_AnalogInputChannel( 0, TArduinoAnalogInputChannel, 'Input A1', '0', 'A0' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 1, TArduinoAnalogInputChannel, 'Input A2', '1', 'A1' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 2, TArduinoAnalogInputChannel, 'Input A3', '2', 'A2' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 3, TArduinoAnalogInputChannel, 'Input A4', '3', 'A3' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 4, TArduinoAnalogInputChannel, 'Input A5', '4', 'A4' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 5, TArduinoAnalogInputChannel, 'Input A6', '5', 'A5' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 6, TArduinoAnalogInputChannel, 'Input A7', '6', 'A6' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 7, TArduinoAnalogInputChannel, 'Input A8', '7', 'A7' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+    [ArduinoBoard_Add_AnalogOutputChannel( 6, TArduinoStandardAnalogOutputChannel, 'Output AQ1', '6' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 7, TArduinoStandardAnalogOutputChannel, 'Output AQ2', '7' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 8, TArduinoStandardAnalogOutputChannel, 'Output AQ3', '8' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 9, TArduinoStandardAnalogOutputChannel, 'Output AQ4', '9' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 10, TArduinoStandardAnalogOutputChannel, 'Output AQ5', '10' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 11, TArduinoStandardAnalogOutputChannel, 'Output AQ6', '11' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 12, TArduinoStandardAnalogOutputChannel, 'Output AQ7', '12' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 13, TArduinoStandardAnalogOutputChannel, 'Output AQ8', '13' )]
+    AnalogOutput : TArduinoAnalogOutputChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduino_Canaduino_PLC_300_24_Shields
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 104 >' )]
+//  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 104 >' )]
+  [ArduinoI2C( 0 )]
+  +TArduino_Canaduino_PLC_500_24_RTC_Module : TArduinoRTCDS3231BasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '53' )]
+  +TArduino_Canaduino_PLC_500_24_RTC_MicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+//  [Name( 'RS232[ 1 ]' )]
+//  +TArduino_Canaduino_PLC_500_24_Serial_232_1 : TArduinoHardwareSerial;
+//---------------------------------------------------------------------------
+//  [Name( 'RS232[ 2 ]' )]
+//  +TArduino_Canaduino_PLC_500_24_Serial_232_2 : TArduinoHardwareSerial;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_T_TYPE',  'BoardDeclarations::Types::SerialPort3' )]
+  [ArduinoTemplateParameter( '1_C_TYPE',  'BoardDeclarations::Instances::SerialPort3' )]
+  [ArduinoTemplateParameter( '2_RESET', 'Mitov::TArduino_Canaduino_PLC_500_24_WiFiModule_Reset' )]
+  [ArduinoDefine( 'MITOV_PLC_500_24_WIFI' )]
+  [ArduinoBoardDeclared]
+  [ArduinoDeclarationCode( 'void G_Arduino_Canaduino_PLC_500_24_WiFiModuleSerial_SystemLoopBegin( void *_Data )' )]
+  [ArduinoDeclarationCode( '{' )]
+  [ArduinoDeclarationCode( '  ::BoardDeclarations::Instances::TArduino_Canaduino_PLC_500_24_WiFi_Property1._DirectPinReceive( _Data );' )]
+  [ArduinoDeclarationCode( '}' )]
+  [ArduinoDeclarationCode( '' )]
+  *TArduino_Canaduino_PLC_500_24_WiFi_Property : TArduinoESP8266_BasicProperty;
+//---------------------------------------------------------------------------
+  [ArduinoChannelIndex( 3 )]
+  [ArduinoForceSerialOutputRead]
+  [ArduinoClass( 'Mitov::TArduino_Canaduino_PLC_500_24_WiFiModuleSerial' )]
+  [ArduinoIncludeWithOwner]
+  TArduino_Canaduino_PLC_500_24_WiFiModule_Serial : TArduinoHardwareSerial
+
+    Speed = 115200
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Canaduino_PLC_500_ESP8266.h' )]
+//  [ArduinoClass( 'Mitov::TArduino_Canaduino_PLC_500_24_WiFiMoadule' )]
+  [ArduinoClass( 'Mitov::TArduino_Canaduino_PLC_500_24_WiFiModule' )]
+//  [ArduinoTemplateParameter( '0_T_TYPE', 'Mitov::TCanaduino_PLC_500ESP8266Serial' )]
+//  [ArduinoTemplateParameter( '1_C_TYPE', 'Mitov::G_Canaduino_PLC_500ESP8266Serial' )]
+//  [ArduinoInit]
+  [ParentImage( TArduinoESP8266BasicModule )]
+  [Name( 'WiFi' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduino_Canaduino_PLC_500_24_WiFiModule : TArduinoShield
+  
+    Serial : TArduino_Canaduino_PLC_500_24_WiFiModule_Serial
+    Module : TArduino_Canaduino_PLC_500_24_WiFi_Property
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoBasicDigitalPWMChannel, 'WiFi I/O [0]',  '10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoBasicDigitalPWMChannel, 'WiFi I/O [2]',  '11' )]
+    Digital : TArduinoDigitalChannels    
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Canaduino PLC 500-24' )]
+  [Category( TArduinoUniversalSolderToolbarCategory )]
+  [ArduinoBoardCompileParams( 'arduino:avr:mega' )]
+  +TArduino_Canaduino_PLC_500_24_Board : TArduino_AVR2560_Basic_Modules_Board
+
+    [AddItem( TArduino_Canaduino_PLC_500_24_RTC_Module )]
+    [AddItem( TArduino_Canaduino_PLC_500_24_RTC_MicroSDModule )]
+    [AddItem( TArduino_Canaduino_PLC_500_24_WiFiModule )]
+    Modules
+    
+    [AddItem( TArduinoHardwareSerial )]
+    [AddNamedItem( TArduinoHardwareSerial, 'RS232[ 1 ]' )]
+    [AddNamedItem( TArduinoHardwareSerial, 'RS232[ 2 ]' )]
+//    [AddItem( TArduino_Canaduino_PLC_500_24_Serial_232_1 )]
+    //[AddItem( TArduino_Canaduino_PLC_500_24_Serial_232_2 )]
+    Serial
+    
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D1',  '31' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D2',  '30' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D3',  '29' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D4',  '28' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D5',  '27' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D6',  '26' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D7',  '25' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D8',  '24' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D9',  '23' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D10', '22' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D11', '37' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D12', '36' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D13', '35' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D14', '34' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D15', '33' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoSimpleIvertedDigitalInputOnlyChannel, 'Input D16', '32' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoBasicDigitalOutputOnlyChannel, 'Output Relay Y1',  '42' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoBasicDigitalOutputOnlyChannel, 'Output Relay Y2',  '43' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoBasicDigitalOutputOnlyChannel, 'Output Relay Y3',  '44' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoBasicDigitalOutputOnlyChannel, 'Output Relay Y4',  '45' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 46, TArduinoBasicDigitalOutputOnlyChannel, 'Output Relay Y5',  '46' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 47, TArduinoBasicDigitalOutputOnlyChannel, 'Output Relay Y6',  '47' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoBasicDigitalOutputOnlyChannel, 'Output Relay Y7',  '48' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoBasicDigitalOutputOnlyChannel, 'Output Relay Y8',  '49' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoBasicDigitalOutputOnlyChannel, 'Output Y9',  '38' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoBasicDigitalOutputOnlyChannel, 'Output Y10', '39' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoBasicDigitalOutputOnlyChannel, 'Output Y11', '40' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoBasicDigitalOutputOnlyChannel, 'Output Y12', '41' )]
+    Digital : TArduinoDigitalChannels    
+
+    [ArduinoBoard_Add_AnalogInputChannel( 0,  TArduinoAnalogInputChannel, 'Input A1',  '0',  'A0' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 1,  TArduinoAnalogInputChannel, 'Input A2',  '1',  'A1' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 2,  TArduinoAnalogInputChannel, 'Input A3',  '2',  'A2' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 3,  TArduinoAnalogInputChannel, 'Input A4',  '3',  'A3' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 4,  TArduinoAnalogInputChannel, 'Input A5',  '4',  'A4' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 5,  TArduinoAnalogInputChannel, 'Input A6',  '5',  'A5' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 6,  TArduinoAnalogInputChannel, 'Input A7',  '6',  'A6' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 7,  TArduinoAnalogInputChannel, 'Input A8',  '7',  'A7' )]
+    
+    [ArduinoBoard_Add_AnalogInputChannel( 8,  TArduinoAnalogInputChannel, 'Input A9',  '8',  'A8' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 9,  TArduinoAnalogInputChannel, 'Input A10', '9',  'A9' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 10, TArduinoAnalogInputChannel, 'Input A11', '10', 'A10' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 11, TArduinoAnalogInputChannel, 'Input A12', '11', 'A11' )]
+    
+    [ArduinoBoard_Add_AnalogInputChannel( 12, TArduinoAnalogInputChannel, 'Input A13', '12', 'A12' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 13, TArduinoAnalogInputChannel, 'Input A14', '13', 'A13' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 14, TArduinoAnalogInputChannel, 'Input A15', '14', 'A14' )]
+    [ArduinoBoard_Add_AnalogInputChannel( 15, TArduinoAnalogInputChannel, 'Input A16', '15', 'A15' )]
+    AnalogInput : TArduinoAnalogInputChannels
+    
+    
+    [ArduinoBoard_Add_AnalogOutputChannel( 2, TArduinoStandardAnalogOutputChannel, 'Output XA1', '2' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 3, TArduinoStandardAnalogOutputChannel, 'Output XA2', '3' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 4, TArduinoStandardAnalogOutputChannel, 'Output XA3', '4' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 5, TArduinoStandardAnalogOutputChannel, 'Output XA4', '5' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 6, TArduinoStandardAnalogOutputChannel, 'Output XA5', '6' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 7, TArduinoStandardAnalogOutputChannel, 'Output XA6', '7' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 8, TArduinoStandardAnalogOutputChannel, 'Output XA7', '8' )]
+    [ArduinoBoard_Add_AnalogOutputChannel( 9, TArduinoStandardAnalogOutputChannel, 'Output XA8', '9' )]
+    AnalogOutput : TArduinoAnalogOutputChannels
+    
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RS232[ 1 ]' )]
+  +TArduino_Canaduino_PLC_500_24_Serial_232_1 : TArduinoHardwareSerial;
+//---------------------------------------------------------------------------
+; // Mitov

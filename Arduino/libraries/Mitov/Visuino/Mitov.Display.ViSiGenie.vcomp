@@ -1,0 +1,655 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  ArduinoViSiGenieButtonsToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Gauges' )]
+  ArduinoViSiGenieGaugesToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Sliders/Knobs' )]
+  ArduinoViSiGenieSliderToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Displays' )]
+  ArduinoViSiGenieDisplayToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Digits' )]
+  ArduinoViSiGenieDigitsToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Switches' )]
+  ArduinoViSiGenieSwitchToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'LEDs' )]
+  ArduinoViSiGenieLEDToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Start' )]
+  TArduinoViSiGenieElementStartCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'Process' )]
+  TArduinoViSiGenieElementProcessCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ProcessOut' )]
+  [ArduinoPopulatedCallChainParameter( 'Genie &', 'AGenie' )]
+  [ArduinoPopulatedCallChainParameter( 'genieFrame &', 'Event' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AProcessed' )]
+  TArduinoViSiGenieElementProcessOutCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ProcessMagicOut' )]
+  [ArduinoPopulatedCallChainParameter( 'Genie &', 'AGenie' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AIndex' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'ALength' )]
+  TArduinoViSiGenieElementProcessMagicOutCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoViSiGenieElementStartCallChain]
+  [TArduinoViSiGenieElementProcessCallChain]
+  [TArduinoViSiGenieElementProcessOutCallChain]
+  [TArduinoViSiGenieElementProcessMagicOutCallChain]
+  TArduinoViSiGenieObjects : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoViSiGenieObjects )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(ViSi Genie Display)' )]
+  TArduinoViSiGenieObject : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoViSiGenieIndexedObject : TArduinoViSiGenieObject
+
+    [OWExcludeBindings]
+    Index  : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoViSiGenieOnlyChangedIndexedObject : TArduinoViSiGenieIndexedObject
+
+    RefreshInputPin : TOWArduinoClockSinkPin
+
+    OnlyChanged : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ViSiGenieTypedDigitalIn' )]
+  [ArduinoTemplateParameter( 'InitialValue', 'Mitov::VariableProperty<121, bool, false>' )]
+  [ArduinoVariable( Boolean, 'FReceived' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [ArduinoVariable( Boolean, 'FOldValue' )]
+  TArduinoViSiGenieBasicDigitalIn : TArduinoViSiGenieOnlyChangedIndexedObject
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ViSiGenieTypedDigitalInOut' )]
+  [ArduinoVariable( Boolean, 'FOldReceivedValue' )]
+  TArduinoViSiGenieBasicDigitalInOut : TArduinoViSiGenieBasicDigitalIn
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoVariable( Boolean, 'FReceived' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  TArduinoViSiGenieBasicCommonUnsignedIn : TArduinoViSiGenieOnlyChangedIndexedObject
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoVariable( Boolean, 'FReceived' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  TArduinoViSiGenieBasicCommonAnalogIn : TArduinoViSiGenieOnlyChangedIndexedObject
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ViSiGenieTypedUnsignedIn' )]
+  TArduinoViSiGenieBasicUnsignedIn : TArduinoViSiGenieBasicCommonUnsignedIn;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'InitialValue', 'Mitov::VariableProperty<121, uint32_t, 0>' )]
+  TArduinoViSiGenieBasicParamUnsignedIn : TArduinoViSiGenieBasicUnsignedIn;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ViSiGenieTypedUnsignedInOut' )]
+  TArduinoViSiGenieBasicUnsignedInOut : TArduinoViSiGenieBasicUnsignedIn
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoUnsignedSourcePin 
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoVariable( Boolean, 'FReceived' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  TArduinoViSiGenieBasicTextIn : TArduinoViSiGenieOnlyChangedIndexedObject
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoViSiGenieBasicCharOut : TArduinoViSiGenieIndexedObject
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoViSiGenieBasicColorIn : TArduinoViSiGenieOnlyChangedIndexedObject
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoColorSinkPin  
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoViSiGenieBasicColorInOut : TArduinoViSiGenieBasicColorIn
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoViSiGenieBasicClockIn : TArduinoViSiGenieOnlyChangedIndexedObject
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin 
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Dip Switch' )]
+  [CreateName( 'DipSwitch' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_DIPSW' )]
+  [Category( ArduinoViSiGenieSwitchToolbarCategory )]
+  [ParentImage( TArduinoRemoteXYSwitchElement )]
+  +TArduinoViSiGenieDipSwitch : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Knob' )]
+  [CreateName( 'Knob' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_KNOB' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  [ParentImage( TArduinoDisplayFT800SceneElementDial )]
+  +TArduinoViSiGenieKnob : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Internal Knob' )]
+  [CreateName( 'Internal Knob' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IDIAL' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInternalKnob : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Media Rotary' )]
+  [CreateName( 'Inherent Media Rotary' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IMEDIA_ROTARY' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentMediaRotary : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Rotary Input' )]
+  [CreateName( 'Inherent Rotary Input' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IROTARY_INPUT' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentRotaryInput : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Smart Knob' )]
+  [CreateName( 'Smart Knob' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISMARTKNOB' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieSmartKnob : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Rocker Switch' )]
+  [CreateName( 'RockerSwitch' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ROCKERSW' )]
+  [Category( ArduinoViSiGenieSwitchToolbarCategory )]
+  +TArduinoViSiGenieRockerSwitch : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Rotary Switch' )]
+  [CreateName( 'Rotary Switch' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ROTARYSW' )]
+  [Category( ArduinoViSiGenieSwitchToolbarCategory )]
+  +TArduinoViSiGenieRotarySwitch : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Slider' )]
+  [CreateName( 'Slider' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_SLIDER' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  [ParentImage( TArduinoRemoteXYSliderElement )]
+  +TArduinoViSiGenieSlider : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Internal Slider E' )]
+  [CreateName( 'Internal Slider E' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISLIDERE' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInternalSliderE : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Slider C' )]
+  [CreateName( 'Inherent Slider C' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISLIDERC' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentSliderC : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Slider D' )]
+  [CreateName( 'Inherent Slider D' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISLIDERD' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentSliderD : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Slider F' )]
+  [CreateName( 'Inherent Slider F' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISLIDERF' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentSliderF : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Slider G' )]
+  [CreateName( 'Inherent Slider G' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISLIDERG' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentSliderG : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Slider H' )]
+  [CreateName( 'Inherent Slider H' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISLIDERH' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentSliderH : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Media Slider' )]
+  [CreateName( 'Inherent Media Slider' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IMEDIA_SLIDER' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentMediaSlider : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Linear Input' )]
+  [CreateName( 'Inherent Linear Input' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ILINEAR_INPUT' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieInherentLinearInput : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Smart Slider' )]
+  [CreateName( 'Smart Slider' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISMARTSLIDER' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieSmartSlider : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Trackbar' )]
+  [CreateName( 'Trackbar' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_TRACKBAR' )]
+  [Category( ArduinoViSiGenieSliderToolbarCategory )]
+  +TArduinoViSiGenieTrackbar : TArduinoViSiGenieBasicUnsignedInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Win Button' )]
+  [CreateName( 'Win Button' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_WINBUTTON' )]
+  [Category( ArduinoViSiGenieButtonsToolbarCategory )]
+  [ParentImage( TArduinoRemoteXYButtonElement )]
+  +TArduinoViSiGenieWinButton : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Angular Meter' )]
+  [CreateName( 'Angular Meter' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ANGULAR_METER' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieAngularMeter : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Cool Gauge' )]
+  [CreateName( 'Cool Gauge' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_COOL_GAUGE' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieCoolGauge : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Custom Digits' )]
+  [CreateName( 'Custom Digits' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_CUSTOM_DIGITS' )]
+  [Category( ArduinoViSiGenieDigitsToolbarCategory )]
+  +TArduinoViSiGenieCustomDigits : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Form' )]
+  [CreateName( 'Form' )]
+  [ArduinoClass( 'Mitov::ViSiGenieTypedClockInOut' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_FORM' )]
+  +TArduinoViSiGenieForm : TArduinoViSiGenieIndexedObject // TArduinoViSiGenieBasicClockIn )
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin 
+
+    RefreshInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Gauge' )]
+  [CreateName( 'Gauge' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_GAUGE' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieGauge : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal Gauge' )]
+  [CreateName( 'Internal Gauge' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IGAUGE' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieInternalGauge : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal Ruler Gauge' )]
+  [CreateName( 'Internal Ruler Gauge' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IRULER' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieInternalRulerGauge : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal Angular Meter' )]
+  [CreateName( 'Internal Angular Meter' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IANGULAR_METER' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieInternalAngularMeter : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal Needle' )]
+  [CreateName( 'Internal Needle' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_INEEDLE' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieInternalNeedle : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal User Gauge' )]
+  [CreateName( 'Internal User Gauge' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IUSER_GAUGE' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieInherentUserGauge : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Media Gauge' )]
+  [CreateName( 'Inherent Media Gauge' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IMEDIA_GAUGE' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieInherentMediaGauge : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Media Thermometer' )]
+  [CreateName( 'Inherent Media Thermometer' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IMEDIA_THERMOMETER' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieInherentMediaThermometer : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Smart Gauge' )]
+  [CreateName( 'Smart Gauge' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISMARTGAUGE' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieSmartGauge : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+//  GENIE_OBJ_IMAGE // Nothing to do
+//---------------------------------------------------------------------------
+  [Name( 'Keyboard' )]
+  [CreateName( 'Keyboard' )]
+  [ArduinoClass( 'Mitov::ViSiGenieTypedCharOut' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_KEYBOARD' )]
+  +TArduinoViSiGenieKeyboard : TArduinoViSiGenieBasicCharOut;
+//---------------------------------------------------------------------------
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_LED' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  [ParentImage( TArduinoRemoteXYLEDElement )]
+  +TArduinoViSiGenieLed : TArduinoViSiGenieBasicDigitalIn;
+//---------------------------------------------------------------------------
+  [Name( 'LED Digits' )]
+  [CreateName( 'LED Digits' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_LED_DIGITS' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  [Category( ArduinoViSiGenieDigitsToolbarCategory )]
+  +TArduinoViSiGenieLedDigits : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal LED Digits Int16' )]
+  [CreateName( 'Internal LED Digits' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ILED_DIGITS' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  [Category( ArduinoViSiGenieDigitsToolbarCategory )]
+  +TArduinoViSiGenieInternalLedDigitsInt16 : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal LED Digits Int32' )]
+  [CreateName( 'Internal LED Digits' )]
+  [ArduinoClass( 'Mitov::ViSiGenieTypedUnsignedIn32bit' )]
+  [ArduinoTemplateParameter( 'TYPE_L', 'GENIE_OBJ_ILED_DIGITS_L' )]
+  [ArduinoTemplateParameter( 'TYPE_H', 'GENIE_OBJ_ILED_DIGITS_H' )]
+  [ArduinoTemplateParameter( 'InitialValue', 'Mitov::VariableProperty<121, uint32_t, 0>' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  [Category( ArduinoViSiGenieDigitsToolbarCategory )]
+  +TArduinoViSiGenieInternalLedDigitsInt32 : TArduinoViSiGenieBasicCommonUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal LED Digits Float32' )]
+  [CreateName( 'Internal LED Digits' )]
+  [ArduinoClass( 'Mitov::ViSiGenieTypedAnalogIn32bit' )]
+  [ArduinoTemplateParameter( 'TYPE_L', 'GENIE_OBJ_ILED_DIGITS_L' )]
+  [ArduinoTemplateParameter( 'TYPE_H', 'GENIE_OBJ_ILED_DIGITS_H' )]
+  [ArduinoTemplateParameter( 'InitialValue', 'Mitov::VariableProperty<121, uint32_t, 0>' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  [Category( ArduinoViSiGenieDigitsToolbarCategory )]
+  +TArduinoViSiGenieInternalLedDigitsFloat32 : TArduinoViSiGenieBasicCommonAnalogIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal LED Digit' )]
+  [CreateName( 'Internal LED Digit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ILED_DIGIT' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  [Category( ArduinoViSiGenieDigitsToolbarCategory )]
+  +TArduinoViSiGenieInternalLedDigit : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Meter' )]
+  [CreateName( 'Meter' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_METER' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieMeter : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Strings' )]
+  [CreateName( 'Strings' )]
+  [ArduinoClass( 'Mitov::ViSiGenieTypedStringIn' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_STRINGS' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoViSiGenieStrings : TArduinoViSiGenieBasicTextIn;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Label B' )]
+  [CreateName( 'Inherent Label B' )]
+  [ArduinoClass( 'Mitov::ViSiGenieTypedInherentStringIn' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ILABELB' )]
+  [Category( TTextToolbarCategory )]
+  +TArduinoViSiGenieInherentLabelB : TArduinoViSiGenieBasicTextIn
+
+    DefaultInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Thermometer' )]
+  [CreateName( 'Thermometer' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_THERMOMETER' )]
+  [Category( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoViSiGenieThermometer : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'User LED' )]
+  [CreateName( 'UserLED' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_USER_LED' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  +TArduinoViSiGenieUserLed : TArduinoViSiGenieBasicDigitalIn;
+//---------------------------------------------------------------------------
+  [Name( 'Internal LED' )]
+  [CreateName( 'Internal LED' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ILED' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  +TArduinoViSiGenieInternalLed : TArduinoViSiGenieBasicDigitalIn;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Media LED' )]
+  [CreateName( 'Inherent Media LED' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IMEDIA_LED' )]
+  [Category( ArduinoViSiGenieLEDToolbarCategory )]
+  +TArduinoViSiGenieInherentMediaLed : TArduinoViSiGenieBasicDigitalIn;
+//---------------------------------------------------------------------------
+  [Name( 'Video' )]
+  [CreateName( 'Video' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_VIDEO' )]
+  +TArduinoViSiGenieVideo : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+//  GENIE_OBJ_STATIC_TEXT // Nothing to do
+//---------------------------------------------------------------------------
+  [Name( 'Sounds' )]
+  [CreateName( 'Sounds' )]
+  [ArduinoClass( 'Mitov::ViSiGenieSounds' )]
+  [SingleCollectionInstance]
+  +TArduinoViSiGenieSounds : TArduinoViSiGenieObject
+
+    [OWPrimaryPin]
+    StopInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    PauseInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    ResumeInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoClockSinkPin )]
+    [OWAutoManagePinListOwner( TOWArduinoClockSinkPin, 1, 1, $10000 )]
+    TracksStartInputPins : TOWPinListOwner
+
+    [ArduinoUseBindingCheckSetter( 'UpdateVolume' )]
+    [ValueRange( 0.0, 1.0 )]
+    Volume : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Timer' )]
+  [CreateName( 'Timer' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_TIMER' )]
+  +TArduinoViSiGenieTimer : TArduinoViSiGenieBasicDigitalIn;
+//---------------------------------------------------------------------------
+  [Name( 'Spectrum' )]
+  [CreateName( 'Spectrum' )]
+  [ArduinoClass( 'Mitov::ViSiGenieSpectrum' )]
+  [Category( ArduinoViSiGenieDisplayToolbarCategory )]
+  +TArduinoViSiGenieSpectrum : TArduinoViSiGenieIndexedObject
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin )]
+    [OWAutoManagePinListOwner( TOWArduinoAnalogSinkPin, 24, 1, 255 )]
+    ColumnsInputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Scope' )]
+  [CreateName( 'Scope' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_SCOPE' )]
+  [Category( ArduinoViSiGenieDisplayToolbarCategory )]
+  +TArduinoViSiGenieScope : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'Tank' )]
+  [CreateName( 'Tank' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_TANK' )]
+  +TArduinoViSiGenieTank : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+  [Name( 'User Images' )]
+  [CreateName( 'UserImages' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_USERIMAGES' )]
+  +TArduinoViSiGenieUserImages : TArduinoViSiGenieBasicParamUnsignedIn;
+//---------------------------------------------------------------------------
+//  GENIE_OBJ_PINOUTPUT
+//  GENIE_OBJ_PININPUT
+//---------------------------------------------------------------------------
+  [Name( '4D Button' )]
+  [CreateName( 'Button4D' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_4DBUTTON' )]
+  [Category( ArduinoViSiGenieButtonsToolbarCategory )]
+  +TArduinoViSiGenie4DButton : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Animated Button' )]
+  [CreateName( 'Animated Button' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ANIBUTTON' )]
+  [Category( ArduinoViSiGenieButtonsToolbarCategory )]
+  +TArduinoViSiGenieAnimatedButton : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Color Picker' )]
+  [CreateName( 'Color Picker' )]
+  [ArduinoClass( 'Mitov::ViSiGenieTypedColorInOut' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_COLORPICKER' )]
+  [ArduinoVariable( Boolean, 'FReceived' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoViSiGenieColorPicker : TArduinoViSiGenieBasicColorInOut;
+//---------------------------------------------------------------------------
+  [Name( 'User Button' )]
+  [CreateName( 'User Button' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_USERBUTTON' )]
+  [Category( ArduinoViSiGenieButtonsToolbarCategory )]
+  +TArduinoViSiGenieUserButton : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Magic Object' )]
+  [CreateName( 'Magic Object' )]
+  [ArduinoClass( 'Mitov::ViSiGenieMagicObject' )]
+  +TArduinoViSiGenieSendMagicObject : TArduinoViSiGenieIndexedObject
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoByteSinkPin    
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin 
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Internal Switch' )]
+  [CreateName( 'Internal Switch' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISWITCH' )]
+  [Category( ArduinoViSiGenieSwitchToolbarCategory )]
+  +TArduinoViSiGenieInternalSwitch : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Switch B' )]
+  [CreateName( 'Inherent Switch' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ISWITCHB' )]
+  [Category( ArduinoViSiGenieSwitchToolbarCategory )]
+  +TArduinoViSiGenieInherentSwitchB : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Internal Button' )]
+  [CreateName( 'Internal Button' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IBUTTOND' )]
+  [Category( ArduinoViSiGenieButtonsToolbarCategory )]
+  +TArduinoViSiGenieInternalButtonD : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Button' )]
+  [CreateName( 'Inherent Button' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IBUTTONE' )]
+  [Category( ArduinoViSiGenieButtonsToolbarCategory )]
+  +TArduinoViSiGenieInherentButtonE : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Toggle Button' )]
+  [CreateName( 'Inherent Toggle Button' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_ITOGGLE_INPUT' )]
+  [Category( ArduinoViSiGenieButtonsToolbarCategory )]
+  +TArduinoViSiGenieInherentToggleButton : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [Name( 'Inherent Media Button' )]
+  [CreateName( 'Inherent Media Button' )]
+  [ArduinoTemplateParameter( 'TYPE', 'GENIE_OBJ_IMEDIA_BUTTON' )]
+  [Category( ArduinoViSiGenieButtonsToolbarCategory )]
+  +TArduinoViSiGenieInherentMediaButton : TArduinoViSiGenieBasicDigitalInOut;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Display4DSystems.h' )]
+  [ArduinoInclude( 'genieArduino.h', 'genieArduino', 'https://github.com/4dsystems/ViSi-Genie-Arduino-Library' )]
+  [ArduinoClass( 'Mitov::Display4DSystems' )]
+  [CreateName( 'Display4DSystems' )]
+  [Name( 'ViSi Genie 4D Systems Display' )]
+  [ArduinoWebKeywords( '4D Systems Display' )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  +TArduinoViSiGenieDisplay : TArduinoComponent
+
+    [ArduinoExclude]
+    [ArduinoSerialInstanceTemplate]
+    OutputPin : TOWArduinoExclusiveSerialSourcePin
+
+    [OWPrimaryPin]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateContrast' )]
+    Contrast : Single = 1.0
+
+    [ComponentEditorEntryDesign( 'Add Display &Objects ...' )]
+    [ArduinoExcludeCollectionItems]
+    Objects : TArduinoViSiGenieObjects
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

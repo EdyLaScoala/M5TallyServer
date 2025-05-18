@@ -1,0 +1,506 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ProcessByte' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'bool', 'APacketEnd' )]
+  [ArduinoPopulatedCallChainParameter( 'bool', 'ASuccess' )]
+  ArduinoFingerprintProcessByteCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'TimeoutProcess' )]
+  ArduinoFingerprintTimeoutCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'InvalidPacket' )]
+  ArduinoFingerprintInvalidPacketCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'NeedsRecognition' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  ArduinoFingerprintNeedsRecognitionCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'Recognized' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t', 'AValue' )]
+  ArduinoFingerprintRecognizedCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoFingerprintProcessByteCallChain]
+  [ArduinoFingerprintTimeoutCallChain]
+  [ArduinoFingerprintInvalidPacketCallChain]
+  [ArduinoFingerprintRecognizedCallChain]
+  [ArduinoFingerprintNeedsRecognitionCallChain]
+  TArduinoFingerprintReaderElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderScan' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoFingerprintProcessByteCallChain]
+  [ArduinoFingerprintTimeoutCallChain]
+  [ArduinoFingerprintInvalidPacketCallChain]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', True )]
+//  [ArduinoVariable( Boolean, 'FIsLastPacket' )]
+  [ArduinoVariable( Unsigned, 3, 'FState' )]
+  [ArduinoLoopBegin]
+  [ArduinoLoopEnd]
+  [ArduinoOptionalVariable( 'FImageData' )]
+  TArduinoFingerprintReaderScan : TArduinoCodeEnabledClockedPersistent
+  
+//    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+//    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+    ClockInputPin
+    
+    [ArduinoVariableIfPinConnected( 'FImageData' )]
+    InputPin : TOWArduinoGrayscale4ImageMultiSinkPin
+    
+    FingerprintIndexOutputPin : TOWArduinoUnsignedSourcePin
+    ConfidenceOutputPin : TOWArduinoUnsignedSourcePin
+    ImageOutputPin : TOWArduinoGrayscale4ImageSourcePin
+    FeaturesOutputPin : TOWArduinoByteSourcePin
+    ErrorOutputPin : TOWArduinoUnsignedSourcePin
+    
+    DetectedOutputPin : TOWArduinoClockSourcePin
+    RecognizedOutputPin : TOWArduinoClockSourcePin
+    UnknownOutputPin : TOWArduinoClockSourcePin
+  
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoFingerprintReaderElements )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoDeclaredClass]
+  TArduinoFingerprintReaderBasicElement : TArduinoCodeEnabledPersistent;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoFingerprintReaderElements )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoDeclaredClass]
+  TArduinoFingerprintReaderBasicEnabledClockedElement : TArduinoCodeEnabledClockedPersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Delete All Templates' )]
+  [CreateName( 'Delete All' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderDeleteAllTemplates' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderDeleteAllTemplates : TArduinoFingerprintReaderBasicEnabledClockedElement;
+  //---------------------------------------------------------------------------
+  [Name( 'Set Password' )]
+  [CreateName( 'Set Password' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderSetPasswordElement' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [Category( TConfigToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderSetPasswordElement : TArduinoFingerprintReaderBasicEnabledClockedElement
+  
+    PasswordCode : Unsigned = 0
+    
+  ;
+  //---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoFingerprintReaderSetArealLEDMode : Enum
+  
+    Breathing
+    Flashing
+    On
+    Off
+    GraduallyOn
+    GraduallyOff
+    
+  ;
+  //---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TArduinoFingerprintReaderSetArealLEDColor : Enum
+
+    Red
+    Blue
+    Purple
+
+  ;
+  //---------------------------------------------------------------------------
+  [Name( 'Set Areal LED' )]
+  [CreateName( 'Set Areal LED' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderSetArealLEDElement' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderSetArealLEDElement : TArduinoFingerprintReaderBasicEnabledClockedElement
+  
+    Mode : TArduinoFingerprintReaderSetArealLEDMode = Breathing    
+    Color : TArduinoFingerprintReaderSetArealLEDColor = Red
+    
+    [ValueRange( 0, 255 )]
+    Cycles : Unsigned = 0
+    
+    [ValueRange( 0.0, 1.0 )]
+    Speed : Single = 0.0
+    
+  ;
+  //---------------------------------------------------------------------------
+  [Name( 'Get Random Number' )]
+  [CreateName( 'Get Random Number' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderGetRandomNumberElement' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoVariable( Boolean, 'FProcessing' )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderGetRandomNumberElement : TArduinoFingerprintReaderBasicEnabledClockedElement
+
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+  //---------------------------------------------------------------------------
+  [Name( 'Reset' )]
+  [CreateName( 'Reset' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderResetElement' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoProcessorModuleResetOperation )]
+  +TArduinoFingerprintReaderResetElement : TArduinoFingerprintReaderBasicEnabledClockedElement;
+  //---------------------------------------------------------------------------
+  [Name( 'Set Address' )]
+  [CreateName( 'Set Address' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderSetAddressElement' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [Category( TConfigToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderSetAddressElement : TArduinoFingerprintReaderBasicEnabledClockedElement
+
+    Address : Unsigned = $FFFFFFFF
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Serial Speed(Baud Rate)' )]
+  [CreateName( 'Set Serial Speed' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderSetSerialSpeedElement' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [Category( TConfigToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderSetSerialSpeedElement : TArduinoFingerprintReaderBasicEnabledClockedElement
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '9600' )]
+    [PropertyListDesignValue( '19200' )]
+    [PropertyListDesignValue( '28800' )]
+    [PropertyListDesignValue( '38400' )]
+    [PropertyListDesignValue( '48000' )]
+    [PropertyListDesignValue( '57600' )]
+    [PropertyListDesignValue( '67200' )]
+    [PropertyListDesignValue( '76800' )]
+    [PropertyListDesignValue( '86400' )]
+    [PropertyListDesignValue( '96000' )]
+    [PropertyListDesignValue( '105600' )]
+    [PropertyListDesignValue( '115200' )]
+    Speed : Unsigned = 57600
+
+  ;
+  //---------------------------------------------------------------------------
+  [Name( 'Set Security Level' )]
+  [CreateName( 'Set Security Level' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderSetSecurityLevelElement' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [Category( TConfigToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderSetSecurityLevelElement : TArduinoFingerprintReaderBasicEnabledClockedElement
+
+    [ValueRange( 1, 5 )]
+    Level : Unsigned = 3
+
+  ;
+  //---------------------------------------------------------------------------
+  [Name( 'Set Packet Length' )]
+  [CreateName( 'Set Packet Length' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderSetPacketLengthElement' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [Category( TConfigToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderSetPacketLengthElement : TArduinoFingerprintReaderBasicEnabledClockedElement
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '128' )]
+    [PropertyListDesignValue( '256' )]
+    Length : Unsigned = 128
+
+  ;
+  //---------------------------------------------------------------------------
+  [Name( 'Handshake' )]
+  [CreateName( 'Handshake' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderHandshakeElement' )]
+  [ArduinoVariable( Boolean, 'FProcessing' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderHandshakeElement : TArduinoFingerprintReaderBasicEnabledClockedElement
+  
+    SuccededOutputPin : TOWArduinoClockSourcePin
+    FailedOutputPin : TOWArduinoClockSourcePin
+
+  ;
+  //---------------------------------------------------------------------------
+  [Name( 'Get Info' )]
+  [CreateName( 'Info' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderGetInfo' )]
+  [ArduinoVariable( Boolean, 'FProcessing' )]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', True )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderGetInfo : TArduinoFingerprintReaderBasicEnabledClockedElement
+  
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+    ClockInputPin
+
+    StatusOutputPin : TOWArduinoUnsignedSourcePin
+    SystemIDOutputPin : TOWArduinoUnsignedSourcePin
+    CapacityOutputPin : TOWArduinoUnsignedSourcePin
+    SecurityLevelOutputPin : TOWArduinoUnsignedSourcePin
+    AddressOutputPin : TOWArduinoUnsignedSourcePin
+    PacketLenOutputPin : TOWArduinoUnsignedSourcePin    
+    SerialSpeedOutputPin : TOWArduinoUnsignedSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'List Templates' )]
+  [CreateName( 'List' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderListTemplates' )]
+//  [ArduinoVariable( Boolean, 'FProcessing' )]
+//  [ArduinoVariable( Boolean, 'FExtractTemplate' )]
+  [ArduinoVariable( Unsigned, 2, 'FState' )]
+  [ArduinoVariable( Unsigned, 2, 'FTableIndex' )]
+//  [ArduinoVariable( Unsigned, 10, 'FCount' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+//  [ArduinoOptionalVariable( Boolean, 'FClocked', True )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderListTemplates : TArduinoFingerprintReaderBasicEnabledClockedElement
+    
+//    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+//    [ArduinoVariableIfPinConnected( 'FClocked' )]
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    IndexOutputPin : TOWArduinoUnsignedSourcePin
+    PopulatedOutputPin : TOWArduinoDigitalSourcePin
+    FeaturesOutputPin : TOWArduinoByteSourcePin
+    TemplateProcessedOutputPin : TOWArduinoClockSourcePin
+    
+    CompletedOutputPin : TOWArduinoClockSourcePin
+    
+    [MaxValue( 1024 )]
+    StartIndex : Unsigned = 0
+    
+    Count : Unsigned = 1024
+    
+  ;
+//---------------------------------------------------------------------------
+//  [Name( 'SendImage' )]
+//  [ArduinoPopulatedCallChainParameter( 'Mitov::TImageBuffer &', 'AImage' )]
+//  ArduinoFingerprintSendImageCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+//  [Name( 'IsOutputConnected' )]
+//  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+//  ArduinoFingerprintIsOutputConnectedCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderTemplateEnrollImage' )]
+//  [ArduinoExcludeUnconnectedAndDefault]
+//  [ArduinoOwnerTemplateTypeAndReference]
+//  [ArduinoDeclaredClass]
+//  [ArduinoFingerprintSendImageCallChain]
+//  [ArduinoFingerprintIsOutputConnectedCallChain]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', False )]
+  [ArduinoOptionalVariable( 'FImageData' )]
+  TArduinoFingerprintReaderTemplateEnrollImage : TArduinoCodePersistent
+  
+    [ArduinoPinCall( 'Image_InputPin' )]
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+    [ArduinoVariableIfPinConnected( 'FImageData' )]
+    InputPin : TOWArduinoGrayscale4ImageMultiSinkPin
+    
+    OutputPin : TOWArduinoGrayscale4ImageSourcePin
+
+//    ScanInputPin : TOWArduinoClockSinkPin
+
+   ;    
+//---------------------------------------------------------------------------
+  [ArduinoLoopBegin]
+  [ArduinoOptionalVariable( Unsigned, 32, 'FLastTime', 0 )]
+  [ArduinoVariable( Boolean, 'FSecondStage' )]
+  TArduinoFingerprintReaderEnroll_Extender : Extender
+  
+    WaitingFingerprintOutputPin : TOWArduinoDigitalSourcePin
+    PlaceFingerOutputPin : TOWArduinoDigitalSourcePin
+    RemoveFingerOutputPin : TOWArduinoDigitalSourcePin
+    
+    FailedOutputPin : TOWArduinoClockSourcePin
+
+    FingerprintsCountOutputPin : TOWArduinoUnsignedSourcePin    
+    
+    [NamePostfix( '(mS)' )]
+    [ArduinoVariableIfNotDefault( 'FLastTime' )]
+    Timeout : Unsigned = 0
+
+    Image : TArduinoFingerprintReaderTemplateEnrollImage
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderTemplateEnroll' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoDeclaredClass]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', False )]
+  [ArduinoVariable( Unsigned, 4, 'FState' )]
+  [ArduinoStart]
+  [ArduinoFingerprintProcessByteCallChain]
+  TArduinoFingerprintReaderTemplateEnroll : TArduinoCodePersistent, TArduinoFingerprintReaderEnroll_Extender
+
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+//    [ArduinoPinIsConnectedFlag]
+    StartInputPin : TOWArduinoClockSinkPin
+    LearnedOutputPin : TOWArduinoClockSourcePin
+    
+//    StatusOutputPin : TOWArduinoUnsignedSourcePin
+   
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Enroll/Learn' )]
+  [CreateName( 'Enroll' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderEnroll' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoVariable( Unsigned, 4, 'FState' )]
+  [ArduinoVariable( Unsigned, 2, 'FTableIndex' )]
+  +TArduinoFingerprintReaderEnroll : TArduinoFingerprintReaderBasicEnabledClockedElement, TArduinoFingerprintReaderEnroll_Extender
+
+    IndexOutputPin : TOWArduinoUnsignedSourcePin
+    SuccededOutputPin : TOWArduinoClockSourcePin
+    FeaturesOutputPin : TOWArduinoByteSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoFingerprintReaderBasicTemplate : TArduinoFingerprintReaderBasicElement
+
+    [ValueRange( 0, $FFFF )]
+    Index : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'User Notepad' )]
+  [CreateName( 'User Notepad' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderNotepadElement' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoVariable( Boolean, 'FReading' )]
+  [ArduinoOptionalVariable( Boolean, 'FReadingRequest', False )]
+//  [ArduinoOptionalVariable( Boolean, 'FWriting', False )]
+  [ArduinoOptionalVariable( 'FInputData' )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintReaderNotepadElement : TArduinoFingerprintReaderBasicElement
+
+    [OWPrimaryPin]
+    [ArduinoVariableIfPinConnected( 'FInputData' )]
+    InputPin : TOWArduinoByteSinkPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin
+
+    [ArduinoVariableIfPinConnected( 'FReadingRequest' )]
+    ReadInputPin : TOWArduinoClockSinkPin
+    
+    [ValueRange( 0, $E )]
+    Page : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Template' )]
+  [CreateName( 'Template' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderTemplate' )]
+  [ArduinoVariable( Unsigned, 3, 'FState' )]
+  [ArduinoOptionalVariable( Boolean, 'FReadClocked', False )]
+  [ArduinoOptionalVariable( Boolean, 'FDeleteClocked', False )]
+//  [ArduinoOptionalVariable( Unsigned, 11, 'FCount', 0 )]
+  [ArduinoLoopBegin]
+  [ArduinoOptionalVariable( 'FTemplateData' )]
+  +TArduinoFingerprintReaderTemplate : TArduinoFingerprintReaderBasicTemplate
+  
+    [ArduinoVariableIfPinConnected( 'FTemplateData' )]
+    InputPin : TOWArduinoByteSinkPin
+
+    OutputPin : TOWArduinoByteSourcePin
+
+    [ArduinoVariableIfPinConnected( 'FReadClocked' )]
+//    [ArduinoVariableIfPinConnected( 'FCount' )]
+    [ArduinoPinIsConnectedFlag]
+    ReadInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoVariableIfPinConnected( 'FDeleteClocked' )]
+    [ArduinoPinIsConnectedFlag]
+    DeleteInputPin : TOWArduinoClockSinkPin
+    
+    [ArduinoIfPinConnectedRequiresClass( TArduinoFingerprintReaderScan )]
+    RecognizedOutputPin : TOWArduinoClockSourcePin
+    
+    [Name( 'Learn/Enroll' )]
+    Enroll : TArduinoFingerprintReaderTemplateEnroll
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Delete Templates' )]
+  [CreateName( 'Delete' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintDeleteTemplate' )]
+  [ParentImage( TArduinoNetworkProtocolsHTTPClientRequestDELETE )]
+  [ArduinoOptionalVariable( Boolean, 'FClocked', False )]
+  [ArduinoLoopBegin]
+  +TArduinoFingerprintDeleteTemplate : TArduinoFingerprintReaderBasicTemplate
+    
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ValueRange( 1, $FFFE )]
+    Count : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_FingerprintReaderSerial.h' )]
+  [ArduinoClass( 'Mitov::TArduinoFingerprintReaderSerial' )]
+  [Name( 'Fingerprint Scanner/Reader (Serial)' )]
+  [CreateName( 'Fingerprint' )]
+  [Category( TDataSourcesToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+//  [ArduinoVariable( Unsigned, 4, 'FDataIndex' )]
+  [ArduinoVariable( Unsigned, 11, 'FCapacity' )]
+  [ArduinoVariable( Unsigned, 3, 'FPacketLen' )]
+  [ArduinoVariable( Boolean, 'FCheckingCapacity' )]
+  [ArduinoVariable( Boolean, 'FReady' )]
+  [ArduinoOptionalVariable( Boolean, 'FHasCount', False )]
+//  [ArduinoVariable( Boolean, 'FHasCount' )]
+  [ArduinoVariable( Boolean, 'FInProcessing' )]
+  [ArduinoVariable( Boolean, 'FLEDRequest' )]
+  [ArduinoVariable( Boolean, 'FPasswordRequest' )]
+  [ArduinoVariable( Boolean, 'FCheckOK' )]
+  [ArduinoVariable( Boolean, 'FReceivingData' )] // Make it optional in the future!
+  [ArduinoVariable( Boolean, 'FReceivingLastData' )] // Make it optional in the future!
+  +TArduinoFingerprintReaderSerial : TArduinoEnableComponent
+  
+    [ArduinoExclude]
+    [ArduinoSerialInstanceTemplate]
+    ControlOutputPin : TOWArduinoSharedSerialSourcePin
+    
+    [ArduinoVariableIfPinUnconnected( 'FHasCount' )]
+    CountTemplatesOutputPin : TOWArduinoUnsignedSourcePin
+
+    CapacityOutputPin : TOWArduinoUnsignedSourcePin
+    StatusOutputPin : TOWArduinoUnsignedSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+    
+    Address : Unsigned = $FFFFFFFF
+    
+    [NamePostfix( '(mS)' )]
+    Timeout : Unsigned = 5000
+
+    PasswordCode : Unsigned = 0
+    
+    Scan : TArduinoFingerprintReaderScan
+    
+    [ArduinoUseBindingCheckSetter( 'SendLEDControl' )]
+    Backlight : Boolean = True
+    
+    [ComponentEditorEntryDesign( 'Edit &Elements ...' )]
+    Elements : TArduinoFingerprintReaderElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

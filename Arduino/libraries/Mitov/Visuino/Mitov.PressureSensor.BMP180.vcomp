@@ -1,0 +1,45 @@
+Mitov
+//---------------------------------------------------------------------------
+  TPressureBMP180Resolution : Enum
+  
+    prLow
+    prStandard
+    prHigh
+    prHighest
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_BMP180_Pressure.h' )]
+  [ArduinoClass( 'Mitov::BMP180_Pressure' )]
+  [Name( 'Pressure BMP180' )]
+  [CreateName( 'Pressure' )]
+  [ArduinoWebKeywords( 'BMP180' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoVariable( Unsigned, 2, 'FState' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoPressureBMP180 : TArduinoI2CClockedEnableComponent
+
+    [ArduinoPinIsConnectedFlag]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    PressureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+//    [ArduinoChangeOnlyPin]
+    ErrorOutputPin : TOWArduinoDigitalSourcePin
+
+    [DesignRange( $77, $77 )]
+    Address : TArduinoUInt8 = $77
+
+    Resolution : TPressureBMP180Resolution = prStandard
+    InFahrenheit : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

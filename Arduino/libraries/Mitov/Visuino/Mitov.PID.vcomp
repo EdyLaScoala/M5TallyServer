@@ -1,0 +1,43 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_PIDController.h' )]
+  [ArduinoClass( 'Mitov::PIDController' )]
+  [CreateName( 'PIDController' )]
+  [Name( 'PID Controller' )]
+  [Category( TArduinoAnalogFiltersToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoPIDController : TArduinoCommonAnalogFilter
+
+    ManualControlInputPin : TOWArduinoAnalogSinkPin
+
+    [ArduinoPinIsConnectedFlag]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartClock' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStart' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [DesignRange( 0, 1 )]
+    ProportionalGain : Single = 0.1
+
+    [DesignRange( 0, 1 )]
+    IntegralGain : Single = 0.1
+
+    [DesignRange( 0, 1 )]
+    DerivativeGain : Single = 0.1
+
+    [ValueRange( 0, 1 )]
+    SetPoint : Single = 0.5
+
+    [ValueRange( 0, 1 )]
+    [ArduinoFlexibleVariable]
+    InitialValue : Single = 0.0
+
+    [ValueRange( 0, 1 )]
+    [ArduinoFlexibleVariable]
+    InitialOutput : Single = 0.5
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

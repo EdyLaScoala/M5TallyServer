@@ -1,0 +1,22 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Micro SD Card Module' )]
+  [CreateName( 'SDCard' )]
+  [Category( TMemoryToolbarCategory )]
+  [ArduinoWebKeywords( 'Micro SD Card Arduino' )]
+  [ArduinoInit]
+  +TArduinoMicroSDCard : TArduinoEnableComponent, TArduinoMicroSDCard_Extender
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    OutputPin : TOWArduinoHardwareSPISourcePin
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoDirectPinTemplate]
+    [OWRequiredPin]
+    ChipSelectOutputPin : TOWArduinoDigitalOutputSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

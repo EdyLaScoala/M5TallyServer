@@ -1,0 +1,52 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint32_t &', 'ACountStarted' )]
+  [Name( 'StartElement' )]
+  TArduinoMultiSensorStartCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoMultiSensorStartCallChain]
+  TArduinoMultiSensorStartElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoMultiSensorStartElements )]
+  [ArduinoHelpPostfix( '(Multi Sensor Pulse Start)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoMultiSensorStartBasicElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_MultiSensorStart.h' )]
+  [ArduinoClass( 'Mitov::MultiSensorPulseStart' )]
+  [Category( TMeasurementToolbarCategory )]
+  [Name( 'Multi-Sensor Pulse Start' )]
+  [CreateName( 'MultiSensorPulseStart' )]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoVariable( Boolean, 'FPulsing' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoMultiSensorPulseStart : TArduinoClockedEnableComponent
+
+    [ArduinoPinConnectDefine( '_MITOV_MULTI_SENSOR_START_CLOCK_PIN_' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [Name( 'Start(Trigger)' )]
+    StartOutputPin : TOWArduinoDigitalSourcePin
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    [ArduinoTemplateParameterCollectionCount]
+    [ArduinoTemplateParameterCollectionPower( 'FCountStarted' )]
+    Elements : TArduinoMultiSensorStartElements
+
+    [DesignRange( 1, 100 )]
+    [MinValue( 1 )]
+    [ NamePostfix( '(uS)' ) ]
+    PulseTime : Unsigned = 2
+
+    [DesignRange( 0, 10000 )]
+    [ValueRange( 0, $FFFF )]
+    [MinValue( 0 )]
+    [ NamePostfix( '(mS)' ) ]
+    PauseTime : Unsigned = 100
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,56 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Nordic' )]
+  TNordicCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Nordic' )]
+  [Category( TSparkFunCategory )]
+  [AlternateCategory( TNordicCategory )]
+  [ParentImage( TNordicCategory )]
+  TSparkFunNordicCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'BLEPeripheral.h' )]
+  +TArduinoNRF52832BluetoothModule : TArduinoBluetoothModule;
+//---------------------------------------------------------------------------
+  [ArduinoBoardArchitecture( 'nRF5' )]
+  [ArduinoBoardCanReset]
+  [ArduinoDefine( 'VISUINO_NRF52' )]
+  TArduino_Basic_nRF5_Board : TArduinoBoardExtendableImplementation
+
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduinoNRF52832BluetoothModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoHardwareSerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'SparkFun nRF52832 Breakout' )]
+  [ArduinoBoardCompileParams( 'sandeepmistry:nRF5:Generic_nRF52832' )]
+  [Category( TSparkFunNordicCategory )]
+  +TArduino_SparkFun_nRF52832_Breakout_Board : TArduino_Basic_nRF5_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,   1, TArduinoBasicDigitalPWMChannel, 'Digital(X1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,   1, TArduinoBasicDigitalPWMChannel, 'Digital(X2)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 2, 0, 4, TArduinoCombinedAnalogDigitalPWMChannel, 'Digital', 'AnalogIn', 'A', '' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6,   1, TArduinoBasicDigitalPWMChannel, 'Digital(Button)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,   1, TArduinoBasicDigitalPWMInputChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  13, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22,  4, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26,  1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 27,  1, TArduinoBasicDigitalPWMSerial0Channel, 'Digital(TX0)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 4, TArduinoCombinedAnalogDigitalPWMChannel, 'Digital', 'AnalogIn', 'A', '' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

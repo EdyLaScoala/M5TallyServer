@@ -1,0 +1,272 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoDFRobotMP3PlayerEqualizerMode : Enum
+
+    emNormal
+    emPop
+    emRock
+    emJazz
+    emClassic
+    emBass
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoMaiyoutMP3PlayerElements )]
+  [ArduinoDeclaredClass]
+//  [ArduinoOwnerReference]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Maiyout MP3 Player)' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  TArduinoMaiyoutMP3PlayerElementBasic : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoMaiyoutMP3PlayerElementClocked : TArduinoMaiyoutMP3PlayerElementBasic
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMaiyoutMP3PlayerElementPlayFileBasic : TArduinoMaiyoutMP3PlayerElementClocked
+
+    [ValueRange( 1, $FFFF )]
+    File : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMaiyoutMP3PlayerElementPlayFileFolderBasic : TArduinoMaiyoutMP3PlayerElementPlayFileBasic
+
+    [ValueRange( 1, $FF )]
+    File
+
+    [ValueRange( 0, 99 )]
+    Folder : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [TArduinoMaiyoutMP3ElementUpdateFailureCallChain]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoMaiyoutMP3PlayerOutputElement]
+  TArduinoMaiyoutMP3PlayerElementUnsignedBasic : TArduinoMaiyoutMP3PlayerElementClocked
+
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Play File' )]
+  [CreateName( 'Play File' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementPlayFile' )]
+  [ParentImage( TArduinoDFRobotMP3PlayerElementPlayFile )]
+  +TArduinoMaiyoutMP3PlayerElementPlayFile : TArduinoMaiyoutMP3PlayerElementPlayFileBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Add File to Queue' )]
+  [CreateName( 'Add File to Queue' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementAddPlayFile' )]
+  +TArduinoMaiyoutMP3PlayerElementAddPlayFile : TArduinoMaiyoutMP3PlayerElementPlayFileBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Insert Play File' )]
+  [CreateName( 'Insert Play File' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementInsertPlayFile' )]
+  +TArduinoMaiyoutMP3PlayerElementInsertPlayFile : TArduinoMaiyoutMP3PlayerElementPlayFileBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Play Folder/File' )]
+  [CreateName( 'Play Folder/File' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementPlayFolderFile' )]
+  [ParentImage( TArduinoDFRobotMP3PlayerElementPlayFolderFile )]
+  +TArduinoMaiyoutMP3PlayerElementPlayFolderFile : TArduinoMaiyoutMP3PlayerElementPlayFileFolderBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Add Folder/File to Queue' )]
+  [CreateName( 'Add Folder/File to Queue' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementAddPlayFolderFile' )]
+  +TArduinoMaiyoutMP3PlayerElementAddPlayFolderFile : TArduinoMaiyoutMP3PlayerElementPlayFileFolderBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Insert Play Folder/File' )]
+  [CreateName( 'Insert Play Folder/File' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementInsertPlayFolderFile' )]
+  +TArduinoMaiyoutMP3PlayerElementInsertPlayFolderFile : TArduinoMaiyoutMP3PlayerElementPlayFileFolderBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Get Files Count' )]
+  [CreateName( 'Get Files Count' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementGetTyped' )]
+  [ArduinoTemplateParameter( 'PARAMS', '0x25, 0' )]
+  [ParentImage( TArduinoDFRobotMP3PlayerElementGetFilesCount )]
+  +TArduinoMaiyoutMP3PlayerElementGetFilesCount : TArduinoMaiyoutMP3PlayerElementUnsignedBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Get Ctrrent Track Number' )]
+  [CreateName( 'Get Ctrrent Track Number' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementGetTyped' )]
+  [ArduinoTemplateParameter( 'PARAMS', '0x29, 0' )]
+  +TArduinoMaiyoutMP3PlayerElementGetCtrrentTrackNumber : TArduinoMaiyoutMP3PlayerElementUnsignedBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Get Ctrrent Play Time' )]
+  [CreateName( 'Get Ctrrent Play Time' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementGetTyped' )]
+  [ArduinoTemplateParameter( 'PARAMS', '0x2C, 0' )]
+  +TArduinoMaiyoutMP3PlayerElementGetCtrrentTime : TArduinoMaiyoutMP3PlayerElementUnsignedBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Get Total Song Time' )]
+  [CreateName( 'Get Total Song Time' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementGetTyped' )]
+  [ArduinoTemplateParameter( 'PARAMS', '0x2D, 0' )]
+  +TArduinoMaiyoutMP3PlayerElementGetTotalSongTime : TArduinoMaiyoutMP3PlayerElementUnsignedBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Get Version Number' )]
+  [CreateName( 'Get Version Number' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementGetTyped' )]
+  [ArduinoTemplateParameter( 'PARAMS', '0x24, 0' )]
+  +TArduinoMaiyoutMP3PlayerElementGetVersionNumber : TArduinoMaiyoutMP3PlayerElementUnsignedBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Get Song Title' )]
+  [CreateName( 'Get Song Title' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementGetTyped' )]
+  [ArduinoTemplateParameter( 'PARAMS', '0x2D, 2' )]
+  [TArduinoMaiyoutMP3ElementUpdateFailureCallChain]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoMaiyoutMP3PlayerOutputElement]
+  +TArduinoMaiyoutMP3PlayerElementGetSongTitle : TArduinoMaiyoutMP3PlayerElementClocked
+
+    OutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Get Volume' )]
+  [CreateName( 'Get Volume' )]
+  [ArduinoClass( 'Mitov::MaiyoutMP3PlayerElementGetTyped' )]
+  [ArduinoTemplateParameter( 'PARAMS', '0x21, 1' )]
+  [TArduinoMaiyoutMP3ElementUpdateFailureCallChain]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoMaiyoutMP3PlayerOutputElement]
+  +TArduinoMaiyoutMP3PlayerElementGetGetVolume : TArduinoMaiyoutMP3PlayerElementClocked
+
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'UpdateOutput' )]
+  [ArduinoPopulatedCallChainParameter( 'void *', 'AValue' )]
+  [ArduinoCallChainIndex]
+  TArduinoMaiyoutMP3ElementUpdateFailureCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  ArduinoMaiyoutMP3PlayerOutputElementAttribute : TCustomAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoMaiyoutMP3ElementUpdateFailureCallChain]
+  TArduinoMaiyoutMP3PlayerElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoScopedEnum]
+  TMitovMaiyoutSerialMP3PlayMode : Enum
+
+    FullDisk
+    Folder 
+    Single
+    Random
+    NoLoop 
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMaiyoutMP3PlayerVolume' )]
+  *TArduinoMaiyoutMP3PlayerVolume : TArduinoCodePersistent
+
+    [ArduinoPinCall( 'Volume_UpInputPin' )]
+    UpInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinCall( 'Volume_DowmInputPin' )]
+    DowmInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter_Root( 'UpdateVolume' )]
+    [ValueRange( 0.0, 1.0 )]
+    Value : Single = 0.5
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMaiyoutMP3PlayerPlayback' )]
+  *TArduinoMaiyoutMP3PlayerPlayback : TArduinoCodePersistent
+
+    [ArduinoPinCall( 'Playback_PlayInputPin' )]
+    PlayInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinCall( 'Playback_PauseInputPin' )]
+    PauseInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinCall( 'Playback_StopInputPin' )]
+    StopInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinCall( 'Playback_FastForwardInputPin' )]
+    FastForwardInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinCall( 'Playback_RewindInputPin' )]
+    RewindInputPin : TOWArduinoClockSinkPin
+
+    StoppedOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMaiyoutMP3PlayerTrack' )]
+  *TArduinoMaiyoutMP3PlayerTrack : TArduinoCodePersistent
+
+    [ArduinoPinCall( 'Track_NextInputPin' )]
+    NextInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinCall( 'Track_PreviousInputPin' )]
+    PreviousInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter_Root( 'UpdatePlayMode' )]
+    Mode : TMitovMaiyoutSerialMP3PlayMode = NoLoop
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMaiyoutMP3PlayerSDCard' )]
+  [ParentImage( TArduinoBasicStandardBoardMicroSDModule )]
+  *TArduinoMaiyoutMP3PlayerSDCard : TArduinoCodePersistent
+
+    InsertedOutputPin : TOWArduinoClockSourcePin
+    RemovedOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FIsSending' )]
+  [ArduinoVariable( Boolean, 'FFirstTry' )]
+  [ArduinoVariable( Boolean, 'FExpectReset' )]
+  [ArduinoVariable( Unsigned, 2, 'FExpectFormatResult' )]
+  TArduinoMaiyoutMP3Player_Extender : Extender
+
+    ResetInputPin : TOWArduinoClockSinkPin
+    TimeoutErrorOutputPin : TOWArduinoClockSourcePin
+    ErrorOutputPin : TOWArduinoUnsignedSourcePin
+
+    Track : TArduinoMaiyoutMP3PlayerTrack
+    Playback : TArduinoMaiyoutMP3PlayerPlayback
+    Volume : TArduinoMaiyoutMP3PlayerVolume
+
+    [Name( 'SD Card' )]
+    SDCard : TArduinoMaiyoutMP3PlayerSDCard
+
+    TimeOutPeriod : Unsigned = 500
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEqualizerMode' )]
+    EqualizerMode : TArduinoDFRobotMP3PlayerEqualizerMode = emNormal
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    [Name( 'Operations' )]
+    [ArduinoAddTemplateIfElementHasAttribute( ArduinoMaiyoutMP3PlayerOutputElementAttribute, 'Element_Response', 'Mitov::TArduinoMaiyoutMP3Player_Element_Response_Empty', 'Mitov::TArduinoMaiyoutMP3Player_Element_Response' )]
+    Elements : TArduinoMaiyoutMP3PlayerElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Maiyout_Serial_MP3.h' )]
+  [ArduinoClass( 'Mitov::MitovMaiyoutSerialMP3' )]
+  [Name( 'Maiyout Serial MP3 Player (MY1690-12P/MY1690-16S)' )]
+  [CreateName( 'MP3Player' )]
+  [Category( TArduinoAudioOutputToolbarCategory )]
+  +TArduinoMaiyoutMP3Player : TArduinoSharedSerialEnableComponent, TArduinoMaiyoutMP3Player_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [CreateName( 'MP3 Player' )]
+  TArduinoMaiyoutMP3PlayerBasicModule : TArduinoEnabledShield, TArduinoMaiyoutMP3Player_Extender
+
+    [ArduinoInitParam]
+    Enabled
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

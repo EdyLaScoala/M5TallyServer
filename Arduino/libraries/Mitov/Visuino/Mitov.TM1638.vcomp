@@ -1,0 +1,38 @@
+Mitov
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM163X_7SegmentBasicElements )]
+  +TArduinoTM1638_ValueSection7Segments : TArduinoTM163X_AnyPoints_ValueSection7Segments
+
+    [OWPrimaryPin]
+    DecmalPointInputPin : TOWArduinoDigitalSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( DecmalPointInputPin )]
+    InitialDecmalPointValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TM1638_IntegerDisplay7Segments' )]
+  [ParentImage( TArduinoMaximLedGroupIntegerDisplay7Segments )]
+  TArduinoTM163X_IntegerDisplay7Segments : TArduinoTM1638_Section7SegmentsBasicCountDigitsElement, TArduinoIntegerDisplay7Segments_Extender;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM1638_7SegmentElements )]
+  +TArduinoTM1638_IntegerDisplay7Segments : TArduinoTM163X_IntegerDisplay7Segments;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TM1638_AnalogDisplay7Segments' )]
+  [ArduinoStart]
+  [ParentImage( TArduinoMaximLedGroupAnalogDisplay7Segments )]
+  TArduinoTM163X_AnalogDisplay7Segments : TArduinoTM1638_Section7SegmentsBasicCountDigitsElement, TArduinoAnalogDisplay7Segments_Extender;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM1638_7SegmentElements )]
+  +TArduinoTM1638_AnalogDisplay7Segments : TArduinoTM163X_AnalogDisplay7Segments;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TM1638_7SegmentText.h' )]
+  [ArduinoClass( 'Mitov::TM1638_TextDisplay7Segments' )]
+  [ParentImage( TArduinoMaximLedGroupTextDisplay7Segments )]
+  TArduinoTM163X_TextDisplay7Segments : TArduinoTM1638_Section7SegmentsBasicCountDigitsElement, TArduinoTextDisplay7Segments_Extender;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoTM1638_7SegmentElements )]
+  +TArduinoTM1638_TextDisplay7Segments : TArduinoTM163X_TextDisplay7Segments;
+//---------------------------------------------------------------------------
+; // Mitov

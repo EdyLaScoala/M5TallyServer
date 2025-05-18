@@ -1,0 +1,90 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Heltec Automation' )]
+  THeltecCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( THeltecCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  THeltecESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_Heltec_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 39 )]
+    SDA = 4
+
+    [ValueRange( 0, 39 )]
+    SCL = 15
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_Heltec_SPI : TArduinoESP32_Generic_SPI
+
+    [ValueRange( 0, 39 )]
+    MOSI = 27
+
+    [ValueRange( 0, 39 )]
+    MISO = 19
+
+    [ValueRange( 0, 39 )]
+    SCK  = 5
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<88, uint8_t, 60 >' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DisplaySSD1306ResetPin<Mitov::DigitalPin_DirectBoardPinImplementation<16> >' )]
+  [ArduinoShieldPin( '16', 'OLED Reset' )]
+  +TArduinoESP32HeltecSSD1306Display : TArduinoDisplaySSD1306BasicShieldDisplayModuleI2C_Up;
+//---------------------------------------------------------------------------
+  [ParentImage( THeltecCategory )]  
+  [ArduinoTemplateParameter( 'C_PIN_CS', '18' )]
+  [ArduinoTemplateParameter( 'C_PIN_RST', '14' )]
+  [ArduinoClass( 'Mitov::MitovLoRaRFM9XShield' )]
+  [ArduinoShieldPin( '18', 'LoRa CS' )]
+  [ArduinoShieldPin( '14', 'LoRa Reset' )]
+  [ArduinoShieldPin( '26', 'LoRa IRQ' )]
+  +TArduinoESP32HeltecRFM9XModule : TArduinoBasicM0RFM9XModule;
+//---------------------------------------------------------------------------
+  [Category( THeltecESP32Category )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  *TArduinoESP32_Heltec_BasicBoard : TArduinoBasicESP32Digital_Serial_ChannelsBoard
+
+    [AddItem( TArduinoESP32HeltecSSD1306Display )]
+    Modules
+
+    [AddItem( TArduinoESP32_Heltec_I2C )]
+    [AddItem( TArduinoESP32_Generic_I2C_2 )]
+    I2CChannels
+
+    [AddItem( TArduinoESP32_Heltec_SPI )]
+    [AddItem( TArduinoESP32_Generic_SPI1 )]    
+    SPIChannels
+
+    [ArduinoBoard_Add_ReservedChannel(  0, 'Button' )]
+    [ArduinoBoard_Add_ReservedChannels( 1,  5 )]
+    [ArduinoBoard_Add_ReservedChannels( 12, 8 )]
+    [ArduinoBoard_Add_ReservedChannel(  21, 'V2 Vext' )]
+    [ArduinoBoard_Add_ReservedChannels( 22, 2 )]
+    [ArduinoBoard_Add_ReservedChannels( 25, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 32, 8 )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( THeltecCategory )]
+  [Name( 'Heltec WiFi ESP32' )]
+  +TArduinoESP32_Heltec_WiFi_Board : TArduinoESP32_Heltec_BasicBoard;
+//---------------------------------------------------------------------------
+  [Name( 'Heltec WiFi LoRa ESP32' )]
+  +TArduinoESP32_Heltec_WiFi_LoRa_Board : TArduinoESP32_Heltec_BasicBoard
+
+    [AddItem( TArduinoESP32HeltecRFM9XModule )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

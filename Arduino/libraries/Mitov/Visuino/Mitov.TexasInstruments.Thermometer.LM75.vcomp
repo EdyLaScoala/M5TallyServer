@@ -1,0 +1,47 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_TCN75A.h' )]
+  [ArduinoClass( 'Mitov::MicrochipTCN75A' )]
+  [Name( 'Texas Instrument Thermometer LM75(I2C)' )]
+  [CreateName( 'Thermometer' )]
+  [ArduinoTemplateParameter( 'Resolution', 'Mitov::ConstantProperty<8, uint32_t, 9 >' )]
+  TArduinoTexasInstrumentLM75_Extender : Extender
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [ArduinoUseBindingCheckSetter( 'ReadData' )]
+    InFahrenheit : Boolean = False
+
+    Alert : TArduinoMicrochipTCN75AAlert
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    ShutDown : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoWebKeywords( 'LM75' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoTexasInstrumentLM75 : TArduinoClockedEnableFlexibleI2CComponent, TArduinoTexasInstrumentLM75_Extender
+
+    [DesignRange( $48, $4F )]
+    Address = $48
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_NAME', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x48 >' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoI2C( 0 )]
+  [ParentImage( TArduinoMPU9250Thermometer )]
+  *TArduinoTexasInstrumentLM75_Module : TArduinoClockEnabledBasicShield, TArduinoTexasInstrumentLM75_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

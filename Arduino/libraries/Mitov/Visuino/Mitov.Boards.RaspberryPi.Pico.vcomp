@@ -1,0 +1,528 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RP2040USBSerial.h' )]
+  [ArduinoClass( 'Mitov::RP2040USBPort' )]
+  [ArduinoSerialType( 'UART' )]
+  TArduinoRaspberryPiPicoBasicSerial : TArduinoHardwareSerial
+
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin )]
+    ConnectedOutputPin : TOWArduinoDigitalSourcePin
+    
+    WaitForConnection : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------  
+  TArduinoRaspberryPiPicoSerial0 : TArduinoRaspberryPiPicoBasicSerial; // In the future allow pin remapping
+//---------------------------------------------------------------------------  
+//  TArduinoRaspberryPiPicoSerial1 : TArduinoRaspberryPiPicoBasicSerial; // In the future allow pin remapping
+//---------------------------------------------------------------------------  
+  TArduinoRaspberryPiPicoI2C0 : TArduinoI2C; // In the future allow pin remapping
+//---------------------------------------------------------------------------  
+//  TArduinoRaspberryPiPicoI2C1 : TArduinoI2C; // In the future allow pin remapping
+//---------------------------------------------------------------------------  
+  [ArduinoInclude( 'Mitov_mbed_RP2040_SPI_Class.h' )]
+  [ArduinoClass( 'Mitov::Arduino_RP2040_SPI' )]
+  TArduinoRaspberryPiPicoSPI_Basic : TArduinoSPI; // In the future allow pin remapping
+//---------------------------------------------------------------------------  
+  TArduinoRaspberryPiPicoSPI0 : TArduinoRaspberryPiPicoSPI_Basic; // In the future allow pin remapping
+//---------------------------------------------------------------------------  
+//  TArduinoRaspberryPiPicoSPI1 : TArduinoRaspberryPiPicoSPI_Basic; // In the future allow pin remapping
+//---------------------------------------------------------------------------  
+  [ArduinoSerial( 0 )]
+  +TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSerial0Channel : TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel;
+//---------------------------------------------------------------------------  
+  [ArduinoI2C( 0 )]
+  +TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptI2C0Channel : TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel;
+//---------------------------------------------------------------------------  
+  [ArduinoSPI( 0 )]
+  +TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel : TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel;
+//---------------------------------------------------------------------------  
+  TArduinoRP2040ProcessorModuleOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRP2040ProcessorModuleOperations )]
+  [ArduinoHelpPostfix( '(RP2040 Processor Operations)' )]
+  TArduinoRP2040ProcessorModuleBasicOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  TArduinoRP2040ProcessorModuleBasicOperation : TArduinoCodePersistent, TArduinoRP2040ProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  TArduinoRP2040ProcessorModuleBasicClockedOperation : TArduinoRP2040ProcessorModuleBasicOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoRP2040ProcessorModuleGetIDOperation : TArduinoProcessorModuleBasicGetIDOperation, TArduinoRP2040ProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  TArduinoRP2040ProcessorModuleBasicSleepOperation : TArduinoRP2040ProcessorModuleBasicClockedOperation
+  
+    UseRingOscillator : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Sleep' )]
+  [CreateName( 'Sleep' )]
+  [ArduinoInclude( 'Mitov_RP2040_ProcessorSleep.h' )]
+  [ArduinoClass( 'Mitov::RP2040ProcessorSleep' )]
+  [Category( TArduinoPowerToolbarCategory )]
+  [ParentImage( TArduinoESP32ProcessorModuleDeepSleepOperation )]
+  +TArduinoRP2040ProcessorModuleSleepOperation : TArduinoRP2040ProcessorModuleBasicSleepOperation;
+//---------------------------------------------------------------------------
+  [Name( 'UpdateRegister' )]
+  TArduinoRP2040ProcessorWakeUpByPinUpdateRegisterCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'UpdateUnRegister' )]
+  TArduinoRP2040ProcessorWakeUpByPinUpdateUnRegisterCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoRP2040ProcessorWakeUpByPinUpdateRegisterCallChain]
+  [TArduinoRP2040ProcessorWakeUpByPinUpdateUnRegisterCallChain]
+  TArduinoRP2040ProcessorWakeUpOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoRP2040ProcessorWakeUpOperations )]
+  [ArduinoDeclaredClass]
+  TArduinoRP2040ProcessorWakeUpBasicOperation : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RP2040_ProcessorSleep.h' )]
+  [TArduinoRP2040ProcessorWakeUpByPinUpdateRegisterCallChain]
+  [TArduinoRP2040ProcessorWakeUpByPinUpdateUnRegisterCallChain]
+  TArduinoRP2040ProcessorWakeUpByPinsBasicOperation : TArduinoRP2040ProcessorWakeUpBasicOperation
+
+    Edge : Boolean = True
+    
+    [Name( 'High/Rising' )]
+    High : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Wakeup By Pin' )]
+  [CreateName( 'Wakeup By Pin' )]
+  [ArduinoClass( 'Mitov::RP2040ProcessorWakeUpByPin' )]
+  +TArduinoRP2040ProcessorWakeUpByPinOperation : TArduinoRP2040ProcessorWakeUpByPinsBasicOperation
+    
+    [ValueRange( 0, 30 )]
+    Pin : Unsigned = 0
+        
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Wakeup By Pins' )]
+  [CreateName( 'Wakeup By Pins' )]
+  [ArduinoClass( 'Mitov::RP2040ProcessorWakeUpByPinsCount' )]
+  +TArduinoRP2040ProcessorWakeUpByPinsCountOperation : TArduinoRP2040ProcessorWakeUpByPinsBasicOperation
+    
+    [ValueRange( 0, 30 )]
+    StartPin : Unsigned = 0
+    
+    [ValueRange( 1, 30 )]
+    Count : Unsigned = 1
+        
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Dormant' )]
+  [CreateName( 'Dormant' )]
+  [ArduinoInclude( 'Mitov_RP2040_ProcessorSleep.h' )]
+  [ArduinoClass( 'Mitov::RP2040ProcessorDormant' )]
+  [Category( TArduinoPowerToolbarCategory )]
+  +TArduinoRP2040ProcessorModuleDormantOperation : TArduinoRP2040ProcessorModuleBasicSleepOperation
+  
+    Wakeup : TArduinoRP2040ProcessorWakeUpOperations
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Reset' )]
+  [CreateName( 'Reset' )]
+  [ArduinoInclude( 'Mitov_RP2040_Processor.h' )]
+  [ArduinoClass( 'Mitov::RP2040ProcessorReset' )]
+  [ParentImage( TArduinoProcessorModuleResetOperation )]
+  +TArduinoRP2040ProcessorModuleResetOperation : TArduinoRP2040ProcessorModuleBasicClockedOperation;
+//---------------------------------------------------------------------------
+  [Name( 'Processor' )]
+  [CreateName( 'Processor' )]
+  [ParentImage( TArduinoProcessorModule )]
+  +TArduinoRP2040ProcessorModule : TArduinoShield
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    Operations : TArduinoRP2040ProcessorModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduino_RP2040_RTC_Alarm' )]
+  [ArduinoVariable( Boolean, 'FAlarm' )]
+  TArduino_RP2040_RTC_Alarm : TArduinoCodeDisabledPersistent
+
+    AlarmOutputPin : TOWArduinoClockSourcePin
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateEnabled' )]
+    Enabled
+
+    Second : TArduinoRTCAlarmElement60
+    Minute : TArduinoRTCAlarmElement60
+    Hour : TArduinoRTCAlarmElement24
+    Day : TArduinoRTCAlarmElement31
+    Month : TArduinoRTCAlarmElement12
+    Year : TArduinoRTCAlarmElementYear
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RP2040_RTC.h' )]
+  [ArduinoClass( 'Mitov::RP2040_RTC' )]
+  [ArduinoInit]
+  +TArduino_RP2040_RTCModule : TArduinoBasicRTCModule
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+    
+    Alarm : TArduino_RP2040_RTC_Alarm
+   
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoRP2040WatchdogRebootReason' )]
+  TArduinoRP2040WatchdogRebootReason : TArduinoCodePersistent
+
+    TimeoutOutputPin : TOWArduinoClockSourcePin
+    EnableCausedOutputPin : TOWArduinoClockSourcePin
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Watchdog Timer' )]
+  [CreateName( 'Watchdog Timer' )]
+  [ArduinoInclude( 'Mitov_RP2040_WatchdogTimer.h' )]
+  [ArduinoClass( 'Mitov::RP2040_WatchdogTimer' )]
+  [ParentImage( TArduinoWatchdogTimerModule )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  +TArduinoRP2040WatchdogModule : TArduinoDisabledUpdateShield
+
+    ClockInputPin : TOWArduinoClockSinkPin
+    
+    [NamePostfix( '(mS)' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    TimeLeftOutputPin : TOWArduinoUnsignedSourcePin
+    
+    RebootReason : TArduinoRP2040WatchdogRebootReason
+       
+    [MaxValue( $7FFFFF )]
+    [NamePostfix( '(mS)' )]
+    [ArduinoUseBindingCheckSetter( 'UpdatePeriod' )]
+    Period : Unsigned = $7FFFFF
+    
+    [ArduinoUseBindingCheckSetter( 'UpdatePeriod' )]
+    PauseOnDebug : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardArchitecture( 'mbed_rp2040' )]
+  [ArduinoBoardCanReset]
+  [ArduinoDefine( 'VISUINO_RPI_PICO' )]
+  TArduinoRP2040_Basic_Board : TArduinoBoardExtendableImplementation
+
+//    [AddItem( TArduinoBasicKeyboardModule )] // Will be added to USB module
+//    [AddItem( TArduinoBasicMouseModule )]
+    [AddItem( TArduinoRP2040ProcessorModule )]
+    [AddItem( TArduinoRP2040WatchdogModule )]
+    [AddItem( TArduino_RP2040_RTCModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoRaspberryPiPicoSerial0 )]
+//    [AddItem( TArduinoRaspberryPiPicoSerial1 )] // Arduino for now supports only 1 serial :-(
+    Serial : TArduinoSerials
+  
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoRaspberryPiPicoI2C0 )]
+//    [AddItem( TArduinoRaspberryPiPicoI2C1 )] // Arduino for now supports only 1 I2C :-(
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoRaspberryPiPicoSPI0 )]
+//    [AddItem( TArduinoRaspberryPiPicoSPI1 )] // Arduino for now supports only 1 SPI :-(
+    SPIChannels : TArduinoSPIChannels
+    
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 0,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSerial0Channel, 'Digital(TX0)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 1,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSerial0Channel, 'Digital(RX0)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 2,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital(SPI0-SCK)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 3,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital(SPI0-MOSI)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 4,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital(SPI0-MISO)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 5,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 6,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptI2C0Channel, 'Digital(I2S0-SDA)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 7,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptI2C0Channel, 'Digital(I2S0-SCL)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 8,   18, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 26, 0, 4, TArduinoCombinedPullDownAnalogDigitalChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( 'C_PIN', '25' )]
+  +TArduinoSparkfun_Micro_Pro_RP2040_LEDModule : TArduinoNeoPixelRGBLedBasicGBRLedModule;
+//---------------------------------------------------------------------------
+  [Name( 'SparkFun Micro Pro - RP2040' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TSparkFunMicroProCategory )]
+  [Category( TRP2040Category )]
+  +TArduinoSparkfun_Micro_Pro_RP2040_Board : TArduinoRP2040_Basic_Board
+
+    [AddItem( TArduinoSparkfun_Micro_Pro_RP2040_LEDModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0,  10 )]
+    [ArduinoBoard_Add_ReservedChannels( 16, 2 )]
+    [ArduinoBoard_Add_ReservedChannels( 20, 4 )]
+    [ArduinoBoard_Add_ReservedChannels( 26, 4 )]
+    [Name( 'Channels' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( 'C_PIN', '8' )]
+  +TArduinoSparkfunThing_Plus_RP2040_RGBLed : TArduinoNeoPixelRGBLedBasicGBRLedModule;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( 'C_PIN', '25' )]
+  [ArduinoClass( 'Mitov::ArduinoDigitalPWMModule' )]
+  +TArduinoSparkfunThing_Plus_RP2040_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [Name( 'SparkFun Thing Plus - RP2040' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TSparkFunThingPlusCategory )]
+  [Category( TRP2040Category )]
+  +TArduinoSparkfunThing_Plus_RP2040_Board : TArduinoRP2040_Basic_Board, TArduinoSparkFunThingPlusShieldsExtender
+
+    [AddItem( TArduinoSparkfunThing_Plus_RP2040_LEDModule )]
+    [AddItem( TArduinoSparkfunThing_Plus_RP2040_RGBLed )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0,  5 )]
+    [ArduinoBoard_Add_ReservedChannels( 6,  2 )]
+    [ArduinoBoard_Add_ReservedChannels( 16, 7 )]
+    [ArduinoBoard_Add_ReservedChannels( 26, 4 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------  
+  [Name( 'QT Py 2040' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TAdafruitQT_PyCategory )]
+  [Category( TRP2040Category )]
+  [ArduinoInclude( 'Seeed_XIAO_RP2040_Pins.h' )]
+  +TArduinoAdafruitQTPyRP2040_Board : TArduinoRP2040_Basic_Board, TArduinoAdafruitQT_PyShieldsExtender
+
+    [AddItem( TArduinoAdafruitQTPyM0_RGBLed )]
+    Modules
+
+//    [ArduinoBoard_Add_ReservedChannels( 0, 5 )]
+//    [ArduinoBoard_Add_ReservedChannels( 6, 2 )]
+//    [ArduinoBoard_Add_ReservedChannels( 26, 4 )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel(  0, TArduinoCombinedPullDownAnalogDigitalChannel, 'Digital/Analog[ 0 ]', 'D0' )] // 26
+    [ArduinoBoard_Add_DigitalAnalogChannel(  1, TArduinoCombinedPullDownAnalogDigitalChannel, 'Digital/Analog[ 1 ]', 'D1' )] // 27
+    [ArduinoBoard_Add_DigitalAnalogChannel(  2, TArduinoCombinedPullDownAnalogDigitalChannel, 'Digital/Analog[ 2 ]', 'D2' )] // 28
+    [ArduinoBoard_Add_DigitalAnalogChannel(  3, TArduinoCombinedPullDownAnalogDigitalChannel, 'Digital/Analog[ 3 ]', 'D3' )] // 29
+    [ArduinoBoard_Add_DigitalAnalogChannel(  4, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptI2C0Channel, 'Digital[ 4 ](I2C-SDA)', 'D4' )] // 6
+    [ArduinoBoard_Add_DigitalAnalogChannel(  5, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptI2C0Channel, 'Digital[ 5 ](I2C-SCL)', 'D5' )] // 7
+    [ArduinoBoard_Add_DigitalAnalogChannel(  6, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSerial0Channel, 'Digital[ 6 ](TX1)', 'D6' )] // 0
+    [ArduinoBoard_Add_DigitalAnalogChannel(  7, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSerial0Channel, 'Digital[ 7 ](RX1)', 'D7' )] // 1
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  8, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital[ 8 ](SPI-SCK)', 'D8' )] // '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel(  9, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital[ 9 ](SPI-MISO)', 'D9' )] // '9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital[ 10 ](SPI-MOSI)', 'D10' )] // '10' )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( 'C_RED_PIN', '18' )]
+  [ArduinoTemplateParameter( 'C_GREEN_PIN', '19' )]
+  [ArduinoTemplateParameter( 'C_BLUE_PIN', '20' )]
+  +TArduinoRP2040_Pimoroni_Tiny_RGBModule : TArduinoSingleRGBLed_Inverted_Basic_Module;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( 'C_PIN', '23' )]
+  [ArduinoClass( 'Mitov::InvertedDigitalPullUpInput' )]
+  +TArduinoRP2040_Pimoroni_Tiny_ButtonModule : TArduinoBasicInterruptButtonModule;
+//---------------------------------------------------------------------------
+  [Name( 'Tiny 2040' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TRP2040Category )]
+  [Category( TPimoroniTinyCategory )]
+  +TArduinoRP2040_Pimoroni_Tiny_Board : TArduinoRP2040_Basic_Board
+
+    [AddItem( TArduinoRP2040_Pimoroni_Tiny_RGBModule )]
+    [AddItem( TArduinoRP2040_Pimoroni_Tiny_ButtonModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 8 )]
+    [ArduinoBoard_Add_ReservedChannels( 26, 4 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( 'C_PIN', '16' )]
+  +TArduinoAdafruit_Feather_RP2040_RGBLed : TArduinoNeoPixelRGBLedBasicGBRLedModule;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Feather RP2040' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TRP2040Category )]
+  [Category( TAdafruitFeatherCategory )]
+  [ArduinoInclude( 'Mitov_ShieldPins_AdafruitFeather_RP2040.h' )]
+  +TArduinoAdafruit_Feather_RP2040_Board : TArduinoRP2040_Basic_Board, TArduinoAdafruitFeather_WingsExtender
+
+    [AddItem( TArduinoAdafruit_Feather_RP2040_RGBLed )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannel(  0, 6 )]
+    [ArduinoBoard_Add_ReservedChannel(  1, 0, 'Digital(TX0)' )]
+    [ArduinoBoard_Add_ReservedChannel(  2, 1, 'Digital(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  3, 20,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital(SPI0-MISO)', '20' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  4, 19,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital(SPI0-MOSI)', '19' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  5, 18,   1, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital(SPI0-SCK)', '18' )]
+    [ArduinoBoard_Add_RemappedShieldChannel(  6, 25, 'Digital' )]
+    [ArduinoBoard_Add_RemappedShieldChannel(  7, 18, 24, 'Digital' )]
+    [ArduinoBoard_Add_RemappedShieldChannel(  8, 17, 29, 'Digital[ 17 ]/Analog[ 3 ]' )]
+    [ArduinoBoard_Add_RemappedShieldChannel(  9, 16, 28, 'Digital[ 16 ]/Analog[ 2 ]' )]
+    [ArduinoBoard_Add_RemappedShieldChannel( 10, 15, 27, 'Digital[ 15 ]/Analog[ 1 ]' )]
+    [ArduinoBoard_Add_RemappedShieldChannel( 11, 14, 26, 'Digital[ 14 ]/Analog[ 0 ]' )]
+
+    [ArduinoBoard_Add_ReservedChannel( 12, 2, 'Digital(I2S0-SDA)' )]
+    [ArduinoBoard_Add_ReservedChannel( 13, 3, 'Digital(I2S0-SCL)' )]
+
+    [ArduinoBoard_Add_ReservedChannel( 14, 7 )]
+    [ArduinoBoard_Add_ReservedChannel( 15, 8 )]
+    [ArduinoBoard_Add_ReservedChannel( 16, 9 )]
+    [ArduinoBoard_Add_ReservedChannel( 17, 10 )]
+    [ArduinoBoard_Add_ReservedChannel( 18, 11 )]
+    [ArduinoBoard_Add_ReservedChannel( 19, 12 )]
+    [ArduinoBoard_Add_ReservedChannel( 20, 13, 'LED' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ItsyBitsy RP2040' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TAdafruitItsyBitsyCategory )]
+  [Category( TRP2040Category )]
+  +TArduinoAdafruitItsyBitsyRP2040_Board : TArduinoRP2040_Basic_Board, TArduinoAdafruitFeather_ItsyBitsyShieldsExtender
+
+    [AddItem( TArduinoAdafruit_Feather_RP2040_RGBLed )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 2 )]
+    [ArduinoBoard_Add_RemappedChannel( 2,  12, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 3,  5, 'Digital' )]
+    [ArduinoBoard_Add_ReservedChannels( 4, 1 )]
+//    [ArduinoBoard_Add_RemappedChannel( 5,  15, 'Digital' )] // Change to Output Only!!!
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5, 1, TArduinoBasicDigitalOpenDrainPWMOutputOnlyInterruptChannel )]
+    [ArduinoBoard_Add_RemappedChannel( 7,  6, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 9,  7, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 10, 8, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 11, 9, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 12, 10, 'Digital' )]
+    [ArduinoBoard_Add_RemappedChannel( 13, 11, 'Digital' )]
+    [ArduinoBoard_Add_ReservedChannels( 24, 2 )]
+
+    [ArduinoBoard_Add_ReservedChannels( 26, 4 )]
+
+    [ArduinoBoard_Add_RemappedChannel( 30, 6, 'Digital(I2S0-SDA)' )]
+    [ArduinoBoard_Add_RemappedChannel( 31, 7, 'Digital(I2S0-SCL)' )]
+    
+    [ArduinoBoard_Add_RemappedChannel( 32, 2, 'Digital(SPI0-SCK)' )]
+    [ArduinoBoard_Add_RemappedChannel( 33, 3, 'Digital(SPI0-MOSI)' )]
+    [ArduinoBoard_Add_RemappedChannel( 34, 4, 'Digital(SPI0-MISO)' )]
+    
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Generic RP2040 Board' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TRP2040Category )]
+  [ParentImage( TRP2040Category )]
+  +TArduinoRP2040_Generic_Board : TArduinoRP2040_Basic_Board
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------  
+  [ArduinoTemplateParameter( 'C_PIN', '25' )]
+  [ArduinoClass( 'Mitov::ArduinoDigitalPWMModule' )]
+  +TArduinoRP2040_RaspberryPi_Pico_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '3' )]
+  *TArduinoRP2040_RaspberryPi_Pico_Power_VSys : TArduinoBasicAnalogSensor;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_RP2040_RaspberryPi_Pico_PowerModule.h' )]
+  [ArduinoClass( 'Mitov::TArduinoRP2040_RaspberryPi_Pico_PowerModule' )]
+  [ParentImage( TArduinoESP32_M5Stack_StickC_PowerModule )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [CreateName( 'Power' )]
+  [ArduinoStart]
+  +TArduinoRP2040_RaspberryPi_Pico_PowerModule : TArduinoShield
+  
+    [Name( 'Has VBus' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin )]
+    HasVBusOutputPin : TOWArduinoDigitalSourcePin
+    
+    [Name( 'VSys Value' )]
+    VSys : TArduinoRP2040_RaspberryPi_Pico_Power_VSys
+    
+    [ArduinoUseBindingCheckSetter( 'Update_PowerSave' )]
+    PowerSave : Boolean = True
+    
+  ;
+//---------------------------------------------------------------------------  
+  [Name( 'Raspberry Pi Pico' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TRaspberryPiRP2040Category )]
+  +TArduinoRP2040_RaspberryPi_Pico_Board : TArduinoRP2040_Basic_Board
+  
+    [AddItem( TArduinoRP2040_RaspberryPi_Pico_LEDModule )]
+    [AddItem( TArduinoRP2040_RaspberryPi_Pico_PowerModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 23 )]
+    [ArduinoBoard_Add_ReservedChannels( 26, 3 )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '18' )]
+  [ArduinoClass( 'Mitov::ArduinoDigitalPWMModule' )]
+  +TArduinoRP2040_Seeed_XIAO_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '12' )]
+  [ArduinoTemplateParameter( 'C_POWER_PIN', '11' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::NeoPixelSingleLEDModule_GRBAdapter' )]
+  +TArduinoRP2040_Seeed_XIAO_GRB_LEDModule : TArduinoNeoPixelRGBLedBasicPowerControlLedModule;
+//---------------------------------------------------------------------------
+  [Name( 'Seeed XIAO RP2040' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_rp2040:pico' )]
+  [Category( TSeeeduinoCategory )]
+  [Category( TRP2040Category )]
+  [ArduinoInclude( 'Seeed_XIAO_RP2040_Pins.h' )]
+  +TArduinoRP2040_Seeed_XIAO_Board : TArduinoRP2040_Basic_Board, TArduinoAdafruitQT_PyShieldsExtender
+
+    [AddItem( TArduinoRP2040_Seeed_XIAO_LEDModule )]
+    [AddItem( TArduinoRP2040_Seeed_XIAO_GRB_LEDModule )]
+    Modules
+    
+//    [ArduinoBoard_Add_ReservedChannels( 26, 4 )]
+//    [ArduinoBoard_Add_ReservedChannels( 6,  2 )]
+//    [ArduinoBoard_Add_ReservedChannels( 0,  5 )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel(  0, TArduinoCombinedPullDownAnalogDigitalChannel, 'Digital/Analog[ 0 ]', 'D0' )] // 26
+    [ArduinoBoard_Add_DigitalAnalogChannel(  1, TArduinoCombinedPullDownAnalogDigitalChannel, 'Digital/Analog[ 1 ]', 'D1' )] // 27
+    [ArduinoBoard_Add_DigitalAnalogChannel(  2, TArduinoCombinedPullDownAnalogDigitalChannel, 'Digital/Analog[ 2 ]', 'D2' )] // 28
+    [ArduinoBoard_Add_DigitalAnalogChannel(  3, TArduinoCombinedPullDownAnalogDigitalChannel, 'Digital/Analog[ 3 ]', 'D3' )] // 29
+    [ArduinoBoard_Add_DigitalAnalogChannel(  4, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptI2C0Channel, 'Digital[ 4 ](I2C-SDA)', 'D4' )] // 6
+    [ArduinoBoard_Add_DigitalAnalogChannel(  5, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptI2C0Channel, 'Digital[ 5 ](I2C-SCL)', 'D5' )] // 7
+    [ArduinoBoard_Add_DigitalAnalogChannel(  6, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSerial0Channel, 'Digital[ 6 ](TX1)', 'D6' )] // 0
+    [ArduinoBoard_Add_DigitalAnalogChannel(  7, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSerial0Channel, 'Digital[ 7 ](RX1)', 'D7' )] // 1
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  8, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital[ 8 ](SPI-SCK)', 'D8' )] // '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel(  9, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital[ 9 ](SPI-MISO)', 'D9' )] // '9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoAdditionalDigitalPullUpDownOpenDrainPWMInterruptSPI0Channel, 'Digital[ 10 ](SPI-MOSI)', 'D10' )] // '10' )]
+    [Name( 'Channels' )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

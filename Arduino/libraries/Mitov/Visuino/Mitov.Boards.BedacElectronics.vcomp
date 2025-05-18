@@ -1,0 +1,214 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'PLC-X' )]
+  TPLCExpertCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TPLCExpertCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TPLCExpertAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TPLCExpertCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TPLCExpertESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Raspberry Pi' )]
+  [Category( TPLCExpertCategory )]
+  [AlternateCategory( TRaspberryPiCategory )]
+  [ParentImage( TRaspberryPiCategory )]
+  TPLCExpertRaspberryPiCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'EEPROM I2C' )]
+  [CreateName( 'EEPROM I2C' )]
+  [ArduinoInclude( 'Mitov_Generic_I2C_EEPROM.h' )]
+  [ArduinoInclude( 'EEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericEEPROM_I2C' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x50 >' )]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoI2C( 0 )]
+  TArduinoPLCMicroEEPROMModule : TArduinoBasicEEPROMModule;
+//---------------------------------------------------------------------------
+  [ArduinoInterruptPin]
+  TArduinoDigitalInputOnlyInterruptChannel : TArduinoDigitalInputOnlyChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 0 )]
+  TArduinoDigitalInputOnlySerial0Channel : TArduinoDigitalInputOnlyChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInterruptPin]
+  TArduinoDigitalInputOnlySerial0InterruptChannel : TArduinoDigitalInputOnlySerial0Channel;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  TArduinoDigitalInputOnlyI2C0Channel : TArduinoDigitalInputOnlyChannel;
+//---------------------------------------------------------------------------
+  [Name( 'PLC-X Micro' )]
+  [OldName( 'PLC-Micro' )]
+  [Category( TPLCExpertAVRCategory )]
+  [ParentImage( TPLCExpertCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_UNO' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:uno' )]
+  +TArduino_PLC_Micro_Board : TArduino_AVR328_BasicBoardNoDigitalChannels
+  
+    [AddItem( TArduinoPLCMicroEEPROMModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoDigitalInputOnlyChannel, 'Input 1', '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoDigitalInputOnlyChannel, 'Input 2', '6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoDigitalInputOnlyChannel, 'Input 3', '7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoDigitalInputOnlyChannel, 'Input 4', '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoDigitalInputOnlyChannel, 'Input 5', '9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoDigitalInputOnlyChannel, 'Input 6', '10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoDigitalInputOnlyChannel, 'Input 7', '11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoDigitalInputOnlyChannel, 'Input 8', '12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoDigitalInputOnlyChannel, 'Input 9', 'A6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoDigitalInputOnlyChannel, 'Input 10','A7' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoBasicDigitalPWMInputChannel, 'Output 1', '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoBasicDigitalInputChannel, 'Output 2', '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoBasicDigitalInputChannel, 'Output 3', '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoBasicDigitalInputChannel, 'Output 4', '17' )] // A3
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoBasicDigitalInputChannel, 'Output 5', '16' )] // A2
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoBasicDigitalInputChannel, 'Output 6', '13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoBasicDigitalInputChannel, 'Output 7', '15' )] // A1
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoBasicDigitalInputChannel, 'Output 8', '14' )] // A0
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'PLC-X DIO 1.3' )]
+  [OldName( 'Bedac - PLC-DIO A13/7' )]
+  [Category( TPLCExpertAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_UNO' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:uno' )]
+  +TArduino_PLC_DIO_A1_3_Board : TArduino_AVR328_BasicBoardNoDigitalChannels
+
+    [AddItem( TArduinoPLCMicroEEPROMModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0,  TArduinoDigitalInputOnlySerial0Channel, 'Input 1 (RX)', '0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1,  TArduinoDigitalInputOnlySerial0InterruptChannel, 'Input 2 (TX)', '1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2,  TArduinoDigitalInputOnlyInterruptChannel, 'Input 3', '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3,  TArduinoDigitalInputOnlyChannel, 'Input 4', '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4,  TArduinoDigitalInputOnlyChannel, 'Input 5', '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5,  TArduinoDigitalInputOnlyChannel, 'Input 6', '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6,  TArduinoDigitalInputOnlyChannel, 'Input 7', '6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7,  TArduinoDigitalInputOnlyI2C0Channel, 'Input 8 (I2C-SCL)', 'A5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8,  TArduinoDigitalInputOnlyI2C0Channel, 'Input 9 (I2C-SDA)', 'A4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9,  TArduinoDigitalInputOnlyChannel, 'Input 10', 'A3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoDigitalInputOnlyChannel, 'Input 11', 'A2' )]    // TArduinoCombinedAnalogDigitalChannel
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoDigitalInputOnlyChannel, 'Input 12', 'A1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoDigitalInputOnlyChannel, 'Input 13', 'A0' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoBasicDigitalInputChannel, 'Output 1', '7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoBasicDigitalInputChannel, 'Output 2', '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoBasicDigitalPWMInputChannel, 'Output 3', '9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoBasicDigitalPWMInputChannel, 'Output 4', '10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoBasicDigitalPWMInputSPI0Channel, 'Output 5 (SPI-MOSI)', '11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoBasicDigitalInputSPI0Channel, 'Output 6 (SPI-MISO)', '12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoBasicDigitalInputSPI0Channel, 'Output 7(LED)(SPI-SCK)', '13' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_PLC_X_Thermometer_LM75_Module : TArduinoTexasInstrumentLM75_Module; 
+//---------------------------------------------------------------------------
+  [Name( 'PLC-X DIO 1.4' )]
+  [Category( TPLCExpertAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_NANO' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:nano' )]
+  +TArduino_PLC_DIO_NANO_1_4_Board : TArduino_AVR328_Basic_DigitalChannels_Board
+
+    [AddItem( TArduinoPLCMicroEEPROMModule )]
+    [AddItem( TArduino_PLC_X_Thermometer_LM75_Module )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0,  TArduinoDigitalInputOnlySerial0Channel, 'Input 1 (RX)', '0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1,  TArduinoDigitalInputOnlySerial0InterruptChannel, 'Input 2 (TX)', '1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2,  TArduinoDigitalInputOnlyInterruptChannel, 'Input 3', '2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3,  TArduinoDigitalInputOnlyChannel, 'Input 4', '3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4,  TArduinoDigitalInputOnlyChannel, 'Input 5', '4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5,  TArduinoDigitalInputOnlyChannel, 'Input 6', '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6,  TArduinoDigitalInputOnlyChannel, 'Input 7', '6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7,  TArduinoDigitalInputOnlyI2C0Channel, 'Input 8 (I2C-SCL)', 'A5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8,  TArduinoDigitalInputOnlyI2C0Channel, 'Input 9 (I2C-SDA)', 'A4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9,  TArduinoDigitalInputOnlyChannel, 'Input 10 (A3)', 'A3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoDigitalInputOnlyChannel, 'Input 11 (A2)', 'A2' )]    // TArduinoCombinedAnalogDigitalChannel
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoDigitalInputOnlyChannel, 'Input 12 (A1)', 'A1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoDigitalInputOnlyChannel, 'Input 13 (A0)', 'A0' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoBasicDigitalInputChannel, 'Output 1 (LED)(SPI-SCK)', '13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoBasicDigitalInputChannel, 'Output 2 (SPI-MISO)', '12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoBasicDigitalPWMInputChannel, 'Output 3 (SPI-MOSI)', '11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoBasicDigitalPWMInputChannel, 'Output 4', '10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoBasicDigitalPWMInputSPI0Channel, 'Output 5', '9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoBasicDigitalInputSPI0Channel, 'Output 6', '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoBasicDigitalInputSPI0Channel, 'Output 7', '7' )]
+
+    [ArduinoBoard_Add_ReservedChannels( 8, 6 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'PLC-X IOT (ESP32)' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32:PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none' )]
+  [Category( TPLCExpertESP32Category )]
+  +TArduino_PLC_X_IOT_ESP32_Board : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard
+  
+    [AddItem( TArduino_PLC_X_Thermometer_LM75_Module )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33,  TArduinoDigitalInputOnlyInterruptChannel, 'Input 1', '33' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34,  TArduinoDigitalInputOnlyChannel, 'Input 2', '34' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35,  TArduinoDigitalInputOnlyChannel, 'Input 3', '35' )]
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoBasicDigitalInputChannel, 'Output 1', '15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2,  TArduinoBasicDigitalInputChannel, 'Output 2', '2' )]
+    
+    [ArduinoBoard_Add_ReservedChannel( 1 )]
+    [ArduinoBoard_Add_ReservedChannel( 3 )]
+    [ArduinoBoard_Add_ReservedChannel( 5 )]
+    [ArduinoBoard_Add_ReservedChannels( 12, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 16, 4 )]
+    [ArduinoBoard_Add_ReservedChannels( 21, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 25, 3 )]
+    [ArduinoBoard_Add_ReservedChannel( 32 )]
+    [ArduinoBoard_Add_ReservedChannel( 36 )]
+    [ArduinoBoard_Add_ReservedChannel( 39 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'PLC-X RpiControl' )]
+  [Category( TPLCExpertRaspberryPiCategory )]
+  +TArduino_PLC_X_RpiControl_Board : TArduino_Raspberry_Pi_Basic_Board
+
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7 ,  TArduinoDigitalInputOnlyChannel, 'Input 1', '7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8 ,  TArduinoDigitalInputOnlyChannel, 'Input 2', '8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25,  TArduinoDigitalInputOnlyChannel, 'Input 3', '25' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24,  TArduinoDigitalInputOnlyChannel, 'Input 4', '24' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23,  TArduinoDigitalInputOnlyChannel, 'Input 5', '23' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22,  TArduinoDigitalInputOnlyChannel, 'Input 6', '22' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27,  TArduinoDigitalInputOnlyChannel, 'Input 7', '27' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17,  TArduinoDigitalInputOnlyChannel, 'Input 8', '17' )]
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoBasicDigitalInputChannel, 'Output 1', '21' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoBasicDigitalInputChannel, 'Output 2', '20' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoBasicDigitalInputChannel, 'Output 3', '26' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoBasicDigitalInputChannel, 'Output 4', '16' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5 , TArduinoBasicDigitalInputChannel, 'Output 5', '5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoBasicDigitalInputChannel, 'Output 6', '12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoBasicDigitalInputChannel, 'Output 7', '13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoBasicDigitalInputChannel, 'Output 8', '19' )]
+    
+    [ArduinoBoard_Add_ReservedChannel( 6 )]
+    [ArduinoBoard_Add_ReservedChannel( 18 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

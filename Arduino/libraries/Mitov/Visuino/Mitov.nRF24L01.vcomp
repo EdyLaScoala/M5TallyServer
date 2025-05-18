@@ -1,0 +1,74 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoNRF24L01DataRate : Enum
+  
+    ndr250KBps
+    ndr1MBps
+    ndr2MBps     
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_NRF24L01.h' )]
+  [ArduinoClass( 'Mitov::MitovNRF24L01' )]
+  [Name( 'NRF24L01 Wireless' )]
+  [CreateName( 'NRF24L01' )]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Unsigned, 3, 'FMode' )]
+  TArduinoNRF24L01_Extender : Extender
+
+    [OWPrimaryPin]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteCharTextSourcePin
+
+    [ArduinoChangeOnlyPin]
+    CarrierDetectedOutputPin : TOWArduinoDigitalSourcePin
+
+    [ValueRange( 2400, 2525 )]
+    [ NamePostfix( '(MHz)' ) ]
+    [ArduinoUseBindingCheckSetter( 'UpdateFrequency' )]
+    Frequency : Unsigned = 2402
+
+    [ValueRange( 0, $FF )]
+    MaxSendQueue : Unsigned = 10
+
+    [ValueRange( 0, 2 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateConfiguration' )]
+    CRCBytes : Unsigned = 2
+
+    [ArduinoUseBindingCheckSetter( 'UpdateRF' )]
+    DataRate : TArduinoNRF24L01DataRate = ndr2MBps
+
+    [PropertyListDesignValue( '-18' )]
+    [PropertyListDesignValue( '-12' )]
+    [PropertyListDesignValue( '-6' )]
+    [PropertyListDesignValue( '0' )]
+    [ValueRange( -18, 0 )]
+    [Name( 'Output Power(dB)' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateRF' )]
+    OutputPower : Integer = 0
+
+  ;
+ //---------------------------------------------------------------------------
+  +TArduinoNRF24L01 : TArduinoComponent, TArduinoNRF24L01_Extender
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    InterfaceOutputPin : TOWArduinoSPISourcePin
+
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+    ChipEnableOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoNRF24L01 )]
+  [ArduinoDeclaredClass]
+  TArduinoNRF24L01BasicElement : TArduinoCodePersistent, TArduinoNRF24L01_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoNRF24L01 )]
+  TArduinoNRF24L01BasicModule : TArduinoShield, TArduinoNRF24L01_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

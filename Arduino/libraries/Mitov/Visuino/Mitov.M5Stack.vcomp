@@ -1,0 +1,181 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_M5Stack_JoystickUnit.h' )]
+  [ArduinoClass( 'Mitov::M5StackJoystickUnitI2C' )]
+  [Name( 'M5Stack Joystick Unit' )]
+  [CreateName( 'Joystick' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoM5StackJoystickUnitI2C : TArduinoI2CAddressSensorPinClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStart' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBegin' )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'X', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    ButtonOutputPin : TOWArduinoDigitalSourcePin
+
+    Address = $52
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Grove.h' )]
+  [ArduinoClass( 'Mitov::GroveDigitalInputInverted' )]
+  [Name( 'M5Stack Dual Button' )]
+  [CreateName( 'DualButton' )]
+  [Category( TArduinoGroveDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoM5StackDigitalInputOutputToolbarCategory )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoM5StackDualButtonUnit : TArduinoEnableComponent
+
+  	[OldName( 'Grove' )]
+    GroveOutputPin : TOWArduinoDigitalGroveSourcePin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Blue',  TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Red',   TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_M5Stack_KeyboardUnit.h' )]
+  [ArduinoClass( 'Mitov::M5StackKeyboardUnitI2C' )]
+  [Name( 'M5Stack Keyboard Unit' )]
+  [CreateName( 'Keyboard' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  [Category( TArduinoTextDataSourcesToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoM5StackKeyboardUnitI2C : TArduinoI2CControlPinEnableComponent
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoCharSourcePin
+
+    Address : TArduinoUInt8 = $5F
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_M5Stack_MakeyCapacitiveTouchUnit.h' )]
+  [ArduinoClass( 'Mitov::M5StackMakeyCapacitiveTouchUnitI2C' )]
+  [Name( 'M5Stack Makey Capacitive Touch Unit' )]
+  [CreateName( 'CapacitiveTouch' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  [Category( TArduinoDigitalDataSourcesToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoM5StackMakeyCapacitiveTouchUnitI2C : TArduinoI2CControlPinClockedEnableComponent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [ArduinoCallChainPinList]
+    [OWAddPin( '1 Low', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '2 Low', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '3 Low', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '4 Low', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '5 Low', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '6 Low', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '7 Low', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '1', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '2', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '3', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '4', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '5', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '6', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '7', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '1 High', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( '2 High', TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoChainCallPinListChangeOnly
+
+    Address : TArduinoUInt8 = $51
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M5Stack Mini GPS/BDS Unit (AT6558)' )]
+  [CreateName( 'GPS' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoM5StackSerialGPSUnit : TArduinoSerialGPSBasic;
+//---------------------------------------------------------------------------
+  [Name( 'M5Stack DAC I2C Unit (MCP4725)' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoM5StackDACUnitMCP4725 : TArduinoMicrochipMCP4725Basic
+
+    Address = $60
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoGroveToolbarCategory )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Name( 'M5Stack Extend I/O Unit' )]
+  +TArduinoM5StackExtendedIO_PCA9554 : TArduinoPCA9554Basic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_M5Stack_EnvironmentalUnit.h' )]
+  [ArduinoClass( 'Mitov::M5StackEnvironmentalUnitI2C' )]
+  [Name( 'M5Stack ENV Unit( Humidity, Thermometer and Pressure)' )]
+  [CreateName( 'EnvironmentalUnit' )]
+  [ArduinoWebKeywords( 'M5Stack ENV Unit' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoM5StackEnvironmentUnitI2C : TArduinoI2CSensorPinClockedEnableComponent
+
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Humidity(%)' )]
+    HumidityOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Pressure(Pa)' )]
+    [ArduinoPinConnectedAddCodeEntry( ceInit )]
+    PressureOutputPin : TOWArduinoAnalogSourcePin
+
+//    [ArduinoPinIsConnectedFlag]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    InFahrenheit : Boolean = False
+
+    Oversampling : TArduinoBMP280Oversampling
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.5' )]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '20' )]
+    [PropertyListDesignValue( '62.5' )]
+    [PropertyListDesignValue( '125' )]
+    [PropertyListDesignValue( '250' )]
+    [PropertyListDesignValue( '500' )]
+    [PropertyListDesignValue( '1000' )]
+    InactiveDuration : Single = 0.5
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    IIRFilterCoefficient : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M5Stack RS485 to TTL Unit' )]
+  [CreateName( 'RS485' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  +TArduinoM5StackSerialRS485Unit : TArduinoBasicGroveSoftwareSerial;
+//---------------------------------------------------------------------------
+; // Mitov

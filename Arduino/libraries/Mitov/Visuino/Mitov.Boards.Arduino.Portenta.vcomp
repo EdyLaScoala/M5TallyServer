@@ -1,0 +1,392 @@
+Mitov
+//---------------------------------------------------------------------------
+//  [Name( 'ARM' )]
+//  [Category( TArduinoCategory )]
+//  [AlternateCategory( TARMCategory )]
+//  [ParentImage( TARMCategory )]
+//  TArduinoARMCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( '(Red)' )]
+  [ArduinoTemplateParameter( 'PIN', 'LEDR' )]
+  [ParentImage( TArduinoMacchinaLED_RGB_Red )]
+  +TArduinoPortenta_H7_LED_RGB_Red : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( '(Green)' )]
+  [ArduinoTemplateParameter( 'PIN', 'LEDG' )]
+  [ParentImage( TArduinoMacchinaLED_RGB_Green )]
+  +TArduinoPortenta_H7_LED_RGB_Green : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( '(Blue)' )]
+  [ArduinoTemplateParameter( 'PIN', 'LEDB' )]
+  [ParentImage( TArduinoMacchinaLED_RGB_Blue )]
+  +TArduinoPortenta_H7_LED_RGB_Blue : TArduinoMacchinaBasicSingleLED;
+//---------------------------------------------------------------------------
+  [Name( '(RGB)' )]
+  [ParentImage( TArduinoMacchinaLED_RGB )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  +TArduinoPortenta_H7_LED_RGB : TArduinoShield
+
+    [AddItem( TArduinoPortenta_H7_LED_RGB_Red )]
+    [AddItem( TArduinoPortenta_H7_LED_RGB_Green )]
+    [AddItem( TArduinoPortenta_H7_LED_RGB_Blue )]
+    Channels : TArduinoMacchinaLEDs
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoPortenta_H7_WiFiModuleOperations : TArduinoBasicNetworkOperations;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoPortenta_H7_WiFiModuleOperations )]
+  [ArduinoHelpPostfix( '(ESP32 WiFi Operations)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoPortenta_H7_WiFiModuleBasicOperation : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Scan WiFi Networks' )]
+  [CreateName( 'Scan Networks' )]
+  [ArduinoClass( 'Mitov::Murata_1DX_WiFiModuleScanNetworksOperation' )]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnected]
+//  [ArduinoVariable( Boolean, 'FScanRequest' )]
+  [ParentImage( TArduinoESP32WiFiModuleScanNetworksOperation )]
+  +TArduinoPortenta_H7_WiFiModuleScanNetworksOperation : TArduinoPortenta_H7_WiFiModuleBasicOperation
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ScanInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoChangeOnlyPin]
+    ScanningOutputPin : TOWArduinoDigitalSourcePin
+
+    CountOutputPin : TOWArduinoIntegerSourcePin
+    SignalStrengthOutputPin : TOWArduinoIntegerSourcePin
+    SSIDOutputPin : TOWArduinoStringSourcePin
+
+    [Name( 'MACAddress(BSSID)' )]
+    MACAddressOutputPin : TOWArduinoStringSourcePin
+
+    EncryptionOutputPin : TOWArduinoUnsignedSourcePin
+    ChannelOutputPin : TOWArduinoIntegerSourcePin
+    FoundNetworkOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoPortenta_H7_WiFi_AccessPoint' )]
+  TArduinoPortenta_H7_WiFi_AccessPoint : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccessPoint' )]
+    Enabled
+
+    SSID : String = ''
+    Password : String = ''
+
+    [DesignRange( 1, 13 )]
+    Channel : Unsigned = 1
+
+//    IsHidden : Boolean = False
+//    Config : TArduinoESP8266WiFiModuleConfig
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeCollectionItems]
+  [ArduinoTemplateParameterCollectionCount]
+  [TArduinoESP8266WiFiAccessPointElementIsEnabledCallChain]
+  [TArduinoESP8266WiFiAccessPointElementTryConnectCallChain]
+  [TArduinoESP8266WiFiAccessPointElementAssignDNSCallChain]
+  [ArduinoTemplateParameterCollectionPowerConstIfZero( 'FAccessPointIndex', 1, 0 )]
+  TArduinoPortenta_H7_WiFi_AccessPoints : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoPortenta_H7_WiFi_AccessPoints )]
+  [ArduinoHelpPostfix( '(Portenta H7 WiFi Module)' )]
+  [Name( 'WiFi Access Point' )]
+  [CreateName( 'Access Point' )]
+  [ArduinoClass( 'Mitov::TArduinoPortenta_H7_WiFi_RemoteAccessPoint' )]
+  [ParentImage( TArduinoESP8266BasicModule )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoPortenta_H7_WiFi_RemoteAccessPoint : TArduinoBasicRemoteWiFiAccessPoint
+
+    Password : String
+//    Channel : TArduinoESP8266WiFiModuleOptionalChannel
+
+//    [Name( 'MAC Address(BSSID)' )]
+//    MacAddress : TArduinoESP8266WiFiModuleOptionalMacAddress
+
+    Config : TArduinoESP8266WiFiModuleRemoteConfig
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoPortenta_H7_WiFi_Sockets : TArduinoBasicSockets;
+//---------------------------------------------------------------------------
+//  [PersistentCollection( TArduinoPortenta_H7_WiFi_Sockets )]
+//  [ArduinoHelpPostfix( '(AirLift Socket)' )]
+//  [ArduinoClass( 'Mitov::TArduinoPortenta_H7_WiFi_TCPClientSocket' )]
+//  [ArduinoOwnerTemplateTypeAndReference]
+//  [ArduinoTemplateParameter( '2_IMPLEMENTATION', 'Mitov::TArduinoAdafruitAirLiftWiFi_TCP_Impl' )]
+//  [ArduinoVariable( Boolean, 'FConnecting' )]
+//  [ArduinoVariable( Boolean, 'FIsClosing' )]
+//  +TArduinoPortenta_H7_WiFi_TCPClientSocket : TArduinoBasicTCPClientSocket;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoPortenta_H7_WiFi_Sockets )]
+  [ArduinoHelpPostfix( '(Portenta H7 Socket)' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoPortenta_H7_WiFi_Socket_Extender : Extender;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TCPClientSocket' )] //<Mitov::BasicEthernetShield,WiFiClient>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicTCPClientSocket_Implementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_CLIENT', 'WiFiClient' )]
+  +TArduinoPortenta_H7_WiFi_TCPClientSocket : TArduinoBasicTCPClientSocket, TArduinoPortenta_H7_WiFi_Socket_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'WiFiSSLClient.h' )]
+  [ArduinoClass( 'Mitov::TCPClientSocket' )] //<Mitov::BasicEthernetShield,WiFiClient>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::SSLTCPClientSocket_Implementation' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_CLIENT', 'WiFiSSLClient' )]
+  [ParentImage( TArduinoBasicTCPSecureClientCACertSocket )]
+//  [ParentImage( TArduinoESP32WiFiTCPSecureClientSocket )]
+  +TArduinoPortenta_H7_WiFi_TCPSSLClientSocket : TArduinoBasicTCPClientSocket, TArduinoPortenta_H7_WiFi_Socket_Extender
+  
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    [MultiLine]
+    CACert : String
+    
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    DisableSNI : Boolean = False
+    
+    Port = 443
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TCPServerSocket' )] //<Mitov::BasicEthernetShield,WiFiServer,WiFiClient>' )]
+  [ArduinoTemplateParameter( 'SERVER', 'Mitov::AvailableAcceptWrapper<WiFiServer, WiFiClient>' )]
+  [ArduinoTemplateParameter( 'CLIENT', 'WiFiClient' )]
+  +TArduinoPortenta_H7_WiFi_TCPServerSocket : TArduinoBasicTCPServerSocket, TArduinoPortenta_H7_WiFi_Socket_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'WiFiUDP.h' )]
+  [ArduinoClass( 'Mitov::UDPSocket' )] //<Mitov::BasicEthernetShield,WiFiUDP>' )]
+  [ArduinoTemplateParameter( 'CLIENT', 'WiFiUDP' )]
+  +TArduinoPortenta_H7_WiFi_UDPSocket : TArduinoBasicUDPSocket, TArduinoPortenta_H7_WiFi_Socket_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoIncludeDefine( '#define private public' )]
+  [ArduinoInclude( 'WiFi.h' )]
+  [ArduinoIncludeDefine( '#undef private' )]
+  [ArduinoInclude( 'Mitov_Murata_1DX_WiFi.h' )]
+  [ArduinoClass( 'Mitov::Murata_1DX_WiFi' )]
+//  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+//  [ArduinoVariable( Boolean, 'FScanning' )]
+//  [ArduinoVariable( Boolean, 'FGetChannel' )]
+//  [ArduinoVariable( Boolean, 'FGetEncriptions' )]
+//  [ArduinoVariable( Boolean, 'FGetMACAddress' )]
+//  [ArduinoVariable( Boolean, 'FGetSignalStrengths' )]
+//  [ArduinoVariable( Boolean, 'FConnected' )]
+//  [ArduinoVariable( Boolean, 'FRemoteConnected' )]
+  [ArduinoVariable( Boolean, 'FStatusChanged' )]
+  [ArduinoVariable( Boolean, 'FIsStarted' )]
+  [ArduinoVariable( Boolean, 'FRemoteStarted' )]
+  [ArduinoVariable( Boolean, 'FDNSUpdated' )]
+//  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+//  [ArduinoOwnerTemplateTypeAndReference]
+
+  [Name( 'WiFi' )]
+  [ParentImage( TArduinoESP8266BasicModule )]
+  +TArduinoPortenta_H7_WiFi : TArduinoEnabledShield
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    FirmwareVersionOutputPin : TOWArduinoStringSourcePin
+
+    AddressOutputPin : TOWArduinoStringSourcePin
+
+    [Name( 'MAC Address' )]
+    MACOutputPin : TOWArduinoStringSourcePin
+
+    BSSIDOutputPin : TOWArduinoStringSourcePin
+    GatewayIPOutputPin : TOWArduinoStringSourcePin
+    SubnetMaskIPOutputPin : TOWArduinoStringSourcePin
+    DNSServerOutputPin : TOWArduinoStringSourcePin
+
+    [ArduinoChangeOnlyPin]
+    RemoteConnectedOutputPin : TOWArduinoDigitalSourcePin
+
+    [Name( 'Module As Access Point'  )]
+    AccessPoint : TArduinoPortenta_H7_WiFi_AccessPoint
+
+    [Name( 'Connect To Access Points'  )]
+    AccessPoints : TArduinoPortenta_H7_WiFi_AccessPoints
+
+    [ArduinoExcludeCollectionItems]
+    Operations : TArduinoPortenta_H7_WiFiModuleOperations
+
+    [ArduinoExcludeCollectionItems]
+    [ArduinoTemplateParameterCollectionCount]
+    Sockets : TArduinoPortenta_H7_WiFi_Sockets
+
+//    [ArduinoUseBindingCheckSetter( 'UpdateAutoReconnect' )]
+//    AutoReconnect : Boolean = True
+
+//    HostName : String = ''
+    
+//    [NamePostfix( '(dBm)' )]
+//    [ValueRange( -1, 19.5 )]
+//    [ArduinoUseBindingCheckSetter( 'Update_TransmitPower' )]
+//    TransmitPower : Single = 19.5
+    
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::TArduinoPortenta_H7_RPC_Serial' )]
+//  [ArduinoInclude( 'Mitov_ArduinoPortenta_H7_RPC_Serial.h' )]
+//  [ArduinoInclude( 'RPC_internal.h' )]
+//  [ArduinoInclude( 'SerialRPC.h' )]
+  [ArduinoInclude( 'RPC.h' )]
+  [ArduinoInclude( 'Mitov_SimpleSerial.h' )]
+//  [ArduinoSerialType( 'RPC1' )]
+//  [ArduinoSerialType( 'SerialRPC' )]
+  [ArduinoClass( 'Mitov::SimpleSerial' )]
+//  [ArduinoSerialType( 'arduino::SerialRPCClass' )]
+//  [ArduinoSerialBasicObjectName( 'SerialRPC' )]
+  [ArduinoSerialType( 'arduino::RPCClass' )]
+  [ArduinoSerialBasicObjectName( 'RPC' )]
+  *TArduinoPortenta_H7_RPC_Serial : TArduinoBasicSimpleSerial;
+//---------------------------------------------------------------------------
+  TArduinoPortenta_H7_MX_Basic_Module : TArduinoShield
+
+    [Name( 'Serial(IPC)' )]
+    Serial : TArduinoPortenta_H7_RPC_Serial
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'M4' )]
+  [ArduinoInclude( 'Mitov_Portenta_H7.h' )]
+  [ArduinoClass( 'Mitov::TArduinoPortenta_H7_M4_Module' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoPortenta_H7_M4_Module : TArduinoPortenta_H7_MX_Basic_Module
+  
+    StartInputPin : TOWArduinoClockSinkPin
+  
+    [OWExcludeBindings]
+    [ArduinoNotDefaultAddCodeEntry( ceInit )]
+    Enabled : Boolean = False
+    
+  ;  
+//---------------------------------------------------------------------------
+  [Name( 'M7' )]
+  +TArduinoPortenta_H7_M7_Module : TArduinoPortenta_H7_MX_Basic_Module;
+//---------------------------------------------------------------------------
+  [CollectionItemAssociation( TOWArduinoBLEServerMultiSinkPin )]
+  [ParentImage( TArduinoBluetoothModule )]
+  +TArduinoPortenta_H7_BluetoothModule : TArduinoShield, TArduinoNano33BluetoothExtender;
+//---------------------------------------------------------------------------
+  [Category( TArduinoARMCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_PORTENTA' )]
+  [ArduinoBoardCanReset]
+  TArduinoPortenta_H7_BasicBoard : TArduinoBoardExtendableImplementation
+  
+    [AddItem( TArduinoPortenta_H7_LED_RGB )]
+    [AddItem( TArduinoPortenta_H7_WiFi )]
+    [AddItem( TArduinoPortenta_H7_BluetoothModule )]
+    Modules : TArduinoModules
+  
+    [AddItem( TArduinoHardwareSerial, 2 )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels : TArduinoI2CChannels
+    
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+        
+    [ArduinoBoard_Add_DigitalAnalogChannels(   0, 7, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(   7, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(   8, 1, TArduinoAdditionalDigitalPullUpDownSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(   9, 1, TArduinoAdditionalDigitalPullUpDownSPI0InterruptChannel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  10, 1, TArduinoAdditionalDigitalPullUpDownSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  11, 1, TArduinoAdditionalDigitalPullUpDownI2C0InterruptChannel, 'Digital(I2C0-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  12, 1, TArduinoAdditionalDigitalPullUpDownI2C0InterruptChannel, 'Digital(I2C0-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  13, 1, TArduinoAdditionalDigitalPullUpDownSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  14, 1, TArduinoAdditionalDigitalPullUpDownSerial1InterruptChannel, 'Digital(TX1)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 0, 6, TArduinoCombinedAnalogDigitalPullUpDownInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 21, 6, 1, TArduinoCombinedAnalogDigitalPullUpDownAnalogOutputInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels(  26, 1, TArduinoAdditionalDigitalPullUpDownSerial0InterruptChannel, 'Digital PA0(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  39, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PA13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  40, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PA14' )] // ADC ?
+    [ArduinoBoard_Add_DigitalAnalogChannels(  45, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PB3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  46, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PB4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  48, 1, TArduinoAdditionalDigitalPullUpDownI2C1InterruptChannel, 'Digital PB6(I2C1-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  49, 1, TArduinoAdditionalDigitalPullUpDownI2C1InterruptChannel, 'Digital PB7(I2C1-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  50, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PB8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  51, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PB9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  56, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  57, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PB15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  71, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PC13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  73, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PC15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  74, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PD0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  77, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PD3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  78, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PD4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  79, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PD5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  80, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PD6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  81, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PD7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  92, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PE2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels(  93, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PE3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 125, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PG3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 131, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PG9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 132, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PG10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 136, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PG14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 147, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PH9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 148, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PH10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 149, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PH11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 150, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PH12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 151, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PH13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 152, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PH14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 156, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PI2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 157, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PI3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 158, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PI4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 159, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PI5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 160, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PI6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 161, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PI7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 162, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PI8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 163, 1, TArduinoAdditionalDigitalPullUpDownSerial0InterruptChannel, 'Digital PI9(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 164, 1, TArduinoAdditionalDigitalPullUpDownSerial0InterruptChannel, 'Digital PI10(RTS0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 167, 1, TArduinoAdditionalDigitalPullUpDownSerial0InterruptChannel, 'Digital PI13(CTS0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 168, 1, TArduinoAdditionalDigitalPullUpDownSerial1InterruptChannel, 'Digital PI14(RTS1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 169, 1, TArduinoAdditionalDigitalPullUpDownSerial1InterruptChannel, 'Digital PI15(CTS1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 177, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital PJ7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 178, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PJ8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 179, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel, 'Digital PJ9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 180, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital PJ10' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Portenta H7 M4' )]
+  [ArduinoBoardArchitecture( 'mbed_portenta' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_portenta:envie_m4' )]
+//  [ArduinoBoardCompileParams( 'arduino:mbed_portenta:envie_m4:split=50_50' )]
+  +TArduinoPortenta_H7_M4_Board : TArduinoPortenta_H7_BasicBoard
+
+    [AddItem( TArduinoPortenta_H7_M7_Module )]
+    Modules
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Portenta H7 M7' )]
+  [ArduinoBoardArchitecture( 'mbed_portenta' )]
+  [ArduinoBoardCompileParams( 'arduino:mbed_portenta:envie_m7' )]
+//  [ArduinoBoardCompileParams( 'arduino:mbed_portenta:envie_m7:split=50_50' )]
+  +TArduinoPortenta_H7_M7_Board : TArduinoPortenta_H7_BasicBoard
+  
+    [AddItem( TArduinoPortenta_H7_M4_Module )]
+    Modules
+
+    [AddItem( TArduinoHardwareSerial )]
+    Serial
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

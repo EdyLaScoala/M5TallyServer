@@ -1,0 +1,24 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_PriorityEncoder.h' )]
+  [ArduinoClass( 'Mitov::PriorityEncoder' )]
+  [Name( 'Priority Binary Encoder' )]
+  [CreateName( 'PriorityEncoder' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  +TArduinoPriorityEncoder : TArduinoCommonUnsignedSource
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSinkPin )]
+    [OWAutoManagePinListOwner( TOWArduinoDigitalSinkPin, 2, 2, 32 )]
+    InputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,55 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 0 )]
+  [ArduinoTemplateParameter( 'ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<Mitov::MicroBitPin_2>' )]
+  [ArduinoTemplateParameter( 'AddressBytes', 'Mitov::ConstantProperty<3, uint32_t, 3>' )]
+  [ArduinoTemplateParameter( 'SPISpeed', 'Mitov::ConstantProperty<54, uint32_t, 8000000 >' )]
+  [ArduinoTemplateParameter( '0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  TArduinoWaveshareMicrobitRAMSPIElemet : TArduinoRAMSPIBasicElemet;
+//---------------------------------------------------------------------------
+  [Name( 'Waveshare Display Breakout' )]
+  [CreateName( 'Display Breakout' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoWaveshareMicrobitDisplayST7735SBreakoutCarrier : TArduinoShield, IMicroBitCarrier
+
+    Display : TArduinoWaveshareMicrobitDisplayST7735Element
+    Memory : TArduinoWaveshareMicrobitRAMSPIElemet
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Display_ST7735R_GreenTab.h' )]
+  [ArduinoInclude( 'Mitov_Brightness_ESP32_ST77XX_Display.h' )]
+  [ArduinoClass( 'Mitov::DisplayST77XXBrightness' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_TYPE', 'Mitov::Display_ST7735R_GreenTab' )]
+
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicSPI_ST7735' )]
+
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.SPISpeed', 'Mitov::ConstantProperty<20, uint32_t, 8000000 >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<Mitov::MicroBitPin_16>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.RegisterSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<Mitov::MicroBitPin_12>' )]
+
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<Mitov::MicroBitPin_8>' )]
+
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationLeft' )]
+
+  [ArduinoTemplateParameter( 'OverridePixelOffset', 'Mitov::NestedProperty<325, Mitov::TArduinoDisplayST7735PixelOffset< Mitov::ConstantProperty<322, bool, false >, Mitov::ConstantProperty<323, uint8_t, 0 >, Mitov::ConstantProperty<324, uint8_t, 0> > >' )]
+  [ArduinoTemplateParameter( '2_BRIGHTNESS_PIN', 'Mitov::MicroBitPin_1' )]
+
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorY', 0 )]
+
+  [ArduinoSPI( 0 )]
+  TArduinoWaveshareMicrobitDisplayST7735Element : TArduinoBasicDisplayST7735BasicElement
+
+    [ArduinoUseBindingSetter]
+    [ValueRange( 0, 1.0 )]
+    Brightness : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

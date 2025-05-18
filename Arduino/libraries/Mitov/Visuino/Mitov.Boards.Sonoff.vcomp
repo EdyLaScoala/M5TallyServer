@@ -1,0 +1,40 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Sonoff' )]
+  TSonoffCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TSonoffCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TSonoffEPS8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '13' )]
+  [CreateName( 'Green LED' )]
+  +TArduinoSonoff_S26_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '0' )]
+  [ArduinoClass( 'Mitov::InvertedDigitalPullUpInput' )]
+  +TArduinoSonoff_S26_ButtonModule : TArduinoBasicInterruptButtonModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '12' )]
+  [CreateName( 'Relay(Red LED)' )]
+  [ArduinoClass( 'Mitov::ArduinoDigitalModuleEnableInitialValue' )]
+  +TArduinoSonoff_S26_RelayModule : TArduinoBasicRelayModule;
+//---------------------------------------------------------------------------
+  [Name( 'Sonoff Smart Socket S26 (ESP8266)' )]
+  [Category( TSonoffEPS8266Category )]
+  +TArduinoESP8266_Sonoff_S26_Board : TArduinoBasicESP8266GenericBootloaderBoard
+
+    [AddItem( TArduinoSonoff_S26_ButtonModule )]
+    [AddItem( TArduinoSonoff_S26_LEDModule )]
+    [AddItem( TArduinoSonoff_S26_RelayModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 1, TArduinoBasicDigitalOpenDrainPWMSerial0InterruptChannel, 'Digital(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3, 1, TArduinoBasicDigitalOpenDrainPWMSerial0InterruptChannel, 'Digital(RX0)(J10)' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

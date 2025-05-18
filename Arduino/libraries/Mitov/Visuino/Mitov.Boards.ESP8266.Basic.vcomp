@@ -1,0 +1,68 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  [Name( 'IsEnabled' )]
+  [ArduinoCallChainIndex]
+  TArduinoESP8266WiFiAccessPointElementIsEnabledCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  [Name( 'TryConnect' )]
+  [ArduinoCallChainIndex]
+  TArduinoESP8266WiFiAccessPointElementTryConnectCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'AssignDNS' )]
+  [ArduinoCallChainIndex]
+  TArduinoESP8266WiFiAccessPointElementAssignDNSCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AValue' )]
+  [Name( 'Connect' )]
+  ArduinoAccessPointElementConnectCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ESPWiFiModuleOptionalMacAddress' )]
+  TArduinoESP8266WiFiModuleOptionalMacAddress : TArduinoCodeDisabledPersistent
+
+    MacAddress : TArduinoMacAddress
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ESPWiFiModuleAccessPointConfig' )]
+  TArduinoESP8266WiFiModuleConfig : TArduinoCodeDisabledPersistent
+
+    IP : TArduinoIPV4Address
+    Gateway : TArduinoIPV4Address
+    Subnet : TArduinoIPV4SubnetAddress
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ESPWiFiModuleRemoteConfig' )]
+  TArduinoESP8266WiFiModuleRemoteConfig : TArduinoESP8266WiFiModuleConfig
+
+    [OldName( 'DNS.IP' )]
+    DNS1 : TArduinoIPV4Address
+
+    DNS2 : TArduinoIPV4Address
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoAccessPointElementConnectCallChain]
+  TArduinoRemoteWiFiAccessPoints : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [CollectionItemAssociation( TArduinoRemoteWiFiAccessPoints )]
+  TArduinoBasicRemoteWiFiAccessPoint : TArduinoCodeEnabledPersistent
+
+    SSID : String = ''
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ESPWiFiModuleOptionalChannel' )]
+  TArduinoESP8266WiFiModuleOptionalChannel : TArduinoCodeDisabledPersistent
+
+    [DesignRange( 1, 13 )]
+    Channel : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

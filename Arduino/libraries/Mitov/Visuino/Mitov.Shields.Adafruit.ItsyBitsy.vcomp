@@ -1,0 +1,22 @@
+Mitov
+//---------------------------------------------------------------------------
+//  [ArduinoShieldPinIndex( 10,  'GPIO0' )]
+  [ArduinoShieldPinIndex( 12,  'Busy' )]
+  [ArduinoShieldPinIndex( 11,  'Reset' )]
+  [ArduinoShieldPinIndex( 13,  'Chip Select' )]
+  [ArduinoSPI( 0 )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::AirLiftShieldInterface' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_INTERFACE', 'SPI' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_CHIP_SELECT', '13' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_RESET', '11' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_GPIO0', '10' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_BUSY', '12' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.2_INVERT_RESET', 'false' )]
+  [ParentImage( TArduinoAdafruitAirLift_Basic_Module )]
+  [Name( 'Adafruit ItsyBitsy - ESP32 WiFi/BLE Co-Processor' )]
+  [CreateName( 'AirLift (WiFi/BLE)' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TCommunicationToolbarCategory )]
+  +TArduinoItsyBitsyAdaloggerFeatherWingAirLiftShield : TArduinoShield, IItsyBitsyShield, TArduinoAdafruitAirLift_LED_UseGPIO0_Shield_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

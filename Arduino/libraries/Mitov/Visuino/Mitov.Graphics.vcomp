@@ -1,0 +1,34 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Pixels' )]
+  ArduinoGraphicsPixelsToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Lines' )]
+  ArduinoGraphicsLinesToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Shapes' )]
+  ArduinoGraphicsShapesToolbarCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Set Cursor' )]
+  [Category( TTextToolbarCategory )]
+  TArduinoGraphicsBasicSetCursor : TArduinoGraphicsElementClocked
+
+    X : Unsigned = 0
+    Y : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoGraphicsElements )]
+  [ArduinoClass( 'Mitov::GraphicsElementSetCursor' )]
+  +TArduinoGraphicsSetCursor : TArduinoGraphicsBasicSetCursor;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoGraphicsElements )]
+  [Name( 'Render Event' )]
+  [ArduinoClass( 'Mitov::GraphicsElementRenderEvent' )]
+  +TArduinoGraphicsRenderEvent : TArduinoGraphicsElementBasic
+
+    ClockOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

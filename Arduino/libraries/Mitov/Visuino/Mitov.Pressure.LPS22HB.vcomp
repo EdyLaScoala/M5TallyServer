@@ -1,0 +1,101 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLSM9DS1AccelerometerFilter' )]
+  TArduinoPressureLPS22HBLowPassFilter : TArduinoCodeEnabledPersistent
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '9' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '100' )]
+    [PropertyListDesignValue( '400' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CTRL_REG1' )]
+    CutoffFrequencyDivider : Unsigned = 50
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_PressureLPS22HB.h' )]
+  [ArduinoClass( 'Mitov::PressureLPS22HB' )]
+  [CreateName( 'Pressure' )]
+  [ArduinoWebKeywords( 'LPS22HB' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  TArduinoPressureLPS22HB_Extender : Extender
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartClock' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginClock')]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [Name( 'Pressure(Pa)' )]
+    PressureOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    InFahrenheit : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG1' )]
+    SingleShot : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '10' )]
+    [PropertyListDesignValue( '25' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '75' )]
+    [ArduinoUseBindingCheckSetter( 'Update_CTRL_REG1' )]
+    [NamePostfix( '(Hz)' )]
+    SampleRate : Unsigned = 25
+
+    LowPassFilter : TArduinoPressureLPS22HBLowPassFilter
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Pressure LPS22HB(I2C)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2C' )]
+  +TArduinoPressureLPS22HB_I2C : TArduinoClockedEnableComponent, TArduinoPressureLPS22HB_Extender
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+    [PropertyListDesignValue( '92' )] // $5C
+    [PropertyListDesignValue( '94' )] // $5E
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $5C
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Pressure LPS22HB(SPI)' )]
+  [ArduinoInclude( 'Mitov_Arduino_SPI.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPISpeed' )]
+  +TArduinoPressureLPS22HB_SPI : TArduinoClockedEnableComponent, TArduinoPressureLPS22HB_Extender
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+//    [ArduinoExclude]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_PressureLPS22HB.h' )]
+  [ArduinoClass( 'Mitov::PressureLPS22HB' )]
+  [Name( 'Pressure' )]
+  [CreateName( 'Pressure' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  *TArduinoLPS22HB_I2C_Module : TArduinoClockEnabledBasicShield, TArduinoPressureLPS22HB_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

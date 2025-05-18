@@ -1,0 +1,65 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DisplaySSD1306NoReset<Mitov::DigitalPin_NoImplementation<5>>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.Address', 'Mitov::ConstantProperty<88, uint8_t, 60 >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_BUFFER' , 'Mitov::DisplaySSD1306Buffered<64, 128>' )]
+  [ArduinoTemplateParameter( 'Type', 'Mitov::ConstantProperty<127, Mitov::TArduinoDisplayOLEDType, Mitov::odtSSD1306>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationUp' )]
+//  [ArduinoTemplateParameter( 'Height', '32' )]
+//  [ArduinoTemplateParameter( 'Width', '128' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoI2C( 0 )]
+  TArduinoSeeeduinoXIAOExpansionBoardDisplay : TArduinoDisplaySSD1306BasicShieldDisplayElementI2C;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x51 >' )]
+  [ArduinoI2C( 0 )]
+  TArduinoSeeeduinoXIAOExpansionBoardRTCPCF8563Persistent : TArduinoRTCPCF8563BasicPersistent;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', 'D2' )]
+  [ArduinoShieldPin( 'D2', 'Micro SD' )]
+  TArduinoSeeeduinoXIAOExpansionBoardMicroSDModuleElement : TArduinoBasicMicroSDShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', 'D3' )]
+  [ArduinoShieldPin( 'D3', 'Buzzer' )]
+  TArduinoSeeeduinoXIAOExpansionBoardBuzzer : TArduinoBasicBuzzerShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', 'D1' )]
+  [ArduinoClass( 'Mitov::DigitalInputInvertedPullUp_Flexible' )]
+  [ArduinoShieldPin( 'D1', 'Button' )]
+  TArduinoSeeeduinoXIAOExpansionBoardButton : TArduinoBasicButtonSensor;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( 'D7', True, 'D6', True )]
+  +TArduinoSeeeduinoXIAOExpansionBoardSerialGrove : TArduinoSerialGrove;
+//---------------------------------------------------------------------------
+//  [ArduinoGrovePins( 'D4', True, 'D5', True )]
+  +TArduinoSeeeduinoXIAOExpansionBoard_I2C_Grove : TArduinoI2CGrove;
+//---------------------------------------------------------------------------
+  [ArduinoGrovePins( 'D0', True, 'D0', True )]
+  +TArduinoSeeeduinoXIAOExpansionBoardGrove0 : TArduinoAnalogDigitalGrove;
+//---------------------------------------------------------------------------
+  [Name( 'Seeed Studio XIAO Expansion board' )]
+  [CreateName( 'Expansion Board' )]
+  [ArduinoWebKeywords( 'Seeed Studio XIAO Expansion board' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  +TArduinoSeeeduinoXIAOExpansionBoard : TArduinoShield, IAdafruitQT_PyShield
+
+    Display : TArduinoSeeeduinoXIAOExpansionBoardDisplay
+    Clock : TArduinoSeeeduinoXIAOExpansionBoardRTCPCF8563Persistent
+    MicroSD : TArduinoSeeeduinoXIAOExpansionBoardMicroSDModuleElement
+    Buzzer : TArduinoSeeeduinoXIAOExpansionBoardBuzzer
+    Button : TArduinoSeeeduinoXIAOExpansionBoardButton
+    
+    [AddNamedItem( TArduinoSeeeduinoXIAOExpansionBoardGrove0, 'A0/D0' )]
+    [AddNamedItem( TArduinoSeeeduinoXIAOExpansionBoardSerialGrove, 'UART' )]
+    [AddNamedItem( TArduinoSeeeduinoXIAOExpansionBoard_I2C_Grove, 'I2C' )]
+    [AddNamedItem( TArduinoSeeeduinoXIAOExpansionBoard_I2C_Grove, 'I2C' )]
+    Grove : TArduinoGroveChannels
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

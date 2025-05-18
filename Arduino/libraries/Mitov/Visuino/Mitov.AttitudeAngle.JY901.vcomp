@@ -1,0 +1,63 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Set Address' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901SetAddressElement' )]
+  [ParentImage( TArduinoInfraredThermometerMLX90614SetAddressElement )]
+  +TArduinoNavigationJY901SetAddressElement : TArduinoNavigationJY901BasicClockedElement
+
+    [ValueRange( 1, $7F )]
+    Value : Unsigned = $50
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Save Settings' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901SaveSettingsElement' )]
+  +TArduinoNavigationJY901SaveSettingsElement : TArduinoNavigationJY901BasicClockedElement;
+//---------------------------------------------------------------------------
+  [Name( 'Restore Default Settings' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901RestoreDefaultSettingsElement' )]
+  +TArduinoNavigationJY901RestoreDefaultSettingsElement : TArduinoNavigationJY901BasicClockedElement;
+//---------------------------------------------------------------------------
+  [Name( 'Sleep/Wake' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901SleepWakeElement' )]
+  +TArduinoNavigationJY901SleepWakeElement : TArduinoNavigationJY901BasicClockedElement;
+//---------------------------------------------------------------------------
+  [Name( 'Calibrate Gyroscope/Accelerometer' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901CalibrateElement' )]
+  [ArduinoTemplateParameter( 'C_PARAM', '1' )]
+  +TArduinoNavigationJY901CalibrateGyroscopeAccelerometerElement : TArduinoNavigationJY901BasicClockedElement;
+//---------------------------------------------------------------------------
+  [Name( 'Calibrate Compass' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901CalibrateElement' )]
+  [ArduinoTemplateParameter( 'C_PARAM', '2' )]
+  +TArduinoNavigationJY901CalibrateCompassElement : TArduinoNavigationJY901BasicClockedElement;
+//---------------------------------------------------------------------------
+  [Name( 'Stop calibration' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901CalibrateElement' )]
+  [ArduinoTemplateParameter( 'C_PARAM', '0' )]
+  +TArduinoNavigationJY901StopCalibrationElement : TArduinoNavigationJY901BasicClockedElement;
+//---------------------------------------------------------------------------
+  [Name( 'Zero Altitude' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901CalibrateElement' )]
+  [ArduinoTemplateParameter( 'C_PARAM', '3' )]
+  +TArduinoNavigationJY901ZeroAltitudeElement : TArduinoNavigationJY901BasicClockedElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AttitudeAngleJY901.h' )]
+  [ArduinoClass( 'Mitov::AttitudeAngleJY901' )]
+  [Name( 'Attitude Angle JY61P/JY901 I2C' )]
+  [CreateName( 'AttitudeAngle' )]
+  [ArduinoWebKeywords( 'JY901' )]
+  [ArduinoWebKeywords( 'JY61P' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoNavigationJY901_I2C : TArduinoNavigationJY901_Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+    Address : TArduinoUInt8 = $50
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

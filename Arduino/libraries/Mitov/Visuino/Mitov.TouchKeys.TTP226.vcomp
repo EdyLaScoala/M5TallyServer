@@ -1,0 +1,41 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'TTP226 Keys Touch Pad (Serial)' )]
+  [ArduinoClass( 'Mitov::TArduinoTouchKeysTTP226_Serial' )]
+  [ArduinoInclude( 'Mitov_TouchKeys_TTP226.h' )]
+  [CreateName( 'TouchKeys' )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoTouchKeysTTP226_Serial : TArduinoCommonEnabledComponent
+
+    [Name( 'Reset(Q6/OUT7)' )]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+//    DataValidInputPin : TOWArduinoDigitalInputSinkPin
+
+    [Name( 'Clock(Q7/OUT8)' )]
+    ClockOutputPin : TOWArduinoDigitalSourcePin
+    
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [OWRequiredPin]
+    [ArduinoDirectPinTemplate]
+    [Name( 'Data(Q0/OUT1)' )]
+    DataInputPin : TOWArduinoDigitalInputSinkPin
+
+    [OWAddPin( '0', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '1', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '2', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '3', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '4', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '5', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '6', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( '7', TOWArduinoDigitalSourcePin )]
+    OutputPins : TOWArduinoChainCallPinList
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

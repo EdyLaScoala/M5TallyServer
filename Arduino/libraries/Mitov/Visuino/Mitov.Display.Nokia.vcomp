@@ -1,0 +1,62 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DisplayNokia5110' )]
+  [ArduinoInclude( 'Mitov_Display_Nokia.h' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoOptionalVariable( Unsigned, 7, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 7, 'FCursorY', 0 )]
+  TArduinoDisplayNokia5110_Extender : Extender
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    RefreshInputPin : TOWArduinoClockSinkPin
+//    PowerUpInputPin : TOWArduinoDigitalSinkPin         read FPowerUpInputPin       write FPowerUpInputPin;
+
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ValueRange( 0.0, 1.0 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateContrast' )]
+    Contrast : Single = 0.3
+
+    [ValueRange( 0, 7 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateBiasSystem' )]
+    BiasSystem : Unsigned = 4
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInverted' )]
+    Inverted : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePoweredUp' )]
+    PoweredUp : Boolean = True
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMonochromeGraphicsElements
+
+    BackgroundColor : TArduinoMonochromeColor = tmcBlack
+    Text : TArduinoMonochromeGraphicsTextSettings
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Display' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [Name( 'Graphic LCD Display Nokia 5110/3310' )]
+  +TArduinoDisplayNokia5110 : TArduinoBasicSpeedSPI, TArduinoDisplayNokia5110_Extender
+
+    [OWPrimaryPin]
+    [ArduinoResetPinImplementation]
+    ResetOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    [Name( 'Data/Command' )]
+    [OWRequiredPin]
+    DataCommandOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  TArduinoDisplayNokia5110Property : TArduinoCodePersistent, TArduinoDisplayNokia5110_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

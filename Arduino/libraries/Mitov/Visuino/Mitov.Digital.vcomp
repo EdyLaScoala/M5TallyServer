@@ -1,0 +1,184 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Switch.h' )]
+  [ArduinoClass( 'Mitov::DigitalSwitch' )]
+  [Name( 'Digital On/Off Switch' )]
+  [CreateName( 'DigitalSwitch' )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FPopulated' )]
+  [ArduinoVariable( Boolean, 'FOutputStarted' )]
+  [ArduinoVariable( Boolean, 'FOutputValue' )]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  +TArduinoDigitalSwitch : TArduinoCommonBooleanSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    EnableInputPin : TOWArduinoDigitalSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialEnabled : Boolean = False
+
+    IgnoreSame : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonMux.h' )]
+  [ArduinoClass( 'Mitov::DigitalToggleSwitch' )]
+  [Name( 'Digital Toggle Switch' )]
+  [CreateName( 'DigitalToggleSwitch' )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  [ArduinoVariable( Boolean, 'FTrueValue' )]
+  [ArduinoVariable( Boolean, 'FFalseValue' )]
+  +TArduinoDigitalToggleSwitch : TArduinoCommonBooleanSource
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoDigitalSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoDigitalSinkPin
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoFlexibleVariable]
+    InitialSelectValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital Toggle Demux' )]
+  [CreateName( 'DigitalToggleDemux' )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  +TArduinoDigitalToggleDemux : TArduinoCommonBooleanSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'DigitalMultiSource' )]
+  [Name( 'Digital Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  +TArduinoDigitalMultiSource : TArduinoCommonBooleanSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalNonFlexibleSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoDigitalNonFlexibleSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatDigital' )]
+  [Name( 'Repeat Digital' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatDigital : TArduinoCommonBooleanFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonMux.h' )]
+  [ArduinoClass( 'Mitov::DigitalMux' )]
+  [Name( 'Digital Mux(Multi channel Switch)' )]
+  [CreateName( 'DigitalMux' )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  +TArduinoDigitalMux : TArduinoBooleanMultiInputSource
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoUnsignedSinkPin
+
+    [OWExcludeBindings]
+    [ValueRange( 0, 255 )]
+    [ArduinoFlexibleVariable]
+    InitialChannel : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'bool' )]
+  [Name( 'Digital Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'DigitalDemux' )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  +TArduinoDigitalDemux : TArduinoCommonBooleanSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoDigitalSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital Multi-Source Merger' )]
+  [CreateName( 'DigitalMultiMerger' )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  +TArduinoDigitalMultiMerger : TArduinoBooleanMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'bool' )]
+  [ArduinoTemplateParameter( 'DATA', 'bool' )]
+  [CreateName( 'RememberDigital' )]
+  [Name( 'Remember Digital Value' )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  +TArduinoRememberDigital : TArduinoCommonBooleanFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( Boolean, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Snapshot.h' )]
+  [ArduinoClass( 'Mitov::DigitalSnapshot' )]
+  [CreateName( 'DigitalSnapshot' )]
+  [Name( 'Digital Snapshot' )]
+  [Category( TArduinoDigitalToolbarCategory )]
+  [ArduinoVariable( Boolean, 'FData' )]
+  +TArduinoDigitalSnapshot : TArduinoCommonBooleanFilter
+
+    [OWPrimaryPin]
+    SnapshotInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AResult' )]
+  [Name( 'TryActive' )]
+  [ArduinoReversed]
+  ArduinoSetValueTryActiveCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoDigitalSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSourceDigital' )]
+  [CreateName( 'DigitalValue' )]
+  [Name( 'Digital (Boolean) Value' )]
+  [Category( TArduinoDigitalDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoBooleanValue : TArduinoCommonBooleanSource
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateValue' )]
+    [ArduinoFlexibleVariableIfCollectionElements( Elements )]
+     Value : Boolean = False
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    [ArduinoAddVariableIfElementHasAttribute( ArduinoValueStateAttribute, Boolean, 'FCurrentValue', False )]
+    [ArduinoAddVariableIfElementHasAttribute( ArduinoValueStateAttribute, Boolean, 'FStateActive', False )]
+    [ArduinoAddPostfixIfElementHasAttribute( ArduinoValueStateAttribute, 'State' )]
+    Elements : TArduinoDigitalSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,69 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoColorSensorThaosScaleDividers' )]
+  TArduinoColorSensorThaosScaleDividers : TArduinoCodePersistent
+
+    [ReplaceValue(0.0, 0.000001)]
+    Red : Single = 1.0
+
+    [ReplaceValue(0.0, 0.000001)]
+    Green : Single = 1.0
+
+    [ReplaceValue(0.0, 0.000001)]
+    Blue : Single = 1.0
+
+    [ReplaceValue(0.0, 0.000001)]
+    Clear : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoColorSensorThaosFrequencyScaling : Enum
+  
+    cfsScaling2
+    cfsScaling20
+    cfsScaling100 
+    
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoColorMeasurementToolbarCategory )]
+  [Name( 'Color Sensor (Taos TCS230, TCS3200, TCS3210)' )]
+  [CreateName( 'ColorSensor' )]
+  [ArduinoInclude( 'Mitov_ColorSensor.h' )]
+  [ArduinoClass( 'Mitov::ColorSensor' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Unsigned, 3, 'FCurrentState' )]
+  +TArduinoColorSensorThaos : TArduinoCommonEnabledComponent
+
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'S0', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'S1', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'S2', TOWArduinoDigitalSourcePin )]
+    [OWAddPin( 'S3', TOWArduinoDigitalSourcePin )]
+    SensorSelectOutputPins : TOWArduinoPinList
+
+    [ArduinoExclude]
+    [ArduinoInterruptRaising( '', True, 'InterruptHandler' )]
+    [OWRequiredPin]
+    FrequencyInputPin : TOWArduinoDigitalInputInterruptSinkPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Red', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Green', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Blue', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Clear', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    ScaleDividers : TArduinoColorSensorThaosScaleDividers
+
+    [ArduinoUseBindingCheckSetter( 'UpdateFrequencyScaling' )]
+    PoweredUp : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateFrequencyScaling' )]
+    FrequencyScaling : TArduinoColorSensorThaosFrequencyScaling = cfsScaling100
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

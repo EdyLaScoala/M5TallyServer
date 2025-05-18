@@ -1,0 +1,112 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<77, uint8_t, 119 >' )]
+  [ArduinoI2C( 0 )]
+  [PersistentCollection( TArduinoBasicShields )]
+  +TArduinoESPCopter_BME280_Shield : TArduinoPressureTemperatureHumidityBME280Basic_Shield, IESPCopterShield;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoTemplateParameter( 'PIN', '0' )]
+  [ArduinoShieldPin( '0', 'Buzzer' )]
+  +TArduinoESPCopter_Buzzer_Shield : TArduinoBasicBuzzerModule, IESPCopterShield;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '2', 'RGB Ring' )]
+  +TArduinoESPCopter_NeoPixelsRing_Shield : TArduinoNeoPixels_Shield, IESPCopterShield;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  TArduinoESPCopter_Shield_Altitude_Element : TArduinoESPCopter_Ranger_Shield_Basic_Element;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_ESPCopter_OpticFlow.h' )]
+  [ArduinoClass( 'Mitov::ESPCopter_OpticFlow' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoESPCopter_Shield_OpticFlow_Element : TArduinoCodeEnabledClockedPersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddPin( 'X', TOWArduinoIntegerSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoIntegerSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Altitude & Optic Flow' )]
+  [CreateName( 'Altitude & Optic Flow' )]
+  +TArduinoESPCopter_OpticFlow_Altitude_Shield : TArduinoESPCopter_BasicShield
+
+    Altitude : TArduinoESPCopter_Shield_Altitude_Element
+    OpticFlow : TArduinoESPCopter_Shield_OpticFlow_Element
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicShields )]
+  TArduinoESPCopter_BasicShield : TArduinoShield, IESPCopterShield;
+//---------------------------------------------------------------------------
+  TArduinoESPCopter_MultiRanger_Shield_Elements : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoTemplateParameter( 'Use2_8V_I2C', 'Mitov::ConstantProperty<88, bool, false >' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<77, uint8_t, 41 >' )]
+  [ArduinoTemplateParameter( 'Elements_Apply', 'Mitov::EmbeddedCallChain<Mitov::CallChains::T_VL53L0X_Apply_NullChain >' )]
+  TArduinoESPCopter_Ranger_Shield_Basic_Element : TArduinoLaserRangerVL53L0XBasicShield_Element;
+//---------------------------------------------------------------------------
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::I2CSplitterChannel' )]
+  ArduinoI2CSplitterChannelObjectAttribute : TArduinoBasicOwnerChannelObjectAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoI2CSplitterChannelObject]
+  TArduinoESPCopter_MultiRanger_Shield_Basic_Collection_Element : TArduinoESPCopter_Ranger_Shield_Basic_Element;
+//---------------------------------------------------------------------------
+  [Name( 'Front' )]
+  +TArduinoESPCopter_MultiRanger_Shield_Front_Element : TArduinoESPCopter_MultiRanger_Shield_Basic_Collection_Element;
+//---------------------------------------------------------------------------
+  [Name( 'Right' )]
+  +TArduinoESPCopter_MultiRanger_Shield_Right_Element : TArduinoESPCopter_MultiRanger_Shield_Basic_Collection_Element;
+//---------------------------------------------------------------------------
+  [Name( 'Back' )]
+  +TArduinoESPCopter_MultiRanger_Shield_Back_Element : TArduinoESPCopter_MultiRanger_Shield_Basic_Collection_Element;
+//---------------------------------------------------------------------------
+  [Name( 'Left' )]
+  +TArduinoESPCopter_MultiRanger_Shield_Left_Element : TArduinoESPCopter_MultiRanger_Shield_Basic_Collection_Element;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '2' )]
+  TArduinoESPCopter_MultiRanger_Button : TArduinoBasicButtonInvertedSensor;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_TexasInstruments_TCA9548A.h' )]
+  [ArduinoClass( 'Mitov::TexasInstrumentsTCA9548A' )]
+  [Name( 'Multi Ranger' )]
+  [CreateName( 'Multi Ranger' )]
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<77, uint8_t, 112 >' )]
+  [ArduinoVariable( Unsigned, 4, 'FCurrentIndex' )]
+  [ArduinoShieldPin( '2', 'Button' )]
+  +TArduinoESPCopter_MultiRanger_Shield : TArduinoESPCopter_BasicShield
+
+    [AddItem( TArduinoESPCopter_MultiRanger_Shield_Front_Element )]
+    [AddItem( TArduinoESPCopter_MultiRanger_Shield_Right_Element )]
+    [AddItem( TArduinoESPCopter_MultiRanger_Shield_Back_Element )]
+    [AddItem( TArduinoESPCopter_MultiRanger_Shield_Left_Element )]
+    Rangers : TArduinoESPCopter_MultiRanger_Shield_Elements
+    Button : TArduinoESPCopter_MultiRanger_Button
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

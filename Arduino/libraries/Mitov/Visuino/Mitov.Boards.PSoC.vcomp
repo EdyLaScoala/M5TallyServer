@@ -1,0 +1,51 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Cortex M3' )]
+  [Category( TSparkFunCategory )]
+  [AlternateCategory( TCortexM3Category )]
+  [ParentImage( TCortexM3Category )]
+  TSparkFunCortexM3Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'FreeSoC2' )]
+  [ArduinoDefine( 'VISUINO_FREESOC2' )]
+  [ArduinoBoardCompileParams( 'arduino:sam:arduino_due_x_dbg' )]
+  [ArduinoBoardCanReset]
+  [Category( TSparkFunCortexM3Category )]
+  [ParentImage( TSparkFunCategory )]
+  +TArduinoFreeSoC2Board : TArduino_Sam_BasicBoard
+
+    [AddItem( TArduinoUARTSpeedSerial )]
+    [AddItem( TArduinoUARTSpeedSerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial0Channel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  2, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  2, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 11, 1, TArduinoBasicDigitalPWMSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(LED)(SPI-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 4, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 18, 4, 1, TArduinoCombinedAnalogDigitalI2C0Channel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 19, 5, 1, TArduinoCombinedAnalogDigitalI2C0Channel, 'Digital(I2C-SCL)' )
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

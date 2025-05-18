@@ -1,0 +1,55 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_HX711_Weight.h' )]
+  [ArduinoClass( 'Mitov::HX711_Weight' )]
+  [Name( 'Weight Scale HX711' )]
+  [CreateName( 'WeightScale' )]
+  [ArduinoWebKeywords( 'HX711 Weight Scale' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoVariable( Boolean, 'FNeedsRead' )]
+  +TArduinoHX711Weight : TArduinoCommonClockedAnalogEnableSource
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [ArduinoExclude]
+    [OWRequiredPinAttribute]
+    [ArduinoDirectPinTemplate]
+    SensorClockOutputPin : TOWArduinoDigitalOutputSourcePin
+
+    [ArduinoExclude]
+    [ArduinoNeedsChannelInstance]
+    [OWRequiredPinAttribute]
+    [ArduinoDirectPinReferenceTemplate]
+    SensorDataInputPin : TOWArduinoDigitalInputSinkPin
+
+    ZeroInputPin : TOWArduinoClockSinkPin
+    CalibrateInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePower' )]
+    Powered : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'SendOutput' )]
+    [OldName( 'Scale' )]
+    [ArduinoFlexibleVariableIfPinConnected( CalibrateInputPin )]  // Used by the CalibrateInputPin!!!
+    [ReplaceValue(0.0, 0.000001)]
+    ScaleDivider : Single = 1.0
+
+    [ArduinoUseBindingCheckSetter( 'SendOutput' )]
+    [ArduinoFlexibleVariableIfPinConnected( ZeroInputPin )]
+    Offset : Single = 0.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateGain' )]
+    UseChannelB : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateGain' )]
+    Gain128 : Boolean = False
+
+    [MinValue( 1 )]
+    Average : Integer = 1
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

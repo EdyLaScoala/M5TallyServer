@@ -1,0 +1,203 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ReadSensor' )]
+  TArduinoInfraredThermometerMLX90614ReadSensorCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoInfraredThermometerMLX90614ReadSensorCallChain]
+  TArduinoInfraredThermometerMLX90614Channels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoInfraredThermometerMLX90614Channel' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoInfraredThermometerMLX90614Channel : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoInfraredThermometerMLX90614Channel )]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPinGroup( TArduinoInfraredThermometerMLX90614Channel )]
+    ErrorOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_REGISTER', 'Mitov::MLX90614Constants::MLX90614_REGISTER_TOBJ1' )]
+  TArduinoInfraredThermometerMLX90614Channel1 : TArduinoInfraredThermometerMLX90614Channel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_REGISTER', 'Mitov::MLX90614Constants::MLX90614_REGISTER_TOBJ2' )]
+  TArduinoInfraredThermometerMLX90614Channel2 : TArduinoInfraredThermometerMLX90614Channel;
+//---------------------------------------------------------------------------
+  TArduinoInfraredThermometerMLX90614Elements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoInfraredThermometerMLX90614Elements )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(MLX90614)' )]
+  TArduinoInfraredThermometerMLX90614BasicElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoInfraredThermometerMLX90614BasicClockedElement : TArduinoInfraredThermometerMLX90614BasicElement
+
+    [OWPinGroup( TArduinoInfraredThermometerMLX90614BasicClockedElement )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoInfraredThermometerMLX90614BasicAnalogValueElement : TArduinoInfraredThermometerMLX90614BasicClockedElement
+
+    Value : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Range Min' )]
+  [ArduinoClass( 'Mitov::TArduinoInfraredThermometerMLX90614SetRangeMinElement' )]
+  +TArduinoInfraredThermometerMLX90614SetRangeMinElement : TArduinoInfraredThermometerMLX90614BasicAnalogValueElement
+
+    [ValueRange( -273.15, +382.2 )]
+    Value = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Range Max' )]
+  [ArduinoClass( 'Mitov::TArduinoInfraredThermometerMLX90614SetRangeMaxElement' )]
+  +TArduinoInfraredThermometerMLX90614SetRangeMaxElement : TArduinoInfraredThermometerMLX90614BasicAnalogValueElement
+
+    [ValueRange( -273.15, +382.2 )]
+    Value = 100.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Emissivity' )]
+  [ArduinoClass( 'Mitov::TArduinoInfraredThermometerMLX90614SetEmissivityElement' )]
+  +TArduinoInfraredThermometerMLX90614SetEmissivityElement : TArduinoInfraredThermometerMLX90614BasicAnalogValueElement
+
+    [ValueRange( 0.1, 1.0 )]
+    Value = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoInfraredThermometerMLX90614IIRCoefficients : Enum
+  
+    iir_a_0_5__b_0_5
+    iir_a_0_571__b_0_429
+    iir_a_0_667__b_0_333
+    iir_a_0_8__b_0_2
+    iir_Off
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Config' )]
+  [ArduinoClass( 'Mitov::TArduinoInfraredThermometerMLX90614SetConfigElement' )]
+  [ParentImage( TConfigToolbarCategory )]
+  +TArduinoInfraredThermometerMLX90614SetConfigElement : TArduinoInfraredThermometerMLX90614BasicClockedElement
+
+    IIRCoeficients : TArduinoInfraredThermometerMLX90614IIRCoefficients = iir_Off
+
+    UsePositiveTemperatureCoefficientSensor : Boolean = False
+
+    [ValueRange( 3, 10 )]
+    FIRCoeficientsOrder : Unsigned = 10
+
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '3' )]
+    [PropertyListDesignValue( '6' )]
+    [PropertyListDesignValue( '12.5' )]
+    [PropertyListDesignValue( '25' )]
+    [PropertyListDesignValue( '50' )]
+    [PropertyListDesignValue( '100' )]
+    [ValueRange( 1, 100 )]
+    Gain : Single = 12.5
+
+    NegativeThermoshockCompensation : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Set Address' )]
+  [ArduinoClass( 'Mitov::TArduinoInfraredThermometerMLX90614SetAddressElement' )]
+  [ParentImage( TArduinoFingerprintReaderSetArealLEDElement )]
+  +TArduinoInfraredThermometerMLX90614SetAddressElement : TArduinoInfraredThermometerMLX90614BasicClockedElement
+
+    [ValueRange( 1, $7F )]
+    Value : Unsigned = $5A
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredThermometer_MLX90614.h' )]
+  [ArduinoWebKeywords( 'MLX90614' )]
+  [ArduinoWebKeywords( 'GY-906' )]
+  [CreateName( 'InfraredThermometer' )]
+  [ArduinoClass( 'Mitov::InfraredThermometerMLX90614' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  TArduinoInfraredThermometerMLX90614Basic : TArduinoClockedEnableFlexibleI2CComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    AmbientOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    EmissivityOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Min', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Max', TOWArduinoAnalogChangeOnlySourcePin )]
+    RangeOutputPins : TOWArduinoPinList
+
+    Address = $5A
+
+    InFahrenheit : Boolean = False
+
+    [AddItem( TArduinoInfraredThermometerMLX90614Channel1 )]
+    [AddItem( TArduinoInfraredThermometerMLX90614Channel2 )]
+    Channels : TArduinoInfraredThermometerMLX90614Channels
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoInfraredThermometerMLX90614Elements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Melexis MLX90614 (GY-906) Infrared Thermometer (I2C)' )]
+  +TArduinoInfraredThermometerMLX90614 : TArduinoInfraredThermometerMLX90614Basic;
+//---------------------------------------------------------------------------
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  [Name( 'NCIR Infrared Temperature Sensor Unit (MLX90614)' )]
+  +TArduinoTemperatureSensorUnitMLX90614 : TArduinoInfraredThermometerMLX90614Basic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredThermometer_MLX90614.h' )]
+  [ArduinoWebKeywords( 'MLX90614' )]
+  [ArduinoWebKeywords( 'GY-906' )]
+  [Name( 'Infrared Thermometer' )]
+  [CreateName( 'Infrared Thermometer' )]
+  [ArduinoClass( 'Mitov::InfraredThermometerMLX90614' )]
+  *TArduinoInfraredThermometerMLX90614BasicShield : TArduinoClockEnabledLoopBeginShield
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    AmbientOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    EmissivityOutputPin : TOWArduinoAnalogSourcePin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Min', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Max', TOWArduinoAnalogChangeOnlySourcePin )]
+    RangeOutputPins : TOWArduinoPinList
+
+    InFahrenheit : Boolean = False
+
+    [AddItem( TArduinoInfraredThermometerMLX90614Channel1 )]
+    [AddItem( TArduinoInfraredThermometerMLX90614Channel2 )]
+    Channels : TArduinoInfraredThermometerMLX90614Channels
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoInfraredThermometerMLX90614Elements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

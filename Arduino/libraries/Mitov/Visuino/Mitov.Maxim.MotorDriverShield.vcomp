@@ -1,0 +1,153 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'UpdateSpeed' )]
+  TArduinoMaximMotorDriverElementUpdateSpeedCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ARegisterValue0' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'APotentiometer0' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ARegisterValue1' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'APotentiometer1' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ARegisterValue2' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'APotentiometer2' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ARegisterValue3' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'APotentiometer3' )]
+  [Name( 'GetPotentiometers' )]
+  TArduinoMaximMotorDriverElementGetPotentiometersCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'UpdateFailure' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AMask' )]
+  TArduinoMaximMotorDriverElementUpdateFailureCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoMaximMotorDriverElementUpdateFailureCallChain]
+  [TArduinoMaximMotorDriverElementUpdateSpeedCallChain]
+  [TArduinoMaximMotorDriverElementGetPotentiometersCallChain]
+  TArduinoMaximMotorDriverChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoMaximMotorCurrentRegulationMode : Enum
+
+    crmRipple25
+    crmFastDecay
+    crmSlowDecay
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoMaximMotorDriverAddresses' )]
+  TArduinoMaximMotorDriverAddresses : TArduinoCodePersistent
+
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '65' )]
+    MAX7300 : TArduinoUInt8 = 64
+
+    [PropertyListDesignValue( '40' )]
+    [PropertyListDesignValue( '48' )]
+    MAX5387_1 : TArduinoUInt8 = 40
+
+    [PropertyListDesignValue( '41' )]
+    [PropertyListDesignValue( '49' )]
+    MAX5387_2 : TArduinoUInt8 = 41
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoMaximMotorDriverChannels )]
+  [ArduinoClass( 'Mitov::Maxim_MotorDriverChannel' )]
+  [ArduinoDeclaredClass]
+  [ParentImage( TArduinoDCMottorsToolbarCategory )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoStart]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  TArduinoMaximMotorDriverChannel : TArduinoCodeEnabledSetterPersistent
+
+    [OWPrimaryPin]
+    SpeedInputPin : TOWArduinoAnalogSinkPin
+
+    [ArduinoChangeOnlyPin]
+    FaultOutputPin : TOWArduinoDigitalSourcePin
+
+    [ValueRange( 0, 1 )]
+    InitialSpeed : Single = 0.5
+
+    [ValueRange( 0.01, 1000 )]
+    SenseResistor : Single = 0.1
+
+    [ArduinoUseBindingCheckSetter( 'UpdateMaxCurrent' )]
+    [ValueRange( 0, 2.6 )]
+    MaxCurrent : Single = 0.0
+
+    [ArduinoUseBindingCheckSetter( 'UpdateCurrentRegulationMode' )]
+    CurrentRegulationMode : TArduinoMaximMotorCurrentRegulationMode = crmRipple25
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'MotorControlOutputPin', 'Mitov::AnalogPin_DirectBoardPinImplementation<4>' )]
+  TArduinoMaximMotorDriverChannel1 : TArduinoMaximMotorDriverChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'MotorControlOutputPin', 'Mitov::AnalogPin_DirectBoardPinImplementation<5>' )]
+  TArduinoMaximMotorDriverChannel2 : TArduinoMaximMotorDriverChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'MotorControlOutputPin', 'Mitov::AnalogPin_DirectBoardPinImplementation<9>' )]
+  TArduinoMaximMotorDriverChannel3 : TArduinoMaximMotorDriverChannel;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'MotorControlOutputPin', 'Mitov::AnalogPin_DirectBoardPinImplementation<10>' )]
+  TArduinoMaximMotorDriverChannel4 : TArduinoMaximMotorDriverChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Maxim Motor Driver Shield' )]
+  [CreateName( 'MotorDriverShield' )]
+  [ArduinoInclude( 'Mitov_Maxim_MotorDriverShield.h' )]
+  [ArduinoClass( 'Mitov::Maxim_MotorDriverShield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [Category( TArduinoDCMottorsToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoShieldPin( '2' )]
+  [ArduinoShieldPin( '4' )]
+  [ArduinoShieldPin( '5' )]
+  [ArduinoShieldPin( '9' )]
+  [ArduinoShieldPin( '10' )]
+  [ArduinoI2C( 0 )]
+  +TArduinoMaximMotorDriverShield : TArduinoShield, IStandardShield
+
+    [AddItem( TArduinoMaximMotorDriverChannel1 )]
+    [AddItem( TArduinoMaximMotorDriverChannel2 )]
+    [AddItem( TArduinoMaximMotorDriverChannel3 )]
+    [AddItem( TArduinoMaximMotorDriverChannel4 )]
+    Channels : TArduinoMaximMotorDriverChannels
+
+    Addresses : TArduinoMaximMotorDriverAddresses
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMaximMotorDriverComponentChannel : TArduinoMaximMotorDriverChannel
+
+    MotorControlOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Maxim Motor Driver Shield' )]
+  [ArduinoInclude( 'Mitov_Maxim_MotorDriverShield.h' )]
+  [ArduinoClass( 'Mitov::Maxim_MotorDriverShield' )]
+  [Category( TArduinoDCMottorsToolbarCategory )]
+  [CreateName( 'MotorDriverShield' )]
+  [ArduinoStart]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  +TArduinoMaximMotorDriverShieldComponent : TArduinoComponent
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    FaultInputPin : TOWArduinoDigitalSinkPin
+
+    [AddItem( TArduinoMaximMotorDriverComponentChannel, 4 )]
+    Channels : TArduinoMaximMotorDriverChannels
+
+    Addresses : TArduinoMaximMotorDriverAddresses
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,92 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU6886Accelerometer' )]
+  TArduinoMPU6886Accelerometer : TArduinoMPUXYZAccelerometer
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfigReg' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1046.0' )]
+    [PropertyListDesignValue( '420.0' )]
+    [PropertyListDesignValue( '218.1' )]
+    [PropertyListDesignValue( '99.0' )]
+    [PropertyListDesignValue( '44.8' )]
+    [PropertyListDesignValue( '21.2' )]
+    [PropertyListDesignValue( '10.2' )]
+    [PropertyListDesignValue( '5.1' )]
+    FilterCutoffFrequency : Single = 1046.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MPU6886Gyroscope' )]
+  TArduinoMPU6886Gyroscope : TArduinoMPUXYZGyroscope
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerManagementReg1' )]
+    Standby : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateConfigReg' )]
+    [PropertyListDesignValue( '8173.0' )]
+    [PropertyListDesignValue( '3281.0' )]
+    [PropertyListDesignValue( '250.0' )]
+    [PropertyListDesignValue( '176.0' )]
+    [PropertyListDesignValue( '92.0' )]
+    [PropertyListDesignValue( '41.0' )]
+    [PropertyListDesignValue( '20.0' )]
+    [PropertyListDesignValue( '10.0' )]
+    [PropertyListDesignValue( '5.0' )]
+    FilterCutoffFrequency : Single = 250.0
+
+//    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAccelerometerConfig1Reg' )]
+//    HighSampleRate : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoMPU6886Extender : Extender
+
+    Accelerometer : TArduinoMPU6886Accelerometer
+    Gyroscope : TArduinoMPU6886Gyroscope
+    Thermometer : TArduinoMPU9250Thermometer
+    FrameSynchronization : TArduinoMPUFrameSynchronization
+
+    Interrupt : TArduinoMPUInterrupt
+
+    LowPowerMode : TArduinoMPU6050LowPowerMode
+
+    [ValueRange( 1, 256 )]
+    [OWExcludeBindings]
+    SampleRateDivider : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_MPU6886.h' )]
+  [ArduinoClass( 'Mitov::MPU6886I2C' )]
+  [Name( 'Accelerometer Gyroscope Compass MPU6886 I2C' )]
+  [CreateName( 'AccelerometerGyroscope' )]
+  [ArduinoWebKeywords( 'MPU6886' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoMPU6886I2C : TArduinoMPUAccelerometerGyroscopeI2C, TArduinoMPU6886Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Orientation' )]
+  [CreateName( 'Orientation' )]
+  [ArduinoInclude( 'Mitov_MPU6886.h' )]
+  [ArduinoClass( 'Mitov::MPU6886I2C' )]
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoBasicGyroscopeAccelerometerCompassModule )]
+  TArduinoBasicMPU6886GyroscopeAccelerometerModule : TArduinoEnabledShield, TArduinoMPU6886Extender
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePowerManagementReg1' )]
+    ClockSource : TArduinoMPUClockSource = mcsAutoSelect
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

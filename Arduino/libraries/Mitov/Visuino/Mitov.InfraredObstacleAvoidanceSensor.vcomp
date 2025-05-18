@@ -1,0 +1,25 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_InfraredAvoidanceSensor.h' )]
+  [ArduinoClass( 'Mitov::InfraredAvoidanceSensor' )]
+  [CreateName( 'ObstacleAvoidance' )]
+  [Name( 'Infrared(IR) Obstacle Avoidance Sensor' )]
+  [Category( TArduinoDigitalMeasurementToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FDisabled' )]
+  [ArduinoVariable( Boolean, 'FCurrentValue' )]
+  +TArduinoInfraredAvoidanceSensor : TArduinoCommonDirectBooleanEnabledFilter
+
+    [OWPrimaryPin]
+    EnableInputPin : TOWArduinoDigitalSinkPin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    EnableOutputPin : TOWArduinoDigitalSourcePin
+
+    EnableDelay : Unsigned = 500
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

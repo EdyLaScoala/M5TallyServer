@@ -1,0 +1,241 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ChannelConfig' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t &', 'AConfig' )]
+  ArduinoTexasInstrumentsINA3221ChannelConfigCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'NeedsShuntBus' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'ANeedsShunt' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'ANeedsBus' )]
+  ArduinoTexasInstrumentsINA3221ChannelAllClockedNeedsShuntBusCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ApplyChannelSumMask' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t &', 'AMask' )]
+  ArduinoTexasInstrumentsINA3221ApplyChannelSumMaskCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ReadData' )]
+  ArduinoTexasInstrumentsINA3221ChannelReadDataCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ProcessStatusData' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t', 'AValue' )]
+  ArduinoTexasInstrumentsINA3221ProcessStatusDataCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ProcessStatusData' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AChannel' )]
+  [ArduinoPopulatedCallChainParameter( 'uint16_t', 'AValue' )]
+  ArduinoTexasInstrumentsINA3221ProcessStatusDataIndexedCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'UpdateRegisters' )]
+  TArduinoTexasInstrumentsINA3221AlertUpdateRegistersCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoTexasInstrumentsINA3221BasicChannel : TArduinoCodeEnabledPersistent;
+//---------------------------------------------------------------------------
+//  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoDeclaredClass]
+  [TArduinoTexasInstrumentsINA3221AlertUpdateRegistersCallChain]
+  TArduinoTexasInstrumentsINA3221Alert : TArduinoCodePersistent //TArduinoCodeEnabledPersistent
+
+    OutputPin : TOWArduinoDigitalSourcePin
+    
+//    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMaskRegister', True, False )]
+//    Enabled
+    
+    [MinValue( 0.0 )]
+    [ArduinoUseBindingCheckSetter( 'UpdateVoltage' )]
+    Voltage : Single = 32.767
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221CriticalAlert' )]
+  [ArduinoTexasInstrumentsINA3221ProcessStatusDataIndexedCallChain]
+  *TArduinoTexasInstrumentsINA3221CriticalAlert : TArduinoTexasInstrumentsINA3221Alert;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221WarningAlert' )]
+  [ArduinoTexasInstrumentsINA3221ProcessStatusDataIndexedCallChain]
+  *TArduinoTexasInstrumentsINA3221WarningAlert : TArduinoTexasInstrumentsINA3221Alert;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221SumAlert' )]
+  [ParentImage( TArduinoBasicAlarm )]
+  [ArduinoTexasInstrumentsINA3221ProcessStatusDataCallChain]
+  *TArduinoTexasInstrumentsINA3221SumAlert : TArduinoTexasInstrumentsINA3221Alert;
+//---------------------------------------------------------------------------
+//  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221ChannelAlerts' )]
+  [ParentImage( TArduinoBasicAlarm )]
+  [TArduinoTexasInstrumentsINA3221AlertUpdateRegistersCallChain]
+  [ArduinoTexasInstrumentsINA3221ProcessStatusDataIndexedCallChain]
+  TArduinoTexasInstrumentsINA3221ChannelAlerts : TArduinoCodePersistent
+
+    Critical : TArduinoTexasInstrumentsINA3221CriticalAlert
+    Warning : TArduinoTexasInstrumentsINA3221WarningAlert
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoTexasInstrumentsINA3221ChannelConfigCallChain]
+  [ArduinoTexasInstrumentsINA3221ChannelReadDataCallChain]
+  [ArduinoTexasInstrumentsINA3221ProcessStatusDataCallChain]
+  [ArduinoTexasInstrumentsINA3221ApplyChannelSumMaskCallChain]
+  [ArduinoTexasInstrumentsINA3221ChannelAllClockedNeedsShuntBusCallChain]
+  [TArduinoTexasInstrumentsINA3221AlertUpdateRegistersCallChain]
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221Channel' )]
+  [ParentImage( ArduinoViSiGenieGaugesToolbarCategory )]
+  +TArduinoTexasInstrumentsINA3221Channel : TArduinoTexasInstrumentsINA3221BasicChannel
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Power (mW)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Bus Voltage (V)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Current (mA)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Shunt Voltage (mV)', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [Name( 'Shunt Resistor (Ohms)' )]
+    [MinValue( 0.000001 )]
+    ShuntResistor : Single = 20.0
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateMaskRegister' )]
+    AddToSum : Boolean = True
+    
+    Alerts : TArduinoTexasInstrumentsINA3221ChannelAlerts
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221SumChannel' )]
+  [Name( 'Sum' )]
+  [ArduinoTexasInstrumentsINA3221ProcessStatusDataCallChain]
+  [ArduinoTexasInstrumentsINA3221ChannelReadDataCallChain]
+  +TArduinoTexasInstrumentsINA3221SumChannel : TArduinoTexasInstrumentsINA3221BasicChannel
+
+    [NamePostfix( ' (mV)' )]
+    ShuntVoltageOutputPin : TOWArduinoAnalogSourcePin
+
+    Alert : TArduinoTexasInstrumentsINA3221SumAlert
+
+  ; 
+//---------------------------------------------------------------------------
+  [PropertyFixedListDesign]
+  [PropertyListDesignValue( '140' )]
+  [PropertyListDesignValue( '204' )]
+  [PropertyListDesignValue( '332' )]
+  [PropertyListDesignValue( '588' )]
+  [PropertyListDesignValue( '1100' )]
+  [PropertyListDesignValue( '2116' )]
+  [PropertyListDesignValue( '4156' )]
+  [PropertyListDesignValue( '8244' )]
+  [NamePostfix( 'uS' )]
+  TArduinoTexasInstrumentsINAConversionTimeAttribute : TAttributeCollectionAttribute;  
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINAConversionTime' )]
+  TArduinoTexasInstrumentsINAConversionTime : TArduinoCodePersistent
+
+    [TArduinoTexasInstrumentsINAConversionTime]
+    Bus : Unsigned = 1100
+
+    [TArduinoTexasInstrumentsINAConversionTime]
+    Shunt : Unsigned = 1100
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221AlertsLatching' )]
+  TArduinoTexasInstrumentsINA3221AlertsLatching : TArduinoCodePersistent
+  
+    Warning : Boolean = False
+    Critical : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221PowerValidLimits' )]
+  TArduinoTexasInstrumentsINA3221PowerValidLimits : TArduinoCodePersistent
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlertsMinLimitRegister' )]
+    [MinValue( 0.0 )]
+    Min : Single = 9.0
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlertsMaxLimitRegister' )]
+    [MinValue( 0.0 )]
+    Max : Single = 10.0
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221PowerValid' )]
+  TArduinoTexasInstrumentsINA3221PowerValid : TArduinoCodePersistent
+
+    OutputPin : TOWArduinoDigitalSourcePin
+    
+    Limits : TArduinoTexasInstrumentsINA3221PowerValidLimits
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::TArduinoTexasInstrumentsINA3221Alerts' )]
+  [ParentImage( TArduinoBasicAlarm )]
+  *TArduinoTexasInstrumentsINA3221Alerts : TArduinoCodePersistent
+    
+    PowerValid : TArduinoTexasInstrumentsINA3221PowerValid
+
+    BadTimingOutputPin : TOWArduinoDigitalSourcePin
+    
+    Latching : TArduinoTexasInstrumentsINA3221AlertsLatching    
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TexasInstruments_INA3221.h' )]
+  [ArduinoWebKeywords( 'INA3221' )]
+  [Name( 'Texas Instruments INA3221 Voltage/Current/Power (I2C)' )]
+  [CreateName( 'VoltageCurrentPower' )]
+  [ArduinoClass( 'Mitov::TexasInstrumentsINA3221' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoTexasInstrumentsINA3221 : TArduinoClockedEnableFlexibleI2CComponent
+  
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    ResetInputPin : TOWArduinoClockSinkPin
+    
+    [AddItem( TArduinoTexasInstrumentsINA3221Channel, 3 )]
+    [AddItem( TArduinoTexasInstrumentsINA3221SumChannel )]
+    [ArduinoTexasInstrumentsINA3221ChannelConfigCallChain]
+    [ArduinoTexasInstrumentsINA3221ChannelReadDataCallChain]
+    [ArduinoTexasInstrumentsINA3221ProcessStatusDataCallChain]
+    [ArduinoTexasInstrumentsINA3221ApplyChannelSumMaskCallChain]
+    [ArduinoTexasInstrumentsINA3221ChannelAllClockedNeedsShuntBusCallChain]
+    [TArduinoTexasInstrumentsINA3221AlertUpdateRegistersCallChain]
+    Channels : TArduinoFixedPersistentCollection
+    
+    [DesignRange( $40, $43 )]
+    Address = $40
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    SingleShot : Boolean = False
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '64' )]
+    [PropertyListDesignValue( '128' )]
+    [PropertyListDesignValue( '256' )]
+    [PropertyListDesignValue( '512' )]
+    [PropertyListDesignValue( '1024' )]
+    Averaging : Unsigned = 1
+    
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    PowerDown : Boolean = False
+    
+    VoltageConversionTime : TArduinoTexasInstrumentsINAConversionTime
+    
+    Alerts : TArduinoTexasInstrumentsINA3221Alerts
+    
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

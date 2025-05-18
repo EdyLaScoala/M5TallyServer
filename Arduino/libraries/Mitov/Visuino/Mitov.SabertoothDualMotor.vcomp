@@ -1,0 +1,12 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::SabertoothDualMotorSimple' )]
+  [Name( 'Sabertooth Dual DC Motor Shield (Simple Serial)' )]
+  [ArduinoStart]
+  +TArduinoSabertoothDualMotorSimple : TArduinoSabertoothDualMotorBasic
+
+    SlaveSelectOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

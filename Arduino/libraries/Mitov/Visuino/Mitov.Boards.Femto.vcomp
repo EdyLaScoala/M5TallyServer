@@ -1,0 +1,61 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'FemtoDuino' )]
+  TFemtoDuinoCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'CortexM0' )]
+  [Category( TFemtoDuinoCategory )]
+  [AlternateCategory( TCortexM0Category )]
+  [ParentImage( TCortexM0Category )]
+  TFemtoDuinoCortexM0Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'LED' )]
+  [CreateName( 'LED' )]
+  [ArduinoInclude( 'Mitov_Femto_LED.h' )]
+  [ArduinoClass( 'Mitov::ArduinoFemtoLED' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoShieldPin( '3', 'LED Green' )]
+  [ArduinoShieldPin( '4', 'LED Red' )]
+  [ArduinoShieldPin( '10', 'LED Blue' )]
+  +TArduinoFemtoLEDModule : TArduinoShield
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Femto USB' )]
+  [ArduinoDefine( 'VISUINO_FEMTO_USB' )]
+  [ArduinoBoardCompileParams( 'femtoduino:samd:atsamd21e18a' )]
+  [ArduinoBoardCompileParams( 'femtoduino:samd:atsamd21e18a_ice' )]
+  [ArduinoBoardCompileParams( 'femtoduino:samd:atsamr21e18a' )]
+  [ArduinoBoardCompileParams( 'femtoduino:samd:atsamr21e18a_ice' )]
+  [Category( TFemtoDuinoCortexM0Category )]
+  [ParentImage( TFemtoDuinoCategory )]
+  +TArduinoFemtoUSBBoard : TArduinoSamdBasicBoard
+  
+    [AddItem( TArduinoFemtoLEDModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3,  1, TArduinoBasicDigitalPWMInterruptChannel, 'Digital(LED Green)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoBasicDigitalPWMChannel, 'Digital(LED Red)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  2, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoBasicDigitalPWMSPI0InterruptChannel, 'Digital(SPI-CS)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoBasicDigitalPWMSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9,  1, TArduinoBasicDigitalPWMSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 1, TArduinoBasicDigitalPWMSPI0InterruptChannel, 'Digital(SPI-SCK)(LED Blue)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 11, 0, 1, TArduinoCombinedAnalogInOutDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 12, 1, 4, TArduinoCombinedAnalogDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25,  1, TArduinoAdditionalDigitalInterruptChannel )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,27 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::Maxim_MAX7300_Channel' )]
+  +TArduinoMaximMAX7300Channel : TArduinoBasicDigitalPullUpGPIOChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Maxim_MAX7300.h' )]
+  [ArduinoClass( 'Mitov::Maxim_MAX7300' )]
+  [Name( 'Maxim MAX7300 GPIO' )]
+  [CreateName( 'GPIO' )]
+  [ArduinoWebKeywords( 'Maxim MAX7300' )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoVariable( Boolean, 'FModifiedMap' )]
+  [ArduinoVariable( Boolean, 'FModifiedPorts' )]
+  +TArduinoMaximMAX7300 : TArduinoEnableI2CGPIO
+
+    [DesignRange( 0, 15 )]
+    Address = 0
+
+    [AddIndexedStartNamedItem( TArduinoMaximMAX7300Channel, 4, 'Channel', 28 )]
+    Channels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

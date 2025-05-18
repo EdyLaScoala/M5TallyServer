@@ -1,0 +1,71 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoPotentiometers : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoBasicPotentiometerShieldElement : TArduinoCodeEnabledPersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Servo 1' )]
+  [ArduinoTemplateParameter( 'PIN', '11' )]
+  [ArduinoShieldPin( '11', 'Servo 1' )]
+  +TArduinoSinoning4PotentiometersServosModule_Servo1 : TArduinoBasicStandardServoChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Servo 2' )]
+  [ArduinoTemplateParameter( 'PIN', '10' )]
+  [ArduinoShieldPin( '10', 'Servo 2' )]
+  +TArduinoSinoning4PotentiometersServosModule_Servo2 : TArduinoBasicStandardServoChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Servo 3' )]
+  [ArduinoTemplateParameter( 'PIN', '9' )]
+  [ArduinoShieldPin( '9', 'Servo 3' )]
+  +TArduinoSinoning4PotentiometersServosModule_Servo3 : TArduinoBasicStandardServoChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Servo 4' )]
+  [ArduinoTemplateParameter( 'PIN', '6' )]
+  [ArduinoShieldPin( '6', 'Servo 4' )]
+  +TArduinoSinoning4PotentiometersServosModule_Servo4 : TArduinoBasicStandardServoChannel;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::InvertedAnalogInputPinSensor' )]
+  TArduinoSinoning4PotentiometersServosModule_Potentiometer_Basic : TArduinoBasicPotentiometerPersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Potentiometer 1' )]
+  [ArduinoTemplateParameter( 'PIN', '0' )]
+  [ArduinoShieldPin( 'A0', 'Potentiometer 1' )]
+  +TArduinoSinoning4PotentiometersServosModule_Potentiometer1 : TArduinoSinoning4PotentiometersServosModule_Potentiometer_Basic;
+//---------------------------------------------------------------------------
+  [Name( 'Potentiometer 2' )]
+  [ArduinoTemplateParameter( 'PIN', '1' )]
+  [ArduinoShieldPin( 'A1', 'Potentiometer 2' )]
+  +TArduinoSinoning4PotentiometersServosModule_Potentiometer2 : TArduinoSinoning4PotentiometersServosModule_Potentiometer_Basic;
+//---------------------------------------------------------------------------
+  [Name( 'Potentiometer 3' )]
+  [ArduinoTemplateParameter( 'PIN', '2' )]
+  [ArduinoShieldPin( 'A2', 'Potentiometer 3' )]
+  +TArduinoSinoning4PotentiometersServosModule_Potentiometer3 : TArduinoSinoning4PotentiometersServosModule_Potentiometer_Basic;
+//---------------------------------------------------------------------------
+  [Name( 'Potentiometer 4' )]
+  [ArduinoTemplateParameter( 'PIN', '3' )]
+  [ArduinoShieldPin( 'A3', 'Potentiometer 4' )]
+  +TArduinoSinoning4PotentiometersServosModule_Potentiometer4 : TArduinoSinoning4PotentiometersServosModule_Potentiometer_Basic;
+//---------------------------------------------------------------------------
+  [Name( 'Sinoning 4 Potentiometers and Servos' )]
+  [CreateName( 'Potentiometers and Servos' )]
+  [Category( TArduinoRobotsToolbarCategory )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [PersistentCollection( TArduinoBasicShields )]
+  +TArduinoSinoning4PotentiometersServosModule : TArduinoShield, IStandardShield, INanoShield
+
+    [AddItem( TArduinoSinoning4PotentiometersServosModule_Servo1 )]
+    [AddItem( TArduinoSinoning4PotentiometersServosModule_Servo2 )]
+    [AddItem( TArduinoSinoning4PotentiometersServosModule_Servo3 )]
+    [AddItem( TArduinoSinoning4PotentiometersServosModule_Servo4 )]
+    Servos : TArduinoServos
+
+    [AddItem( TArduinoSinoning4PotentiometersServosModule_Potentiometer1 )]
+    [AddItem( TArduinoSinoning4PotentiometersServosModule_Potentiometer2 )]
+    [AddItem( TArduinoSinoning4PotentiometersServosModule_Potentiometer3 )]
+    [AddItem( TArduinoSinoning4PotentiometersServosModule_Potentiometer4 )]
+    Potentiometers : TArduinoPotentiometers
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

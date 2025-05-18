@@ -1,0 +1,21 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Arduino Ethernet' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:ethernet' )]
+  [Category( TArduinoAVRCategory )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_ETHERNET' )]
+  +TArduino_Ethernet_Board : TArduino_AVR328_Basic_DigitalChannels_Board
+
+    [AddItem( TArduinoEthernetModule )]
+    [AddItem( TArduinoEthernetShieldMicroSDModule )]
+    Modules
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;  
+//---------------------------------------------------------------------------
+; // Mitov

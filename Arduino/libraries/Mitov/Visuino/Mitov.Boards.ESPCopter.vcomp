@@ -1,0 +1,100 @@
+Mitov
+//---------------------------------------------------------------------------
+  ['{AE9842F3-0644-45D0-96A2-40FD72D2AD81}']
+  IESPCopterShield : Interface;
+//---------------------------------------------------------------------------
+  [Name( 'ESPCopter' )]
+  TESPCopterCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IESPCopterShield )]
+  TArduinoESPCopterShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TESPCopterCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TESPCopterESP8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  TArduinoESPCopterMotorsModuleChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DirectMotorDriverForwardChannel' )]
+  [ArduinoStart]
+  TArduinoESPCopterMotorsModuleBasicChannel : TArduinoBasicNamedMotorShieldChannel
+
+    InitialValue = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Front/Left' )]
+  [ArduinoTemplateParameter( 'C_PIN', '14' )]
+  [ArduinoTemplateParameter( 'C_RANGE', '200' )]
+  +TArduinoESPCopterMotorsModuleChannelFrontLeft : TArduinoESPCopterMotorsModuleBasicChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Front/Right' )]
+  [ArduinoTemplateParameter( 'C_PIN', '15' )]
+  [ArduinoTemplateParameter( 'C_RANGE', '200' )]
+  +TArduinoESPCopterMotorsModuleChannelFrontRight : TArduinoESPCopterMotorsModuleBasicChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Back/Left' )]
+  [ArduinoTemplateParameter( 'C_PIN', '12' )]
+  [ArduinoTemplateParameter( 'C_RANGE', '200' )]
+  +TArduinoESPCopterMotorsModuleChannelBackLeft : TArduinoESPCopterMotorsModuleBasicChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Back/Right' )]
+  [ArduinoTemplateParameter( 'C_PIN', '13' )]
+  [ArduinoTemplateParameter( 'C_RANGE', '200' )]
+  +TArduinoESPCopterMotorsModuleChannelBackRight : TArduinoESPCopterMotorsModuleBasicChannel;
+//---------------------------------------------------------------------------
+  [CreateName( 'Motors' )]
+  [Name( 'Motors' )]
+  [ParentImage( TArduinoESPCopterMotorsModuleBasicChannel )]
+  +TArduinoESPCopterMotorsModule : TArduinoShield
+
+    [AddItem( TArduinoESPCopterMotorsModuleChannelFrontLeft )]
+    [AddItem( TArduinoESPCopterMotorsModuleChannelFrontRight )]
+    [AddItem( TArduinoESPCopterMotorsModuleChannelBackLeft )]
+    [AddItem( TArduinoESPCopterMotorsModuleChannelBackRight )]
+    Motors : TArduinoESPCopterMotorsModuleChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x68 >' )]
+  TArduinoESPCopterGyroscopeAccelerometerCompassModule : TArduinoBasicGyroscopeAccelerometerCompassModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ESPCopter.h' )]
+  [ArduinoClass( 'Mitov::ArduinoRGBESPCopterModule' )]
+  [ArduinoTemplateParameter( 'C_Red', '2' )] // Red
+  [ArduinoTemplateParameter( 'C_Green', '0' )] // Green
+  [ArduinoTemplateParameter( 'C_Blue', '16' )] // Blue
+  TArduinoESPCopterRGBLEDModule : TArduinoBasicRGBLEDModule;
+//---------------------------------------------------------------------------
+  [Name( 'ESPCopter' )]
+  [Category( TESPCopterESP8266Category )]
+  [ParentImage( TESPCopterCategory )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:generic:baud=921600' )]  
+  +TArduinoESPCopterBoard : TArduinoESP8266_Basic_DefaultPins_Board
+
+    [AddItem( TArduinoESPCopterMotorsModule )]
+    [AddItem( TArduinoESPCopterRGBLEDModule )]
+    [AddItem( TArduinoESPCopterGyroscopeAccelerometerCompassModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0,  1, 'LED Green' )]
+    [ArduinoBoard_Add_ReservedChannels( 1,  1, 'TX0)(LED Red' )]
+    [ArduinoBoard_Add_ReservedChannels( 2,  1, 'TX1)(LED Red' )]
+    [ArduinoBoard_Add_ReservedChannels( 3,  3, 'RX0' )]
+    [ArduinoBoard_Add_ReservedChannels( 16, 1 )]
+    Digital
+
+    [Name( 'Analog Input' )]
+    [ArduinoBoard_Add_AnalogInputChannels( 0, 1, TArduinoESP8266AnalogInputChannel, 'Analog Input' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoESPCopterShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

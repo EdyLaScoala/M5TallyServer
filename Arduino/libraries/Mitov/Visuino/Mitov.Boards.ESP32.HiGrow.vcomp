@@ -1,0 +1,41 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Moisture' )]
+  [CreateName( 'Moisture' )]
+  [ArduinoTemplateParameter( 'PIN', '32' )]
+  [ArduinoClass( 'Mitov::InvertedAnalogInputPinSensor' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoESP32HiGrowMoistureSensor : TArduinoBasicAnalogSensorModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'INTERRUPT', 'Interrupts::Handler22' )]
+  [ArduinoAddInterruptHandler( 'SensorOutputPin', '22', True, False )]
+  [ArduinoClass( 'Mitov::DHTSensor_Interrupt' )]
+  +TArduinoESP32HiGrowDHT11Module : TArduinoBasicDHTModule;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32:PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none' )]
+  [ParentImage( TArduinoESP32HiGrowMoistureSensor )]
+  TArduinoESP32HiGrowBasicBoard : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard
+  
+    [AddItem( TArduinoESP32HiGrowDHT11Module )]
+    [AddItem( TArduinoESP32HiGrowMoistureSensor )]
+    Modules
+    
+    [ArduinoBoard_Add_ReservedChannels( 0, 21 )]
+    [ArduinoBoard_Add_ReservedChannel( 22, 'DTH11' )]
+    [ArduinoBoard_Add_ReservedChannels( 23, 4 )]
+    [ArduinoBoard_Add_ReservedChannel( 32, 'Moisture' )]
+    [ArduinoBoard_Add_ReservedChannels( 33, 4 )]
+    [ArduinoBoard_Add_ReservedChannel( 39 )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32 HiGrow' )]
+  [Category( TESP32Category )]
+  +TArduinoESP32HiGrowBoard : TArduinoESP32HiGrowBasicBoard;
+//---------------------------------------------------------------------------
+  [Name( 'DIY More ESP32 HiGrow' )]
+  [Category( TDIYMoreESP32Category )]
+  +TArduinoESP32DIYHiGrowBoard : TArduinoESP32HiGrowBasicBoard;
+//---------------------------------------------------------------------------
+; // Mitov

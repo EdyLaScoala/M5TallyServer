@@ -1,0 +1,134 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoRTCDS3231Alarm1Mode : Enum
+
+    rtc3231a1mOncePerSecond
+    rtc3231a1mOnSeconds
+    rtc3231a1mOnMinutesSeconds
+    rtc3231a1mOnHoursMinutesSeconds
+    rtc3231a1mOnDateHoursMinutesSeconds
+    rtc3231a1mOnWeekDayHoursMinutesSeconds
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCDS3231Alarm2Mode : Enum
+
+    rtc3231a2mOncePerMinute
+    rtc3231a2mOnMinutes
+    rtc3231a2mOnHoursMinutes
+    rtc3231a2mOnDateHoursMinutes
+    rtc3231a2mOnWeekDayHoursMinutes
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCDS3231BasicAlarm : TArduinoWeeklyBasicAlarm
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl' )]
+    [OldName( 'InterrupEnabled' )]
+    InterruptEnabled : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefineOnConnectedOrNotDefault( '_MITOV_DS3231_RTC_ALARM_ONE_' )]
+  [ArduinoClass( 'Mitov::TArduinoRTCDS3231AlarmOne' )]
+  TArduinoRTCDS3231AlarmOne : TArduinoRTCDS3231BasicAlarm
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmOneMinute' )]
+    Minute
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmOneHour' )]
+    Hour
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmOneDate' )]
+    Date
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmOneWeekDay' )]
+    WeekDay
+
+    [ValueRange( 0, 59 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmOneSecond' )]
+    Second : Unsigned = 0
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmOne' )]
+    Mode : TArduinoRTCDS3231Alarm1Mode = rtc3231a1mOnHoursMinutesSeconds
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefineOnConnectedOrNotDefault( '_MITOV_DS3231_RTC_ALARM_TWO_' )]
+  [ArduinoClass( 'Mitov::TArduinoRTCDS3231AlarmTwo' )]
+  TArduinoRTCDS3231AlarmTwo : TArduinoRTCDS3231BasicAlarm
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmTwoMinute' )]
+    Minute
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmTwoHour' )]
+    Hour
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmTwoDate' )]
+    Date
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmTwoWeekDay' )]
+    WeekDay
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAlarmTwo' )]
+    Mode : TArduinoRTCDS3231Alarm2Mode = rtc3231a2mOnHoursMinutes
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RTC_DS3231.h' )]
+  [ArduinoClass( 'Mitov::RTC_DS3231' )]
+  [ArduinoPinDefinePrefix( '_MITOV_DS3231' )]
+  TArduinoRTCDS3231_Basic_Extender : Extender
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    TemperatureOutputPin : TOWArduinoAnalogSourcePin
+
+    [Name( 'Alarm[ 1 ]' )]
+    AlarmOne : TArduinoRTCDS3231AlarmOne
+
+    [Name( 'Alarm[ 2 ]' )]
+    AlarmTwo : TArduinoRTCDS3231AlarmTwo
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCDS3231_Extender : TArduinoRTCDS3231_Basic_Extender
+
+    [ArduinoUseBindingCheckSetter( 'UpdateHalt' )]
+    Halt : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoUseParentTemplateParams]
+  TArduinoRTCDS3231BasicElement : TArduinoCodeEnabledClockedPersistent, TArduinoRTCDS3231_Extender
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+    [OWPrimaryPin]
+    SetInputPin : TOWArduinoDateTimeSinkPin
+
+    [ComponentEditorEntryDesign( 'Edit &Clock Elements ...', True )]
+    Elements : TArduinoRTCElements
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCDS3231Element : TArduinoRTCDS3231BasicElement
+
+    [DesignRange( $68, $68 )]
+    Address : TArduinoUInt8 = $68
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  TArduinoRTCDS3231BasicModule : TArduinoBasicHaltRTCModule, TArduinoRTCDS3231_Basic_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,87 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '10' )]
+  TArduinoTouchScreenTFTLCDShieldMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoTFTLCDShieldTouchCoordinate' )]
+  TArduinoTFTLCDShieldTouchCoordinate : TArduinoCodePersistent
+
+    Raw : Boolean = False
+
+    [ValueRange( 0, 1023 )]
+    MinRaw : Unsigned = 130
+
+    [ValueRange( 0, 1023 )]
+    MaxRaw : Unsigned = 900
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoTFTLCDShieldTouchYCoordinate : TArduinoTFTLCDShieldTouchCoordinate
+
+    MinRaw = 68
+    MaxRaw = 898
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoInclude( 'Mitov_TouchScreen.h' )]
+  [ArduinoClass( 'Mitov::TFTShieldTouchScreen' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoDisplayFT800Touch )]
+  +TArduinoTFTLCDShieldTouch : TArduinoCodePersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    XOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    YOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    PressureOutputPin : TOWArduinoAnalogSourcePin
+
+    MinPressure : Single = 0.01
+
+    XCoordinate : TArduinoTFTLCDShieldTouchCoordinate
+    YCoordinate : TArduinoTFTLCDShieldTouchYCoordinate
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Display_ILI9341_Parallel.h' )]
+  [ArduinoClass( 'Mitov::DisplayILI9341' )]
+  [Name( 'TFT Color Touch Screen Display ILI9341 Shield' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::DisplayILI9341OptimizedD2D9A0A4' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoShieldPin( '2' )]
+  [ArduinoShieldPin( '3' )]
+  [ArduinoShieldPin( '4' )]
+  [ArduinoShieldPin( '5' )]
+  [ArduinoShieldPin( '6' )]
+  [ArduinoShieldPin( '7' )]
+  [ArduinoShieldPin( '8' )]
+  [ArduinoShieldPin( '9' )]
+  [ArduinoShieldPin( '10' )]
+  [ArduinoShieldPin( '11' )]
+  [ArduinoShieldPin( '12' )]
+  [ArduinoShieldPin( '13' )]
+  [ArduinoShieldPin( '14' )]
+  [ArduinoShieldPin( '15' )]
+  [ArduinoShieldPin( '16' )]
+  [ArduinoShieldPin( '17' )]
+  [ArduinoShieldPin( '18' )]
+  +TArduinoTouchScreenTFTLCDShield : TArduinoDisplayILI9341BasicParallelShield
+
+    MicroSD : TArduinoTouchScreenTFTLCDShieldMicroSDModule
+    Touch : TArduinoTFTLCDShieldTouch
+    
+    [RearrangeOrder]
+    Elements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,32 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::VirtualSerialData' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoCallChain( 'SendData' )]
+  [ArduinoCallChainParameter( 'uint32_t ALength' )]
+  [ArduinoCallChainParameter( 'uint8_t * AData' )]
+  TArduinoVirtualSerialData : TArduinoCodePersistent
+
+    InputPin : TOWArduinoByteSinkPin
+    OutputPin : TOWArduinoByteSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Virtual Serial Port' )]
+  [CreateName( 'VirtualSerial' )]
+  [ArduinoInclude( 'Mitov_VirtualSerial.h' )]
+  [ArduinoClass( 'Mitov::VirtualSerial' )]
+  +TArduinoVirtualSerial : TArduinoBasicCommonSerialComponent
+
+    [ArduinoIfPinConnectedExclusiveAddPostfix( '_Stream' )]
+    InputPin
+
+    Data : TArduinoVirtualSerialData
+
+    [MaxValue( 255 )]
+    BufferSize : Unsigned = 100
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,76 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'QT Py' )]
+  [Category( TAdafruitCategory )]
+  TAdafruitQT_PyCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  ['{06DAB69A-7FA2-4CBF-BCE5-D3E24CA44BFC}']
+  IAdafruitQT_PyShield : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IAdafruitQT_PyShield )]
+  TArduinoAdafruitQT_PyShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitQT_PyShieldsExtender : Extender
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoAdafruitQT_PyShields
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '11' )]
+  +TArduinoAdafruitQTPyM0_RGBLed : TArduinoNeoPixelRGBLedBasicGBRLedModule;
+//---------------------------------------------------------------------------
+  [Name( 'QT Py - SAMD21' )]
+  [ArduinoDefine( 'VISUINO_FEATHER_M0_BASIC' )]
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_qtpy_m0:opt=small,usbstack=arduino,debug=off' )]
+  [Category( TAdafruitQT_PyCategory )]
+  [Category( TAdafruitCortexM0Category )]
+  [ArduinoInclude( 'Mitov_DirectMap_Pins.h' )]
+  +TArduinoAdafruitQTPyM0_Board : TArduinoSamdBasicBoard, TArduinoAdafruitQT_PyShieldsExtender
+
+    [AddItem( TArduinoAdafruitQTPyM0_RGBLed )]
+    Modules
+
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 0, 0, 11, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(RX)' )]
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(TX)' )]
+
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  2, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3, 23, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 22, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Digital(5V)' )]
+
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9, 25, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 2, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+//    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital(LED)' )]
+
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 0 ]/Digital' )]
+//    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 5, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+    
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  0, TArduinoCombinedAnalogTouchDigitalPullUpDownAnalogOutputInterruptChannel, 'Digital/Touch/Analog In/Out[ 0 ]', 'D0' )] // 2
+    [ArduinoBoard_Add_DigitalAnalogChannel(  1, TArduinoCombinedTouchPullUpPullDownAnalogDigitalInterruptChannel, 'Digital/Touch/Analog[ 1 ]', 'D1' )] // 3 // No PWM
+    [ArduinoBoard_Add_DigitalAnalogChannel(  2, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'Digital/Touch/Analog[ 2 ]', 'D2' )] // 4
+    [ArduinoBoard_Add_DigitalAnalogChannel(  3, TArduinoCombinedTouchPullDownAnalogDigitalInterruptChannel, 'Digital/Touch/Analog[ 3 ]', 'D3' )] // 5
+
+    [ArduinoBoard_Add_DigitalAnalogChannel(  4, TArduinoAdditionalDigitalPullUpDownPWMI2C0InterruptChannel, 'Digital[ 4 ](I2C-SDA)', 'D4' )] // 16(0) ?
+    [ArduinoBoard_Add_DigitalAnalogChannel(  5, TArduinoAdditionalDigitalPullUpDownPWMI2C0InterruptChannel, 'Digital[ 5 ](I2C-SDA)', 'D5' )] // 17(1) ?
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  6, TArduinoCombinedTouchPullDownAnalogDigitalSerial1InterruptChannel, 'Digital/Analog[ 6 ](TX1)', 'D6' )] // 6
+    [ArduinoBoard_Add_DigitalAnalogChannel(  7, TArduinoCombinedTouchPullDownAnalogDigitalSerial1InterruptChannel, 'Digital/Analog[ 7 ](RX1)', 'D7' )] // 7
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel(  8, TArduinoDigitalPullDownOpenDrainPWMSPI0InterruptChannel, 'Digital[ 8 ](SPI-SCK)', 'D8' )] // 16(0) ? Analog In
+    [ArduinoBoard_Add_DigitalAnalogChannel(  9, TArduinoDigitalPullDownOpenDrainPWMSPI0InterruptChannel, 'Digital[ 9 ](SPI-MISO)', 'D9' )] // 16(0) ? Analog In
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoDigitalPullDownOpenDrainPWMSPI0InterruptChannel, 'Digital[ 10 ](SPI-MOSI)', 'D10' )] // 16(0) ? Analog In
+    
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------  
+; // Mitov

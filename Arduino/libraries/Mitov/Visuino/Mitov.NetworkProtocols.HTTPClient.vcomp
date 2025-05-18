@@ -1,0 +1,195 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ProcessData' )]
+  [ArduinoCallChainIndex]
+  [ArduinoPopulatedCallChainParameter( 'void *', 'AData' )]
+  TArduinoNetworkProtocolsHTTPClientRequestProcessDataCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'AddFields' )]
+  [ArduinoPopulatedCallChainParameter( 'String &', 'AText' )]
+  TArduinoNetworkProtocolsHTTPClientRequestAddFieldsCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoNetworkProtocolsHTTPClientRequestProcessDataCallChain]
+  TArduinoNetworkProtocolsHTTPClientRequests : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [TArduinoNetworkProtocolsHTTPClientRequestAddFieldsCallChain]
+  TArduinoNetworkProtocolsHTTPClientHaderFields : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestResponse' )]
+  TArduinoNetworkProtocolsHTTPClientRequestResponse : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteCharTextSourcePin
+
+    [OWPrimaryPin]
+    ContentOutputPin : TOWArduinoByteCharTextSourcePin
+
+    StatusCodeOutputPin : TOWArduinoUnsignedSourcePin
+    TimeoutOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MitovHTTPClientRequest' )]
+  [ArduinoInclude( 'Mitov_HTTP_Client.h' )]
+  [PersistentCollection( TArduinoNetworkProtocolsHTTPClientRequests )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoVariable( Boolean, 'FClocked' )]
+  [ArduinoLoopBegin]
+  [ArduinoDeclaredClass]
+  TArduinoNetworkProtocolsHTTPClientRequestBasic : TArduinoBasicNamedExludePersistent
+  
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [PropertyListDesignValue( 'text/html' )]
+    [PropertyListDesignValue( 'application/json' )]
+    [PropertyListDesignValue( 'text/plain' )]
+    [PropertyListDesignValue( 'image/png' )]
+    [PropertyListDesignValue( 'image/jpeg' )]
+    [PropertyListDesignValue( 'image/gif' )]
+    ContentType : String = 'text/html'
+
+    [PropertyListDesignValue( 'no-cache' )]
+    [PropertyListDesignValue( 'no-store' )]
+    [PropertyListDesignValue( 'max-age = 1' )]
+    [PropertyListDesignValue( 'min-fresh = 1' )]
+    [PropertyListDesignValue( 'no-transform' )]
+    [PropertyListDesignValue( 'only-if-cached' )]
+    CacheControl : String = 'no-cache'
+
+    [PropertyListDesignValue( 'close' )]
+    [PropertyListDesignValue( 'keep-alive' )]
+    Connection : String = 'close'
+
+    ContentLength : Boolean = True
+
+    [MultiLine]
+    [ArduinoUseBindingSetter]
+    Content : String = ''
+
+    Fields : TArduinoNetworkProtocolsHTTPClientHaderFields
+
+    Response : TArduinoNetworkProtocolsHTTPClientRequestResponse
+
+    [NamePostfix( ' (mS)' )]
+    Timeout : Unsigned = 15000
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoNetworkProtocolsHTTPClientRequestBasicURL : TArduinoNetworkProtocolsHTTPClientRequestBasic
+
+    URL : String = '/'
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'GET' )]
+  [CreateName( 'GET' )]
+  [ArduinoTemplateParameter( 'IMPLEMENTATION', 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestGET' )]
+  +TArduinoNetworkProtocolsHTTPClientRequestGET : TArduinoNetworkProtocolsHTTPClientRequestBasicURL
+
+    ContentLength = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'HEAD' )]
+  [CreateName( 'HEAD' )]
+  [ArduinoTemplateParameter( 'IMPLEMENTATION', 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestHEAD' )]
+  +TArduinoNetworkProtocolsHTTPClientRequestHEAD : TArduinoNetworkProtocolsHTTPClientRequestBasicURL
+
+    ContentLength = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'DELETE' )]
+  [CreateName( 'DELETE' )]
+  [ArduinoTemplateParameter( 'IMPLEMENTATION', 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestDELETE' )]
+  +TArduinoNetworkProtocolsHTTPClientRequestDELETE : TArduinoNetworkProtocolsHTTPClientRequestBasicURL
+  
+    ContentLength = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'CONNECT' )]
+  [CreateName( 'CONNECT' )]
+  [ArduinoTemplateParameter( 'IMPLEMENTATION', 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestCONNECT' )]
+  +TArduinoNetworkProtocolsHTTPClientRequestCONNECT : TArduinoNetworkProtocolsHTTPClientRequestBasicURL
+
+    ContentLength = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'OPTIONS' )]
+  [CreateName( 'OPTIONS' )]
+  [ArduinoTemplateParameter( 'IMPLEMENTATION', 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestOPTIONS' )]
+  +TArduinoNetworkProtocolsHTTPClientRequestOPTIONS : TArduinoNetworkProtocolsHTTPClientRequestBasicURL
+
+    ContentLength = False
+    URL = '*'
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'TRACE' )]
+  [CreateName( 'TRACE' )]
+  [ArduinoTemplateParameter( 'IMPLEMENTATION', 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestTRACE' )]
+  +TArduinoNetworkProtocolsHTTPClientRequestTRACE : TArduinoNetworkProtocolsHTTPClientRequestBasicURL;
+//---------------------------------------------------------------------------
+  [Name( 'POST' )]
+  [CreateName( 'POST' )]
+  [ArduinoTemplateParameter( 'IMPLEMENTATION', 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestPOST' )]
+  +TArduinoNetworkProtocolsHTTPClientRequestPOST : TArduinoNetworkProtocolsHTTPClientRequestBasicURL;
+//---------------------------------------------------------------------------
+  [Name( 'PUT' )]
+  [CreateName( 'PUT' )]
+  [ArduinoTemplateParameter( 'IMPLEMENTATION', 'Mitov::TArduinoNetworkProtocolsHTTPClientRequestPUT' )]
+  +TArduinoNetworkProtocolsHTTPClientRequestPUT : TArduinoNetworkProtocolsHTTPClientRequestBasicURL;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::MitovHTTPClientHaderCustomField' )]
+  [Name( 'Custom Field' )]
+  [CreateName( 'Custom Field' )]
+  [PersistentCollection( TArduinoNetworkProtocolsHTTPClientHaderFields )]
+  +TArduinoNetworkProtocolsHTTPClientHaderCustomField : TArduinoBasicNamedPersistent
+  
+    Value : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_HTTP_Client.h' )]
+  [ArduinoClass( 'Mitov::MitovHTTPClient' )]
+  [Name( 'HTTP Client' )]
+  [CreateName( 'HTTPClient' )]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoVariable( Unsigned, 32, 'FEndTime' )]
+  [ArduinoVariable( Boolean, 'FCollectBuffer' )]
+  [ArduinoVariable( Boolean, 'FInProcessingContent' )]
+  [ArduinoVariable( Boolean, 'FNewLineDetected' )]
+  [ArduinoVariable( Boolean, 'FDetectedCR' )]
+  [ArduinoVariable( Boolean, 'FDetectedNL' )]
+  +TArduinoNetworkProtocolsHTTPClient : TArduinoComponent
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoPopulateSocket( ConfigureSocket, 'Port' )]
+    [ArduinoPopulateSocket( ConfigureSocket, 'Host' )]
+    OutputPin : TOWArduinoTCPClientSocketSourcePin
+
+    [PropertyListDesignValue( 'HTTP/1.0' )]
+    [PropertyListDesignValue( 'HTTP/1.1' )]
+    Version : String = 'HTTP/1.1'
+
+    Host : String = ''
+
+    [Name( 'User-Agent' )]
+    UserAgent : String = ''
+
+    [ComponentEditorEntryDesign( 'Add &Requests ...' )]
+    [ArduinoTemplateParameterCollectionPower( 'FRequestIndex', 1 )]
+    [ArduinoTemplateParameterCollectionCount]
+    Requests : TArduinoNetworkProtocolsHTTPClientRequests
+
+    ConfigureSocket : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

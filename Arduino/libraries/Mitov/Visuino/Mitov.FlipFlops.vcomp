@@ -1,0 +1,79 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_LogicFlipFlops.h' )]
+  [Category( TArduinoBooleanFlipFlopsToolbarCategory )]
+  [ArduinoStart]
+  TArduinoBasicFlipFlop : TArduinoCommonBooleanSource
+
+    [OWPrimaryPin]
+    InvertedOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::SRFlipFlop' )]
+  [CreateName( 'SRFlipFlop' )]
+  [Name( 'SR Flip-Flop' )]
+  +TArduinoSRFlipFlop : TArduinoBasicFlipFlop
+
+    [OWPrimaryPin]
+    SetInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    ResetInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoClockableFlipFlop : TArduinoSRFlipFlop
+
+    [OWPrimaryPin]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TFlipFlop' )]
+  [CreateName( 'TFlipFlop' )]
+  [Name( 'Toggle(T) Flip-Flop' )]
+  [ArduinoVariable( Boolean, 'FToggleValue' )]
+  [ArduinoStart]
+  +TArduinoTFlipFlop : TArduinoClockableFlipFlop
+
+    [OWPrimaryPin]
+    ToggleInputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::DFlipFlop' )]
+  [CreateName( 'DFlipFlop' )]
+  [Name( 'Data(D) Flip-Flop' )]
+  [ArduinoVariable( Boolean, 'FData' )]
+  +TArduinoDFlipFlop : TArduinoClockableFlipFlop
+
+    [OWPrimaryPin]
+    DataInputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::JKFlipFlop' )]
+  [CreateName( 'JKFlipFlop' )]
+  [Name( 'JK Flip-Flop' )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FJ' )]
+  [ArduinoVariable( Boolean, 'FK' )]
+  +TArduinoJKFlipFlop : TArduinoBasicFlipFlop
+
+    [OWPrimaryPin]
+    JInputPin : TOWArduinoDigitalSinkPin
+
+    [OWPrimaryPin]
+    KInputPin : TOWArduinoDigitalSinkPin
+
+    [OWPrimaryPin]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

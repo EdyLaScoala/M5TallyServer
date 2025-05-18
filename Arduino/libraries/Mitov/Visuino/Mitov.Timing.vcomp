@@ -1,0 +1,297 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::ClockGenerator' )]
+  [CreateName( 'ClockGenerator' )]
+  [Name( 'Clock Generator' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [AlternateCategory( TGeneratorsToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoClockGenerator : TArduinoCommonEnableClockSource
+
+    [DesignRange( 0.0001, 1000.0 )]
+    Frequency : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RandomGenerator.h' )]
+  [ArduinoClass( 'Mitov::RandomClockGenerator' )]
+  [CreateName( 'RandomClockGenerator' )]
+  [Name( 'Random Clock Generator' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [AlternateCategory( TGeneratorsToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoRandomClockGenerator : TArduinoCommonEnableClockSource
+
+    Seed : Integer = 0
+
+    [DesignRange( 0.0001, 1000.0 )]
+    [MinValue( 0.000001 )]
+    [ArduinoUseBindingCheck]
+    MinFrequency : Single = 0.1
+
+    [DesignRange( 0.0001, 1000.0 )]
+    [MinValue( 0.000001 )]
+    [ArduinoUseBindingCheck]
+    MaxFrequency : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TSynchronizationToolbarCategory )]
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::TimeoutTimer' )]
+  [Name( 'Timeout Timer' )]
+  [CreateName( 'Timeout' )]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  +TArduinoTimeoutTimer : TArduinoCommonEnableClockSource
+
+    [OWPrimaryPin]
+    StartInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    CancelInputPin : TOWArduinoClockSinkPin
+
+    [ NamePostfix( '(uS)' ) ]
+    Interval : Unsigned = 1000000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::Delay' )]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  [CreateName( 'Delay' )]
+  [Name( 'Delay' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoDelay : TArduinoCommonEnableClockSource
+
+    [OWPrimaryPin]
+    StartInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    [ NamePostfix( '(uS)' ) ]
+    Interval : Unsigned = 1000000
+
+    CanRestart : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::OnOffDelay' )]
+  [Name( 'On/Off Delay' )]
+  [CreateName( 'OnOffDelay' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoOnOffDelay : TArduinoCommonBooleanFilter
+
+    [ArduinoFlexibleVariable]
+    InitialValue : Boolean = False
+
+    [ NamePostfix( '(uS)' ) ]
+    OnInterval : Unsigned = 1000000
+
+    [ NamePostfix( '(uS)' ) ]
+    OffInterval : Unsigned = 1000000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::DetectEdge' )]
+  [CreateName( 'DetectEdge' )]
+  [Name( 'Detect Edge' )]
+  [ArduinoVariable( Boolean, 'FLastValue' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoDetectEdge : TArduinoCommonEnableClockSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    Rising : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::Start' )]
+  [CreateName( 'Start' )]
+  [Name( 'Start' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoStart : TArduinoCommonClockSource;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [CreateName( 'ClockMultiSource' )]
+  [Name( 'Clock Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoClockMultiSource : TArduinoCommonClockSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoClockSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonMux.h' )]
+  [ArduinoClass( 'Mitov::ClockMux' )]
+  [Name( 'Clock Mux(Multi channel Switch)' )]
+  [CreateName( 'ClockMux' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoClockMux : TArduinoClockMultiInputSource
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoUnsignedSinkPin
+
+    [OWExcludeBindings]
+    [ValueRange( 0, 4000 )]
+    [ArduinoFlexibleVariable]
+    InitialChannel : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonDemux.h' )]
+  [ArduinoClass( 'Mitov::ClockDemux' )]
+  [Name( 'Clock Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'ClockDemmux' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoClockDemux : TArduinoCommonClockSink
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoUnsignedSinkPin
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoClockSourcePin, 2, 2, 4000 )]
+    OutputPins  : TOWPinListOwner
+
+    [OWExcludeBindings]
+    [ValueRange( 0, 4000 )]
+    [ArduinoFlexibleVariable]
+    InitialChannel : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::ClockModified' )]
+  [Name( 'Clock Modified' )]
+  [CreateName( 'ClockModified' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  +TArduinoClockModified : TArduinoCommonClockFilter;
+//---------------------------------------------------------------------------
+  [Name( 'Clock Toggle Demux' )]
+  [CreateName( 'ClockToggleDemux' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoClockToggleDemux : TArduinoCommonClockSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoClockSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CommonMux.h' )]
+  [ArduinoClass( 'Mitov::ClockToggleSwitch' )]
+  [Name( 'Clock Toggle Switch' )]
+  [CreateName( 'ClockToggleSwitch' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoClockToggleSwitch : TArduinoCommonClockSource
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    SelectInputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoFlexibleVariable]
+    InitialSelectValue : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Switch.h' )]
+  [ArduinoClass( 'Mitov::ClockSwitch' )]
+  [Name( 'Clock On/Off Switch' )]
+  [CreateName( 'ClockSwitch' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoClockSwitch : TArduinoCommonClockSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+    EnableInputPin : TOWArduinoDigitalSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialEnabled : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::Timer' )]
+  [Name( 'Timer (Single Pulse/Clock to Digital)' )]
+  [CreateName( 'Timer' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  +TArduinoTimer : TArduinoCommonEnableBooleanSource
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [ NamePostfix( '(uS)' ) ]
+    Interval : Unsigned = 1000000
+
+    AutoRepeat : Boolean = False
+    CanRestart : Boolean = True
+
+    [OWPrimaryPin]
+    StartInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    ResetInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::Repeat' )]
+  [CreateName( 'Repeat' )]
+  [Name( 'Repeat' )]
+//  [ParentImage( TArduinoSequenceRepeatElement )]
+  [Category( TSynchronizationToolbarCategory )]
+  [ArduinoLoopBegin]
+  +TArduinoRepeat : TArduinoCommonEnableClockSource;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Timing.h' )]
+  [ArduinoClass( 'Mitov::RepeatSourceClock' )]
+  [CreateName( 'RepeatClock' )]
+  [Name( 'Repeat Clock' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatClock : TArduinoCommonClockFilter
+
+    [ArduinoAddPowerVariableIfBinding( 'FRemainingCount', 1, 32 )]
+    Count : Unsigned = 1
+
+    [ NamePostfix( '(uS)' ) ]
+    [ArduinoNotDefaultPostfix( '_Interval' )]
+    [ArduinoNotDefaultAddCodeEntry( ceLoopBegin )]
+    Interval : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

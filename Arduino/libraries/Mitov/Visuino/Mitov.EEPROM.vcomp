@@ -1,0 +1,122 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoLoopUpdateHardware]
+  TArduinoBasicEEPROM_Extender : Extender
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoPROMMemoryElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_Generic_I2C_EEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericEEPROM_I2C' )]
+  TArduinoBasicEEPROM_I2C_Extender : TArduinoBasicEEPROM_Extender
+
+    [DesignRange( $50, $57 )]
+    Address : TArduinoUInt8 = $50
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TMemoryToolbarCategory )]
+  TArduinoBasicEEPROMI2C : TArduinoEnableComponent, TArduinoBasicEEPROM_I2C_Extender
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'EEPROM I2C' )]
+  [CreateName( 'EEPROM' )]
+  +TArduinoEEPROMI2C : TArduinoBasicEEPROMI2C;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoUseParentTemplateParams]
+  *TArduinoEEPROMI2CElemet : TArduinoCodeEnabledPersistent, TArduinoBasicEEPROM_I2C_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_Generic_I2C_EEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericEEPROM_I2C' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ParentImage( TArduinoEEPROMI2CElemet )]
+  TArduinoEEPROMI2CBasicModule : TArduinoEnabledShield, TArduinoBasicEEPROM_Extender;
+//---------------------------------------------------------------------------
+  ArduinoEEPROMProtectedBlocks : Enum
+  
+    pbNone
+    pbUppeQuarter
+    pbUppeHalf
+    pbAll
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Generic_SPI_EEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericEEPROM_SPI' )]
+  [Category( TMemoryToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoVariable( Boolean, 'FCached' )]
+  TArduinoBasicEEPROMSPI : TArduinoBasicEnableSpeedSPI
+
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin )]
+    WriteProtectedOutputPin : TOWArduinoDigitalSourcePin
+
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoPROMMemoryElements
+
+    [ValueRange( 2, 3 )]
+    [OWExcludeBindings]
+    AddressBytes : Unsigned = 3
+
+    [ArduinoUseBindingCheckSetter( 'UpdateWriteProtect' )]
+    WriteEnable : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateProtectedBlocks' )]
+    ProtectedBlocks : ArduinoEEPROMProtectedBlocks = pbNone
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'EEPROM SPI' )]
+  [CreateName( 'EEPROM' )]
+  +TArduinoEEPROMSPI : TArduinoBasicEEPROMSPI
+    
+    AddressBytes = 2
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Fujitsu MB85 FRAM I2C' )]
+  [CreateName( 'FRAM' )]
+  +TArduinoFujitsuFRAMI2C : TArduinoBasicEEPROMI2C;
+//---------------------------------------------------------------------------
+  [Name( 'Fujitsu MB85 FRAM SPI' )]
+  [CreateName( 'FRAM' )]
+  +TArduinoFujitsuFRAMSPI : TArduinoBasicEEPROMSPI;
+//---------------------------------------------------------------------------
+  [Category( TMemoryToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoVariable( Boolean, 'FCached' )]
+  TArduinoBasicMemorySPI : TArduinoBasicEnableSpeedSPI
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoRAMMemoryElements
+
+    [ValueRange( 2, 3 )]
+    [OWExcludeBindings]
+    AddressBytes : Unsigned = 3
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RAM SPI' )]
+  [CreateName( 'RAM' )]
+  [ArduinoInclude( 'Mitov_Generic_SPI_RAM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericRAM_SPI' )]
+  +TArduinoRAMSPI : TArduinoBasicMemorySPI;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,193 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAPDS9960LEDPulses' )]
+  TArduinoAPDS9960LEDPulses : TArduinoCodePersistent
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '32' )]
+    [ValueRange( 4, 32 )]
+    [NamePostfix( '(uS)' )]
+    Length : Unsigned = 16
+
+    [MaxValue( 63 )]
+    Count : Unsigned = 15
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAPDS9960LEDPulsesProximity : TArduinoAPDS9960LEDPulses
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PPULSE' )]
+    Length
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_PPULSE' )]
+    Count
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoOptionalVariable( Boolean, 'FClocked', True )]
+  TArduinoAPDS9960BasicClocked_Extender : Extender
+
+    [ArduinoVariableIfPinConnected( 'FClocked' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAPDS9960Proximity' )]
+  *TArduinoAPDS9960Proximity : TArduinoBasicAnalogSourcePersistent, TArduinoAPDS9960BasicClocked_Extender
+
+    [ArduinoPinCall( 'Proximity_ClockInputPin' )]
+    ClockInputPin
+
+    LEDPulses : TArduinoAPDS9960LEDPulsesProximity
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CONTROL' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [ValueRange( 1, 8 )]
+    Gain : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAPDS9960Color' )]
+  *TArduinoAPDS9960Color : TArduinoCodePersistent, TArduinoAPDS9960BasicClocked_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Red', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Green', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Blue', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Clear', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    ColorOutputPin : TOWArduinoColorSourcePin
+
+    [ArduinoPinCall( 'Color_ClockInputPin' )]
+    ClockInputPin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CONTROL' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '64' )]
+    [ValueRange( 1, 64 )]
+    Gain : Unsigned = 16
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAPDS9960LEDPulsesGesture : TArduinoAPDS9960LEDPulses
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_GPULSE' )]
+    Length
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_GPULSE' )]
+    Count
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAPDS9960Gesture' )]
+  *TArduinoAPDS9960Gesture : TArduinoCodePersistent, TArduinoAPDS9960BasicClocked_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [ArduinoVariableIfPinConnected_Parent( 'FLastTime' )]
+    [ArduinoVariableIfPinConnected_Parent( 'FX0' )]
+    [ArduinoVariableIfPinConnected_Parent( 'FX1' )]
+    [ArduinoVariableIfPinConnected_Parent( 'FY0' )]
+    [ArduinoVariableIfPinConnected_Parent( 'FY1' )]
+    [OWAddPin( 'Up', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Down', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Left', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoClockSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [ArduinoVariableIfPinConnected_Parent( 'FLastTime' )]
+    [ArduinoVariableIfPinConnected_Parent( 'FX0' )]
+    [ArduinoVariableIfPinConnected_Parent( 'FX1' )]
+    [ArduinoVariableIfPinConnected_Parent( 'FY0' )]
+    [ArduinoVariableIfPinConnected_Parent( 'FY1' )]
+    [OWAddPin( 'X', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogSourcePin )]
+    DirectionOutputPins : TOWArduinoPinList
+
+    [ArduinoPinCall( 'Gesture_ClockInputPin' )]
+    ClockInputPin
+
+    LEDPulses : TArduinoAPDS9960LEDPulsesGesture
+
+    [NamePostfix( 'mS' )]
+    Timeout : Unsigned = 500
+
+    [ValueRange( 0.0, 1.0 )]
+    Threshold : Single = 0.06
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_APDS9960.h' )]
+  [ArduinoClass( 'Mitov::APDS9960I2C' )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoOptionalVariable( Unsigned, 32, 'FLastTime', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 2, 'FX0', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 2, 'FX1', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 2, 'FY0', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 2, 'FY1', 0 )]
+  TArduinoGestureColorProximityAPDS9960_Extender : Extender
+
+    Proximity : TArduinoAPDS9960Proximity
+    Color : TArduinoAPDS9960Color
+
+    [ArduinoProcessChildParentVariables]
+    Gesture : TArduinoAPDS9960Gesture
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_WTIME_CONFIG1_ENABLE' )]
+//    [ValueRange( 0.00278, 8.54 )]
+    [ValueRange( 0.0, 8.54 )]
+    [NamePostfix( 'S' )]
+    WaitTime : Single = 0.0
+    
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_ATIME' )]
+    [ValueRange( 2.78, 712.0 )]
+    [NamePostfix( 'mS' )]
+    IntegrationTime : Single = 2.78
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_ENABLE' )]
+    PowerDown : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'Update_CONTROL' )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '12.5' )]
+    [PropertyListDesignValue( '25.0' )]
+    [PropertyListDesignValue( '50.0' )]
+    [PropertyListDesignValue( '100.0' )]
+    [ValueRange( 12.5, 100.0 )]
+    [Name( 'LED Power (mA)' )]
+    LEDPower : Single = 100.0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Gesture Color Proximity APDS9960 I2C' )]
+  [CreateName( 'GestureColorProximity' )]
+  [ArduinoWebKeywords( 'APDS9960' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  +TArduinoGestureColorProximityAPDS9960_I2C : TArduinoSimpleFlexibleI2CComponent, TArduinoGestureColorProximityAPDS9960_Extender
+
+    Address = $39
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [Name( 'Gesture Color Proximity' )]
+  [CreateName( 'Gesture Color Proximity' )]
+  *TArduinoGestureColorProximityAPDS9960_I2C_Module : TArduinoShield, TArduinoGestureColorProximityAPDS9960_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

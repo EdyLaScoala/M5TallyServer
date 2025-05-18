@@ -1,0 +1,97 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'SparkFun' )]
+  TSparkFunCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Thing' )]
+  [Category( TSparkFunCategory )]
+  TSparkFunThingCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Thing Plus' )]
+  [Category( TSparkFunCategory )]
+  TSparkFunThingPlusCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'Micro Pro' )]
+  [Category( TSparkFunCategory )]
+  TSparkFunMicroProCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TSparkFunCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TSparkFunESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TSparkFunCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TSparkFunESP8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  ['{CED04141-3858-4E83-80E9-2A7F901815B8}']
+  ISparkFunThingPlusShield : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( ISparkFunThingPlusShield )]
+  TArduinoSparkFunThingPlusShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  TArduinoSparkFunThingPlusShieldsExtender : Extender
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoSparkFunThingPlusShields
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoESP8266_SparkFun_Thing_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 16 )]
+    SDA = 2
+
+    [ValueRange( 0, 16 )]
+    SCL = 14
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'SparkFun ESP8266 Thing' )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:thing' )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:thingdev' )]
+  [Category( TSparkFunESP8266Category )]
+  [Category( TSparkFunThingCategory )]
+  +TArduinoESP8266_SparkFun_Thing_Board : TArduinoBasicESP8266Board_NoI2C
+
+    [AddItem( TArduinoESP8266_SparkFun_Thing_I2C )]
+    I2CChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoBasicDigitalOpenDrainPWMInterruptChannel, 'Digital' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoBasicDigitalOpenDrainPWMI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4,  1, TArduinoBasicDigitalOpenDrainPWMInterruptChannel, 'Digital' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalOpenDrainPWMInterruptChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoBasicDigitalOpenDrainPWMSerial0InterruptChannel, 'Digital(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 8,  1, TArduinoBasicDigitalOpenDrainPWMSerial0InterruptChannel, 'Digital(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoBasicDigitalOpenDrainPWMSPI0InterruptChannel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalOpenDrainPWMSPI0InterruptChannel, 'Digital(SPI-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14, 1, TArduinoBasicDigitalOpenDrainPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15, 1, TArduinoBasicDigitalOpenDrainPWMInterruptChannel, 'Digital' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16, 1, TArduinoBasicDigitalPWMInterruptChannel, 'Digital' )]
+    Digital : TArduinoDigitalChannels
+
+    [Name( 'Analog Input' )]
+    [ArduinoBoard_Add_AnalogInputChannels( 0, 1, TArduinoESP8266AnalogInputChannel, 'Analog Input' )]
+    AnalogInput : TArduinoAnalogInputChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TSparkFunESP32Category )]
+  [Category( TSparkFunThingCategory )]
+  [Name( 'SparkFun ESP32 Thing' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32thing' )]
+  +TArduinoESP32_SparkFun_Thing_Board : TArduinoBasicESP32Digital_SPI_I2C_ChannelsBoard
+  
+    [ArduinoBoard_Add_ReservedChannels( 0, 6 )]
+    [ArduinoBoard_Add_ReservedChannels( 12, 8 )]
+    [ArduinoBoard_Add_ReservedChannels( 21, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 25, 3 )]
+    [ArduinoBoard_Add_ReservedChannels( 32, 8 )]
+    Digital
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

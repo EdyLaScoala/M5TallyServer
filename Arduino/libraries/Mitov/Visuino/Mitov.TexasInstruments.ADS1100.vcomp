@@ -1,0 +1,53 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TexasInstruments_ADS1100.h' )]
+  [ArduinoClass( 'Mitov::TexasInstrumentsADS1100' )]
+  TArduinoTexasInstrumentsADS1100_Extender : Extender
+
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [ValueRange( 1, 8 )]
+    Gain : Unsigned = 1
+
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    [PropertyListDesignValue( '32' )]
+    [PropertyListDesignValue( '128' )]
+    [ValueRange( 8, 128 )]
+    DataRange : Unsigned = 8
+
+    [NamePostfix( '(0.0 - 1.0)' )]
+    Normalize : Boolean = False
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoWebKeywords( 'ADS1100' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  TArduinoTexasInstrumentsADS1100_Basic : TArduinoI2CAddressSensorPinClockedEnableComponent, TArduinoTexasInstrumentsADS1100_Extender
+
+    Address = $48
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Texas Instruments ADS1100 ADC (I2C)' )]
+  [CreateName( 'ADC' )]
+  +TArduinoTexasInstrumentsADS1100 : TArduinoTexasInstrumentsADS1100_Basic;
+//---------------------------------------------------------------------------
+  [Name( 'M5Stack ADC I2C Unit (ADS1100)' )]
+  [CreateName( 'ADCUnit' )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  +TArduinoM5StackADCUnitADS1100 : TArduinoTexasInstrumentsADS1100_Basic;
+//---------------------------------------------------------------------------
+  *TArduinoTexasInstrumentsADS1100BasicShield : TArduinoClockEnabledBasicShield, TArduinoTexasInstrumentsADS1100_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

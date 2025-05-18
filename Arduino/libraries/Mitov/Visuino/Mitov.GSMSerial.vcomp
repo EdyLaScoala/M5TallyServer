@@ -1,0 +1,448 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'bool', 'AFromStart' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'ATryNextConnection' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AProccessed' )]
+  [Name( 'TryConnect' )]
+  ArduinoGSMAccessPointElementTryConnectCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'ResetRetry' )]
+  ArduinoGSMAccessPointElementResetRetryCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoGSMAccessPointElementTryConnectCallChain]
+  [ArduinoGSMAccessPointElementResetRetryCallChain]
+  TArduinoGPRSAccessPoints : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialModules : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [Name( 'StartSocket' )]
+  ArduinoBasicSocketElementTryStartSocketCallChainAttribute : ArduinoCallChainCompleteAttribute; // Used for the LinitONE!
+//---------------------------------------------------------------------------
+  [ArduinoBasicSocketElementTryStopSocketCallChain]
+  TArduinoGSMSerialGPRSSockets : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialBasicFunctions : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialFunctions : TArduinoGSMSerialBasicFunctions;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoGPRSAccessPoints )]
+  [Name( 'GPRS Access Point' )]
+  [CreateName( 'Access Point' )]
+  [ArduinoClass( 'Mitov::GPRSAccessPoint' )]
+  [ArduinoDeclaredClass]
+  [ParentImage( TArduinoESP8266BasicModule )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoGPRSAccessPoint : TArduinoBasicNamedExludePersistent
+  
+    Enabled : Boolean = True
+
+    [OldName( 'AccessPoint' )]
+    [Name( 'Access Point Name (APN)' )]
+    AccessPointName : String = ''
+
+    UserName : String = ''
+    Password : String = ''
+
+    [ValueRange( 0, 500 )]
+    NumberRetries : Integer = 5
+
+    [MinValue( 0 )]
+    RetryInterval : Integer = 30000
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoGSMSerialModules )]
+  [ArduinoHelpPostfix( '(SIM900 Module)' )]
+  TArduinoGSMSerialBasicModule : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [PersistentCollection( TArduinoGSMSerialFunctions )]
+  [ArduinoHelpPostfix( '(SIM900 Function)' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoGSMSerialBasicRootFunction : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialClockOutputFunction : TArduinoGSMSerialBasicRootFunction
+
+    OutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Is Ready' )]
+  [ArduinoClass( 'Mitov::MitovArduinoGSMSerialDetectDefinedTextFunction' )]
+  [ArduinoContructorParameter( '"RDY"' )]
+  +TArduinoGSMSerialDetectReadyFunction : TArduinoGSMSerialClockOutputFunction;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Is Call Ready' )]
+  [ArduinoClass( 'Mitov::MitovArduinoGSMSerialDetectDefinedTextFunction' )]
+  [ArduinoContructorParameter( '"Call Ready"' )]
+  +TArduinoGSMSim900DetectCallReadyFunction : TArduinoGSMSerialClockOutputFunction;
+//---------------------------------------------------------------------------
+  [Name( 'Detect Power Down' )]
+  [ArduinoClass( 'Mitov::MitovArduinoGSMSerialDetectDefinedTextFunction' )]
+  [ArduinoContructorParameter( '"NORMAL POWER DOWN"' )]
+  +TArduinoGSMSerialDetectPowerDownFunction : TArduinoGSMSerialClockOutputFunction;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialClockedFunction : TArduinoGSMSerialBasicRootFunction
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoClass( 'Mitov::MitovSIM900ReadADCFunction' )]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  [ArduinoVariable( Boolean, 'FErrorStarted' )]
+  TArduinoGSMSim900InputOutputModuleADC : TArduinoGSMSerialClockedFunction
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoChangeOnlyPin]
+    ErrorOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Input/Output (SIM900)' )]
+  [SingleCollectionInstance]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::GSMSim900InputOutputModule' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoGSMSim900InputOutputModule : TArduinoGSMSerialBasicModule
+
+    AnalogInput : TArduinoGSMSim900InputOutputModuleADC
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoGSMReceivingVoiceCallAutoAnswer' )]
+  TArduinoGSMReceivingVoiceCallAutoAnswer : TArduinoCodeDisabledPersistent
+
+    [ValueRange( 1, 127 )]
+    NumberRings : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MitovGSMSerialReceivingVoiceCall' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoGSMReceivingVoiceCall : TArduinoCodePersistent
+
+    CallingOutputPin : TOWArduinoClockSourcePin
+    NumberOutputPin : TOWArduinoStringSourcePin
+    AddressTypeOutputPin : TOWArduinoUnsignedSourcePin
+    SubAddressOutputPin : TOWArduinoStringSourcePin
+    SubAddressTypeOutputPin : TOWArduinoUnsignedSourcePin
+    PhoneBookAddressOutputPin : TOWArduinoStringSourcePin
+
+    [ArduinoPinCall( 'ReceivingCall_AnswerInputPin' )]
+    AnswerInputPin : TOWArduinoClockSinkPin
+
+    AutoAnswer : TArduinoGSMReceivingVoiceCallAutoAnswer
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoClass( 'Mitov::MitovGSMSerialSMSMessageReceivedFunction' )]
+  [Name( 'Message Received' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoGSMSerialShortMessageReceiving : TArduinoCodePersistent
+
+    StorageOutputPin : TOWArduinoUnsignedSourcePin
+    IndexOutputPin : TOWArduinoUnsignedSourcePin
+    ReceivedOutputPin : TOWArduinoClockSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [ArduinoClass( 'Mitov::MitovGSMSerialSMSMessageFunction' )]
+  [ArduinoVariable( Boolean, 'FIsPDU' )]
+  TArduinoGSMSerialShortMessageInfo : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoStringSourcePin
+
+    AddressOutputPin : TOWArduinoStringSourcePin
+    NameOutputPin : TOWArduinoStringSourcePin
+    TimeOutputPin : TOWArduinoDateTimeSourcePin
+    TimeZoneOutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Short Message (SMS)' )]
+  [SingleCollectionInstance]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoClass( 'Mitov::MitovGSMSerialSMSModule' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoGSMSerialShortMessageModule : TArduinoGSMSerialBasicModule
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Functions ...' )]
+    Functions : TArduinoGSMSerialSMSModuleFunctions
+
+    Receiving : TArduinoGSMSerialShortMessageReceiving
+
+    MessageInfo : TArduinoGSMSerialShortMessageInfo
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialVoiceModuleFunctions : TArduinoGSMSerialBasicFunctions;
+//---------------------------------------------------------------------------
+  [Name( 'Voice' )]
+  [SingleCollectionInstance]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::MitovGSMSerialVoiceCallFunction' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoGSMSerialVoiceModule : TArduinoGSMSerialBasicModule
+
+    BusyOutputPin : TOWArduinoClockSourcePin
+    InUseOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Functions ...' )]
+    Functions : TArduinoGSMSerialVoiceModuleFunctions
+
+    ReceivingCall : TArduinoGSMReceivingVoiceCall
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [Name( 'Get Signal Strength' )]
+  [ArduinoClass( 'Mitov::MitovGSMSerialGetSignalStrengthFunction' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoVariable( Boolean, 'FStarted' )]
+  +TArduinoGSMSerialGetSignalStrengthFunction : TArduinoGSMSerialClockedFunction
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    SignalStrengthOutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoChangeOnlyPin]
+    SignalStrengthUnknownOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoChangeOnlyPin]
+    BitErrorRateOutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoChangeOnlyPin]
+    BitErrorRateUnknownOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialSMSModuleFunctions : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [PersistentCollection( TArduinoGSMSerialSMSModuleFunctions )]
+  [ArduinoHelpPostfix( '(Short Message Function)' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoGSMSerialBasicSMSModuleFunction : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialBasicClockedSMSModuleFunction : TArduinoGSMSerialBasicSMSModuleFunction
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoRootOwnerReference]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnected]
+  [Name( 'Send Message (SMS)' )]
+  [ArduinoClass( 'Mitov::MitovGSMSerialSMSSendMessageFunction' )]
+  [ArduinoVariable( Boolean, 'FEmptyLineDetected' )]
+  [ArduinoVariable( Boolean, 'FTextSent' )]
+  [ArduinoVariable( Boolean, 'FLocked' )]
+  +TArduinoGSMSerialSMSSendMessageFunction : TArduinoGSMSerialBasicClockedSMSModuleFunction
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    ReferenceOutputPin : TOWArduinoUnsignedSourcePin
+    FailedOutputPin : TOWArduinoClockSourcePin
+
+    Address : String = ''
+
+    [ArduinoUseBindingCheckSetter( 'UpdateText' )]
+    Text : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialVoiceModuleExistingCallMode : Enum
+  
+    ccmDrop
+    ccmHold
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::MitovVoiceModuleCallFunction' )]
+  [Name( 'Make Call' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  +TArduinoGSMSerialVoiceModuleCallFunction : TArduinoGSMSerialBasicClockedVoiceModuleFunction
+
+    Number : String = ''
+    ExistingCallMode : TArduinoGSMSerialVoiceModuleExistingCallMode = ccmDrop
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [PersistentCollection( TArduinoGSMSerialVoiceModuleFunctions )]
+  [ArduinoHelpPostfix( '(Voice Function)' )]
+  TArduinoGSMSerialBasicVoiceModuleFunction : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoGSMSerialBasicClockedVoiceModuleFunction : TArduinoGSMSerialBasicVoiceModuleFunction
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoGSMSerialVoiceModuleBasicAtduioChannelFunction : TArduinoGSMSerialBasicClockedVoiceModuleFunction
+
+    [ValueRange( 0, 64 )]
+    Channel : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Select Audio Channel' )]
+  [ArduinoClass( 'Mitov::MitovGSMSerialVoiceSelectAudioChannelFunction' )]
+  +TArduinoGSMSerialVoiceModuleSelectAudioChannelFunction : TArduinoGSMSerialVoiceModuleBasicAtduioChannelFunction;
+//---------------------------------------------------------------------------
+  [Name( 'Set Audio Volume' )]
+  [ArduinoClass( 'Mitov::MitovGSMSerialVoiceSetVolumeFunction' )]
+  +TArduinoGSMSerialVoiceModuleSetVolumeFunction : TArduinoGSMSerialVoiceModuleBasicAtduioChannelFunction
+
+    [ValueRange( 0.0, 1.0 )]
+    Volume : Single = 0.5
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoGSMSerialGPRSSockets )]
+  [ArduinoHelpPostfix( '(GPRS Socket)' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoVariable( Boolean, 'FRunning' )]
+  [ArduinoVariable( Boolean, 'FIsConnected' )]
+  TArduinoSIMComGPRSTCPBasicSocket : TArduinoBasicConnectNotifySocket;
+//---------------------------------------------------------------------------
+  [ArduinoVariable( Boolean, 'FConnectingRunning' )]
+  TArduinoSIMComGPRSTCPHostSocket : TArduinoSIMComGPRSTCPBasicSocket
+
+    Host : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'TCP/IP Client' )]
+  [CreateName( 'TCP Client' )]
+  [ParentImage( TArduinoBasicTCPClientSocket )]
+  [ArduinoClass( 'Mitov::SIMComGPRSTCPClientSocket' )]
+  [ArduinoStart]
+  [ArduinoSocketDirectControlInterface( IOWArduinoTCPClientSocketStream )]
+  +TArduinoSIMComGPRSTCPClientSocket : TArduinoSIMComGPRSTCPHostSocket
+
+    [OWPinGroup( TArduinoBasicOutputSocket )]
+    [ArduinoPinPair( TArduinoBasicOutputSocket )]
+    InputPin : TOWArduinoTCPClientSocketMultiSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'UDP Client' )]
+  [CreateName( 'UDP Client' )]
+  [ParentImage( TArduinoBasicUDPSocket )]
+  [ArduinoClass( 'Mitov::SIMComGPRSUDPClientSocket' )]
+  [ArduinoSocketDirectControlInterface( IOWArduinoUDPSocketStream )]
+  +TArduinoSIMComGPRSUDPClientSocket : TArduinoSIMComGPRSTCPHostSocket
+
+    [OWPinGroup( TArduinoBasicOutputSocket )]
+    [ArduinoPinPair( TArduinoBasicOutputSocket )]
+    InputPin : TOWArduinoUDPSocketMultiSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'TCP/IP Server' )]
+  [CreateName( 'TCP Server' )]
+  [ParentImage( TArduinoBasicTCPServerSocket )]
+  [ArduinoClass( 'Mitov::SIMComGPRSTCPServerSocket' )]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'FInOpening' )]
+  [ArduinoSocketDirectControlInterface( IOWArduinoTCPServerSocketStream )]
+  +TArduinoSIMComGPRSTCPServerSocket : TArduinoSIMComGPRSTCPBasicSocket
+
+    [OWPinGroup( TArduinoBasicOutputSocket )]
+    [ArduinoPinPair( TArduinoBasicOutputSocket )]
+    InputPin : TOWArduinoTCPServerSocketMultiSinkPin
+
+    [ArduinoChangeOnlyPin]
+    ListeningOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Packet Service(GPRS) (SIMCom)' )]
+  [CreateName( 'Packet Service' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_GSM_Serial_SIMCom_GPRS.h' )]
+  [ArduinoClass( 'Mitov::SIMComGPRSModule' )]
+  [ArduinoLoopBegin]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoVariable( Boolean, 'FConnected' )]
+  [ArduinoVariable( Boolean, 'FFromStart' )]
+  [ArduinoVariable( Boolean, 'FInConnecting' )]
+  [ArduinoVariable( Boolean, 'FMultiConnection' )]
+  [ArduinoVariable( Boolean, 'FTryNextConnection' )]
+  [ArduinoTemplateParameterCollectionIndexOfType( ThisAttributedType )]
+  +TArduinoGSMSerialSIMComGPRSModule : TArduinoGSMSerialBasicModule
+
+    AddressOutputPin : TOWArduinoStringSourcePin
+
+    Enabled : Boolean = True
+    AccessPoints : TArduinoGPRSAccessPoints
+
+    [ComponentEditorEntryDesign( 'Add Sockets ...' )]
+    Sockets : TArduinoGSMSerialGPRSSockets
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoGSMSerialDelays' )]
+  TArduinoGSMSerialDelays : TArduinoCodePersistent
+
+    PowerPulse : Unsigned = 2000000
+    Shutdown : Unsigned = 10000000
+    Startup : Unsigned = 20000000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GSM_Serial.h' )]
+  [ArduinoClass( 'Mitov::MitovGSMSerial' )]
+  [Name( 'GSM/GPRS Serial' )]
+  [CreateName( 'GSM' )]
+  [ArduinoWebKeywords( 'SIM900' )]
+  [ArduinoWebKeywords( 'SIM800' )]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoLoopBegin]
+  [ArduinoStart]
+  [ArduinoVariable( Boolean, 'IsStarted' )]
+  [ArduinoVariable( Boolean, 'FPowerChecked' )]
+  [ArduinoVariable( Boolean, 'FInPowerCheckWait' )]
+  [ArduinoVariable( Boolean, 'FInPowerSwitch' )]
+  [ArduinoVariable( Boolean, 'FInPowerSwitchDelay' )]
+  [ArduinoVariable( Boolean, 'FInStartupWait' )]
+  +TArduinoGSMSerial : TArduinoSerialComponent
+
+    PowerOutputPin : TOWArduinoDigitalSourcePin
+    ReadyOutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePowerOn' )]
+    PowerOn : Boolean = True
+
+    [ComponentEditorEntryDesign( 'Edit &Modules ...' )]
+    Modules : TArduinoGSMSerialModules
+
+    [ComponentEditorEntryDesign( 'Edit &Functions ...' )]
+    Functions : TArduinoGSMSerialFunctions
+
+    Delays : TArduinoGSMSerialDelays
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,124 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoRTCAlarm' )]
+  TArduinoRTCAlarm : TArduinoCodePersistent
+
+    Minute : TArduinoRTCAlarmElement60
+    Hour : TArduinoRTCAlarmElement24
+    Day : TArduinoRTCAlarmElement31
+    WeekDay : TArduinoRTCAlarmElement7
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoRTCAlarm' )]
+  TArduinoRTCPCF8563Alarm : TArduinoRTCAlarm
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl2' )]
+    [OldName( 'InterrupEnabled' )]
+    InterruptEnabled : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoPCF8563ClockOutFrequency : Enum
+
+    pcfco32768Hz
+    pcfco1024Hz
+    pcfco32Hz
+    pcfco1Hz
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoPCF8563ClockOutElement' )]
+  TArduinoPCF8563ClockOutElement : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClockOut' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateClockOut' )]
+    Frequency : TArduinoPCF8563ClockOutFrequency = pcfco32768Hz
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoPCF8563TimerClockFrequency : Enum
+
+    pcft4096Hz
+    pcft64Hz
+    pcft1Hz
+    pcft1_60th_Hz
+    pcftAuto
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoClass( 'Mitov::TArduinoPCF8563BasicTimerElement' )]
+  [ArduinoClass( 'Mitov::TArduinoPCF8563TimerElement' )]
+  TArduinoPCF8563BasicTimerElement : TArduinoCodeEnabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimer' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimer' )]
+    ClockFrequency : TArduinoPCF8563TimerClockFrequency = pcftAuto
+
+    [ValueRange( 0, 15300 )]
+    [ NamePostfix( '(S)' ) ]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTimer' )]
+    Period : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoPCF8563TimerElement : TArduinoPCF8563BasicTimerElement
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl2' )]
+    [OldName( 'PulseInterrupEnabled' )]
+    PulseInterruptEnabled : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateControl2' )]
+    [OldName( 'InterrupEnabled' )]
+    InterruptEnabled : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoRTCPCF8563BasicExtender : Extender
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    [ArduinoChangeOnlyPin]
+    LowVoltageOutputPin : TOWArduinoDigitalSourcePin
+
+    AlarmOutputPin : TOWArduinoClockSourcePin
+    TimerOutputPin : TOWArduinoClockSourcePin
+
+    Alarm : TArduinoRTCPCF8563Alarm
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_RTC_PCF8563.h' )]
+  [ArduinoClass( 'Mitov::RTC_PCF8563' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  TArduinoRTCPCF8563FullExtender : TArduinoRTCPCF8563BasicExtender
+
+    Timer : TArduinoPCF8563TimerElement
+    ClockOut : TArduinoPCF8563ClockOutElement
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Real Time Alarm Clock(RTC) PCF8563/BM8563' )]
+  [ArduinoWebKeywords( 'PCF8563 RTC' )]
+  [ArduinoWebKeywords( 'BM8563 RTC' )]
+  +TArduinoRTCPCF8563 : TArduinoRTC_I2C, TArduinoRTCPCF8563FullExtender
+
+    [DesignRange( $51, $51 )]
+    Address : TArduinoUInt8 = $51
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  TArduinoRTCPCF8563BasicModule : TArduinoBasicRTCModule, TArduinoRTCPCF8563FullExtender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoRTCPCF8563BasicPersistent : TArduinoBasicRTCPersistent, TArduinoRTCPCF8563FullExtender;
+//---------------------------------------------------------------------------
+; // Mitov

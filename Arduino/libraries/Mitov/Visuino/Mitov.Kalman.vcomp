@@ -1,0 +1,35 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_KalmanFilter.h' )]
+  [ArduinoLoopEnd]
+  TArduinoBasicKalman : TArduinoBasicComplementaryTypeFilter
+
+    [MinValue( 0 )]
+    [Name( 'Value Process Noise (Q Value)' )]
+    ValueProcessNoise : Single = 0.01
+
+    [MinValue( 0 )]
+    [Name( 'Value Observed Noise (R Value)' )]
+    ValueObservedNoise : Single = 0.01
+
+    [MinValue( 0 )]
+    [Name( 'Change Rate Process Noise (Q Rate)' )]
+    RateProcessNoise : Single = 0.0003
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::KalmanAnalog' )]
+  [Name( 'Kalman Analog Filter' )]
+  [CreateName( 'Kalman' )]
+  +TArduinoKalmanAnalog : TArduinoBasicKalman;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::KalmanAngle' )]
+  [Name( 'Kalman Angle Filter' )]
+  [CreateName( 'KalmanAngle' )]
+  +TArduinoKalmanAngle : TArduinoBasicKalman
+
+    Units : TArduinoAngleUnits = auDegree
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

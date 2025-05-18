@@ -1,0 +1,424 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoEVIVEDirectChannels : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoClass( 'Mitov::TypedInputPins2' )]
+  [ArduinoTemplateParameter( 'Button1', 'Mitov::TDefinedDigitalInputPin<38>' )]
+  [ArduinoTemplateParameter( 'Button2', 'Mitov::TDefinedDigitalInputPin<39>' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoBasicButtonModule )]
+  +TArduinoEVIVEButtonsModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( 'Button1', TOWArduinoDigitalInputChangeOnlySourcePin, '38' )]
+    [OWAddArduinoBoardDigitalPin( 'Button2', TOWArduinoDigitalInputChangeOnlySourcePin, '39' )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Potentiometers' )]
+  [CreateName( 'Potentiometers' )]
+  [ArduinoInclude( 'Mitov_EVIVE.h' )]
+  [ArduinoClass( 'Mitov::ArduinoEVIVEPotentiometers' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoBasicPotentiometerPersistent )]
+  +TArduinoEVIVEPotentiometersModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Potentiometer1', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Potentiometer2', TOWArduinoAnalogChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoEVIVESlideSwitch' )]
+  [ParentImage( TArduinoBasicSwitchModule )]
+  TArduinoEVIVESlideSwitch : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Up', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Down', TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [ArduinoChangeOnlyPin]
+    ValueOutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Slide Switches' )]
+  [CreateName( 'Slide Switches' )]
+  [ArduinoInclude( 'Mitov_EVIVE.h' )]
+  [ArduinoClass( 'Mitov::ArduinoEVIVESlideSwitches' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ParentImage( TArduinoBasicSwitchModule )]
+  +TArduinoEVIVESlideSwitchesModule : TArduinoShield
+
+    Switch1 : TArduinoEVIVESlideSwitch
+    Switch2 : TArduinoEVIVESlideSwitch
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Navigation' )]
+  [CreateName( 'Navigation' )]
+  [ArduinoInclude( 'Mitov_EVIVE.h' )]
+  [ArduinoClass( 'Mitov::ArduinoEVIVENavigation' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoEVIVENavigationModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Up', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Down', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Left', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Right', TOWArduinoDigitalChangeOnlySourcePin )]
+    DirectionOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    PressOutputPin : TOWArduinoDigitalSourcePin
+
+    [OWPrimaryPin]
+    [ArduinoChangeOnlyPin]
+    AnalogOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_L298NDualMotorDriver.h' )]
+  [ArduinoClass( 'Mitov::L298NDualMotorDriverChannel' )]
+  [ArduinoTemplateParameter( 'ForwardOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<28>' )]
+  [ArduinoTemplateParameter( 'ReverseOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<29>' )]
+  [ArduinoTemplateParameter( 'SpeedOutputPin', 'Mitov::AnalogPin_DirectBoardPinImplementation<44>' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  TArduinoEVIVEDCMotor1 : TArduinoBasicMotorChannel;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_L298NDualMotorDriver.h' )]
+  [ArduinoClass( 'Mitov::L298NDualMotorDriverChannel' )]
+  [ArduinoTemplateParameter( 'ForwardOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<30>' )]
+  [ArduinoTemplateParameter( 'ReverseOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<31>' )]
+  [ArduinoTemplateParameter( 'SpeedOutputPin', 'Mitov::AnalogPin_DirectBoardPinImplementation<45>' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  TArduinoEVIVEDCMotor2 : TArduinoBasicMotorChannel;
+//---------------------------------------------------------------------------
+  [DynamicElement]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoEVIVEBasicMotor : TArduinoCodePersistent;
+//---------------------------------------------------------------------------
+  [Default]
+  [Name( 'DC Motors' )]
+  [ParentImage( TArduinoDCMottorsToolbarCategory )]
+  +TArduinoEVIVEDCMotors : TArduinoEVIVEBasicMotor
+
+    Motor1 : TArduinoEVIVEDCMotor1
+    Motor2 : TArduinoEVIVEDCMotor2
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Stepper' )]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::StepperMotor4Wire' )]
+  [ArduinoTemplateParameter( 'OutputPins0', 'Mitov::DigitalPin_DirectBoardPinImplementation<28>' )]
+  [ArduinoTemplateParameter( 'OutputPins1', 'Mitov::DigitalPin_DirectBoardPinImplementation<29>' )]
+  [ArduinoTemplateParameter( 'OutputPins2', 'Mitov::DigitalPin_DirectBoardPinImplementation<30>' )]
+  [ArduinoTemplateParameter( 'OutputPins3', 'Mitov::DigitalPin_DirectBoardPinImplementation<31>' )]
+  [ArduinoVariable( Unsigned, 4, 'FStep' )]
+  [ParentImage( TArduinoStepperMottorsToolbarCategory )]
+  +TArduinoEVIVEStepper : TArduinoEVIVEBasicMotor, TArduinoStepper_Extender
+
+    HalfStep : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '28' )]
+  [ParentImage( TArduinoBooleanValue )]
+  +TArduinoEVIVEDirectPin1 : TArduinoDirectOutputPinShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '29' )]
+  [ParentImage( TArduinoBooleanValue )]
+  +TArduinoEVIVEDirectPin2 : TArduinoDirectOutputPinShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '30' )]
+  [ParentImage( TArduinoBooleanValue )]
+  +TArduinoEVIVEDirectPin3 : TArduinoDirectOutputPinShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '31' )]
+  [ParentImage( TArduinoBooleanValue )]
+  +TArduinoEVIVEDirectPin4 : TArduinoDirectOutputPinShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '44' )]
+  [ParentImage( TArduinoFloatValue )]
+  +TArduinoEVIVEDirectPWMPin1 : TArduinoDirectOutputDigitalAnalogPinShieldElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '45' )]
+  [ParentImage( TArduinoFloatValue )]
+  +TArduinoEVIVEDirectPWMPin2 : TArduinoDirectOutputDigitalAnalogPinShieldElement;
+//---------------------------------------------------------------------------
+  [Name( 'Direct Control' )]
+  [ParentImage( TArduinoInputOutputToolbarCategory )]
+  +TArduinoEVIVEDirectControl : TArduinoEVIVEBasicMotor
+
+    [AddItem( TArduinoEVIVEDirectPin1 )]
+    [AddItem( TArduinoEVIVEDirectPin2 )]
+    [AddItem( TArduinoEVIVEDirectPin3 )]
+    [AddItem( TArduinoEVIVEDirectPin4 )]
+    [AddItem( TArduinoEVIVEDirectPWMPin1 )]
+    [AddItem( TArduinoEVIVEDirectPWMPin2 )]
+    Channels : TArduinoEVIVEDirectChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'OutputPin', '44' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoEVIVEServo1 : TArduinoServoShieldOptionalElement;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'OutputPin', '45' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoEVIVEServo2 : TArduinoServoShieldOptionalElement;
+//---------------------------------------------------------------------------
+  [Name( 'Motors/Servos' )]
+  [CreateName( 'Motors/Servos' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoStart]
+  +TArduinoEVIVEMotorsServosModule : TArduinoShield
+
+    [AddItem( TArduinoEVIVEServo1 )]
+    [AddItem( TArduinoEVIVEServo2 )]
+    Servos : TArduinoServos
+
+    Motors : TArduinoEVIVEBasicMotor
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoEVIVEBasicMeasurement : TArduinoCodePersistent
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoEVIVEVoltageProbe' )]
+  +TArduinoEVIVEVoltageProbe : TArduinoEVIVEBasicMeasurement
+
+    [ArduinoPinCall( 'Voltage_ClockInputPin' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoEVIVECurrentVoltageProbe' )]
+  +TArduinoEVIVECurrentVoltageProbe : TArduinoEVIVEBasicMeasurement
+
+    [ArduinoPinCall( 'CurrentVoltage_ClockInputPin' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    Voltage : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoPinDefinePrefix( '_MITOV_EVIVE_TEMPERATURE' )]
+  [ParentImage( TArduinoMPU9250Thermometer )]
+  [ArduinoClass( 'Mitov::TArduinoEVIVEADCTemperature' )]
+  TArduinoEVIVEADCTemperature : TArduinoEVIVEBasicMeasurement
+
+    [ArduinoPinCall( 'Temperature_ClockInputPin' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin
+
+    InFahrenheit : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Measurement(DAQ)' )]
+  [CreateName( 'Analog Measurement(DAQ)' )]
+  [ArduinoInclude( 'SPI.h' )]
+  [ArduinoInclude( 'Mitov_EVIVE_ADC.h' )]
+  [ArduinoClass( 'Mitov::ArduinoEVIVEAnalogMeasurement' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ArduinoLoopUpdateHardware]
+  +TArduinoEVIVEADCModule : TArduinoShield
+
+    ResetInputPin : TOWArduinoClockSinkPin
+
+    Voltage : TArduinoEVIVEVoltageProbe
+
+    [Name( 'Current(A)/Voltage' )]
+    CurrentVoltage : TArduinoEVIVECurrentVoltageProbe
+
+    Temperature : TArduinoEVIVEADCTemperature
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    PoweredUp : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'UpdateConfig' )]
+    [ NamePostfix( '(2.0 kHz)' ) ]
+    LowBandwith : Boolean = False
+
+    [ArduinoUseBindingSetter]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [NamePostfix( '(kHz)' )]
+    SampleFrequency : Unsigned = 8
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Output(DAC)' )]
+  [CreateName( 'Analog Output(DAC)' )]
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_EVIVE_DAC.h' )]
+  [ArduinoClass( 'Mitov::ArduinoEVIVEAnalogOutput' )]
+  [ArduinoInclude( 'Mitov_EVIVE.h' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoI2C( 0 )]
+  +TArduinoEVIVEDACModule : TArduinoEnabledShield
+
+    [ArduinoPinIsConnectedFlag]
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateValue' )]
+    [OldName( 'ShitDown' )]
+    ShiftDown : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateValue' )]
+    [OldName( 'ShitDownMode' )]
+    ShiftDownMode : TArduinoMicrochipMCP4725ShiftDownMode = sdm500K
+
+    WriteToEEPROM : Boolean = False
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '46' )]
+  +TArduinoEVIVEBuzzerModule : TArduinoBasicBuzzerModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameterBoardChannel( 'ChipSelectOutputPin', '34' )]
+  +TArduinoEVIVEMicroSDModule : TArduinoBasicStandardBoardMicroSDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'InterruptEnabled', 'Mitov::ConstantProperty<23, bool, false>' )]
+  [ArduinoTemplateParameter( 'PulseInterruptEnabled', 'Mitov::ConstantProperty<22, bool, false>' )]
+  TArduinoEVIVERTTimerElement : TArduinoPCF8563BasicTimerElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoInclude( 'Mitov_RTC_PCF8563.h' )]
+  [ArduinoClass( 'Mitov::RTC_PCF8563' )]
+  [ArduinoPinDefinePrefix( '_MITOV_PCF8563' )]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 81 >' )]
+  [ArduinoTemplateParameter( 'ClockOut', 'Mitov::NestedProperty<29, Mitov::TArduinoPCF8563ClockOutElement<'#13#10'      Mitov::ConstantProperty<28, bool, true>, // Enabled'#13#10'      Mitov::ConstantProperty<29, Mitov::TArduinoPCF8563ClockOutFrequency, Mitov::pcfco32768Hz> // Frequency'#13#10'      >>' )]
+  [ArduinoI2C( 0 )]
+  +TArduinoEVIVERTCModule : TArduinoBasicRTCModule, TArduinoRTCPCF8563BasicExtender
+
+    Timer : TArduinoEVIVERTTimerElement
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Display' )]
+  [CreateName( 'Display' )]
+//  [ArduinoInclude( 'Mitov_EVIVE_Display.h' )]
+  [ArduinoClass( 'Mitov::DisplayST7735Basic' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoSPI( 0 )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::BasicSPI_ST7735' )]
+
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.SPISpeed', 'Mitov::ConstantProperty<20, uint32_t, 8000000 >' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<48>' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION.RegisterSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<49>' )]
+
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_ORIENTATION' , 'Mitov::DisplayOrientationRight' )]
+
+  [ArduinoTemplateParameter( 'OverridePixelOffset', 'Mitov::NestedProperty<325, Mitov::TArduinoDisplayST7735PixelOffset< Mitov::ConstantProperty<322, bool, false >, Mitov::ConstantProperty<323, uint8_t, 0 >, Mitov::ConstantProperty<324, uint8_t, 0> > >' )]
+
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<47>' )]
+
+  [ArduinoInclude( 'Mitov_Display_ST7735R_BlackTab.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION_TYPE', 'Mitov::Display_ST7735R_BlackTab' )]
+
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 8, 'FCursorY', 0 )]
+  [ParentImage( T4DSystemsBasicPicasoDisplayModule )]
+  +TArduinoEVIVEDisplayModule : TArduinoShield
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoColorGraphicsElements
+
+    [ArduinoNeedsRGBColor]
+    BackgroundColor : TColor = Black
+
+    Text : TArduinoColorGraphicsTextSettings
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOrientation' )]
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoUseBindingCheckSetter( 'UpdateInverted' )]
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_ARDUINO_MEGA' )]
+  [ArduinoDefine( 'VISUINO_ARDUINO_EVIVE' )]
+  [ArduinoBoardCompileParams( 'arduino:avr:mega' )]
+  [Name( 'EVIVE' )]
+  +TArduino_AVR2560_EVIVE_Board : TArduino_AVR2560_BasicBoard
+  
+    [AddItem( TArduinoEVIVEDisplayModule )]
+    [AddItem( TArduinoEVIVEButtonsModule )]
+    [AddItem( TArduinoEVIVEPotentiometersModule )]
+    [AddItem( TArduinoEVIVESlideSwitchesModule )]
+    [AddItem( TArduinoEVIVENavigationModule )]
+    [AddItem( TArduinoEVIVEMotorsServosModule )]
+    [AddItem( TArduinoEVIVEDACModule )]
+    [AddItem( TArduinoEVIVEADCModule )]
+    [AddItem( TArduinoEVIVEBuzzerModule )]
+    [AddItem( TArduinoEVIVEMicroSDModule )]
+    [AddItem( TArduinoEVIVERTCModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 28 )]
+    [ArduinoBoard_Add_ReservedChannels( 54, 6 )]
+    [ArduinoBoard_Add_ReservedChannels( 66, 4 )]
+    [Name( 'Channels' )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

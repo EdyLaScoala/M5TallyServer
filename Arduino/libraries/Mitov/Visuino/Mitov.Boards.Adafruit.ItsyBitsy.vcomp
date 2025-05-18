@@ -1,0 +1,145 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ItsyBitsy' )]
+  [Category( TAdafruitCategory )]
+  TAdafruitItsyBitsyCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  ['{23AB0181-EFB0-445C-93BF-07A02A30DD73}']
+  IItsyBitsyShield : Interface;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( IItsyBitsyShield )]
+  TArduinoAdafruitItsyBitsyShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  TArduinoAdafruitFeather_ItsyBitsyShieldsExtender : Extender
+
+    [ComponentEditorEntryDesign( 'Add &Shields ...' )]
+    Shields : TArduinoAdafruitItsyBitsyShields
+
+  ;
+//---------------------------------------------------------------------------
+//  [ArduinoDefine( 'VISUINO_FEATHER_32U4_BASIC' )]
+  [Category( TAdafruitItsyBitsyCategory )]
+  [Category( TAdafruitATmega32U4Category )]
+  TArduinoAdafruitItsyBitsy32u4_Common_Board : TArduino_32u4_BasicHIDBasicBoard, TArduinoAdafruitFeather_ItsyBitsyShieldsExtender
+
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(RX1)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalSerial1InterruptChannel, 'Digital(TX1)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 2,  1, TArduinoAdditionalDigitalI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 3,  1, TArduinoDigitalPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 4, 6,  1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 6, 7, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 8, 8, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 9, 9, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 10, 10, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 11, 1, TArduinoDigitalPWMChannel )]
+    [ArduinoBoard_Reserve_DigitalNamedAnalogChannels( 12, 11, 1, TArduinoCombinedAnalogDigitalChannel )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 13, 1, TArduinoDigitalPWMChannel, 'Digital(LED)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 14, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MISO)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 15, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-SCK)' )]
+    [ArduinoBoard_Reserve_DigitalAnalogChannels( 16, 1, TArduinoAdditionalDigitalSPI0Channel, 'Digital(SPI-MOSI)' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ItsyBitsy 32u4 - 5V' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:itsybitsy32u4_5V')]
+  +TArduinoAdafruitItsyBitsy32u4_5V_Board : TArduinoAdafruitItsyBitsy32u4_Common_Board
+
+    [ArduinoBoard_Add_AllChannels]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ItsyBitsy 32u4 - 3V' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:itsybitsy32u4_3V')]
+  +TArduinoAdafruitItsyBitsy32u4_3V_Board : TArduinoAdafruitItsyBitsy32u4_Common_Board
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 5 )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Digital(5V)' )]
+    [ArduinoBoard_Add_AllChannelsFrom( 6 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN_DATA', '41' )]
+  [ArduinoTemplateParameter( 'C_PIN_CLOCK', '40' )]
+  +TArduinoAdafruitItsyBitsyM0_RGBLedModule : TArduinoAdafruitDotStarSingleRGBLed_Basic_Module;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_itsybitsy_m0:opt=small,usbstack=arduino,debug=off' )]
+//  [ArduinoDefine( 'VISUINO_FEATHER_M0_BASIC' )]
+  [Category( TAdafruitItsyBitsyCategory )]
+  [Category( TAdafruitCortexM0Category )]
+  [Name( 'ItsyBitsy M0 Express' )]
+  +TArduinoAdafruitItsyBitsyM0_Board : TArduinoSamdBasicBoard, TArduinoAdafruitFeather_ItsyBitsyShieldsExtender
+  
+    [AddItem( TArduinoAdafruitItsyBitsyM0_RGBLedModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(TX)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  2, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3, 23, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 22, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Digital(5V)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9, 25, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 2, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital(LED)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 0 ]/Digital' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 5, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN_DATA', '8' )]
+  [ArduinoTemplateParameter( 'C_PIN_CLOCK', '6' )]
+  +TArduinoAdafruitItsyBitsyM4_RGBLedModule : TArduinoAdafruitDotStarSingleRGBLed_Basic_Module;
+//---------------------------------------------------------------------------
+  [Name( 'ItsyBitsy M4 Express' )]
+  [Category( TAdafruitItsyBitsyCategory )]
+  [Category( TAdafruitCortexM4Category )]
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_itsybitsy_m4:cache=on,speed=120,opt=small,maxqspi=50,usbstack=arduino,debug=off' )]
+  +TArduinoAdafruitItsyBitsyM4_Board : TArduinoSamdBasicBoard, TArduinoAdafruitFeather_ItsyBitsyShieldsExtender
+
+    [AddItem( TArduinoAdafruitItsyBitsyM4_RGBLedModule )]
+    Modules
+                                                    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoAdditionalDigitalPullUpDownPWMSerial1InterruptChannel, 'Digital(TX)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  2, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3, 23, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4, 22, 1, TArduinoCombinedAnalogDigitalPWMChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5,  1, TArduinoBasicDigitalPWMOutputOnlyChannel, 'Digital(5V)' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7,  1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 9, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 10, 2, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12, 1, TArduinoAdditionalDigitalPullUpDownInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoAdditionalDigitalPullUpDownPWMInterruptChannel, 'Digital(LED)' )]
+
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 14, 0, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 0 ]/Digital' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 15, 1, 1, TArduinoCombinedAnalogDigitalAnalogOutputInterruptChannel, 'Analog Output[ 1 ]/Digital' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 16, 2, 4, TArduinoCombinedAnalogDigitalPWMInterruptChannel )]
+
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

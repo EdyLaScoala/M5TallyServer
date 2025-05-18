@@ -1,0 +1,981 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'ST Microelectronics STM32' )]
+  TSTM32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ST Nucleo' )]
+  [Category( TSTM32Category )]
+  TSTM32_Nucleo_Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'F401' )]
+  [Category( TSTM32_Nucleo_Category )]
+  [ParentImage( TSTM32_Nucleo_Category )]
+  [AlternateCategory( TSTM32_F401_Category )]
+  TSTM32_F401_Nucleo_Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'F303' )]
+  [Category( TSTM32_Nucleo_Category )]
+  [ParentImage( TSTM32_Nucleo_Category )]
+  [AlternateCategory( TSTM32_F303_Category )]
+  TSTM32_F303_Nucleo_Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'F103' )]
+  [Category( TSTM32Category )]
+  [ParentImage( TSTM32Category )]
+  TSTM32_F103_Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'F303' )]
+  [Category( TSTM32Category )]
+  [ParentImage( TSTM32Category )]
+  TSTM32_F303_Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'F401' )]
+  [Category( TSTM32Category )]
+  [ParentImage( TSTM32Category )]
+  TSTM32_F401_Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'F407' )]
+  [Category( TSTM32Category )]
+  [ParentImage( TSTM32Category )]
+  TSTM32_F407_Category : TClassCategory;
+//---------------------------------------------------------------------------
+  ['{2CA0832A-CA58-4573-A275-BCFFA961F29B}']
+  INucleoStandardShield : IStandardShield;
+//---------------------------------------------------------------------------
+  [ArduinoShieldsType( INucleoStandardShield )]
+  TNucleoStandardShields : TArduinoShields;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::SerialSTM32Port' )]
+  TArduinoSTM32DefinedPinsBasicSerial : TArduinoHardwareSerial
+
+    [ValueRange( 7, 8 )]
+    DataBits
+
+    [ValueRange( 0, 80 )]
+    [ArduinoBoardIndexChannel( 'RX' )]
+    RXPin : Unsigned
+
+    [ValueRange( 0, 80 )]
+    [ArduinoBoardIndexChannel( 'TX' )]
+    TXPin : Unsigned
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoSTM32HardwareSerial0 : TArduinoSTM32DefinedPinsBasicSerial
+
+    RXPin = 10
+    TXPin = 9
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoSTM32HardwareSerial1VG : TArduinoSTM32DefinedPinsBasicSerial
+
+    RXPin = 3
+    TXPin = 2
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoSTM32HardwareSerial2VG : TArduinoSTM32DefinedPinsBasicSerial
+
+    RXPin = 27
+    TXPin = 26
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoSTM32HardwareSerial3VG : TArduinoSTM32DefinedPinsBasicSerial
+
+    RXPin = 43
+    TXPin = 42
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoSTM32HardwareSerial4VG : TArduinoSTM32DefinedPinsBasicSerial
+
+    RXPin = 50
+    TXPin = 44
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Arduino_STM32_SPI_Class.h' )]
+  [ArduinoClass( 'Mitov::Arduino_STM32_SPI' )]
+  TArduinoSTM32_SPI_Basic : TArduinoBasicPinMapSPI
+
+    [ValueRange( 0, 80 )]
+    MOSI
+
+    [ValueRange( 0, 80 )]
+    MISO
+
+    [ValueRange( 0, 80 )]
+    SCK
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoSTM32F4VE_SPI0 : TArduinoSTM32_SPI_Basic
+
+    MOSI = 21
+    MISO = 20
+    SCK  = 19
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_STM32_SPI2.h' )]
+  +TArduinoSTM32F4VE_SPI2 : TArduinoSTM32_SPI_Basic
+
+    MOSI = 31
+    MISO = 30
+    SCK  = 29
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSTM32_RTCAlarm' )]
+  [ParentImage( TArduinoRTCDS3231BasicAlarm )]
+  TArduinoSTM32_RTCAlarm : TArduinoCodeEnabledPersistent
+
+    OutputPin : TOWArduinoClockSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateEnableAlarm' )]
+    Enabled
+
+    Second : TArduinoRTCAlarmElement60Enabled
+    Minute : TArduinoRTCAlarmElement60Enabled
+    Hour : TArduinoRTCAlarmElement24Enabled
+    WeekDay : TArduinoRTCAlarmElement7Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateEnableAlarm' )]
+    [ValueRange( 0, 99 )]
+    MilliSecond : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoSTM32_RTC_ClockSource' )]
+  TArduinoSTM32_RTC_ClockSource : TArduinoCodePersistent
+
+    External : Boolean = False
+    HighSpeed : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_STM32_RTC.h' )]
+  [Name( 'Real Time Clock' )]
+  [CreateName( 'Real Time Clock' )]
+  [ArduinoClass( 'Mitov::STM32_RTC' )]
+  [ArduinoInit]
+  +TArduinoSTM32_RTCModule : TArduinoBasicRTCModule
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    ClockSource : TArduinoSTM32_RTC_ClockSource
+    Alarm : TArduinoSTM32_RTCAlarm
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_STM32_ProcessorModuleOperations : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduino_STM32_ProcessorModuleOperations )]
+  [ArduinoHelpPostfix( '(STM32 Processor Operations)' )]
+  TArduino_STM32_ProcessorModuleBasicOperation_Extender : Extender;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  TArduino_STM32_ProcessorModuleBasicOperation : TArduinoCodePersistent, TArduino_STM32_ProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  TArduino_STM32_ProcessorModuleBasicClockedOperation : TArduino_STM32_ProcessorModuleBasicOperation
+
+    ClockInputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduino_STM32_ProcessorModuleGetIDOperation : TArduinoProcessorModuleBasicGetIDOperation, TArduino_STM32_ProcessorModuleBasicOperation_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Processor' )]
+  [CreateName( 'Processor' )]
+  [ParentImage( TArduinoProcessorModule )]
+  +TArduino_STM32_ProcessorModule : TArduinoShield
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Operations ...' )]
+    Operations : TArduino_STM32_ProcessorModuleOperations
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 0 )]
+  [ArduinoTemplateParameter( '0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( 'AddressBytes', 'Mitov::ConstantProperty<4, uint32_t, 3 >' )]
+  [ArduinoTemplateParameter( 'ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<PB0 >' )]
+  +TArduinoSTM32F4VE_FlashSPIModule : TArduinoBasicFlashSPIModule;
+//---------------------------------------------------------------------------
+  [ArduinoBoardArchitecture( 'stm32' )]
+  [ArduinoDefine( 'VISUINO_STMDUINO' )]
+  [ArduinoBoardCanReset]
+  TArduino_STM32_Basic_Modules_Board : TArduinoBoardExtendableImplementation
+
+    [AddItem( TArduino_STM32_ProcessorModule )]
+    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduinoSTM32_RTCModule )]
+    Modules : TArduinoModules
+    
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    SPIChannels : TArduinoSPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_STM32_Basic_I2C_SPI_Modules_Board : TArduino_STM32_Basic_Modules_Board
+
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI, 2 )]
+    SPIChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_STM32_Basic_Serials_Modules_Board : TArduino_STM32_Basic_I2C_SPI_Modules_Board
+
+    [AddItem( TArduinoSTM32HardwareSerial0 )]
+    [AddItem( TArduinoSTM32HardwareSerial1VG )]
+    [AddItem( TArduinoSTM32HardwareSerial2VG )]
+    [AddItem( TArduinoSTM32HardwareSerial3VG )]
+    [AddItem( TArduinoSTM32HardwareSerial4VG )]
+    Serial
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Blue Pill (STM32F103)' )]
+  [ArduinoBoardCompileParams( 'STM32:stm32:GenF1' )]
+  [Category( TSTM32_F103_Category )]
+  +TArduino_STM32_Blue_Pill_Board : TArduino_STM32_Basic_Modules_Board
+
+    [AddItem( TArduinoSTM32HardwareSerial0 )]
+    [AddItem( TArduinoHardwareSerial, 2 )]
+    Serial
+
+    [AddItem( TArduinoI2C, 2 )]
+    I2CChannels
+
+    [AddItem( TArduinoSPI, 2 )]
+    SPIChannels
+    
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA0 3.3V', 'PA0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA1 3.3V', 'PA1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial1Channel, 'PA2(TX1) 3.3V', 'PA2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial1Channel, 'PA3(RX1) 3.3V', 'PA3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA4 3.3V', 'PA4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA5 3.3V', 'PA5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA6(SPI0-MISO) 3.3V', 'PA6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA7(SPI0-MOSI) 3.3V', 'PA7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB0 3.3V', 'PB0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB1 3.3V', 'PB1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoDigitalPullDownOpenDrainChannel, 'PB2(Boot1)', 'PB2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB3(SPI0-SCK)', 'PB3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB4(SPI0-MISO)', 'PB4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB5 3.3V(SPI0-MOSI)', 'PB5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB6(I2C0-SCL)(TX0)', 'PB6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB7(I2C0-SDA)(RX0)', 'PB7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB8(I2C0-SCL)', 'PB8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB9(I2C0-SDA)', 'PB9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoCombinedAnalogDigitalPullDownOpenDrainSerial2Channel, 'PB10(TX2)', 'PB10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoCombinedAnalogDigitalPullDownOpenDrainSerial2Channel, 'PB11(RX2)', 'PB11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB12', 'PB12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB13(SPI1-SCK)', 'PB13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB14(SPI1-MISO)', 'PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB15(SPI1-MOSI)', 'PB15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC13(LED) 3.3V', 'PC13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC14 3.3V', 'PC14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC15 3.3V', 'PC15' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardCompileParams( 'STM32:stm32:GenF1:pnum=Generic_F103VG' )]
+  [Category( TSTM32_F103_Category )]  
+  [ParentImage( TSTM32Category )]
+  [ArduinoDefine( 'VISUINO_STM32F103_VG' )]
+  TArduino_Generic_STM32F103VG_Basic_Board : TArduino_STM32_Basic_Serials_Modules_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA0', 'PA0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA1', 'PA1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA2', 'PA2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA3', 'PA3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA4', 'PA4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA5', 'PA5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA6(SPI0-MISO)', 'PA6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA7(SPI0-MOSI)', 'PA7' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA8', 'PA8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA9', 'PA9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA10', 'PA10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA11', 'PA11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA12', 'PA12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA13', 'PA13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA14', 'PA14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA15', 'PA15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB0', 'PB0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB1', 'PB1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoDigitalPullDownOpenDrainChannel, 'PB2(Boot1)', 'PB2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB3(SPI0-SCK)', 'PB3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB4(SPI0-MISO)', 'PB4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB5(SPI0-MOSI)', 'PB5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB6(I2C0-SCL)', 'PB6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB7(I2C0-SDA)', 'PB7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB8(I2C0-SCL)', 'PB8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB9(I2C0-SDA)', 'PB9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB10', 'PB10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB11', 'PB11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB12', 'PB12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB13(SPI1-SCK)', 'PB13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB14(SPI1-MISO)', 'PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB15(SPI1-MOSI)', 'PB15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC0', 'PC0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC1', 'PC1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC2', 'PC2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC3', 'PC3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC4', 'PC4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC5', 'PC5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC6', 'PC6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC7', 'PC7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC8', 'PC8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC9', 'PC9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC10', 'PC10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC11', 'PC11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC12', 'PC12' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC13(LED)', 'PC13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 46, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC14', 'PC14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 47, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC15', 'PC15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD0', 'PD0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD1', 'PD1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 50, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD2', 'PD2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 51, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD3', 'PD3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 52, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD4', 'PD4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 53, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD5', 'PD5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 54, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD6', 'PD6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 55, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD7', 'PD7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 56, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD8', 'PD8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 57, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD9', 'PD9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 58, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD10', 'PD10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 59, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD11', 'PD11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 60, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD12', 'PD12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 61, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD13', 'PD13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 62, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD14', 'PD14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 63, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD15', 'PD15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 64, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE0', 'PE0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 65, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE1', 'PE1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 66, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE2', 'PE2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 67, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE3', 'PE3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 68, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE4', 'PE4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 69, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE5', 'PE5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 70, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE6', 'PE6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 71, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE7', 'PE7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 72, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE8', 'PE8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 73, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE9', 'PE9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 74, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE10', 'PE10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 75, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE11', 'PE11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 76, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE12', 'PE12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 77, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE13', 'PE13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 78, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE14', 'PE14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 79, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE15', 'PE15' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Generic STM32F103VG' )]
+  [OldName( 'Generic STM32F103' )]
+  [OldName( 'STM32F103' )]
+  +TArduino_Generic_STM32F103VG_Board : TArduino_Generic_STM32F103VG_Basic_Board;
+//---------------------------------------------------------------------------
+  [Name( 'Generic STM32F407VE' )]
+  [ArduinoDefine( 'VISUINO_STM32F407_VE' )]
+  [ArduinoBoardCompileParams( 'STM32:stm32:GenF4:pnum=Generic_F407VE' )]
+  [Category( TSTM32_F407_Category )]  
+  [ParentImage( TSTM32Category )]
+  +TArduino_Generic_STM32F407VE_Board : TArduino_STM32_Basic_Serials_Modules_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA0', 'PA0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA1', 'PA1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA2', 'PA2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA3', 'PA3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA4', 'PA4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA5', 'PA5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA6(SPI0-MISO)', 'PA6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA7(SPI0-MOSI)', 'PA7' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA8', 'PA8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA9', 'PA9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA10', 'PA10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA11', 'PA11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA12', 'PA12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA13', 'PA13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA14', 'PA14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA15', 'PA15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB0', 'PB0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB1', 'PB1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoDigitalPullDownOpenDrainChannel, 'PB2(Boot1)', 'PB2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB3(SPI0-SCK)', 'PB3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB4(SPI0-MISO)', 'PB4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB5(SPI0-MOSI)', 'PB5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB6(I2C0-SCL)', 'PB6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB7(I2C0-SDA)', 'PB7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB8(I2C0-SCL)', 'PB8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB9(I2C0-SDA)', 'PB9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB10', 'PB10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB11', 'PB11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB12', 'PB12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB13(SPI1-SCK)', 'PB13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB14(SPI1-MISO)', 'PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB15(SPI1-MOSI)', 'PB15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC0', 'PC0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC1', 'PC1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC2', 'PC2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC3', 'PC3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC4', 'PC4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC5', 'PC5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC6', 'PC6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC7', 'PC7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC8', 'PC8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC9', 'PC9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC10', 'PC10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC11', 'PC11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC12', 'PC12' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC13(LED)', 'PC13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 46, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC14', 'PC14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 47, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC15', 'PC15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD0', 'PD0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD1', 'PD1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 50, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD2', 'PD2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 51, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD3', 'PD3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 52, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD4', 'PD4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 53, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD5', 'PD5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 54, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD6', 'PD6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 55, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD7', 'PD7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 56, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD8', 'PD8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 57, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD9', 'PD9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 58, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD10', 'PD10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 59, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD11', 'PD11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 60, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD12', 'PD12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 61, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD13', 'PD13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 62, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD14', 'PD14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 63, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD15', 'PD15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 64, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE0', 'PE0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 65, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE1', 'PE1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 66, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE2', 'PE2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 67, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE3', 'PE3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 68, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE4', 'PE4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 69, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE5', 'PE5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 70, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE6', 'PE6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 71, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE7', 'PE7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 72, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE8', 'PE8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 73, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE9', 'PE9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 74, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE10', 'PE10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 75, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE11', 'PE11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 76, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE12', 'PE12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 77, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE13', 'PE13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 78, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE14', 'PE14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 79, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE15', 'PE15' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'STM32F4VE' )]
+  [ArduinoDefine( 'VISUINO_STM32F407_VE' )]
+  [ArduinoBoardCompileParams( 'STM32:stm32:GenF4:pnum=Generic_F407VE' )]
+  [Category( TSTM32_F407_Category )]  
+  +TArduino_STM32F4VE_Board : TArduino_STM32_Basic_Serials_Modules_Board
+  
+    [AddItem( TArduinoSTM32F4VE_FlashSPIModule )]
+    Modules
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA0(Button K_UP)', 'PA0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA1', 'PA1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA2', 'PA2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA3', 'PA3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA4', 'PA4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA5', 'PA5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA6(SPI0-MISO)(LED D2)', 'PA6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA7(SPI0-MOSI)(LED D3)', 'PA7' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA8', 'PA8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA9', 'PA9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA10', 'PA10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA11', 'PA11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA12', 'PA12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA13', 'PA13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA14', 'PA14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA15', 'PA15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB0', 'PB0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB1', 'PB1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoDigitalPullDownOpenDrainChannel, 'PB2(Boot1)', 'PB2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB3(SPI0-SCK)(Flash)', 'PB3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB4(SPI0-MISO)(Flash)', 'PB4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB5(SPI0-MOSI)(Flash)', 'PB5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB6(I2C0-SCL)', 'PB6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB7(I2C0-SDA)', 'PB7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB8(I2C0-SCL)', 'PB8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB9(I2C0-SDA)', 'PB9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB10', 'PB10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB11', 'PB11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB12', 'PB12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB13(SPI1-SCK)', 'PB13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB14(SPI1-MISO)', 'PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB15(SPI1-MOSI)', 'PB15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC0', 'PC0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC1', 'PC1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC2', 'PC2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC3', 'PC3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC4', 'PC4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC5', 'PC5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC6', 'PC6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC7', 'PC7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC8(SDIO_D0)', 'PC8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC9(SDIO_D1)', 'PC9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC10(SDIO_D2)', 'PC10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC11(SDIO_D3)', 'PC11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC12(SDIO_SCK)', 'PC12' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC13(LED)', 'PC13' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD0', 'PD0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD1', 'PD1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 50, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD2(SDIO_CMD)', 'PD2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 51, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD3', 'PD3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 52, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD4', 'PD4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 53, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD5', 'PD5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 54, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD6', 'PD6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 55, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD7', 'PD7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 56, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD8', 'PD8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 57, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD9', 'PD9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 58, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD10', 'PD10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 59, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD11', 'PD11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 60, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD12', 'PD12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 61, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD13', 'PD13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 62, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD14', 'PD14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 63, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD15', 'PD15' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 64, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE0', 'PE0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 65, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE1', 'PE1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 66, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE2', 'PE2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 67, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE3(Button K_1)', 'PE3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 68, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE4(Button K_0)', 'PE4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 69, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE5', 'PE5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 70, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE6', 'PE6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 71, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE7', 'PE7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 72, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE8', 'PE8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 73, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE9', 'PE9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 74, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE10', 'PE10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 75, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE11', 'PE11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 76, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE12', 'PE12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 77, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE13', 'PE13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 78, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE14', 'PE14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 79, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE15', 'PE15' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Generic STM32F407VG' )]
+  [ArduinoBoardCompileParams( 'STM32:stm32:GenF4:pnum=BLACK_F407VG' )]
+  [Category( TSTM32_F407_Category )]  
+  [ParentImage( TSTM32Category )]
+  [ArduinoDefine( 'VISUINO_STM32F103_VG' )]
+  +TArduino_Generic_STM32F407VG_Board : TArduino_STM32_Basic_Serials_Modules_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA0', 'PA0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA1', 'PA1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA2', 'PA2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA3', 'PA3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA4', 'PA4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA5', 'PA5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA6(SPI0-MISO)', 'PA6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA7(SPI0-MOSI)', 'PA7' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA8', 'PA8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA9', 'PA9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA10', 'PA10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA11', 'PA11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA12', 'PA12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA13', 'PA13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA14', 'PA14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA15', 'PA15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB0', 'PB0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB1', 'PB1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoDigitalPullDownOpenDrainChannel, 'PB2(Boot1)', 'PB2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB3(SPI0-SCK)', 'PB3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB4(SPI0-MISO)', 'PB4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB5(SPI0-MOSI)', 'PB5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB6(I2C0-SCL)', 'PB6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB7(I2C0-SDA)', 'PB7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB8(I2C0-SCL)', 'PB8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB9(I2C0-SDA)', 'PB9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB10', 'PB10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB11', 'PB11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB12', 'PB12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB13(SPI1-SCK)', 'PB13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB14(SPI1-MISO)', 'PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB15(SPI1-MOSI)', 'PB15' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC0', 'PC0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC1', 'PC1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC2', 'PC2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC3', 'PC3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC4', 'PC4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC5', 'PC5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC6', 'PC6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC7', 'PC7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC8', 'PC8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC9', 'PC9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC10', 'PC10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC11', 'PC11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC12', 'PC12' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC13(LED)', 'PC13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 46, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC14', 'PC14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 47, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC15', 'PC15' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD0', 'PD0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD1', 'PD1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 50, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD2', 'PD2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 51, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD3', 'PD3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 52, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD4', 'PD4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 53, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD5', 'PD5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 54, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD6', 'PD6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 55, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD7', 'PD7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 56, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD8', 'PD8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 57, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD9', 'PD9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 58, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD10', 'PD10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 59, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD11', 'PD11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 60, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD12', 'PD12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 61, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD13', 'PD13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 62, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD14', 'PD14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 63, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD15', 'PD15' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 64, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE0', 'PE0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 65, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE1', 'PE1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 66, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE2', 'PE2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 67, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE3', 'PE3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 68, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE4', 'PE4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 69, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE5', 'PE5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 70, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE6', 'PE6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 71, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE7', 'PE7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 72, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE8', 'PE8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 73, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE9', 'PE9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 74, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE10', 'PE10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 75, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE11', 'PE11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 76, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE12', 'PE12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 77, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE13', 'PE13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 78, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE14', 'PE14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 79, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE15', 'PE15' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+// http://dubstylee.net/v/wp-content/uploads/2017/08/DIY-More-STM32F407VGT6.png
+  [Name( 'CJMCU-407' )]
+  [ArduinoBoardCompileParams( 'STM32:stm32:GenF4:pnum=BLACK_F407VG' )]
+  [Category( TSTM32_F407_Category )]  
+  [ParentImage( TSTM32Category )]
+  [ArduinoDefine( 'VISUINO_STM32F103_VG' )]
+  +TArduino_Generic_CJMCU_407_Board : TArduino_STM32_Basic_Serials_Modules_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA0', 'PA0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA1', 'PA1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA2', 'PA2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA3', 'PA3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA4', 'PA4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA5', 'PA5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA6(SPI0-MISO)', 'PA6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA7(SPI0-MOSI)', 'PA7' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA8', 'PA8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA9', 'PA9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA10', 'PA10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA11(USB DM)', 'PA11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA12(USB DP)', 'PA12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA13', 'PA13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA14', 'PA14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA15', 'PA15' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB0', 'PB0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB1', 'PB1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoDigitalPullDownOpenDrainChannel, 'PB2(Boot1)', 'PB2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB3(SPI0-SCK)', 'PB3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB4(SPI0-MISO)', 'PB4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoDigitalPullDownOpenDrainSPI0Channel, 'PB5(SPI0-MOSI)', 'PB5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB6(I2C0-SCL)', 'PB6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB7(I2C0-SDA)', 'PB7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB8(I2C0-SCL)', 'PB8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMI2C0Channel, 'PB9(I2C0-SDA)', 'PB9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB10(TX2)', 'PB10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB11(RX2)', 'PB11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB12', 'PB12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB13(SPI1-SCK)', 'PB13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB14(SPI1-MISO)', 'PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI1Channel, 'PB15(SPI1-MOSI)', 'PB15' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC0', 'PC0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC1', 'PC1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC2', 'PC2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC3', 'PC3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC4', 'PC4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC5', 'PC5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC6', 'PC6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC7', 'PC7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC8', 'PC8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC9', 'PC9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC10', 'PC10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC11', 'PC11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC12', 'PC12' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC13(LED)', 'PC13' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD0', 'PD0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD1', 'PD1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 50, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD2', 'PD2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 51, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD3', 'PD3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 52, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD4', 'PD4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 53, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD5', 'PD5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 54, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD6', 'PD6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 55, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD7', 'PD7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 56, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD8', 'PD8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 57, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD9', 'PD9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 58, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD10', 'PD10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 59, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD11', 'PD11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 60, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD12', 'PD12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 61, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD13', 'PD13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 62, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD14', 'PD14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 63, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PD15', 'PD15' )]
+                                          
+    [ArduinoBoard_Add_DigitalAnalogChannel( 64, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE0(LED)', 'PE0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 65, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE1', 'PE1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 66, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE2', 'PE2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 67, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE3', 'PE3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 68, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE4', 'PE4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 69, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE5', 'PE5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 70, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE6', 'PE6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 71, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE7', 'PE7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 72, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE8', 'PE8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 73, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE9', 'PE9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 74, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE10', 'PE10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 75, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE11', 'PE11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 76, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE12', 'PE12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 77, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE13', 'PE13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 78, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE14', 'PE14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 79, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PE15', 'PE15' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+  TArduino_ST_Nucleo_Basic_Board : TArduino_STM32_Basic_I2C_SPI_Modules_Board
+  
+    [AddItem( TArduinoHardwareSerial )]
+    Serial
+    
+  ;
+//---------------------------------------------------------------------------
+// https://docs.zephyrproject.org/1.13.0/boards/arm/nucleo_f401re/doc/nucleof401re.html
+  [Name( 'ST Nucleo F401RE' )]
+  [ArduinoBoardCompileParams( 'STM32:stm32:Nucleo_64:pnum=NUCLEO_F401RE' )]
+  [Category( TSTM32_F401_Nucleo_Category )]  
+  [ParentImage( TSTM32_F401_Nucleo_Category )]
+  +TArduino_ST_Nucleo_F401RE_Board : TArduino_ST_Nucleo_Basic_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial0Channel, 'PA3/D0(RX)', 'D0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial0Channel, 'PA2/D1(TX)', 'D1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA10/D2(RX1)', 'D2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB3/D3', 'D3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB5/D4', 'D4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB4/D5', 'D5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB10/D6', 'D6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA8/D7', 'D7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA9/D8', 'D8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC7/D9', 'D9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB6/D10', 'D10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA7/D11(SPI0-MOSI)', 'D11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA6/D12(SPI0-MISO)', 'D12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA5/D13(LED)(SPI0-SCK)', 'D13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB9/D14(I2C0-SDA)', 'D14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB8/D15(I2C0-SCL)', 'D15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC9', 'PC9' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoDigitalPullDownOpenDrainChannel, 'PC11', 'PC11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoDigitalPullDownOpenDrainChannel, 'PD2', 'PD2' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA0/A0', 'A0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA1/A1', 'A1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA4/A2', 'A2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB0/A3', 'A3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC1/A4', 'A4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC0/A5', 'A5' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC4', 'PC4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB13', 'PB13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB14', 'PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB15', 'PB15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PB1', 'PB1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoDigitalPullDownOpenDrainChannel, 'PB2', 'PB2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoDigitalPullDownOpenDrainChannel, 'PB12', 'PB12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA11', 'PA11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoDigitalPullDownOpenDrainChannel, 'PA12', 'PA12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC5', 'PC5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC6', 'PC6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC8', 'PC8' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC3', 'PC3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC2', 'PC2' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoDigitalPullDownOpenDrainChannel, 'PH1', 'PH1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoDigitalPullDownOpenDrainChannel, 'PH0', 'PH0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoDigitalPullDownOpenDrainChannel, 'PC15', 'PC15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoDigitalPullDownOpenDrainChannel, 'PC14', 'PC14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoDigitalPullDownOpenDrainChannel, 'PC13(Button)', 'PC13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB7', 'PB7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA15', 'PA15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 46, TArduinoDigitalPullDownOpenDrainChannel, 'PA14', 'PA14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 47, TArduinoDigitalPullDownOpenDrainChannel, 'PA13', 'PA13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoDigitalPullDownOpenDrainChannel, 'PC12', 'PC12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoDigitalPullDownOpenDrainChannel, 'PC10', 'PC10' )]
+    Digital : TArduinoDigitalChannels
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TNucleoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'ST Nucleo F303RE' )]
+  [ArduinoBoardCompileParams( 'STM32:stm32:Nucleo_64:pnum=NUCLEO_F303RE' )]
+  [Category( TSTM32_F303_Nucleo_Category )]  
+  [ParentImage( TSTM32_F303_Nucleo_Category )]
+  +TArduino_ST_Nucleo_F303RE_Board : TArduino_ST_Nucleo_Basic_Board
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 0, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial0Channel, 'PA3/D0(RX)', 'D0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial0Channel, 'PA2/D1(TX)', 'D1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 2, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA10/D2', 'D2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 3, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB3/D3', 'D3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 4, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB5/D4', 'D4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 5, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB4/D5', 'D5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 6, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB10/D6', 'D6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 7, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA8/D7', 'D7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 8, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA9/D8', 'D8' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 9, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC7/D9', 'D9' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 10, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB6/D10', 'D10' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 11, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA7/D11(SPI0-MOSI)', 'D11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 12, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'PA6/D12(SPI0-MISO)', 'D12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 13, TArduinoCombinedAnalogDigitalPullDownOpenDrainAnalogSPI0Channel, 'PA5/D13(LED)(SPI0-SCK)', 'D13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 14, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB9/D14(I2C0-SDA)', 'D14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 15, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB8/D15(I2C0-SCL)', 'D15' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 16, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC9', 'PC9' )]
+                               
+    [ArduinoBoard_Add_DigitalAnalogChannel( 17, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC11', 'PC11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 18, TArduinoDigitalPullDownOpenDrainChannel, 'PD2', 'PD2' )]
+                               
+    [ArduinoBoard_Add_DigitalAnalogChannel( 19, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PA0/A0', 'A0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 20, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PA1/A1', 'A1' )]
+                               
+    [ArduinoBoard_Add_DigitalAnalogChannel( 21, TArduinoCombinedAnalogDigitalPullDownOpenDrainAnalogChannel, 'PA4/A2', 'A2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 22, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB0/A3', 'A3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 23, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC1/A4', 'A4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 24, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC0/A5', 'A5' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 25, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC4', 'PC4' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 26, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB13', 'PB13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 27, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB14', 'PB14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 28, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB15', 'PB15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 29, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB1', 'PB1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 30, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB2', 'PB2' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 31, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PB11', 'PB11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 32, TArduinoDigitalPullDownOpenDrainChannel, 'PB12', 'PB12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 33, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA11', 'PA11' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 34, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA12', 'PA12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 35, TArduinoCombinedAnalogDigitalPullDownOpenDrainChannel, 'PC5', 'PC5' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 36, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC6', 'PC6' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 37, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC8', 'PC8' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 38, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC3', 'PC3' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 39, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'PC2', 'PC2' )]
+
+    [ArduinoBoard_Add_DigitalAnalogChannel( 40, TArduinoDigitalPullDownOpenDrainChannel, 'PF1', 'PF1' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 41, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PF0', 'PF0' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 42, TArduinoDigitalPullDownOpenDrainChannel, 'PC15', 'PC15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 43, TArduinoDigitalPullDownOpenDrainChannel, 'PC14', 'PC14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 44, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC13(Button)', 'PC13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 45, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PB7', 'PB7' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 46, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA15', 'PA15' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 47, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA14', 'PA14' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 48, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PA13', 'PA13' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 49, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC12', 'PC12' )]
+    [ArduinoBoard_Add_DigitalAnalogChannel( 50, TArduinoDigitalPullDownOpenDrainPWMChannel, 'PC10', 'PC10' )]
+    Digital : TArduinoDigitalChannels
+
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TNucleoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Maple Mini' )]
+  [ArduinoBoardCompileParams( 'STM32:stm32:GenF1:pnum=MAPLEMINI_F103CB,upload_method=swdMethod,xserial=generic,usb=none,xusb=FS,opt=osstd,rtlib=nano' )]
+  [Category( TSTM32_F103_Category )]    
+  [ArduinoDefine( 'VISUINO_MAPLE_MINI' )]
+  +TArduino_Maple_Mini_Board : TArduino_STM32_Basic_I2C_SPI_Modules_Board
+
+    [AddItem( TArduinoHardwareSerial )]
+    [AddItem( TArduinoSimpleHardwareSerial, 2 )]
+    Serial
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0,  1, TArduinoDigitalPullDownOpenDrainSerial2I2C1Channel, 'Digital 5V(I2C1-SDA)(RX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1,  1, TArduinoDigitalPullDownOpenDrainSerial2I2C1Channel, 'Digital 5V(I2C1-SCL)(TX2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 3,  8, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 4,  7, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'Digital 3.3V(SPI0-MOSI)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 5,  6, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSPI0Channel, 'Digital 3.3V(SPI0-MISO)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 6,  5, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainSPI0Channel, 'Digital 3.3V(SPI0-SCK)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 7,  4, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainSerial1Channel, 'Digital 3.3V(CK1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 8,  3, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial1Channel, 'Digital 3.3V(RX1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9,  2, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial1Channel, 'Digital 3.3V(TX1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 10, 1, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial1Channel, 'Digital 3.3V(RTS1)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 11, 0, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMSerial1Channel, 'Digital 3.3V(CTS1)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 12,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 14,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 3.3V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 15,  1, TArduinoDigitalPullDownOpenDrainPWMI2C0Channel, 'Digital 5V(I2C1-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 16,  1, TArduinoDigitalPullDownOpenDrainPWMI2C0Channel, 'Digital 5V(I2C1-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 17,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 3.3V(SMBA0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 18,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 19,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 20,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 21,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 22,  1, TArduinoDigitalPullDownOpenDrainChannel, 'Digital 5V' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 23,  1, TArduinoDigitalPullDownOpenDrainPWMSerial0Channel, 'Digital 5V(RTS0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 24,  1, TArduinoDigitalPullDownOpenDrainPWMSerial0Channel, 'Digital 5V(CTS0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 25,  1, TArduinoDigitalPullDownOpenDrainPWMSerial0Channel, 'Digital 5V(RX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 26,  1, TArduinoDigitalPullDownOpenDrainPWMSerial0Channel, 'Digital 5V(TX0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 27,  1, TArduinoDigitalPullDownOpenDrainPWMSerial0Channel, 'Digital 5V(CK0)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 28,  1, TArduinoDigitalPullDownOpenDrainSPI1Channel, 'Digital 5V(SPI0-MOSI)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 29,  1, TArduinoDigitalPullDownOpenDrainSerial2SPI1Channel, 'Digital 5V(SPI0-MISO)(RTS2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 30,  1, TArduinoDigitalPullDownOpenDrainSerial2SPI1Channel, 'Digital 5V(SPI0-SCK)(CTS2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 31,  1, TArduinoDigitalPullDownOpenDrainPWMSerial2Channel, 'Digital 5V(SMBA1)(CK2)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 32,  1, TArduinoDigitalPullDownOpenDrainPWMChannel, 'Digital 5V(Button)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 33,  9, 1, TArduinoCombinedAnalogDigitalPullDownOpenDrainPWMChannel, 'Digital 3.3V(LED)' )]
+    Digital : TArduinoDigitalChannels
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

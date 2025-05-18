@@ -1,0 +1,185 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoCommonImageSink : TArduinoComponent
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoImageSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonImageSource : TArduinoComponent
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoImageSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonEnableImageFilter : TArduinoCommonImageSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoImageSourcePin
+    
+    Enabled : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoImageMultiInputSource : TArduinoCommonImageSource
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoImageSinkPin )]
+    [OWAutoManagePinListOwner( TOWArduinoImageSinkPin, 2, 2, 200 )]
+    InputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Image.h' )]
+  [ArduinoClass( 'Mitov::ExtractImageInfo' )]
+  [Name( 'Extract Image Info' )]
+  [CreateName( 'ImageInfo' )]
+  [Category( TArduinoImageConvertersToolbarCategory )]
+  +TArduinoExtractImageInfo : TArduinoEnableComponent
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoImageSinkPin
+    
+    [OWPrimaryPin]
+    WidthOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    HeightOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    FormatOutputPin : TOWArduinoUnsignedSourcePin
+    
+    [OWPrimaryPin]
+    DataOutputPin : TOWArduinoByteSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Image.h' )]
+  [ArduinoClass( 'Mitov::TArduinoBinaryToImageFormat' )]
+  TArduinoBinaryToImageFormat : TArduinoCodePersistent
+    
+    ExtractFromData : Boolean = False
+    
+    PixelFormat : TImageFormat = GrayScale
+    Width : Unsigned = 8
+    Height : Unsigned = 8
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Image.h' )]
+  [ArduinoClass( 'Mitov::BinaryToImage' )]
+  [CreateName( 'BinaryToImage' )]
+  [Name( 'Binary To Image' )]
+  [Category( TArduinoImageConvertersToolbarCategory )]
+  [Category( TArduinoBinaryConvertersToolbarCategory )]
+  +TArduinoBinaryToImage : TArduinoCommonByteSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoImageSourcePin
+    
+    Enabled : Boolean = True
+    Format : TArduinoBinaryToImageFormat
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Image.h' )]
+  [ArduinoClass( 'Mitov::ImageToBinary' )]
+  [CreateName( 'ImageToBinary' )]
+  [Name( 'Image To Binary' )]
+  [Category( TArduinoImageConvertersToolbarCategory )]
+  [Category( TArduinoBinaryConvertersToolbarCategory )]
+  +TArduinoImageToBinary : TArduinoCommonByteSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoImageSinkPin
+    
+    Enabled : Boolean = True
+    IncludeFormat : Boolean = False
+    
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Image Multi-Source Merger' )]
+  [CreateName( 'ImageMultiMerger' )]
+  [Category( TArduinoImageToolbarCategory )]
+  +TArduinoImageMultiMerger : TArduinoImageMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [CreateName( 'ImageMultiSource' )]
+  [Name( 'Image Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TArduinoImageToolbarCategory )]
+  +TArduinoImageMultiSource : TArduinoCommonImageSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoImageSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoImageSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatImage' )]
+  [Name( 'Repeat Image' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatImage : TArduinoCommonEnableImageFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TStoredImageBuffer' )]
+  [Name( 'Image On/Off Switch' )]
+  [CreateName( 'ImageSwitch' )]
+  [Category( TArduinoImageToolbarCategory )]
+  +TArduinoImageSwitch : TArduinoCommonImageSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoImageSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TStoredImageBuffer' )]
+  [Name( 'Image Toggle Switch' )]
+  [CreateName( 'ImageToggleSwitch' )]
+  [Category( TArduinoImageToolbarCategory )]
+  +TArduinoImageToggleSwitch : TArduinoCommonImageSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoImageSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoImageSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TStoredImageBuffer' )]
+  [Name( 'Image Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'ImageDemux' )]
+  [Category( TArduinoImageToolbarCategory )]
+  +TArduinoImageDemux : TArduinoCommonImageSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoImageSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoImageSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Image Toggle Demux' )]
+  [CreateName( 'ImageToggleDemux' )]
+  [Category( TArduinoImageToolbarCategory )]
+  +TArduinoImageToggleDemux : TArduinoCommonImageSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoImageSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin  : TOWArduinoImageSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TStoredImageBuffer' )]
+  [Name( 'Image Mux(Multi channel Switch)' )]
+  [CreateName( 'ImageMux' )]
+  [Category( TArduinoImageToolbarCategory )]
+  +TArduinoImageMux : TArduinoImageMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

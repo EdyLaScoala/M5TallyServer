@@ -1,0 +1,827 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::TextToChar' )]
+  [CreateName( 'TextToChar' )]
+  [Name( 'Text To Char' )]
+  [Category( TArduinoTextConvertersToolbarCategory )]
+  +TArduinoTextToChar : TArduinoCommonEnableCharSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+    AddReturn : Boolean = True
+    AddNewLine : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::AnalogToText' )]
+  [CreateName( 'AnalogToText' )]
+  [Name( 'Analog To Text' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoFloatToText : TArduinoCommonAnalogSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoStringSourcePin
+
+    [DesignRange( 1, 20 )]
+    [ValueRange( 1, 30 )]
+    MinWidth : Unsigned = 1
+
+    [OldName( 'Prcision' )]
+    [DesignRange( 0, 20 )]
+    [ValueRange( 0, 30 )]
+    Precision  : Unsigned = 3
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoCommonAnalogScaleSink : TArduinoCommonAnalogSink
+
+    Scale : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::AnalogToInteger' )]
+  [CreateName( 'AnalogToInteger' )]
+  [Name( 'Analog To Integer' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoFloatToInteger : TArduinoCommonAnalogScaleSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+    Round : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::AnalogToUnsigned' )]
+  [CreateName( 'AnalogToUnsigned' )]
+  [Name( 'Analog To Unsigned' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  +TArduinoFloatToUnsigned : TArduinoCommonAnalogScaleSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+    Round : Boolean = True
+    Constrain : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::TypedToAnalog' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [CreateName( 'IntegerToAnalog' )]
+  [Name( 'Integer To Analog' )]
+  [Category( TArduinoIntegerConvertersToolbarCategory )]
+  +TArduinoIntegerToFloat : TArduinoCommonIntegerSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    Scale : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::ComplexToAnalog' )]
+  [CreateName( 'ComplexToAnalog' )]
+  [Name( 'Complex To Analog' )]
+  [Category( TArduinoComplexConvertersToolbarCategory )]
+  +TArduinoComplexToAnalog : TArduinoCommonComplexSink
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Real', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Imaginary', TOWArduinoAnalogChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::AnalogToComplex' )]
+  [CreateName( 'AnalogToComplex' )]
+  [Name( 'Analog To Complex' )]
+  [Category( TArduinoComplexConvertersToolbarCategory )]
+  [ArduinoVariable( Unsigned, 2, 'FPopulated' )]
+  +TArduinoAnalogToComplex : TArduinoCommonComplexSource
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Real', TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Imaginary', TOWArduinoAnalogSinkPin )]
+    InputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::QuaternionToAnalog' )]
+  [CreateName( 'QuaternionToAnalog' )]
+  [Name( 'Quaternion To Analog' )]
+  [Category( TArduinoQuaternionConvertersToolbarCategory )]
+  +TArduinoQuaternionToAnalog : TArduinoCommonQuaternionSink
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'X', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Z', TOWArduinoAnalogChangeOnlySourcePin )]
+    ImaginaryOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    RealOutputPin : TOWArduinoAnalogChangeOnlySourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::AnalogToQuaternion' )]
+  [CreateName( 'AnalogToQuaternion' )]
+  [Name( 'Analog To Quaternion' )]
+  [Category( TArduinoQuaternionConvertersToolbarCategory )]
+  [ArduinoVariable( Unsigned, 4, 'FPopulated' )]
+  +TArduinoAnalogToQuaternion : TArduinoCommonQuaternionSource
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'X', TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Z', TOWArduinoAnalogSinkPin )]
+    ImaginaryInputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    RealInputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::TypedToAnalog' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [CreateName( 'UnsignedToAnalog' )]
+  [Name( 'Unsigned To Analog' )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  +TArduinoUnsignedToFloat : TArduinoCommonUnsignedSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    Scale : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::TypedToText' )]
+  [CreateName( 'IntegerToText' )]
+  [Name( 'Integer To Text' )]
+  [Category( TArduinoIntegerConvertersToolbarCategory )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  +TArduinoIntegerToText : TArduinoCommonIntegerSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoStringSourcePin
+
+    [ValueRange( 2, 36 )]
+    Base : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::TypedToText' )]
+  [CreateName( 'UnsignedToText' )]
+  [Name( 'Unsigned To Text' )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  +TArduinoUnsignedToText : TArduinoCommonUnsignedSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoStringSourcePin
+
+    [ValueRange( 2, 36 )]
+    Base : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToText' )]
+  [Name( 'Digital To Text' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToText : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoStringSourcePin
+
+    [MultiLine]
+    TrueValue : String = 'true'
+
+    [MultiLine]
+    FalseValue : String = 'false'
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToBinary' )]
+  [CreateName( 'DigitalToBinary' )]
+  [Name( 'Digital To Binary' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToBinary : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoByteSourcePin
+
+    [MultiLine]
+    TrueValue : TArduinoBinaryPersistent
+
+    [MultiLine]
+    FalseValue : TArduinoBinaryPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToChar' )]
+  [Name( 'Digital To Char' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToChar : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoCharSourcePin
+
+    TrueValue : AnsiChar = 'T'
+    FalseValue : AnsiChar = 'F'
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::TextToInteger' )]
+  [CreateName( 'TextToInteger' )]
+  [Name( 'Text To Integer' )]
+  [Category( TArduinoTextConvertersToolbarCategory )]
+  +TArduinoTextToInteger : TArduinoCommonTextSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+    [ValueRange( 2, 36 )]
+    Base : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::TextToUnsigned' )]
+  [CreateName( 'TextToUnsigned' )]
+  [Name( 'Text To Unsigned' )]
+  [Category( TArduinoTextConvertersToolbarCategory )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  +TArduinoTextToUnsigned : TArduinoCommonTextSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+    [ValueRange( 2, 36 )]
+    Base : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::TextToAnalog' )]
+  [CreateName( 'TextToAnalog' )]
+  [Name( 'Text To Analog' )]
+  [Category( TArduinoTextConvertersToolbarCategory )]
+  +TArduinoTextToFloat : TArduinoCommonTextSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::UnsignedToInteger' )]
+  [CreateName( 'UnsignedToInteger' )]
+  [Name( 'Unsigned To Integer' )]
+  [Category( TArduinoIntegerConvertersToolbarCategory )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  +TArduinoUnsignedToInteger : TArduinoCommonUnsignedSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+    Constrain : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::IntegerToUnsigned' )]
+  [CreateName( 'IntegerToUnsigned' )]
+  [Name( 'Integer To Unsigned' )]
+  [Category( TArduinoIntegerConvertersToolbarCategory )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  +TArduinoIntegerToUnsigned : TArduinoCommonIntegerSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+    Constrain : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::BinaryToText' )]
+  [CreateName( 'BinaryToText' )]
+  [Name( 'Binary To Text' )]
+  [Category( TArduinoBinaryConvertersToolbarCategory )]
+  +TArduinoBinaryToText : TArduinoCommonByteSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoStringSourcePin
+
+    DirectCast : Boolean = False
+    BeginText : String = '('
+    EndText : String = ')'
+    SeparatorText : String = ','
+
+    ElementPrefix : String = ''
+
+    [ValueRange( 2, 36 )]
+    Base : Unsigned = 10
+
+    [MinValue( 1 )]
+    MaxSize : Unsigned = 32
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToInteger' )]
+  [Name( 'Digital To Integer' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToInteger : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+    TrueValue : Integer = 1
+    FalseValue : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToUnsigned' )]
+  [Name( 'Digital To Unsigned' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  +TArduinoDigitalToUnsigned : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+    TrueValue : Unsigned = 1
+    FalseValue : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToAnalog' )]
+  [Name( 'Digital To Analog' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToFloat : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    TrueValue : Single = 1.0
+    FalseValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToColor' )]
+  [Name( 'Digital To Color' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToColor : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoColorSourcePin
+
+    TrueValue  : TColor = White
+    FalseValue : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToRGBWColor' )]
+  [Name( 'Digital To RGBW Color' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToRGBWColor : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoRGBWColorSourcePin
+
+    TrueValue : TRGBWColor = White
+    FalseValue : TRGBWColor = Null
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::DigitalToType' )]
+  [CreateName( 'DigitalToDateTime' )]
+  [Name( 'Digital To Date/Time' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  +TArduinoDigitalToDateTime : TArduinoCommonBooleanSink
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+    TrueValue  : TDateTime = 100.0
+    FalseValue : TDateTime = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::UnsignedToDigital' )]
+  [CreateName( 'UnsignedToDigital' )]
+  [Name( 'Unsigned To Digital' )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  [ArduinoInit]
+  +TArduinoUnsignedToDigital : TArduinoCommonUnsignedSink
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoDigitalSourcePin, 8, 1, 32 )]
+    OutputPins : TOWPinListOwner
+
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoReversableConverter : TArduinoCommonAnalogFilter
+
+    Reverse : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::CelsiusToFahrenheit' )]
+  [CreateName( 'CelsiusToFahrenheit' )]
+  [Name( 'Celsius To Fahrenheit' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoCelsiusToFahrenheit : TArduinoReversableConverter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::CelsiusToKelvin' )]
+  [CreateName( 'CelsiusToKelvin' )]
+  [Name( 'Celsius To Kelvin' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoCelsiusToKelvin : TArduinoReversableConverter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::MetresToFeet' )]
+  [CreateName( 'MetresToFeet' )]
+  [Name( 'Metres To Feet' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoMetresToFeet : TArduinoReversableConverter;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::PressureToAltitude' )]
+  [CreateName( 'PressureToAltitude' )]
+  [Name( 'Pressure To Altitude' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoPressureToAltitude : TArduinoCommonAnalogFilter
+
+    [ NamePostfix( '(mb)' ) ]
+    BaseLinePressure : Single = 1013.25
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::AltitudePressureToSeaLevelPressure' )]
+  [CreateName( 'ToSeaLevelPressure' )]
+  [Name( 'Altitude Pressure To Sea Level Pressure' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoAltitudePressureToSeaLevelPressure : TArduinoCommonAnalogFilter
+
+    Altitude : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::AnalogArrayToAnalog' )]
+  [CreateName( 'AnalogArrayToAnalog' )]
+  [Name( 'Analog Array To Analog' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoAnalogArrayToAnalog : TArduinoCommonAnalogArraySink
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoAnalogSourcePin, 8, 1, 255 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DewPoint.h' )]
+  [ArduinoClass( 'Mitov::DewPoint' )]
+  [CreateName( 'DewPoint' )]
+  [Name( 'Calculate Dew Point' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoDewPoint : TArduinoCommonAnalogEnableSource
+
+    [OWPrimaryPin]
+    TemperatureInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    HumidityInputPin : TOWArduinoAnalogSinkPin
+
+    InFahrenheit : Boolean = False
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( TemperatureInputPin )]
+    
+    [ NamePostfix( '(C)' ) ]
+    InitialTemperature : Single = 20.0
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( HumidityInputPin )]
+    [ NamePostfix( '(%)' ) ]
+    InitialHumidity : Single = 20.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SpeedToClock.h' )]
+  [ArduinoClass( 'Mitov::SpeedToClock' )]
+  [CreateName( 'SpeedToClock' )]
+  [Name( 'Speed To Clock/Direction(Stepper Driver)' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoVariable( Boolean, 'FSendOutput' )]
+  +TArduinoSpeedToClock : TArduinoSpeedToDirectionBasic
+
+    ClockOutputPin : TOWArduinoDigitalSourcePin
+
+    MaxFrequency : Single = 100.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Steering_Differential.h' )]
+  [ArduinoClass( 'Mitov::SteeringDifferential' )]
+  [Name( 'Steering Differential' )]
+  [CreateName( 'Steering' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  +TArduinoSteeringDifferential : TArduinoComponent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Direction', TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Speed', TOWArduinoAnalogSinkPin )]
+    SteeringInputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Left', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Right', TOWArduinoAnalogSourcePin )]
+    MotorsOutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SplitDigits.h' )]
+  [ArduinoClass( 'Mitov::SplitIntegerDigits' )]
+  [Name( 'Split Integer Digits' )]
+  [CreateName( 'SplitIntegerDigits' )]
+  [Category( TArduinoIntegerConvertersToolbarCategory )]
+  +TArduinoSplitIntegerDigits : TArduinoCommonIntegerSink
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoIntegerSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoIntegerSourcePin, 1, 1, 100 )]
+    OutputPins : TOWPinListOwner
+
+    [ValueRange( 2, 36 )]
+    Base : Unsigned = 10
+
+    FillValue : Integer = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoSpeedToDirectionBasic : TArduinoCommonAnalogEnableSink
+
+    [OWPrimaryPin]
+    DirectionOutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SpeedToSpeedAndDirection.h' )]
+  [ArduinoClass( 'Mitov::SpeedToSpeedAndDirection' )]
+  [CreateName( 'SpeedToSpeedAndDirection' )]
+  [Name( 'Speed To Speed and Direction' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoSpeedToSpeedAndDirection : TArduinoSpeedToDirectionBasic
+
+    [OWPrimaryPin]
+    SpeedOutputPin : TOWArduinoAnalogSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOutputs' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOutputs' )]
+    InverseForward : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateOutputs' )]
+    InverseReverse : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SpeedToSpeedAndDirection.h' )]
+  [ArduinoClass( 'Mitov::SpeedAndDirectionToSpeed' )]
+  [CreateName( 'SpeedAndDirectionToSpeed' )]
+  [Name( 'Speed and Direction To Speed' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoSpeedAndDirectionToSpeed : TArduinoCommonAnalogEnableSource
+
+    [OWPrimaryPin]
+    SpeedInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    ReverseInputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoFlexibleVariableIfPinConnected( SpeedInputPin )]
+    [OWExcludeBindings]
+    [ValueRange( 0.0, 1.0 )]
+    InitialSpeed : Single = 0.0
+
+    [ArduinoFlexibleVariableIfPinConnected( ReverseInputPin )]
+    InitialReverse : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_HeatIndex.h' )]
+  [ArduinoClass( 'Mitov::HeatIndex' )]
+  [CreateName( 'HeatIndex' )]
+  [Name( 'Calculate Heat Index' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoHeatIndex : TArduinoCommonAnalogEnableSource
+
+    [OWPrimaryPin]
+    TemperatureInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    HumidityInputPin : TOWArduinoAnalogSinkPin
+
+    InFahrenheit : Boolean = False
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( TemperatureInputPin )]
+    InitialTemperature : Single = 0.0
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( HumidityInputPin )]
+    InitialHumidity : Single = 0.0
+
+  ;
+  //---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AbsoluteHumidity.h' )]
+  [ArduinoClass( 'Mitov::AbsoluteHumidity' )]
+  [CreateName( 'AbsoluteHumidity' )]
+  [Name( 'Calculate Absolute Humidity' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoAbsoluteHumidity: TArduinoCommonAnalogEnableSource
+
+    [OWPrimaryPin]
+    TemperatureInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    HumidityInputPin : TOWArduinoAnalogSinkPin
+
+    InFahrenheit : Boolean = False
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( TemperatureInputPin )]
+    InitialTemperature : Single = 0.0
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( HumidityInputPin )]
+    InitialHumidity : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_CompassHeading.h' )]
+  [ArduinoClass( 'Mitov::CompassHeading' )]
+  [CreateName( 'CompassHeading' )]
+  [Name( 'Compass Heading' )]
+  [Category( TArduinoAnalogConvertersToolbarCategory )]
+  [ArduinoLoopEnd]
+  [ArduinoVariable( Boolean, 'FChangeOnly' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  +TArduinoCompassHeading : TArduinoCommonAnalogSource
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'X', TOWArduinoAnalogSinkPin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogSinkPin )]
+    InputPins : TOWArduinoPinList
+
+    DeclinationAngle : Single = 0.0
+
+    Units : TArduinoAngleUnits = auDegree
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DigitalsToUnsigned.h' )]
+  [ArduinoClass( 'Mitov::DigitalsToUnsigned' )]
+  [Name( 'Digitals To Unsigned(Binary Encoder)' )]
+  [CreateName( 'DigitalsToUnsigned' )]
+  [Category( TArduinoDigitalConvertersToolbarCategory )]
+  [Category( TArduinoUnsignedConvertersToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  +TArduinoDigitalsToUnsigned : TArduinoCommonUnsignedSource
+
+    [ArduinoChangeOnlyPin]
+    OutputPin
+
+    [OWPrimaryPin]
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSinkPin )]
+    [OWAutoManagePinListOwner( TOWArduinoDigitalSinkPin, 8, 2, 32 )]
+    InputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoCharToTextEndingElements )]
+  [ArduinoHelpPostfix( '(Char To Text)' )]
+  [ArduinoDeclaredClass]
+//  [ArduinoOwnerReference]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicCharToTextEndingElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Ending Text' )]
+  [CreateName( 'Ending Text' )]
+  [ArduinoClass( 'Mitov::TArduinoCharToTextEndingTextElement' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ParentImage( TArduinoTextEndsWith )]
+  +TArduinoCharToTextEndingTextElement : TArduinoBasicCharToTextEndingElement
+
+    Enabled : Boolean = True
+    Include : Boolean = False
+
+    [MultiLine]
+    Value : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AResult' )]
+  [Name( 'IsEnding' )]
+  ArduinoSetValueIsEndingCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoSetValueIsEndingCallChain]
+  TArduinoCharToTextEndingElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Converters.h' )]
+  [ArduinoClass( 'Mitov::CharToText' )]
+  [CreateName( 'CharToText' )]
+  [Name( 'Char To Text' )]
+  [Category( TArduinoTextConvertersToolbarCategory )]
+  +TArduinoCharToText : TArduinoCommonEnableTextSource
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoCharSinkPin
+
+    ClockInputPin : TOWArduinoClockSinkPin
+    ClearInputPin : TOWArduinoClockSinkPin
+    DeleteOneInputPin : TOWArduinoClockSinkPin
+
+//    [ArduinoExclude]
+    [OWExcludeBindings]
+    [ArduinoTemplateParameterConst]
+    [ArduinoAddPowerVariable( 'FIndex' )]
+    MaxLength : Unsigned = 100
+
+    Truncate : Boolean = False
+    UpdateOnEachChar : Boolean = False
+    EndOnNewLine     : Boolean = True
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoCharToTextEndingElements
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,136 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Set Address' )]
+  [CreateName( 'Set Address' )]
+  [ArduinoClass( 'Mitov::LaserRangerSetAddress' )]
+  [ParentImage( TArduinoInfraredThermometerMLX90614SetAddressElement )]
+  +TArduinoLaserRangerElementSetAddress : TArduinoLaserRangerElementBasic
+
+    [ArduinoPinDisconnectCallChain( 'Apply();' )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    Address : TArduinoUInt8 = $29
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoCallChain( 'Apply' )]
+  TArduinoLaserRangerElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLaserRangerElements )]
+  [ArduinoHelpPostfix( '(Laser Ranger)' )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoDeclaredClass]
+  TArduinoLaserRangerElementBasic : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  [CreateName( 'LaserRanger' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart]
+//  [ArduinoLoopBegin]
+  TArduinoLaserRangerSTMicroelectronicsBasic : TArduinoI2CAddressSensorPinClockedEnableComponent
+
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [NamePostfix( '(mm)' )]
+    DitanceOutputPin : TOWArduinoAnalogSourcePin
+
+    Address = $29
+
+    [ComponentEditorEntryDesign( 'Add E&ntries ...' )]
+    Elements : TArduinoLaserRangerElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLaserRangerVL53L0XPulsePeriods' )]
+  TArduinoLaserRangerVL53L0XPulsePeriods : TArduinoCodePersistent
+
+    [ValueRange( 12, 18 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePulsePeriods_PreRange' )]
+    PreRange : Unsigned = 14
+
+    [ValueRange( 8, 14 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePulsePeriods_FinalRange' )]
+    FinalRange : Unsigned = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_VL53L0X.h' )]
+  [ArduinoInclude( 'Mitov_Vl53l0X_Tuning.h' )]
+  [ArduinoClass( 'Mitov::LaserRangerVL53L0X' )]
+  [ArduinoTemplateParameter( 'C_InterruptSettingBuffer', '(const uint8_t *)nullptr' )]
+  [ArduinoTemplateParameter( 'C_InterruptSettingBuffer_Size', '0' )]
+  [ArduinoTemplateParameter( 'C_TuningSettingBuffer', 'Mitov::VL53L0XConst::DefaultTuningSettings' )]
+  [ArduinoTemplateParameter( 'C_TuningSettingBuffer_Size', 'sizeof( Mitov::VL53L0XConst::DefaultTuningSettings ) / 2' )]
+  [ArduinoWebKeywords( 'VL53L0X' )]
+  TArduinoLaserRangerVL53L0X_Basic_Extender : Extender
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [ValueRange( 0, 511.99 )]
+    ReturnSignalRateLimit : Single = 0.25
+
+    [NamePostfix( '(mS)' )]
+    Timeout : Unsigned = 500
+
+    [NamePostfix( '(mS)' )]
+    SamplingPeriod : Unsigned = 0
+
+    PulsePeriods : TArduinoLaserRangerVL53L0XPulsePeriods
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoLaserRangerVL53L0XBasic : TArduinoLaserRangerSTMicroelectronicsBasic, TArduinoLaserRangerVL53L0X_Basic_Extender
+
+    [Name( 'Use 2.8V I2C' )]
+    Use2_8V_I2C : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Time Of Flight Laser Ranger VL53L0X' )]
+  +TArduinoLaserRangerVL53L0X : TArduinoLaserRangerVL53L0XBasic;
+//---------------------------------------------------------------------------
+  [Name( 'M5Stack Time-of-Flight Ranging Unit (VL53L0X)' )]
+  [Category( TArduinoGroveToolbarCategory )]
+  [Category( TArduinoM5StackToolbarCategory )]
+  +TArduinoM5StackLaserRangingUnitVL53L0X : TArduinoLaserRangerVL53L0XBasic;
+//---------------------------------------------------------------------------
+  [Name( 'Time Of Flight Laser Ranger VL6180X' )]
+  [ArduinoWebKeywords( 'VL6180X' )]
+  *TArduinoLaserRangerVL6180X : TArduinoLaserRangerSTMicroelectronicsBasic; // Needs to be implemented!
+//---------------------------------------------------------------------------
+  [ArduinoStart]
+  TArduinoLaserRangerVL53L0X_Extender : TArduinoLaserRangerVL53L0X_Basic_Extender
+
+    [OWPrimaryPin]
+    [NamePostfix( '(mm)' )]
+    DitanceOutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoLaserRangerVL53L0X )]
+  [ArduinoStart]
+  TArduinoLaserRangerVL53L0XBasicShield : TArduinoClockEnabledLoopBeginShield, TArduinoLaserRangerVL53L0X_Extender
+
+    Address : TArduinoUInt8 = $29
+
+    [Name( 'Use 2.8V I2C' )]
+    Use2_8V_I2C : Boolean = False
+
+    [ComponentEditorEntryDesign( 'Add E&ntries ...' )]
+    Elements : TArduinoLaserRangerElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoLaserRangerVL53L0X )]
+  TArduinoLaserRangerVL53L0XBasicShield_Element : TArduinoCodeEnabledClockedPersistent, TArduinoLaserRangerVL53L0X_Extender
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

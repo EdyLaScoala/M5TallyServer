@@ -1,0 +1,39 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Kocoa Fab' )]
+  TCocoaFabCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TCocoaFabCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TCocoaFabAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'BluetoothLESerial' )]
+  [CreateName( 'Bluetooth LE' )]
+  [ParentImage( TArduinoBluetoothUartService )]
+  [ArduinoShieldPin( '4',  'BLE RX' )]
+  [ArduinoShieldPin( '5',  'BLE TX' )]
+  [ArduinoTemplateParameter( '0', '5' )]
+  [ArduinoTemplateParameter( '1', '4' )]
+  [ArduinoTemplateParameter( 'Speed', 'Mitov::ConstantProperty<8, uint32_t, 9600 >' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  +TArduinoOrangeBoardBLEModule : TArduinoSoftwareSerialModule;
+//---------------------------------------------------------------------------
+  [Name( 'Orange Board BLE' )]
+  [Category( TCocoaFabCategory )]
+  [ParentImage( TCocoaFabCategory )]
+  +TArduino_CocoaFab_Orange_Board_BLE_Board : TArduino_AVR328_Basic_UNO_Board
+  
+    [AddItem( TArduinoOrangeBoardBLEModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 4 )]
+    [ArduinoBoard_Add_ReservedChannel( 4, 'BLE RX' )]
+    [ArduinoBoard_Add_ReservedChannel( 5, 'BLE TX' )]
+    [ArduinoBoard_Add_AllChannelsFrom( 6 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

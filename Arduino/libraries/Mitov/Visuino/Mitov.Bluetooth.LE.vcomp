@@ -1,0 +1,403 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoBluetoothBasicService: TArduinoComponent
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    DeviceOutputPin : TOWArduinoBLEServerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BluetoothLE_Battery.h' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLEBatteryService' )]
+  [CreateName( 'BatteryBluetoothService' )]
+  [Name( 'Battery Bluetooth Service' )]
+  [Category( TCommunicationBluetoothLEServerToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoStart]
+  +TArduinoBluetoothBatteryService : TArduinoBluetoothBasicService
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [ValueRange( 0.0, 1.0 )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+    UserDescription  : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBluetoothSensorLocation : Enum
+  
+    slNone
+    slOther
+    slChest
+    slWrist
+    slFinger
+    slHand
+    slEarLobe
+    slFoot
+    
+   ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_BluetoothLE_HearthRate.h' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLEHearthRateService' )]
+  [CreateName( 'HeartRateBluetoothService' )]
+  [Name( 'Heart Rate Bluetooth Service' )]
+  [Category( TCommunicationBluetoothLEServerToolbarCategory )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopEnd]
+  [ArduinoVariable( Boolean, 'FContactValue' )]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  +TArduinoBluetoothHearthrateService : TArduinoBluetoothBasicService
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [ArduinoPinIsConnectedFlag]
+    ContactInputPin : TOWArduinoDigitalSinkPin
+
+    [ArduinoPinIsConnectedFlag]
+    EnergyExpandedInputPin : TOWArduinoAnalogSinkPin
+
+    [ArduinoPinConnectDefine( '_MITOV_BLE_HEARTHRATE_RESET_ENERGY_EXPANDED_PIN_' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin )]
+    ResetEnergyExpendedOutputPin : TOWArduinoClockSourcePin
+
+    [MinValue( 0.0 )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+    [MinValue( 0.0 )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( EnergyExpandedInputPin )]
+    InitialEnergyExpanded : Single = 0.0
+
+    [OWExcludeBindings]
+    TwoBytes : Boolean = False
+
+    Location : TArduinoBluetoothSensorLocation = slNone
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBluetoothUUIDTypedCharacteristic : TArduinoBluetoothUUIDCharacteristic
+
+    BigEndian : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital' )]
+  [ArduinoTemplateParameter( 'TYPE', 'bool' )]
+  [ArduinoTemplateParameter( 'BASE', 'BLEUnsignedCharCharacteristic' )]
+  [ParentImage( TArduinoMemoryDigitalElement )]
+  +TArduino101BluetoothDigitalCharacteristic : TArduinoBluetoothUUIDTypedCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothDigitalCharacteristic )]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [OWPinGroup( TArduino101BluetoothDigitalCharacteristic )]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [ArduinoTemplateParameter( 'BASE', 'BLEFloatCharacteristic' )]
+  [ParentImage( TArduinoMemoryAnalogElement )]
+  +TArduino101BluetoothAnalogCharacteristic : TArduinoBluetoothUUIDTypedCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothAnalogCharacteristic )]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [OWPinGroup( TArduino101BluetoothAnalogCharacteristic )]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'BLELongCharacteristic' )]
+  [ParentImage( TArduinoMemoryIntegerElement )]
+  +TArduino101BluetoothIntegerCharacteristic : TArduinoBluetoothUUIDTypedCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothIntegerCharacteristic )]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [OWPinGroup( TArduino101BluetoothIntegerCharacteristic )]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'BLEUnsignedLongCharacteristic' )]
+  [ParentImage( TArduinoMemoryUnsignedElement )]
+  +TArduino101BluetoothUnsignedCharacteristic : TArduinoBluetoothUUIDTypedCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothUnsignedCharacteristic )]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [OWPinGroup( TArduino101BluetoothUnsignedCharacteristic )]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 16bit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int16_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'BLEShortCharacteristic' )]
+  [ParentImage( TArduinoMemoryInteger16Element )]
+  +TArduino101BluetoothInteger16Characteristic : TArduinoBluetoothUUIDTypedCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothIntegerCharacteristic )]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [OWPinGroup( TArduino101BluetoothIntegerCharacteristic )]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 16bit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint16_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'BLEUnsignedShortCharacteristic' )]
+  [ParentImage( TArduinoMemoryUnsigned16Element )]
+  +TArduino101BluetoothUnsigned16Characteristic : TArduinoBluetoothUUIDTypedCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothUnsignedCharacteristic )]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [OWPinGroup( TArduino101BluetoothUnsignedCharacteristic )]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 8bit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int8_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'BLECharCharacteristic' )]
+  [ParentImage( TArduinoMemoryInteger8Element )]
+  +TArduino101BluetoothInteger8Characteristic : TArduinoBluetoothUUIDTypedCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothIntegerCharacteristic )]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [OWPinGroup( TArduino101BluetoothIntegerCharacteristic )]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 8bit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint8_t' )]
+  [ArduinoTemplateParameter( 'BASE', 'BLEUnsignedCharCharacteristic' )]
+  [ParentImage( TArduinoMemoryUnsigned8Element )]
+  +TArduino101BluetoothUnsigned8Characteristic : TArduinoBluetoothUUIDTypedCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothUnsignedCharacteristic )]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [OWPinGroup( TArduino101BluetoothUnsignedCharacteristic )]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Binary' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLEBinaryCharacteristic' )]
+  +TArduino101BluetoothBinaryCharacteristic : TArduinoBluetoothUUIDCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothBinaryCharacteristic )]
+    InputPin : TOWArduinoByteSinkPin
+
+    [OWPinGroup( TArduino101BluetoothBinaryCharacteristic )]
+    OutputPin : TOWArduinoByteSourcePin
+
+    [ValueRange( 1, 20 )]
+    [ArduinoExclude]
+    [ArduinoTemplateParameterConst]
+    [OWExcludeBindings]
+    MaxSize : Unsigned = 20
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLETextCharacteristic' )]
+  +TArduino101BluetoothTextCharacteristic : TArduinoBluetoothUUIDCharacteristic
+
+    [OWPinGroup( TArduino101BluetoothTextCharacteristic )]
+    InputPin : TOWArduinoStringSinkPin
+
+    [OWPinGroup( TArduino101BluetoothTextCharacteristic )]
+    OutputPin : TOWArduinoStringSourcePin
+
+    [ValueRange( 1, 20 )]
+    [ArduinoExclude]
+    [ArduinoTemplateParameterConst]
+    [OWExcludeBindings]
+    MaxSize : Unsigned = 20
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Binary' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLEBinaryRemoteCharacteristic' )]
+  [ParentImage( TArduino101BluetoothBinaryCharacteristic )]
+  +TArduinoBluetoothBinaryRemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothBinaryRemoteCharacteristic )]
+    InputPin : TOWArduinoByteSinkPin
+
+    [OWPinGroup( TArduinoBluetoothBinaryRemoteCharacteristic )]
+    OutputPin : TOWArduinoByteSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLETextRemoteCharacteristic' )]
+  [ParentImage( TArduino101BluetoothTextCharacteristic )]
+  +TArduinoBluetoothTextRemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothTextRemoteCharacteristic )]
+    InputPin : TOWArduinoStringSinkPin
+
+    [OWPinGroup( TArduinoBluetoothTextRemoteCharacteristic )]
+    OutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital' )]
+  [ArduinoTemplateParameter( 'TYPE', 'bool' )] //, Mitov::BLEUnsignedCharRemoteCharacteristic' )]
+  [ParentImage( TArduinoMemoryDigitalElement )]
+  +TArduinoBluetoothDigitalRemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothDigitalRemoteCharacteristic )]
+    InputPin : TOWArduinoDigitalSinkPin
+
+    [OWPinGroup( TArduinoBluetoothDigitalRemoteCharacteristic )]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLEAnalogRemoteCharacteristic' )]
+  [ParentImage( TArduinoMemoryAnalogElement )]
+  +TArduinoBluetoothAnalogRemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothAnalogRemoteCharacteristic )]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [OWPinGroup( TArduinoBluetoothAnalogRemoteCharacteristic )]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )] //, Mitov::BLEIntegerRemoteCharacteristic' )]
+  [ParentImage( TArduinoMemoryIntegerElement )]
+  +TArduinoBluetoothIntegerRemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothIntegerRemoteCharacteristic )]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [OWPinGroup( TArduinoBluetoothIntegerRemoteCharacteristic )]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 16bit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int16_t' )]
+  [ParentImage( TArduinoMemoryInteger16Element )]
+  +TArduinoBluetoothInteger16RemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothIntegerRemoteCharacteristic )]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [OWPinGroup( TArduinoBluetoothIntegerRemoteCharacteristic )]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 8bit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int8_t' )]
+  [ParentImage( TArduinoMemoryInteger8Element )]
+  +TArduinoBluetoothInteger8RemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothIntegerRemoteCharacteristic )]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [OWPinGroup( TArduinoBluetoothIntegerRemoteCharacteristic )]
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ParentImage( TArduinoMemoryUnsignedElement )]
+  +TArduinoBluetoothUnsignedRemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothUnsignedRemoteCharacteristic )]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [OWPinGroup( TArduinoBluetoothUnsignedRemoteCharacteristic )]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 16bit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint16_t' )]
+  [ParentImage( TArduinoMemoryUnsigned16Element )]
+  +TArduinoBluetoothUnsigned16RemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothUnsignedRemoteCharacteristic )]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [OWPinGroup( TArduinoBluetoothUnsignedRemoteCharacteristic )]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 8bit' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint8_t' )]
+  [ParentImage( TArduinoMemoryUnsigned8Element )]
+  +TArduinoBluetoothUnsigned8RemoteCharacteristic : TArduinoBluetoothUUIDTypedRemoteCharacteristic
+
+    [OWPinGroup( TArduinoBluetoothUnsignedRemoteCharacteristic )]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [OWPinGroup( TArduinoBluetoothUnsignedRemoteCharacteristic )]
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoBoardDeclared]
+  [Name( 'Bluetooth Low Energy' )]
+  [CreateName( 'Bluetooth' )]
+  [ArduinoInclude( 'Mitov_BluetoothLE.h' )]
+  [ArduinoClass( 'Mitov::ArduinoBluetoothLE' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoDeclarationSectionName( 'BoardDeclarations' )]
+  [ArduinoVariable( Boolean, 'FConnected' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [CollectionItemAssociation( TOWArduinoBLEServerMultiSinkPin )]
+  +TArduinoBluetoothModule : TArduinoEnabledShield
+
+    InputPin : TOWArduinoBLEServerMultiSinkPin
+
+    ConnectedOutputPin : TOWArduinoDigitalSourcePin
+
+    [Name( 'MAC Address' )]
+    MACAddressOutputPin : TOWArduinoStringSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'UpdateEnabled' )]
+    Enabled
+
+    [Name( 'BLE Server Serial' )]
+    Serial : TArduinoBluetoothUartService
+
+    LocalName : String = ''
+    DeviceName : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

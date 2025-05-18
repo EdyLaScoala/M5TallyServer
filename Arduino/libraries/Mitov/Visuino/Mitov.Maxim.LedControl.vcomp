@@ -1,0 +1,152 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Pixels' )]
+  [CreateName( 'Pixels' )]
+  [ArduinoClass( 'Mitov::MaximLedGroup' )]
+  [ArduinoStart]
+  +TArduinoMaximLedGroup : TArduinoMaximLedBasicInitialValueGroup
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSinkPin )]
+    [OWResizeProperty( 'CountPixels' )]
+    [OWAutoManagePinList( TOWArduinoDigitalSinkPin )]
+    InputPins : TOWArduinoDynamicPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::MaximLedPixelsReversedProperty' )]
+  TArduinoPixelsReversedProperty : TArduinoCodePersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateReversePixels' )]
+    Reversed : Boolean = False
+
+    AllPixels : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Single Value' )]
+  [CreateName( 'Value' )]
+  [ArduinoClass( 'Mitov::MaximLedSingleValueGroup' )]
+  [ArduinoStart]
+  +TArduinoMaximLedSingleValueGroup : TArduinoMaximLedBasicValueGroup
+
+    [ArduinoFlexibleVariable]
+    InitialValue
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Indexed Pixel' )]
+  [CreateName( 'Indexed Pixel' )]
+  [ArduinoClass( 'Mitov::MaximLedIndexedPixelGroup' )]
+  [ArduinoStart]
+  +TArduinoMaximLedIndexedPixelGroup : TArduinoMaximLedBasicValueGroup
+
+    [OWPrimaryPin]
+    IndexInputPin : TOWArduinoUnsignedSinkPin
+
+    [ArduinoFlexibleVariable]
+    InitialValue
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialIndex : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Running Pixel' )]
+  [CreateName( 'Running Pixel' )]
+  [ArduinoClass( 'Mitov::MaximLedRunningPixelGroup' )]
+  [ArduinoVariable( Boolean, 'FCurrentReversed' )]
+  +TArduinoMaximLedRunningPixelGroup : TArduinoMaximLedBasicValueGroup
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    StepInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoFlexibleVariable]
+    InitialValue
+
+    Reversed : TArduinoPixelsReversedProperty
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned Bit Pixels' )]
+  [CreateName( 'Unsigned Bit Pixels' )]
+  [ArduinoClass( 'Mitov::MaximLedGroupUnsignedBitPixelsSection' )]
+  [ArduinoStart]
+  +TArduinoMaximLedGroupUnsignedBitPixelsSection : TArduinoMaximLedBasicGroup
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Unsigned = 0
+
+    [ValueRange( 1, 32 )]
+    CountPixels = 32
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer Display 7 Segments' )]
+  [CreateName( 'Integer Display 7 Segments' )]
+  TArduinoIntegerDisplay7Segments_Extender : Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoIntegerSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Integer = 0
+
+    LeadingZeroes : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_7SegmentDigits.h' )]
+  [ArduinoClass( 'Mitov::IntegerDisplay7SegmentsElement' )]  
+  +TArduinoMaximLedGroupIntegerDisplay7Segments : TArduinoMaximLedGroupBasicMultiDigitDisplay7Segments, TArduinoIntegerDisplay7Segments_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Display 7 Segments' )]
+  [CreateName( 'Analog Display 7 Segments' )]
+  TArduinoAnalogDisplay7Segments_Extender : Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoAnalogSinkPin
+
+    [OldName( 'Value' )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Single = 0.0
+
+    [DesignRange( 0, 10 )]
+    [ValueRange( 0, 30 )]
+    Precision : Unsigned = 2
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_7SegmentDigits.h' )]
+  [ArduinoClass( 'Mitov::AnalogDisplay7SegmentsElement' )]
+  [ArduinoStart]
+  +TArduinoMaximLedGroupAnalogDisplay7Segments : TArduinoMaximLedGroupBasicMultiDigitDisplay7Segments, TArduinoAnalogDisplay7Segments_Extender;
+//---------------------------------------------------------------------------
+  [Name( 'Text Display 7 Segments' )]
+  [CreateName( 'Text Display 7 Segments' )]
+  TArduinoTextDisplay7Segments_Extender : Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoStringSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : String = ''
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_7SegmentText.h' )]
+  [ArduinoClass( 'Mitov::TextDisplay7SegmentsElement' )]
+  +TArduinoMaximLedGroupTextDisplay7Segments : TArduinoMaximLedGroupBasicMultiDigitDisplay7Segments, TArduinoTextDisplay7Segments_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

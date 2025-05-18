@@ -1,0 +1,965 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Storage State' )]
+  [CreateName( 'Storage State' )]
+  [ArduinoMemoryElementData( Unsigned, 5 )]
+  TArduinoBasicMemoryStorageStateElement : TArduinoBasicMemoryElement
+
+    InputPin : TOWArduinoStoreStateSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoBasicReadWriteMemoryElements )]
+  [Name( 'Storage' )]
+  [CreateName( 'Storage' )]
+  [ArduinoInclude( 'Mitov_Memory.h' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElement' )]
+  [ArduinoStart]
+  [ParentImage( TArduinoFlashStorageElement )]
+  [ArduinoMemoryElementNoData]
+  +TArduinoMemoryReadWriteStorageElement : TArduinoBasicMemoryElement
+
+    [OWPrimaryPin]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+
+    ReadPositionOutputPin : TOWArduinoUnsignedSourcePin
+    WritePositionOutputPin : TOWArduinoUnsignedSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMemoryReadWriteStorageElements
+
+    [MinValue( 1 )]
+    [OWExcludeBindings]
+    [ArduinoAddPowerVariable( 'FReadPosition' )]
+    [ArduinoAddPowerVariable( 'FWritePosition' )]
+    [ArduinoIncludeInMemoryElementData( 1 )]
+    Size : Unsigned = 512
+
+    Loop : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Repeat Read' )]
+  [CreateName( 'Repeat Read' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementRepeatRead' )]
+  [ParentImage( TArduinoRepeat )]
+  [Category( TArduinoFileReadersCollectionsItemCategory )]
+  [PersistentCollection( TArduinoMemoryReadElements )]
+  [OldName( 'TArduinoMicroSDCardFileElementRepeatRead' )]
+  +TArduinoStorageElementRepeatRead : TArduinoStorageElementClocked
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMemoryReadElements
+
+    [MinValue( 1 )]
+    Count : Unsigned = 10
+
+    UntilEndOfFile : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoStorageElementBasicSeek : TArduinoStorageElementClocked
+    
+    Position : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [Category( TArduinoFileReadersCollectionsItemCategory )]
+  [Name( 'Read Seek' )]
+  [CreateName( 'Read Seek' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadSeek' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadSeek' )]
+  +TArduinoStorageElementReadSeek : TArduinoStorageElementBasicSeek;
+//---------------------------------------------------------------------------
+  [Category( TArduinoFileWritersCollectionsItemCategory )]
+  [Name( 'Write Seek' )]
+  [CreateName( 'Write Seek' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteSeek' )]
+  [OldName( 'TArduinoMicroSDCardFileElementWriteSeek' )]
+  +TArduinoStorageElementWriteSeek : TArduinoStorageElementBasicSeek;
+//---------------------------------------------------------------------------
+  [Name( 'Read Text Line' )]
+  [CreateName( 'Read Text Line' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTextLine' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadTextLine' )]
+  +TArduinoStorageElementReadTextLine : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoStringSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Analog' )]
+  [CreateName( 'Read Binary Analog' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadBinaryFloat' )]
+  +TArduinoStorageElementReadBinaryFloat : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Integer' )]
+  [CreateName( 'Read Binary Integer' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadBinaryInteger' )]
+  +TArduinoStorageElementReadBinaryInteger : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Unsigned' )]
+  [CreateName( 'Read Binary Unsigned' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadBinaryUnsigned' )]
+  +TArduinoStorageElementReadBinaryUnsigned : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Color' )]
+  [CreateName( 'Read Binary Color' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadBinaryColor' )]
+  +TArduinoStorageElementReadBinaryColor : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Alpha Color' )]
+  [CreateName( 'Read Binary Alpha Color' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TAlphaColor' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadBinaryAlphaColor' )]
+  +TArduinoStorageElementReadBinaryAlphaColor : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoAlphaColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary RGBW Color' )]
+  [CreateName( 'Read Binary RGBW Color' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadBinaryRGBWColor' )]
+  +TArduinoStorageElementReadBinaryRGBWColor : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoRGBWColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary RGBW Alpha Color' )]
+  [CreateName( 'Read Binary RGBW Alpha Color' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  +TArduinoStorageElementReadBinaryRGBWAlphaColor : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoRGBWAlphaColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Date/Time' )]
+  [CreateName( 'Read Binary Date/Time' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [OldName( 'TArduinoMicroSDCardFileElementReadBinaryDateTime' )]
+  +TArduinoStorageElementReadBinaryDateTime : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Complex' )]
+  [CreateName( 'Read Binary Complex' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  +TArduinoStorageElementReadBinaryComplex : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoComplexSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Quaternion' )]
+  [CreateName( 'Read Binary Quaternion' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  +TArduinoStorageElementReadBinaryQuaternion : TArduinoStorageElementBasicReader
+
+    OutputPin : TOWArduinoQuaternionSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Read Binary Block' )]
+  [CreateName( 'Read Binary Block' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementReadBinary' )]
+  +TArduinoStorageElementReadBinaryBlock : TArduinoStorageElementBasicReader
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoStorageElementReadBinaryBlock )]
+    OutputPin : TOWArduinoByteSourcePin
+
+    Size : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Analog' )]
+  [CreateName( 'Write Binary Analog' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'float' )]
+  [OldName( 'TArduinoMicroSDCardFileElementWriteBinaryFloat' )]
+  +TArduinoStorageElementWriteBinaryFloat : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Integer' )]
+  [CreateName( 'Write Binary Integer' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'int32_t' )]
+  [OldName( 'TArduinoMicroSDCardFileElementWriteBinaryInteger' )]
+  +TArduinoStorageElementWriteBinaryInteger : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoIntegerSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Unsigned' )]
+  [CreateName( 'Write Binary Unsigned' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [OldName( 'TArduinoMicroSDCardFileElementWriteBinaryUnsigned' )]
+  +TArduinoStorageElementWriteBinaryUnsigned : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoUnsignedSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Color' )]
+  [CreateName( 'Write Binary Color' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TColor' )]
+  [OldName( 'TArduinoMicroSDCardFileElementWriteBinaryColor' )]
+  +TArduinoStorageElementWriteBinaryColor : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Alpha Color' )]
+  [CreateName( 'Write Binary Alpha Color' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TAlphaColor' )]
+  [OldName( 'TArduinoMicroSDCardFileElementWriteBinaryAlphaColor' )]
+  +TArduinoStorageElementWriteBinaryAlphaColor : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoAlphaColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary RGBW Color' )]
+  [CreateName( 'Write Binary RGBW Color' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWColor' )]
+  [OldName( 'TArduinoMicroSDCardFileElementWriteBinaryRGBWColor' )]
+  +TArduinoStorageElementWriteBinaryRGBWColor : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoRGBWColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary RGBW Alpha Color' )]
+  [CreateName( 'Write Binary RGBW Alpha Color' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TRGBWAlphaColor' )]
+  +TArduinoStorageElementWriteBinaryRGBWAlphaColor : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoRGBWAlphaColorSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Date/Time' )]
+  [CreateName( 'Write Binary Date/Time' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TDateTime' )]
+  [OldName( 'TArduinoMicroSDCardFileElementWriteBinaryDateTime' )]
+  +TArduinoStorageElementWriteBinaryDateTime : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoDateTimeSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Complex' )]
+  [CreateName( 'Write Binary Complex' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TComplex' )]
+  +TArduinoStorageElementWriteBinaryComplex : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoComplexSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Quaternion' )]
+  [CreateName( 'Write Binary Quaternion' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteTyped' )]
+  [ArduinoTemplateParameter( 'TYPE', 'Mitov::TQuaternion' )]
+  +TArduinoStorageElementWriteBinaryQuaternion : TArduinoStorageElementBasicWriter
+
+    InputPin : TOWArduinoQuaternionSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Write Binary Block' )]
+  [CreateName( 'Write Binary Block' )]
+  [ArduinoClass( 'Mitov::MemoryStorageElementWriteBinary' )]
+  +TArduinoStorageElementWriteBinaryBlock : TArduinoStorageElementBasicWriter
+
+    [OWPrimaryPin]
+    [OWPinGroup( TArduinoStorageElementWriteBinaryBlock )]
+    InputPin : TOWArduinoByteSinkPin
+
+    Size : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::StorageStateElementEEPROM' )]
+  [PersistentCollection( TArduinoPROMMemoryElements )]
+  [ArduinoVariable( Unsigned, 5, 'FModified' )]
+  +TArduinoPROMMemoryStorageStateElement : TArduinoBasicMemoryStorageStateElement;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::StorageStateElement' )]
+  [PersistentCollection( TArduinoRAMMemoryElements )]
+  [ParentImage( TArduinoPROMMemoryStorageStateElement]
+  +TArduinoRAMMemoryStorageStateElement : TArduinoBasicMemoryStorageStateElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Generic_SPI_RAM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericRAM_SPI' )]
+  [Name( 'RAM' )]
+  [CreateName( 'RAM' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoVariable( Boolean, 'FCached' )]
+  TArduinoRAMSPIBasicElemet : TArduinoCodeEnabledPersistent
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoRAMMemoryElements
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog' )]
+  [CreateName( 'Analog' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'float' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'float' )]
+  [ParentImage( TArduinoBasicAnalogValueElement]
+  [ArduinoMemoryElementData( Single )]
+  +TArduinoMemoryAnalogElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoAnalogSinkPin        
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog' )]
+  [CreateName( 'Analog' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'float' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'float' )]
+  [ParentImage( TArduinoBasicAnalogValueElement]
+  [ArduinoMemoryElementData( Single )]
+  +TArduinoNonCachedMemoryAnalogElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoAnalogSinkPin        
+    OutputPin : TOWArduinoAnalogSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Complex' )]
+  [CreateName( 'Complex' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TComplex' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TComplex' )]
+  [ParentImage( TArduinoBasicComplexValueElement]
+  [ArduinoMemoryElementData( Single, 2 )]
+  +TArduinoMemoryComplexElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoComplexSinkPin
+    OutputPin : TOWArduinoComplexSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Complex' )]
+  [CreateName( 'Complex' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TComplex' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TComplex' )]
+  [ParentImage( TArduinoBasicComplexValueElement]
+  [ArduinoMemoryElementData( Single, 2 )]
+  +TArduinoNonCachedMemoryComplexElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoComplexSinkPin
+    OutputPin : TOWArduinoComplexSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Quaternion' )]
+  [CreateName( 'Quaternion' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TQuaternion' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TQuaternion' )]
+  [ParentImage( TArduinoBasicQuaternionValueElement]
+  [ArduinoMemoryElementData( Single, 4 )]
+  +TArduinoMemoryQuaternionElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoQuaternionSinkPin
+    OutputPin : TOWArduinoQuaternionSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Quaternion' )]
+  [CreateName( 'Quaternion' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TQuaternion' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TQuaternion' )]
+  [ParentImage( TArduinoBasicQuaternionValueElement]
+  [ArduinoMemoryElementData( Single, 4 )]
+  +TArduinoNonCachedMemoryQuaternionElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoQuaternionSinkPin
+    OutputPin : TOWArduinoQuaternionSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer' )]
+  [CreateName( 'Integer' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'int32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'int32_t' )]
+  [ArduinoMemoryElementData( Integer )]
+  [ParentImage( TArduinoMakeJSONIntegerElement]
+  +TArduinoMemoryIntegerElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoIntegerSinkPin
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer' )]
+  [CreateName( 'Integer' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'int32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'int32_t' )]
+  [ParentImage( TArduinoMemoryIntegerElement]
+  [ArduinoMemoryElementData( Integer )]
+  +TArduinoNonCachedMemoryIntegerElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoIntegerSinkPin
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned' )]
+  [CreateName( 'Unsigned' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'uint32_t' )]
+  [ArduinoMemoryElementData( Unsigned )]
+  [ParentImage( TArduinoMakeJSONUnsignedElement]
+  +TArduinoMemoryUnsignedElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoUnsignedSinkPin
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned' )]
+  [CreateName( 'Unsigned' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'uint32_t' )]
+  [ParentImage( TArduinoMemoryUnsignedElement]
+  [ArduinoMemoryElementData( Unsigned )]
+  +TArduinoNonCachedMemoryUnsignedElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoUnsignedSinkPin
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 16bit' )]
+  [CreateName( 'Integer 16bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'int32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'int16_t' )]
+  [ParentImage( TArduinoMemoryInteger16Element]
+  [ArduinoMemoryElementData( Int16 )]
+  +TArduinoNonCachedMemoryInteger16Element : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoIntegerSinkPin
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 64bit' )]
+  [CreateName( 'Integer 64bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'int64_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'int64_t' )]
+  [ArduinoMemoryElementData( Int64 )]
+  [ParentImage( TArduinoMakeJSONInteger64Element]
+  +TArduinoMemoryInteger64Element : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoInt64SinkPin
+    OutputPin : TOWArduinoInt64SourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 64bit' )]
+  [CreateName( 'Integer 64bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'int64_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'int64_t' )]
+  [ParentImage( TArduinoMemoryInteger64Element]
+  [ArduinoMemoryElementData( Int64 )]
+  +TArduinoNonCachedMemoryInteger64Element : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoInt64SinkPin
+    OutputPin : TOWArduinoInt64SourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 16bit' )]
+  [CreateName( 'Unsigned 16bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'uint16_t' )]
+  [ParentImage( TArduinoMemoryUnsigned16Element]
+  [ArduinoMemoryElementData( UInt16 )]
+  +TArduinoNonCachedMemoryUnsigned16Element : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoUnsignedSinkPin
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 64bit' )]
+  [CreateName( 'Unsigned 64bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'uint64_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'uint64_t' )]
+  [ArduinoMemoryElementData( UInt64 )]
+  [ParentImage( TArduinoMakeJSONUnsigned64Element]
+  +TArduinoMemoryUnsigned64Element : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoUInt64SinkPin
+    OutputPin : TOWArduinoUInt64SourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 64bit' )]
+  [CreateName( 'Unsigned 64bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'uint64_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'uint64_t' )]
+  [ParentImage( TArduinoMemoryUnsigned16Element]
+  [ArduinoMemoryElementData( UInt64 )]
+  +TArduinoNonCachedMemoryUnsigned64Element : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoUInt64SinkPin
+    OutputPin : TOWArduinoUInt64SourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 8bit' )]
+  [CreateName( 'Integer 8bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'int32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'int8_t' )]
+  [ArduinoMemoryElementData( Int8 )]
+  +TArduinoMemoryInteger8Element : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoIntegerSinkPin
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 8bit' )]
+  [CreateName( 'Integer 8bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'int32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'int8_t' )]
+  [ParentImage( TArduinoMemoryInteger8Element]
+  [ArduinoMemoryElementData( Int8 )]
+  +TArduinoNonCachedMemoryInteger8Element : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoIntegerSinkPin
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 8bit' )]
+  [CreateName( 'Unsigned 8bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'uint8_t' )]
+  [ArduinoMemoryElementData( UInt8 )]
+  +TArduinoMemoryUnsigned8Element : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoUnsignedSinkPin
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 8bit' )]
+  [CreateName( 'Unsigned 8bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'uint8_t' )]
+  [ParentImage( TArduinoMemoryUnsigned8Element]
+  [ArduinoMemoryElementData( UInt8 )]
+  +TArduinoNonCachedMemoryUnsigned8Element : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoUnsignedSinkPin
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color' )]
+  [CreateName( 'Color' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TColor' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TCompactColor' )]
+  [ArduinoMemoryElementData( UInt8, 3 )]
+  [ParentImage( TArduinoColorValueElement )]
+  +TArduinoMemoryColorElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoColorSinkPin
+    OutputPin : TOWArduinoColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Color' )]
+  [CreateName( 'Color' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TColor' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TCompactColor' )]
+  [ParentImage( TArduinoMemoryColorElement )]
+  [ArduinoMemoryElementData( UInt8, 3 )]
+  +TArduinoNonCachedMemoryColorElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoColorSinkPin
+    OutputPin : TOWArduinoColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Alpha Color' )]
+  [CreateName( 'Alpha Color' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TAlphaColor' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TAlphaColor' )]
+  [ArduinoMemoryElementData( UInt8, 4 )]
+  [ParentImage( TArduinoAlphaColorValueElement )]
+  +TArduinoMemoryAlphaColorElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoAlphaColorSinkPin
+    OutputPin : TOWArduinoAlphaColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Alpha Color' )]
+  [CreateName( 'Alpha Color' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TAlphaColor' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TAlphaColor' )]
+  [ParentImage( TArduinoMemoryAlphaColorElement )]
+  [ArduinoMemoryElementData( UInt8, 4 )]
+  +TArduinoNonCachedMemoryAlphaColorElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoAlphaColorSinkPin
+    OutputPin : TOWArduinoAlphaColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGBW Color' )]
+  [CreateName( 'RGBW Color' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TRGBWColor' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TRGBWColor' )]
+  [ArduinoMemoryElementData( UInt8, 4 )]
+  [ParentImage( TArduinoRGBWColorValueElement )]
+  +TArduinoMemoryRGBWColorElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoRGBWColorSinkPin
+    OutputPin : TOWArduinoRGBWColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGBW Color' )]
+  [CreateName( 'RGBW Color' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TRGBWColor' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TRGBWColor' )]
+  [ParentImage( TArduinoMemoryRGBWColorElement )]
+  [ArduinoMemoryElementData( UInt8, 4 )]
+  +TArduinoNonCachedMemoryRGBWColorElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoRGBWColorSinkPin
+    OutputPin : TOWArduinoRGBWColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGBW Alpha Color' )]
+  [CreateName( 'RGBW Alpha Color' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TRGBWAlphaColor' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TRGBWAlphaColor' )]
+  [ArduinoMemoryElementData( UInt8, 5 )]
+  [ParentImage( TArduinoRGBWAlphaColorValueElement )]
+  +TArduinoMemoryRGBWAlphaColorElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoRGBWAlphaColorSinkPin
+    OutputPin : TOWArduinoRGBWAlphaColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'RGBW Alpha Color' )]
+  [CreateName( 'RGBW Alpha Color' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TRGBWAlphaColor' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TRGBWAlphaColor' )]
+  [ParentImage( TArduinoMemoryRGBWAlphaColorElement )]
+  [ArduinoMemoryElementData( UInt8, 5 )]
+  +TArduinoNonCachedMemoryRGBWAlphaColorElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoRGBWAlphaColorSinkPin
+    OutputPin : TOWArduinoRGBWAlphaColorSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Date/Time' )]
+  [CreateName( 'DateTime' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TDateTime' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TDateTime' )]
+  [ArduinoMemoryElementData( UInt32, 4 )]
+  [ParentImage( TArduinoDateTimeValueElement )]
+  +TArduinoMemoryDateTimeElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoDateTimeSinkPin
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Date/Time' )]
+  [CreateName( 'DateTime' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'Mitov::TDateTime' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'Mitov::TDateTime' )]
+  [ParentImage( TArduinoMemoryDateTimeElement )]
+  [ArduinoMemoryElementData( UInt32, 4 )]
+  +TArduinoNonCachedMemoryDateTimeElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoDateTimeSinkPin
+    OutputPin : TOWArduinoDateTimeSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Char' )]
+  [CreateName( 'Char' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'char' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'char' )]
+  [ArduinoMemoryElementData( UInt8 )]
+  +TArduinoMemoryCharElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoCharSinkPin
+    OutputPin : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Integer 16bit' )]
+  [CreateName( 'Integer 16bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'int32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'int16_t' )]
+  [ArduinoMemoryElementData( Int16 )]
+  +TArduinoMemoryInteger16Element : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoIntegerSinkPin
+    OutputPin : TOWArduinoIntegerSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned 16bit' )]
+  [CreateName( 'Unsigned 16bit' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'uint16_t' )]
+  [ArduinoMemoryElementData( UInt64 )]
+  +TArduinoMemoryUnsigned16Element : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoUnsignedSinkPin
+    OutputPin : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoMemoryElementNoData]
+  TArduinoReadWritePROMMemoryMaxSizeElement : TArduinoReadWritePROMMemoryElement
+
+    [OWExcludeBindings]
+    [ArduinoTemplateParameterConst]
+    [ArduinoExclude]
+    [ArduinoIncludeInMemoryElementData( 1 )]
+    MaxSize : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital' )]
+  [CreateName( 'Digital' )]
+  [ArduinoClass( 'Mitov::DigitalMemoryElement' )]
+  [ArduinoVariable( Boolean, 'FValue' )]
+  [ParentImage( TArduinoMakeJSONDigitalElement )]
+  [ArduinoMemoryElementBitsData( 1 )]
+  +TArduinoMemoryDigitalElement : TArduinoReadWritePROMMemoryElement
+
+    InputPin : TOWArduinoDigitalSinkPin
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Char' )]
+  [CreateName( 'Char' )]
+  [ArduinoClass( 'Mitov::TypedMemoryElement_NonCached' )]
+  [ArduinoTemplateParameter( 'TYPE_PIN', 'char' )]
+  [ArduinoTemplateParameter( 'TYPE_DATA', 'char' )]
+  [ParentImage( TArduinoMemoryCharElement )]
+  [ArduinoMemoryElementData( UInt8 )]
+  +TArduinoNonCachedMemoryCharElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoCharSinkPin
+    OutputPin : TOWArduinoCharSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Digital' )]
+  [CreateName( 'Digital' )]
+  [ArduinoClass( 'Mitov::DigitalMemoryElement_NonCached' )]
+  [ParentImage( TArduinoMemoryDigitalElement )]
+  [ArduinoMemoryElementBitsData( 1 )]
+  +TArduinoNonCachedMemoryDigitalElement : TArduinoReadWriteRAMMemoryElement
+
+    InputPin : TOWArduinoDigitalSinkPin
+    OutputPin : TOWArduinoDigitalSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text' )]
+  [CreateName( 'Text' )]
+//  [ArduinoClass( 'Mitov::TypedMemoryElement<Mitov::String,Mitov::String>' )]
+  [ArduinoClass( 'Mitov::TextMemoryElement' )]
+  [ParentImage( TArduinoMakeJSONTextElement )]
+  +TArduinoMemoryPROMTextElement : TArduinoReadWritePROMMemoryMaxSizeElement
+
+    InputPin : TOWArduinoStringSinkPin
+    OutputPin : TOWArduinoStringSourcePin
+
+    [ValueRange( 1, 255 )]
+    MaxSize = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Binary' )]
+  [CreateName( 'Binary' )]
+//  [ArduinoClass( 'Mitov::TypedMemoryElement<Mitov::String,Mitov::String>' )]
+  [ArduinoClass( 'Mitov::BinaryMemoryElement' )]
+  +TArduinoMemoryPROMBinaryElement : TArduinoReadWritePROMMemoryMaxSizeElement
+
+    InputPin : TOWArduinoByteSinkPin
+    OutputPin : TOWArduinoByteSourcePin
+
+    [MinValue( 1 )]
+    MaxSize = 256
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoMemoryElementNoData]
+  TArduinoNonCachedMemoryMaxSizeElement : TArduinoReadWriteRAMMemoryElement
+
+    [OWExcludeBindings]
+    [ArduinoTemplateParameterConst]
+    [ArduinoExclude]
+    [ArduinoIncludeInMemoryElementData( 1 )]
+    MaxSize : Unsigned = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Text' )]
+  [CreateName( 'Text' )]
+//  [ArduinoClass( 'Mitov::TypedMemoryElement<Mitov::String,Mitov::String>' )]
+  [ArduinoClass( 'Mitov::TextMemoryElement_NonCached' )]
+  [ParentImage( TArduinoMemoryPROMTextElement )]
+  +TArduinoNonCachedMemoryTextElement : TArduinoNonCachedMemoryMaxSizeElement
+  
+    InputPin : TOWArduinoStringSinkPin
+    OutputPin : TOWArduinoStringSourcePin
+
+    [ValueRange( 1, 255 )]
+    MaxSize = 10
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Binary' )]
+  [CreateName( 'Binary' )]
+  [ArduinoClass( 'Mitov::BinaryMemoryElement_NonCached' )]
+  [ParentImage( TArduinoMemoryPROMBinaryElement )]
+  +TArduinoNonCachedMemoryBinaryElement : TArduinoNonCachedMemoryMaxSizeElement
+
+    InputPin : TOWArduinoByteSinkPin
+    OutputPin : TOWArduinoByteSourcePin
+
+    [MinValue( 1 )]
+    MaxSize = 256
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Memory Storage' )]
+  [CreateName( 'Storage' )]
+  [ArduinoInclude( 'Mitov_Memory.h' )]
+  [ArduinoClass( 'Mitov::MemoryStorage' )]
+  [ArduinoStart]
+  [Category( TMemoryToolbarCategory )]
+  [ParentImage( TArduinoFlashStorageElement )]
+  +TArduinoMemoryStorage : TArduinoComponent
+
+    [OWPrimaryPin]
+    [ArduinoSerialPortAdapter]
+    InputPin : TOWArduinoDataMultiSinkPin
+    ReadPositionOutputPin : TOWArduinoUnsignedSourcePin
+    WritePositionOutputPin : TOWArduinoUnsignedSourcePin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoMemoryReadWriteStorageElements
+
+    [MinValue( 1 )]
+    [OWExcludeBindings]
+    [ArduinoTemplateParameterConst]
+    [ArduinoAddPowerVariable( 'FReadPosition' )]
+    [ArduinoAddPowerVariable( 'FWritePosition' )]
+    Size : Unsigned = 512
+
+    Loop : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

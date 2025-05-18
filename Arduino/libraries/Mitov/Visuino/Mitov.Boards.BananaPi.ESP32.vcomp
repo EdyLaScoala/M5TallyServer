@@ -1,0 +1,256 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Banana Pi' )]
+  TBananaPiCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP32' )]
+  [Category( TBananaPiCategory )]
+  [AlternateCategory( TESP32Category )]
+  [ParentImage( TESP32Category )]
+  TBananaPiESP32Category : TClassCategory;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_BananaPi_bpi_bit_I2C : TArduinoPinMapI2C
+
+    [ValueRange( 0, 20 )]
+    SDA = 20
+
+    [ValueRange( 0, 20 )]
+    SCL = 19
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_BananaPi_bpi_bit_I2C_2 : TArduinoPinMapI2C
+
+    [ValueRange( 0, 20 )]
+    SDA = 8
+
+    [ValueRange( 0, 20 )]
+    SCL = 9
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_BananaPi_bpi_bit_SPI : TArduinoESP32_Generic_SPI
+  
+    [ValueRange( 0, 20 )]
+    MOSI = 15
+
+    [ValueRange( 0, 20 )]
+    MISO = 14
+
+    [ValueRange( 0, 20 )]
+    SCK  = 13
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_BananaPi_bpi_bit_SPI1 : TArduinoESP32_Generic_SPI1
+
+    [ValueRange( 0, 20 )]
+    MOSI = 4
+
+    [ValueRange( 0, 20 )]
+    MISO = 6
+
+    [ValueRange( 0, 20 )]
+    SCK  = 7
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_BananaPi_bpi_uno32_I2C : TArduinoPinMapI2C
+  
+    [ValueRange( 0, 39 )]
+    SDA = 21
+
+    [ValueRange( 0, 39 )]
+    SCL = 22
+
+  ;
+//---------------------------------------------------------------------------
+  +TArduinoESP32_BananaPi_bpi_uno32_SPI : TArduinoESP32_Generic_SPI
+  
+    [ValueRange( 0, 39 )]
+    MOSI = 23
+
+    [ValueRange( 0, 39 )]
+    MISO = 19
+
+    [ValueRange( 0, 39 )]
+    SCK  = 18
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoBpiBitLightSensorsList : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoDeclaredClass]
+  [ArduinoClass( 'Mitov::ArduinoBpiBitLightSensor' )]
+  [ParentImage( TArduinoCircuitPlaygroundLightSensorModule )]
+  TArduinoBpiBitBasicLightSensor : TArduinoCodePersistent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWPrimaryPin]
+//    [ArduinoChangeOnlyPin]
+    OutputPin : TOWArduinoAnalogSourcePin
+
+    Enabled : Boolean = True
+
+    [ArduinoUseBindingCheckSetter( 'ReadData' )]
+    InLux : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '36' )]
+  [Name( 'Left' )]
+  +TArduinoBpiBitLeftLightSensor : TArduinoBpiBitBasicLightSensor;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '39' )]
+  [Name( 'Right' )]
+  +TArduinoBpiBitRightLightSensor : TArduinoBpiBitBasicLightSensor;
+//---------------------------------------------------------------------------
+  [Name( 'Light Sensor' )]
+  [CreateName( 'Light Sensor' )]
+  [ArduinoInclude( 'Mitov_BpiBit.h' )]
+  [ArduinoExcludeUnconnected]
+  [ArduinoStart]
+  [ParentImage( TArduinoCircuitPlaygroundLightSensorModule )]
+  +TArduinoBpiBitLightSensorModule : TArduinoEnabledShield
+
+    [AddItem( TArduinoBpiBitLeftLightSensor )]
+    [AddItem( TArduinoBpiBitRightLightSensor )]
+    Sensors : TArduinoBpiBitLightSensorsList
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Thermometer' )]
+  [CreateName( 'Thermometer' )]
+  [ArduinoInclude( 'Mitov_BpiBit.h' )]
+  [ParentImage( TArduinoEVIVEADCTemperature )]
+  [ArduinoClass( 'Mitov::ArduinoBpiBitThermometer' )]
+  [ArduinoExcludeUnconnected]
+  +TArduinoBpiBitThermometerModule : TArduinoBasicAnalogSensorModule
+
+    [ArduinoUseBindingCheckSetter( 'ReadData' )]
+    InFahrenheit : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 105 >' )]
+  +TArduinoBpiBitGyroscopeAccelerometerCompassModule : TArduinoBasicGyroscopeAccelerometerCompassModule;
+//---------------------------------------------------------------------------
+  [Category( TBananaPiESP32Category )]
+  [Name( 'bpi:bit (ESP32)' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduinoESP32_BananaPi_bpi_bit_Board : TArduinoBasicESP32Digital_Serial_ChannelsBoard
+  
+    [AddItem( TArduinoBpiBitLightSensorModule )]
+    [AddItem( TArduinoBpiBitThermometerModule )]
+    [AddItem( TArduinoBpiBitGyroscopeAccelerometerCompassModule )]
+    [AddItem( TArduinoBpiBitNeoPixels2DGraphicsModule )]
+    Modules
+
+    [AddItem( TArduinoESP32_BananaPi_bpi_bit_I2C )]
+    [AddItem( TArduinoESP32_BananaPi_bpi_bit_I2C_2 )]
+    I2CChannels
+
+    [AddItem( TArduinoESP32_BananaPi_bpi_bit_SPI )]
+    [AddItem( TArduinoESP32_BananaPi_bpi_bit_SPI1 )]
+    SPIChannels
+    
+    [ArduinoBoard_Add_RemappedChannel( 0,  25, 'P0(Buzzer)', True )]
+    [ArduinoBoard_Add_RemappedChannel( 1,  32, 'P1', True )]
+    [ArduinoBoard_Add_RemappedChannel( 2,  33, 'P2', True )]
+    [ArduinoBoard_Add_RemappedChannel( 3,  13, 'P3', True )]
+    [ArduinoBoard_Add_RemappedChannel( 4,  15, 'P4', True )]
+    [ArduinoBoard_Add_RemappedChannel( 5,  35, 'P5(Button A)', True )]
+    [ArduinoBoard_Add_RemappedChannel( 6,  12, 'P6', True )]
+    [ArduinoBoard_Add_RemappedChannel( 7,  14, 'P7', True )]
+    [ArduinoBoard_Add_RemappedChannel( 8,  16, 'P8(RX2)', True )]
+    [ArduinoBoard_Add_RemappedChannel( 9,  17, 'P9(TX2)', True )]
+    [ArduinoBoard_Add_RemappedChannel( 10, 26, 'P10', True )]
+    [ArduinoBoard_Add_RemappedChannel( 11, 27, 'P11(Button B)', True )]
+    [ArduinoBoard_Add_RemappedChannel( 12, 2,  'P12', True )]
+    [ArduinoBoard_Add_RemappedChannel( 13, 18, 'P13', True )]
+    [ArduinoBoard_Add_RemappedChannel( 14, 19, 'P14', True )]
+    [ArduinoBoard_Add_RemappedChannel( 15, 23, 'P15', True )]
+    [ArduinoBoard_Add_RemappedChannel( 16, 5,  'P16', True )]
+    [ArduinoBoard_Add_RemappedChannel( 19, 22, 'P19(SCL)', True )]
+    [ArduinoBoard_Add_RemappedChannel( 20, 21, 'P20(SDA)', True )]
+    Digital
+    
+    [ComponentEditorEntryDesign( 'Add Carrier &Boards ...' )]
+    [Name( 'Carrier Boards' )]
+    Shields : TArduinoMicroBitShields
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_Red', '17' )] // Red
+  [ArduinoTemplateParameter( 'C_Green', '16' )] // Green
+  [ArduinoTemplateParameter( 'C_Blue', '27' )] // Blue
+  [ArduinoShieldPin( '17', 'Red' )]
+  [ArduinoShieldPin( '16', 'Green' )]
+  [ArduinoShieldPin( '27', 'Blue' )]
+  +TArduinoESP32_BananaPi_bpi_uno32_LEDModule : TArduinoBasicRGBLEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '0' )]
+  [ArduinoTemplateParameter( 'C_VALUE', '3000' )]
+  [ArduinoClass( 'Mitov::InvertedAnalogAsDigitalInput' )]
+  [ArduinoShieldPin( '0', 'Button' )]
+  +TArduinoESP32_BananaPi_bpi_uno32_ButtonModule : TArduinoBasicInterruptButtonModule;
+//---------------------------------------------------------------------------
+  [Category( TBananaPiESP32Category )]
+  [ParentImage( TBananaPiCategory )]
+  [Name( 'bpi:uno32' )]
+  [ArduinoBoardCompileParams( 'esp32:esp32:esp32' )]
+  +TArduinoESP32_BananaPi_bpi_uno32_Board : TArduinoBasicESP32Digital_Serial_ChannelsBoard
+  
+    [AddItem( TArduinoESP32_BananaPi_bpi_uno32_ButtonModule )]
+    [AddItem( TArduinoESP32_BananaPi_bpi_uno32_LEDModule )]
+    Modules
+
+    [AddItem( TArduinoESP32_BananaPi_bpi_uno32_I2C )]
+    [AddItem( TArduinoESP32_Generic_I2C_2 )]
+    I2CChannels
+
+    [AddItem( TArduinoESP32_BananaPi_bpi_uno32_SPI )]
+    [AddItem( TArduinoESP32_Generic_SPI1 )]
+    SPIChannels
+
+    [ArduinoBoard_Add_ReservedChannel( 3,  'D0' )]
+    [ArduinoBoard_Add_ReservedChannel( 1,  'D1' )]
+    [ArduinoBoard_Add_ReservedChannel( 2,  'D2' )]
+    [ArduinoBoard_Add_ReservedChannel( 4,  'D3' )]
+    [ArduinoBoard_Add_ReservedChannel( 15, 'D4' )]
+    [ArduinoBoard_Add_ReservedChannel( 13, 'D5' )]
+    [ArduinoBoard_Add_ReservedChannel( 12, 'D6' )]
+    [ArduinoBoard_Add_ReservedChannel( 14, 'D7' )]
+    [ArduinoBoard_Add_ReservedChannel( 25, 'D8/DA1)(Buzzer' )]
+    [ArduinoBoard_Add_ReservedChannel( 26, 'D9/DA2' )]
+    [ArduinoBoard_Add_ReservedChannel( 5,  'D10' )]
+    [ArduinoBoard_Add_ReservedChannel( 23, 'D11' )]
+    [ArduinoBoard_Add_ReservedChannel( 19, 'D12' )]
+    [ArduinoBoard_Add_ReservedChannel( 18, 'D13' )]
+
+    [ArduinoBoard_Add_ReservedChannel( 27 )]
+    [ArduinoBoard_Add_ReservedChannels( 21, 2 )]
+    
+    [ArduinoBoard_Add_ReservedChannels( 16, 2 )]
+
+    [ArduinoBoard_Add_ReservedChannel( 36, 'A0' )]
+    [ArduinoBoard_Add_ReservedChannel( 39, 'A3' )]
+    [ArduinoBoard_Add_ReservedChannel( 32, 'A4' )]
+    [ArduinoBoard_Add_ReservedChannel( 33, 'A5' )]
+    [ArduinoBoard_Add_ReservedChannel( 34, 'A6' )]
+    [ArduinoBoard_Add_ReservedChannel( 35, 'A7' )]
+    
+    [ArduinoBoard_Add_ReservedChannel( 0 )]
+    Digital
+    
+    [ComponentEditorEntryDesign( 'Add S&hields ...' )]
+    Shields : TArduinoStandardShields
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

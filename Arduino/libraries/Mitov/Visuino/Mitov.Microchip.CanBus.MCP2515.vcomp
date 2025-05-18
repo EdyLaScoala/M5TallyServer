@@ -1,0 +1,71 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Microchip_MCP2515_CanBus.h' )]
+  [ArduinoClass( 'Mitov::Microchip_MCP2515_CanBus' )]
+  [CreateName( 'CANbus' )]
+  [Name( 'Microchip CAN bus - MCP2515 (SPI)' )]
+  [ArduinoWebKeywords( 'Microchip MCP2515' )]
+  [Category( TCommunicationToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  +TArduinoMicrochipCanBusMCP2515 : TArduinoCommonSpeedEnabledSPI
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoCanBusSinkPin
+
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoCanBusSourcePin
+
+    IDOutputPin : TOWArduinoUnsignedSourcePin
+    ExtendedOutputPin : TOWArduinoDigitalSourcePin
+    RequestOutputPin : TOWArduinoDigitalSourcePin
+    MessageOutputPin : TOWArduinoByteSourcePin
+
+    [ NamePostfix( '(MHz)' ) ]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '8' )]
+    [PropertyListDesignValue( '16' )]
+    ClockFrequency : Unsigned = 16
+
+    [ NamePostfix( '(kBPS)' ) ]
+    [PropertyListDesignValue( '5' ) ]
+    [PropertyListDesignValue( '10' ) ]
+    [PropertyListDesignValue( '20' ) ]
+    [PropertyListDesignValue( '25' ) ]
+    [PropertyListDesignValue( '31' ) ]
+    [PropertyListDesignValue( '33' ) ]
+    [PropertyListDesignValue( '40' ) ]
+    [PropertyListDesignValue( '50' ) ]
+    [PropertyListDesignValue( '80' ) ]
+    [PropertyListDesignValue( '83' ) ]
+    [PropertyListDesignValue( '95' ) ]
+    [PropertyListDesignValue( '100' ) ]
+    [PropertyListDesignValue( '125' ) ]
+    [PropertyListDesignValue( '200' ) ]
+    [PropertyListDesignValue( '250' ) ]
+    [PropertyListDesignValue( '500' ) ]
+    [PropertyListDesignValue( '666' ) ]
+    [PropertyListDesignValue( '1000' ) ]
+    BusSpeed : Unsigned = 500
+
+    [ NamePostfix( '(uS)' ) ]
+    SendTimeout : Unsigned = 500
+
+    [ComponentEditorEntryDesign( 'Edit E&lements ...', True )]
+    Elements : TArduinoCanBusElements
+
+    [ArduinoUseBindingCheckSetter( 'UpdateMode' )]
+    Sleep : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateMode' )]
+    ListenOnly : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateMode' )]
+    Loopback : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateMode' )]
+    OneShot : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

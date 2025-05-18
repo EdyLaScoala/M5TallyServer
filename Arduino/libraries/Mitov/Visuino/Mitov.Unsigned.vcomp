@@ -1,0 +1,261 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoSetValueTryActiveCallChain]
+  TArduinoUnsignedSetValueElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoUnsignedSetValueElements )]
+  [ArduinoHelpPostfix( '(Unsigned Set Values)' )]
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  TArduinoBasicUnsignedSetValueElement : TArduinoBasicNamedExludePersistent;
+//---------------------------------------------------------------------------
+  TArduinoUnsignedBasicValueElement : TArduinoBasicUnsignedSetValueElement
+
+    [ExtendDisplayName( ' (', ')' )]
+    Value : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoUnsignedBasicClockedValueElement : TArduinoUnsignedBasicValueElement
+
+    [OWPinGroup( TArduinoUnsignedBasicClockedValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoClockSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoSetValueElement' )]
+  [ParentImage( TArduinoUnsignedValue )]
+  [Name( 'Set Value' )]
+  [ArduinoCallChainExcludeOwnerComplete]
+  +TArduinoUnsignedSetValueElement : TArduinoUnsignedBasicClockedValueElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoAddValueElement' )]
+  [Name( 'Add Value' )]
+  [ParentImage( TArduinoUnsignedAdd )]
+  +TArduinoUnsignedAddValueElement : TArduinoUnsignedBasicClockedValueElement
+
+    Value = 1
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SetValueItems.h' )]
+  [ArduinoClass( 'Mitov::ArduinoStateSetValueElement' )]
+  [ArduinoVariable( Boolean, 'FInputValue' )]
+  [Name( 'Set Value State' )]
+  [ArduinoValueState]
+  [ArduinoSetValueTryActiveCallChain]
+  +TArduinoUnsignedStateSetValueElement : TArduinoUnsignedBasicValueElement
+
+    [OWPinGroup( TArduinoUnsignedStateSetValueElement )]
+    [OWPrimaryPin]
+    InputPin : TOWArduinoDigitalSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov.h' )]
+  [ArduinoClass( 'Mitov::ValueSource' )]
+  [CreateName( 'UnsignedValue' )]
+  [Name( 'Unsigned Value' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Category( TArduinoUnsignedDataSourcesToolbarCategory )]
+//  [ValueSourceComponent]
+  +TArduinoUnsignedValue : TArduinoCommonClockedUnsignedSource, TArduinoValue_Extender
+
+    Value : Unsigned = 0
+    Elements : TArduinoUnsignedSetValueElements
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'UnsignedMultiSource' )]
+  [Name( 'Unsigned Multi Source' )]
+  [Category( TSynchronizationToolbarCategory )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoUnsignedMultiSource : TArduinoCommonUnsignedSink, TArduinoMultiSource_Extender
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoUnsignedSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoUnsignedSourcePin, 2, 2, 100 )]
+    [ArduinoExclude]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'RepeatUnsigned' )]
+  [Name( 'Repeat Unsigned' )]
+  [Category( TSynchronizationToolbarCategory )]
+  +TArduinoRepeatUnsigned : TArduinoCommonUnsignedFilter, TArduinoRepeat_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Unsigned Mux(Multi channel Switch)' )]
+  [CreateName( 'UnsignedMux' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoUnsignedMux : TArduinoUnsignedMultiInputSource, TArduinoMux_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Unsigned Demux(Multiple Output channel Switch)' )]
+  [CreateName( 'UnsignedDemux' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoUnsignedDemux : TArduinoCommonUnsignedSink, TArduinoDemux_Extender
+
+    [ArduinoTemplatePinListSize]
+    [OWPinListPrimaryPinType( TOWArduinoUnsignedSourcePin )]
+    [OWAutoManagePinListOwner( TOWArduinoUnsignedSourcePin, 2, 2, 4000 )]
+    OutputPins : TOWPinListOwner
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [ArduinoContructorParameter( '0' )]
+  [Name( 'Unsigned On/Off Switch' )]
+  [CreateName( 'UnsignedSwitch' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoUnsignedSwitch : TArduinoCommonUnsignedSource, TArduinoSwitch_Extender
+
+    [OWPrimaryPin]
+    InputPin : TOWArduinoUnsignedSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Unsigned Toggle Switch' )]
+  [CreateName( 'UnsignedToggleSwitch' )]
+  [ArduinoContructorParameter( '0' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoUnsignedToggleSwitch : TArduinoCommonUnsignedSource, TArduinoToggleSwitch_Extender
+
+    [OWPrimaryPin]
+    TrueInputPin : TOWArduinoUnsignedSinkPin
+
+    [OWPrimaryPin]
+    FalseInputPin : TOWArduinoUnsignedSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned Toggle Demux' )]
+  [CreateName( 'UnsignedToggleDemux' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoUnsignedToggleDemux : TArduinoCommonUnsignedSink, TArduinoToggleDemux_Extender
+
+    [OWPrimaryPin]
+    TrueOutputPin : TOWArduinoUnsignedSourcePin
+
+    [OWPrimaryPin]
+    FalseOutputPin  : TOWArduinoUnsignedSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Unsigned Multi-Source Merger' )]
+  [CreateName( 'UnsignedMultiMerger' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoUnsignedMultiMerger : TArduinoUnsignedMultiInputSource, TArduinoMultiMerger_Extender;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_SchmittTrigger.h' )]
+  [ArduinoClass( 'Mitov::SchmittTrigger' )]
+  [ArduinoTemplateParameter( 'TYPE', 'uint32_t' )]
+  [Name( 'Unsigned Schmitt Trigger (Hysteresis)' )]
+  [CreateName( 'SchmittTrigger' )]
+  [Category( TMeasurementToolbarCategory )]
+  [AlternateCategory( TArduinoUnsignedMathFilterToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoUnsignedSchmittTrigger : TArduinoCommonUnsignedEnableSink
+    [OWPrimaryPin]
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Value : Unsigned = 100
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Threshold : Unsigned = 25
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'ProcessOutput' )]
+    Inverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'STORE', 'uint32_t' )]
+  [ArduinoTemplateParameter( 'DATA', 'uint32_t' )]
+  [CreateName( 'RememberUnsigned' )]
+  [Name( 'Remember Unsigned Value' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoRememberUnsigned : TArduinoCommonUnsignedFilter, TArduinoRemember_Extender
+
+    [ArduinoAddVariableIfPinConnected( Unsigned, 32, 'FLastData' )]
+    RememberInputPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariable]
+    InitialValue : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreValues' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'uint32_t' )]
+  [Name( 'Ignore Unsigned Values' )]
+  [CreateName( 'IgnoreUnsignedValues' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  +TArduinoIgnoreUnsignedValues : TArduinoCommonUnsignedFilter
+
+    Value : Unsigned = 0
+    PassValuesBellow : Boolean = False
+    PassEqualValues : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoPopulatedCallChainParameter( 'uint32_t &', 'AValue' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AExclude' )]
+  [Name( 'Exclude' )]
+  TArduinoIgnoreUnsignedValuesExcludeCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoIgnoreUnsignedValuesExcludeCallChain]
+  TArduinoUnsignedRangeElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoHelpPostfix( '(Ranges)' )]
+  [ArduinoClass( 'Mitov::IgnoreRangeElement' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'uint32_t' )]
+  [Name( 'Range' )]
+  [CreateName( 'Range' )]
+  [PersistentCollection( TArduinoUnsignedRangeElements )]
+  +TArduinoUnsignedRangeElement : TArduinoBasicRangeElement
+
+    Min : Unsigned = 0
+    Max : Unsigned = 1000
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_IgnoreValues.h' )]
+  [ArduinoClass( 'Mitov::IgnoreRanges' )]
+  [ArduinoTemplateParameter( '0_TYPE', 'uint32_t' )]
+  [Name( 'Ignore Unsigned Ranges' )]
+  [CreateName( 'IgnoreUnsignedRanges' )]
+  [Category( TArduinoUnsignedMathFilterToolbarCategory )]
+  +TArduinoIgnoreUnsignedRanges : TArduinoCommonUnsignedFilter
+
+    IgnoredOutputPin : TOWArduinoDigitalSourcePin
+
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoUnsignedRangeElements
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_TYPE', 'uint32_t' )]
+  [ArduinoContructorParameter( '0' )]
+  [CreateName( 'UnsignedSnapshot' )]
+  [Name( 'Unsigned Snapshot' )]
+  [Category( TArduinoUnsignedToolbarCategory )]
+  +TArduinoUnsignedSnapshot : TArduinoCommonUnsignedFilter, TArduinoSnapshot_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

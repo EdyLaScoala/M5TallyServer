@@ -1,0 +1,41 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Cytron' )]
+  TArduinoCytronCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'AVR' )]
+  [Category( TArduinoCytronCategory )]
+  [AlternateCategory( TAVRCategory )]
+  [ParentImage( TAVRCategory )]
+  TArduinoCytronAVRCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '2' )]
+  [ArduinoClass( 'Mitov::InvertedDigitalPullUpInput' )]
+  +TArduinoMakerUnoButtonModule : TArduinoBasicInterruptButtonModule;
+//---------------------------------------------------------------------------
+  [Name( 'Maker UNO' )]
+  [Category( TArduinoCytronCategory )]
+  +TArduino_Cytron_Maker_UNO_Board : TArduino_AVR328_Basic_UNO_Board
+  
+    [AddItem( TArduinoMakerUnoButtonModule )]
+    Modules
+
+    [ArduinoBoard_Add_ReservedChannels( 0, 2 )]
+    [ArduinoBoard_Add_ReservedChannel( 2, 'LED2)(Button' )]
+    [ArduinoBoard_Add_ReservedChannel( 3, 'LED3' )]
+    [ArduinoBoard_Add_ReservedChannel( 4, 'LED4' )]
+    [ArduinoBoard_Add_ReservedChannel( 5, 'LED5' )]
+    [ArduinoBoard_Add_ReservedChannel( 6, 'LED6' )]
+    [ArduinoBoard_Add_ReservedChannel( 7, 'LED7' )]
+    [ArduinoBoard_Add_ReservedChannel( 8, 'LED8)(Buzzer' )]
+    [ArduinoBoard_Add_ReservedChannel( 9, 'LED9' )]
+    [ArduinoBoard_Add_ReservedChannel( 10, 'LED10' )]
+    [ArduinoBoard_Add_ReservedChannel( 11, 'LED11)(SPI-MOSI' )]
+    [ArduinoBoard_Add_ReservedChannel( 12, 'LED12)(SPI-MISO' )]
+    [ArduinoBoard_Add_ReservedChannel( 13, 'LED13)(SPI-SCK' )]
+    [ArduinoBoard_Add_AllChannelsFrom( 14 )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

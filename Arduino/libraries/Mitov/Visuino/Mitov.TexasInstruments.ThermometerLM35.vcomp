@@ -1,0 +1,20 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_TexasInstruments_Thermometer.h' )]
+  [ArduinoClass( 'Mitov::TexasInstruments_Thermometer' )]
+  [CreateName( 'Thermometer' )]
+  TArduinoThermometerLM35_Extender : Extender
+
+    InFahrenheit : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Texas Instruments Thermometer LM35' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoWebKeywords( 'LM35 Thermometer' )]
+  +TArduinoThermometerLM35 : TArduinoCommonAnalogFilter, TArduinoThermometerLM35_Extender;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoBasicEnabledThermometer )]
+  *TArduinoThermometerLM35_BasicModule : TArduinoBasicAnalogSensorModule, TArduinoThermometerLM35_Extender;
+//---------------------------------------------------------------------------
+; // Mitov

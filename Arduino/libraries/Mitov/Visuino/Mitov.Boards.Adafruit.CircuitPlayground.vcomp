@@ -1,0 +1,260 @@
+Mitov
+//---------------------------------------------------------------------------
+  TArduinoCircuitPlaygroundLEDItems : TArduinoFixedPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::ArduinoCircuitPlaygroundRGBLed' )]
+  [ArduinoDeclaredClass]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [CreateName( 'LED' )]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [PersistentCollection( TArduinoCircuitPlaygroundLEDItems )]
+  [ArduinoStart]
+  [ParentImage( TArduinoLEDRGB )]
+  [OldName( 'TArduinoCirquitPlaygroundLEDItem' )]
+  +TArduinoCircuitPlaygroundLEDItem : TArduinoBasicNamedExludePersistent
+
+    [OWPinGroup( TArduinoCircuitPlaygroundLEDItem )]
+    [OWPrimaryPin]
+    ColorInputPin : TOWArduinoColorSinkPin
+
+    [OWExcludeBindings]
+    [ExcludeSystemColors]
+    [ArduinoFullColor]
+    InitialValue : TColor = Black
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Buttons' )]
+  [CreateName( 'Buttons' )]
+  [ArduinoClass( 'Mitov::TypedInputPins2' )]
+  [ArduinoTemplateParameter( 'Button1', 'Mitov::TDefinedDigitalInputPin<4>' )]
+  [ArduinoTemplateParameter( 'Button2', 'Mitov::TDefinedDigitalInputPin<19>' )]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoEVIVEButtonsModule )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [OldName( 'TArduinoCirquitPlaygroundButtonsModule' )]
+  +TArduinoCircuitPlaygroundButtonsModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( 'Button1', TOWArduinoDigitalInputSourcePin, '4' )]
+    [OWAddArduinoBoardDigitalPin( 'Button2', TOWArduinoDigitalInputSourcePin, '19' )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Slide Switch' )]
+  [CreateName( 'Slide Switch' )]
+  [ArduinoInclude( 'Mitov_CircuitPlayground.h' )]
+  [ArduinoClass( 'Mitov::ArduinoCircuitPlaygroundSlideSwitch' )]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoBasicSwitchModule )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [OldName( 'TArduinoCirquitPlaygroundSlideSwitchModule' )]
+  +TArduinoCircuitPlaygroundSlideSwitchModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [OWArduinoBoardDigitalPin( '21' )]
+    OutputPin : TOWArduinoDigitalInputSourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Thermometer' )]
+  [CreateName( 'Thermometer' )]
+  [ArduinoInclude( 'Mitov_CircuitPlayground.h' )]
+  [ParentImage( TArduinoEVIVEADCTemperature )]
+  [ArduinoClass( 'Mitov::ArduinoCircuitPlaygroundThermometer' )]
+  [ArduinoExcludeUnconnected]
+  [OldName( 'TArduinoCirquitPlaygroundThermometerModule' )]
+  +TArduinoCircuitPlaygroundThermometerModule : TArduinoBasicAnalogSensorModule
+
+    [ArduinoUseBindingCheckSetter( 'ReadData' )]
+    InFahrenheit : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Light Sensor' )]
+  [CreateName( 'Light Sensor' )]
+  [ArduinoInclude( 'Mitov_CircuitPlayground.h' )]
+  [ArduinoClass( 'Mitov::ArduinoCircuitPlaygroundLightSensor' )]
+  [ArduinoExcludeUnconnected]
+  [ParentImage( TArduinoBasicLightSensorPersistent )]
+  [OldName( 'TArduinoCirquitPlaygroundLightSensorModule' )]
+  +TArduinoCircuitPlaygroundLightSensorModule : TArduinoBasicAnalogSensorModule
+
+    [ArduinoUseBindingCheckSetter( 'ReadData' )]
+    InLux : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Microphone' )]
+  [CreateName( 'Microphone' )]
+  [ArduinoInclude( 'Mitov_CircuitPlayground.h' )]
+  [ArduinoClass( 'Mitov::ArduinoCircuitPlaygroundMicrophone' )]
+  [ArduinoExcludeUnconnected]
+  [OldName( 'TArduinoCirquitPlaygroundMicrophoneModule' )]
+  [ParentImage( TArduinoBasicAnalogMicrophone )]
+  +TArduinoCircuitPlaygroundMicrophoneModule : TArduinoBasicAnalogSensorModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'PIN', '5' )]
+  [OldName( 'TArduinoCirquitPlaygroundBuzzerModule' )]
+  +TArduinoCircuitPlaygroundBuzzerModule : TArduinoBasicBuzzerModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Adafruit_NeoPixel.h', 'Adafruit NeoPixel', 'https://github.com/adafruit/Adafruit_NeoPixel' )]
+  [ArduinoInclude( 'Mitov_CircuitPlayground_RGB_LED.h' )]
+  [ArduinoClass( 'Mitov::ArduinoCircuitPlaygroundRGBLedsModule' )]
+  [Name( 'RGB LEDs' )]
+  [CreateName( 'RGB LEDs' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoInit]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [OldName( 'TArduinoCirquitRGBLedsModule' )]
+  [OldName( 'TArduinoCirquitPlaygroundRGBLedsModule' )]
+  [ParentImage( TArduinoESPCopter_NeoPixelsRing_Shield )]
+  +TArduinoCircuitPlaygroundRGBLedsModule : TArduinoShield
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopEnd )]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [AddItem( TArduinoCircuitPlaygroundLEDItem, 10 )]
+    RGBLeds : TArduinoCircuitPlaygroundLEDItems
+
+    [ArduinoUseBindingCheckSetter( 'UpdateBrightness' )]
+    [ValueRange( 0.0, 1.0 )]
+    Brightness : Single = 1.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoSPI( 0 )]
+  [ArduinoTemplateParameter( '0_INTERFACE', 'Mitov::InterfaceSPI< BoardDeclarations::Types::BoardSPI0, BoardDeclarations::Instances::BoardSPI0, Mitov::DigitalPin_DirectBoardPinImplementation<8> >' )]
+  [OldName( 'TArduinoCirquitAccelerometerSPIModule' )]
+  +TArduinoCircuitAccelerometerSPIModule : TArduinoAccelerometerLIS3DH_BasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoTemplateParameter( '0_INTERFACE', 'Mitov::InterfaceI2C< TwoWire, Wire, Mitov::ConstantProperty<3, uint8_t, 24 > >' )]
+  [OldName( 'TArduinoCirquitAccelerometerI2CModule' )]
+  TArduinoCircuitAccelerometerI2CModule : TArduinoAccelerometerLIS3DH_BasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorInputPin', '26' )]
+  TArduinoCirquitPlaygroundExpressInfraredRemoteReceiverPersistent : TArduinoInfraredRemoteTransmitterPersistent;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'SensorOutputPin', '25' )]
+  TArduinoCirquitPlaygroundExpressInfraredRemoteTransmitterPersistent : TArduinoInfraredRemoteTransmitterPersistent;
+//---------------------------------------------------------------------------
+  [Name( 'Infrared Remote' )]
+  [CreateName( 'Infrared Remote' )]
+  [ParentImage( TArduinoInfraredRemoteReceiver )]
+  +TArduinoInfraredRemoteReceiverTransmitterModule : TArduinoShield
+
+    Receiver : TArduinoCirquitPlaygroundExpressInfraredRemoteReceiverPersistent
+    Transmitter : TArduinoCirquitPlaygroundExpressInfraredRemoteTransmitterPersistent
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'EEPROM I2C' )]
+  [CreateName( 'EEPROM I2C' )]
+  [ArduinoInclude( 'Mitov_Generic_I2C_EEPROM.h' )]
+  [ArduinoClass( 'Mitov::ArduinoGenericEEPROM_I2C' )]
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 0x50 >' )]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoI2C( 0 )]
+  TArduinoCirquitPlaygroundEEPROMModule : TArduinoBasicEEPROMModule;
+//---------------------------------------------------------------------------
+  [ArduinoDefine( 'VISUINO_CIRCUIT_PLAYGROUND' )]
+  [ArduinoBoardArchitecture( 'avr' )]
+  [ArduinoBoardCompileParams( 'adafruit:avr:circuitplay32u4cat' )]
+  [Category( TAdafruitATmega32U4Category )]
+  [ArduinoBoardCanReset]
+  TArduino_AdafruitCircuitPlaygroundClasic_Board_Basic : TArduino_32u4_BasicHIDBasicBoard
+  
+//    [AddItem( TArduinoEEPROMModule )]
+    [AddItem( TArduinoCircuitPlaygroundButtonsModule )]
+    [AddItem( TArduinoCircuitPlaygroundSlideSwitchModule )]
+    [AddItem( TArduinoCircuitPlaygroundThermometerModule )]
+    [AddItem( TArduinoCircuitPlaygroundLightSensorModule )]
+    [AddItem( TArduinoCircuitPlaygroundMicrophoneModule )]
+    [AddItem( TArduinoCircuitPlaygroundBuzzerModule )]
+    [AddItem( TArduinoCircuitPlaygroundRGBLedsModule )]
+    [AddItem( TArduinoCircuitAccelerometerSPIModule )]
+    Modules
+    
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 1, TArduinoCircuitPlaygroundAdditionalDigitalTouchSerial0InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 1, TArduinoCircuitPlaygroundAdditionalDigitalTouchSerial0InterruptChannel, 'Digital(TX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 2, 1, TArduinoCircuitPlaygroundAdditionalDigitalTouchI2C0InterruptChannel, 'Digital(I2C-SDA)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 3, 1, TArduinoCircuitPlaygroundDigitalTouchPWMI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 6, 7, 1, TArduinoCircuitPlaygroundCombinedAnalogDigitalTouchPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 9, 9, 2, TArduinoCircuitPlaygroundCombinedAnalogDigitalTouchPWMChannel )]
+    [ArduinoBoard_Add_DigitalNamedAnalogChannels( 12, 11, 1, TArduinoCircuitPlaygroundCombinedAnalogDigitalTouchPWMChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 13, 1, TArduinoBasicDigitalPWMInputChannel, 'Digital(LED)' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+  [OldName( 'Adafruit Circuit Playground Clasic' )]
+  [Name( 'Adafruit Circuit Playground Classic' )]
+  +TArduino_AdafruitCircuitPlaygroundClasic_Board : TArduino_AdafruitCircuitPlaygroundClasic_Board_Basic;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Circuit Playground Developer Edition' )]
+  +TArduino_AdafruitCircuitPlaygroundDeveloperEdition_Board : TArduino_AdafruitCircuitPlaygroundClasic_Board_Basic;
+//---------------------------------------------------------------------------
+  [ArduinoI2C( 0 )]
+  [ArduinoInterruptPin]
+  +TArduinoCircuitPlaygroundExpressCombinedAnalogDigitalTouchI2C0InterruptChannel : TArduinoCombinedTouchAnalogDigitalChannel;
+//---------------------------------------------------------------------------
+  [ArduinoSerial( 0 )]
+  [ArduinoInterruptPin]
+  +TArduinoCircuitPlaygroundExpressCombinedAnalogDigitalTouchPWMSerial0InterruptChannel : TArduinoCombinedAnalogDigitalTouchPWMInterruptChannel;
+//---------------------------------------------------------------------------
+  [Name( 'Adafruit Circuit Playground Express' )]
+  [ArduinoDefine( 'VISUINO_CIRCUIT_PLAYGROUND_EXPRESS' )]
+  [ArduinoBoardArchitecture( 'samd' )]
+  [ArduinoBoardCompileParams( 'arduino:samd:adafruit_circuitplayground_m0' )]
+  [ArduinoBoardCompileParams( 'adafruit:samd:adafruit_circuitplayground_m0' )]
+  [Category( TAdafruitCortexM0Category )]
+  [ArduinoBoardCanReset]
+  +TArduino_AdafruitCircuitPlaygroundExpress_Board : TArduinoBoardExtendableImplementation
+
+    [AddItem( TArduinoCirquitPlaygroundEEPROMModule )]
+    [AddItem( TArduinoBasicKeyboardModule )]
+    [AddItem( TArduinoBasicMouseModule )]
+    [AddItem( TArduinoCircuitPlaygroundButtonsModule )]
+    [AddItem( TArduinoCircuitPlaygroundSlideSwitchModule )]
+    [AddItem( TArduinoCircuitPlaygroundThermometerModule )]
+    [AddItem( TArduinoCircuitPlaygroundLightSensorModule )]
+    [AddItem( TArduinoCircuitPlaygroundMicrophoneModule )]
+    [AddItem( TArduinoCircuitPlaygroundRGBLedsModule )]
+    [AddItem( TArduinoCircuitAccelerometerI2CModule )]
+    [AddItem( TArduinoInfraredRemoteReceiverTransmitterModule )]
+    Modules : TArduinoModules
+
+    [AddItem( TArduinoHardwareSerial )]
+    Serial : TArduinoSerials
+
+    [Name( 'I2C Channels' )]
+    [AddItem( TArduinoI2C )]
+    I2CChannels : TArduinoI2CChannels
+
+    [Name( 'SPI Channels' )]
+    [AddItem( TArduinoSPI )]
+    SPIChannels : TArduinoSPIChannels
+
+    [ArduinoBoard_Add_DigitalAnalogChannels( 0, 1, TArduinoCombinedAnalogDigitalBasicAnalogChannel, 'Digital(Speaker)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 1, 3, TArduinoCombinedAnalogDigitalTouchPWMInterruptChannel )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 4, 1, TArduinoCircuitPlaygroundExpressCombinedAnalogDigitalTouchI2C0InterruptChannel, 'Digital(I2C-SCL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 5, 1, TArduinoCircuitPlaygroundExpressCombinedAnalogDigitalTouchI2C0InterruptChannel, 'Digital(I2C-SDL)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 6, 1, TArduinoCircuitPlaygroundExpressCombinedAnalogDigitalTouchPWMSerial0InterruptChannel, 'Digital(RX)' )]
+    [ArduinoBoard_Add_DigitalAnalogChannels( 7, 1, TArduinoCircuitPlaygroundExpressCombinedAnalogDigitalTouchPWMSerial0InterruptChannel, 'Digital(TX)' )]
+    [Name( 'Channels' )]
+    Digital : TArduinoDigitalChannels
+    
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

@@ -1,0 +1,242 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'AssignFrames' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AFrame' )]
+  [ArduinoCallChainIndex]
+  TArduinoDisplayIS31FL3731ElementAssignFramesCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'SystemInitStart' )]
+  [ArduinoPopulatedCallChainParameter( 'bool &', 'AStarted' )]
+  TArduinoDisplayIS31FL3731ElementSystemInitStartCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [Name( 'SetFrame' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t', 'AFrame' )]
+  [ArduinoCallChainIndex]
+  TArduinoLedDriverIS31FL3731FrameElementSetFrameCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [TArduinoLedDriverIS31FL3731FrameElementSetFrameCallChain]
+  TArduinoLedDriverIS31FL3731FrameElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [TArduinoDisplayIS31FL3731ElementAssignFramesCallChain]
+  [TArduinoDisplayIS31FL3731ElementSystemInitStartCallChain]
+  TArduinoLedDriverIS31FL3731ModeElements : TArduinoPersistentCollection;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+//  [ArduinoOwnerReference]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoClass( 'Mitov::DisplayIS31FL3731BasicBlink' )]
+//  [ArduinoVariable( TypeInfo(Boolean), 'FModified' )]
+//  [ArduinoCallChain( 'PopulateReg' )]
+//  [ArduinoCallChain( 'SetFrame' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoCallChain( 'Operation' )]
+  [ArduinoCallChainParameter( 'bool AIsPopulateReg' )]
+  [ArduinoOptionalVariable( Unsigned, 6, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 6, 'FCursorY', 0 )]
+  [ArduinoOptionalVariable( Boolean, 'FModified', True )]
+  TArduinoLedDriverIS31FL3731Blink : TArduinoCodeDisabledPersistent
+
+    [ArduinoPinConnectedClassName( 'Mitov::DisplayIS31FL3731Blink' )]
+    [ArduinoVariableIfPinConnected( 'FModified' )]
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    [ArduinoNotDefaultClassName( 'Mitov::DisplayIS31FL3731Blink' )]
+    [ArduinoVariableIfNotDefault( 'FModified' )]
+    Elements : TArduinoMonochromeGraphicsElements
+
+    Text : TArduinoMonochromeGraphicsTextSettings
+    BackgroundColor : TArduinoGrayscaleColor = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLedDriverIS31FL3731FadeEffect' )]
+  TArduinoLedDriverIS31FL3731FadeEffect : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateFadeEffect' )]
+    Enabled
+
+    [ValueRange( 0, 7 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateFadeEffect' )]
+    FadeIn : Unsigned = 0
+
+    [ValueRange( 0, 7 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateFadeEffect' )]
+    FadeOut : Unsigned = 0
+
+    [ValueRange( 0, 7 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateFadeEffect' )]
+    ExtinguishTime : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLedDriverIS31FL3731AudioControl' )]
+  TArduinoLedDriverIS31FL3731AudioControl : TArduinoCodeDisabledPersistent
+
+    [ValueRange( 64, 16384 )]
+    [NamePostfix( '(uS)' )]
+    SamplingInterval : Unsigned = 16384
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  TArduinoLedDriverIS31FL3731ElementBasic : TArduinoBasicNamedExludePersistent
+
+    Enabled  : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [PersistentCollection( TArduinoLedDriverIS31FL3731ModeElements )]
+  [ArduinoHelpPostfix( '(IS31FL3731 Display)' )]
+  [ArduinoInclude( 'Mitov_Display_IS31FL3731.h' )]
+  [ArduinoOwnerTemplateType]
+  TArduinoLedDriverIS31FL3731ModeElementBasic : TArduinoLedDriverIS31FL3731ElementBasic;
+//---------------------------------------------------------------------------
+  [ArduinoHelpPostfix( '(IS31FL3731 Display)' )]
+  [ArduinoInclude( 'Mitov_Display_IS31FL3731.h' )]
+  [ParentImage( TArduinoGrayscaleGraphicsElementDrawBitmap )]
+  [ArduinoOwnerTemplateTypeAndReference]
+  [ArduinoVariable( Boolean, 'FModified' )]
+  [ArduinoOptionalVariable( Unsigned, 6, 'FCursorX', 0 )]
+  [ArduinoOptionalVariable( Unsigned, 6, 'FCursorY', 0 )]
+  TArduinoLedDriverIS31FL3731BasicPictureElement : TArduinoLedDriverIS31FL3731ElementBasic
+
+    InputPin : TOWArduinoDisplayDataMultiSinkPin
+
+    Orientation : TArduinoGraphicsOrientation = goUp
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    Elements : TArduinoGrayscaleGraphicsElements
+
+    BackgroundColor : TArduinoGrayscaleColor = 0
+    Text : TArduinoGrayscaleGraphicsTextSettings
+    Blink : TArduinoLedDriverIS31FL3731Blink
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Picture' )]
+  [ArduinoClass( 'Mitov::DisplayIS31FL3731PictureElement' )]
+  [PersistentCollection( TArduinoLedDriverIS31FL3731ModeElements )]
+  [ArduinoLoopEnd]
+  [ArduinoVariable( Boolean, 'FFrameAssigned' )]
+  [ArduinoVariable( Boolean, 'FFrame' )]
+  [ArduinoVariable( Unsigned, 3, 'FFrame0' )]
+  [ArduinoVariable( Unsigned, 3, 'FFrame1' )]
+  +TArduinoLedDriverIS31FL3731PictureModeElement : TArduinoLedDriverIS31FL3731BasicPictureElement
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoPinIsConnectedFlag]
+    RefreshInputPin : TOWArduinoClockSinkPin
+
+    FadeEffect : TArduinoLedDriverIS31FL3731FadeEffect
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Animation' )]
+  [ArduinoClass( 'Mitov::DisplayIS31FL3731AnimationElement' )]
+//  [ParentImage( TArduinoGrayscaleGraphicsElementDrawBitmap )]
+  [ArduinoVariable( Boolean, 'FFrameAssigned' )]
+  [ArduinoVariable( Unsigned, 3, 'FFrameStart' )]
+  [ArduinoOwnerTemplateReference]
+  [ArduinoTemplateParameterCollectionItemIndex]
+  +TArduinoLedDriverIS31FL3731AnimationModeElement : TArduinoLedDriverIS31FL3731ModeElementBasic
+
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    [ArduinoTemplateParameterCollectionCount]
+    Frames : TArduinoLedDriverIS31FL3731FrameElements
+
+    FadeEffect : TArduinoLedDriverIS31FL3731FadeEffect
+
+    [ValueRange( 0, 7 )]
+    Loops : Unsigned = 0
+
+    [ValueRange( 0, 63 )]
+    FrameDelay : Unsigned = 0
+
+    AudioControl : TArduinoLedDriverIS31FL3731AudioControl
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Frame' )]
+  [ArduinoClass( 'Mitov::DisplayIS31FL3731FrameElement' )]
+  [PersistentCollection( TArduinoLedDriverIS31FL3731FrameElements )]
+  +TArduinoLedDriverIS31FL3731FrameElement : TArduinoLedDriverIS31FL3731BasicPictureElement;
+//---------------------------------------------------------------------------
+  TArduinoLedDriverIS31FL3731AudioGainMode : Enum
+  
+    igmDisabled
+    igmSlow
+    igmFast
+    
+  ;
+//---------------------------------------------------------------------------
+  TArduinoLedDriverIS31FL3731AudioGain : Enum
+  
+    isg0dB
+    isg3dB
+    isg6dB
+    isg9dB
+    isg12dB
+    isg15dB
+    isg18dB
+    isg21dB
+    
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoLedDriverIS31FL3731AudioModulation' )]
+  TArduinoLedDriverIS31FL3731AudioModulation : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAudioModulation' )]
+    Enabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAudioModulation' )]
+    GainMode : TArduinoLedDriverIS31FL3731AudioGainMode = igmDisabled
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateAudioModulation' )]
+    Gain : TArduinoLedDriverIS31FL3731AudioGain = isg0dB
+
+  ;
+//---------------------------------------------------------------------------
+  [CreateName( 'Display' )]
+  [ArduinoClass( 'Mitov::DisplayIS31FL3731' )]
+  [ArduinoInclude( 'Mitov_Display_IS31FL3731.h' )]
+  [Category( TArduinoDisplaysToolbarCategory )]
+  [Name( 'Led Driver IS31FL3731 (I2C)' )]
+  [ArduinoInit]
+  [ArduinoStart]
+  +TArduinoLedDriverIS31FL3731 : TArduinoEnableComponent
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    OutputPin : TOWArduinoI2CSourcePin
+
+    [ArduinoUseBindingCheckSetter( 'SystemInit' )]
+    Enabled
+
+    [DesignRange( $1, $FF )]
+    Address : TArduinoUInt8 = $74
+
+    [ArduinoExcludeCollectionItems]
+    [ComponentEditorEntryDesign( 'Add &Elements ...' )]
+    [ArduinoTemplateParameterCollectionCount]
+    Elements : TArduinoLedDriverIS31FL3731ModeElements
+
+    AudioModulation : TArduinoLedDriverIS31FL3731AudioModulation
+
+    [ValueRange( 0, 7 )]
+    BlinkPeriod : Unsigned = 2
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

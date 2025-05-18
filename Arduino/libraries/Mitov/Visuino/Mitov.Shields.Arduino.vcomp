@@ -1,0 +1,99 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_Joystick.h' )]
+  [ArduinoClass( 'Mitov::ArduinoModuleJoystick' )]
+  [ParentImage( TArduinoJoystick )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoJoystickShieldJoystick : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogChangeOnlySourcePin )]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartJoystick' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginJoystick' )]
+    [OWAddPin( 'X', TOWArduinoAnalogChangeOnlySourcePin )]
+    [OWAddPin( 'Y', TOWArduinoAnalogChangeOnlySourcePin )]
+    AxesOutputPins : TOWArduinoPinList
+
+    [OWArduinoBoardDigitalPin( '8' )]
+    [OWPrimaryPin]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartButton' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginButton' )]
+    ButtonOutputPin : TOWArduinoDigitalInputChangeOnlySourcePin
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoDeclaredClass]
+  [ArduinoInclude( 'Mitov_Joystick.h' )]
+  [ArduinoClass( 'Mitov::ArduinoModuleJoystickButtons' )]
+  [ParentImage( TArduinoButton )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoJoystickShieldButtons : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartDirection' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginDirection' )]
+    [OWAddPin( 'Up (A)', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Down (C)', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Left (D)', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Right (B)', TOWArduinoDigitalChangeOnlySourcePin )]
+    DirectionOutputPins : TOWArduinoPinList
+
+    [OWPinListPrimaryPinType( TOWArduinoDigitalChangeOnlySourcePin )]
+    [ArduinoPinConnectedAddCodeEntry( ceStart, 'SystemStartButtons' )]
+    [ArduinoPinConnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginButtons' )]
+    [OWAddPin( 'Button E', TOWArduinoDigitalChangeOnlySourcePin )]
+    [OWAddPin( 'Button F', TOWArduinoDigitalChangeOnlySourcePin )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_SPI_TYPE_PIN', 'BoardDeclarations::Types::BoardSPI0' )]
+  [ArduinoTemplateParameter( '1_SPI_NAME_PIN', 'BoardDeclarations::Instances::BoardSPI0' )]
+  [ArduinoTemplateParameter( 'ChipEnableOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<9>' )]
+  [ArduinoTemplateParameter( 'ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<10>' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [ArduinoShieldPin( '9',  'NRF24L01 CS' )]
+  [ArduinoShieldPin( '10',  'NRF24L01 CE' )]
+  [ArduinoSPI( 0 )]
+  TArduinoJoystickShieldNRF24L01 : TArduinoNRF24L01BasicElement;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_Shield_Joystick_Display.h' )]
+  [ArduinoTemplateParameter( '0_SPI_TYPE_PIN', 'Mitov::VisuinoSoftwareSPI<10, 9>' )]
+  [ArduinoTemplateParameter( '1_SPI_NAME_PIN', 'Mitov::GSoftwareSPI_Nokia' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin_RESET', 'Mitov::ResetPinImplementation' )]
+  [ArduinoTemplateParameter( 'ChipSelectOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<13>' )]
+  [ArduinoTemplateParameter( 'DataCommandOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<11>' )]
+  [ArduinoTemplateParameter( 'ResetOutputPin', 'Mitov::DigitalPin_DirectBoardPinImplementation<12>' )]
+  [ArduinoShieldPin( '9',  'Display Clk' )]
+  [ArduinoShieldPin( '10',  'Display Data' )]
+  [ArduinoShieldPin( '13',  'Display CS' )]
+  [ArduinoShieldPin( '11',  'Display D/C' )]
+  [ArduinoShieldPin( '12',  'Display Reset' )]
+  [ArduinoExcludeUnconnectedAndDefault]
+  TArduinoJoystickShieldNokia5110 : TArduinoDisplayNokia5110Property;
+//---------------------------------------------------------------------------
+  [ParentImage( TArduinoJoystick )]
+  [Name( 'Funduino Joystick Shield' )]
+  [CreateName( 'Joystick Shield' )]
+  [PersistentCollection( TArduinoBasicShields )]
+  [ArduinoShieldPin( '2',  'Button Up(A)' )]
+  [ArduinoShieldPin( '3',  'Button Right(B)' )]
+  [ArduinoShieldPin( '4',  'Button Down(C)' )]
+  [ArduinoShieldPin( '5',  'Button Left(D)' )]
+  [ArduinoShieldPin( '6',  'Button (E)' )]
+  [ArduinoShieldPin( '7',  'Button (F)' )]
+  [ArduinoShieldPin( '8',  'Joystick Button' )]
+  [ArduinoShieldPin( 'A0',  'Joystick X' )]
+  [ArduinoShieldPin( 'A1',  'Joystick Y' )]
+  +TArduinoJoystickShield : TArduinoShield, IStandardShield
+
+    Joystick : TArduinoJoystickShieldJoystick
+    Buttons : TArduinoJoystickShieldButtons
+    NRF24L01 : TArduinoJoystickShieldNRF24L01
+    Display : TArduinoJoystickShieldNokia5110
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

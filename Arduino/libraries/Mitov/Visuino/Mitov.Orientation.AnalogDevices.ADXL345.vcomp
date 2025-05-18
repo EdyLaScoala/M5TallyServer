@@ -1,0 +1,295 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345Offsets' )]
+  [ParentImage( TArduinoBasicXYZOffsets )]
+  TArduinoAccelerometerADXL345Offsets : TArduinoCodeDisabledPersistent
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateOffsets' )]
+    Enabled
+
+    [ValueRange( -2.0, 2.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateOffsets' )]
+    X : Single = 0.0
+
+    [ValueRange( -2.0, 2.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateOffsets' )]
+    Y : Single = 0.0
+
+    [ValueRange( -2.0, 2.0 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateOffsets' )]
+    Z : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345DoubleTapTiming' )]
+  TArduinoAccelerometerADXL345DoubleTapTiming : TArduinoCodePersistent
+
+    [NamePostfix( '(mS)' )]
+    [ValueRange( 0.0, 318.75 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTapLatent' )]
+    [Name( 'Latency' )]
+    Latentcy : Single = 100.0
+
+    [NamePostfix( '(mS)' )]
+    [ValueRange( 0.0, 318.75 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTapWindow' )]
+    Window : Single = 250.0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345TapTiming' )]
+  TArduinoAccelerometerADXL345TapTiming : TArduinoCodePersistent
+
+    [NamePostfix( '(mS)' )]
+    [ValueRange( 0.0, 159.375 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTapDuration' )]
+    Duration : Single = 9.375
+
+    DoubleTap : TArduinoAccelerometerADXL345DoubleTapTiming
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345Tap' )]
+  *TArduinoAccelerometerADXL345Tap : TArduinoCodePersistent
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAddPin( 'X', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Z', TOWArduinoClockSourcePin )]
+    SingleOutputPins : TOWArduinoPinList
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAddPin( 'X', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Z', TOWArduinoClockSourcePin )]
+    DoubleOutputPins : TOWArduinoPinList
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTapThreshold' )]
+    [ValueRange( 0.0, 16.0 )]
+    [NamePostfix( '(G)' )]
+    Threshold : Single = 0.25
+
+    Timing : TArduinoAccelerometerADXL345TapTiming
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTapAxes' )]
+    Suppress : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTapAxes' )]
+    X : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTapAxes' )]
+    Y : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateTapAxes' )]
+    Z : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoAccelerometerADXL345BasicActive : TArduinoCodePersistent
+
+    [ValueRange( 0.0, 16.0 )]
+    [NamePostfix( '(G)' )]
+    Threshold : Single = 0
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateActiveAxis' )]
+    ACMode : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateActiveAxis' )]
+    X : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateActiveAxis' )]
+    Y : Boolean = True
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateActiveAxis' )]
+    Z : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345Active' )]
+  *TArduinoAccelerometerADXL345Active : TArduinoAccelerometerADXL345BasicActive
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoClockSourcePin )]
+    [OWAddPin( 'X', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Y', TOWArduinoClockSourcePin )]
+    [OWAddPin( 'Z', TOWArduinoClockSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateActiveThreshold' )]
+    Threshold = 0.25
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345Inactive' )]
+  *TArduinoAccelerometerADXL345Inactive : TArduinoAccelerometerADXL345BasicActive
+
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateInactiveThreshold' )]
+    Threshold = 0.125
+
+    [MaxValue( 255 )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdateInactiveTime' )]
+    [NamePostfix( '(S)' )]
+    Time : Unsigned = 0
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345Activity' )]
+  *TArduinoAccelerometerADXL345Activity : TArduinoCodePersistent
+
+    Active : TArduinoAccelerometerADXL345Active
+    Inactive : TArduinoAccelerometerADXL345Inactive
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerControl' )]
+    Linked : Boolean = True
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345FreeFall' )]
+  *TArduinoAccelerometerADXL345FreeFall : TArduinoCodePersistent
+
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ValueRange( 0.0, 16.0 )]
+    [NamePostfix( '(G)' )]
+    Threshold : Single = 0.44
+
+    [MaxValue( 1275 )]
+    [NamePostfix( '(mS)' )]
+    [DesignRange( 20.0, 70.0 )]
+    Time : Unsigned = 30
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::TArduinoAccelerometerADXL345Sleep' )]
+  *TArduinoAccelerometerADXL345Sleep : TArduinoCodePersistent
+
+    OutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerControl' )]
+    AutoSleep : Boolean = False
+
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerControl' )]
+    Sleep : Boolean = False
+
+    [ValueRange( 1, 8 )]
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '1' )]
+    [PropertyListDesignValue( '2' )]
+    [PropertyListDesignValue( '4' )]
+    [PropertyListDesignValue( '8' )]
+    [ArduinoUseBindingCheckSetter_Parent( 'UpdatePowerControl' )]
+    SamplingRate : Unsigned = 8
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_AnalogDevices_ADXL345.h' )]
+  [ArduinoClass( 'Mitov::AnalogDevicesADXL345' )]
+  [CreateName( 'Accelerometer' )]
+  [ArduinoWebKeywords( 'ADXL345' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoStart( 'SystemStartActivity' )]
+  [ArduinoLoopBegin( 'SystemLoopBeginActivity' )]
+  TArduinoAccelerometerADXL345_Basic : TArduinoClockedEnableComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart, 'SystemStartRead' )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin, 'SystemLoopBeginRead' )]
+    ClockInputPin
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'X(G)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Y(G)', TOWArduinoAnalogSourcePin )]
+    [OWAddPin( 'Z(G)', TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDataFormat' )]
+    FullScaleRange : TArduinoMPU9250AccelerometerRange = ar2g
+
+    [ArduinoUseBindingCheckSetter( 'UpdateRate' )]
+    LowPower : Boolean = False
+
+    [ArduinoUseBindingCheckSetter( 'UpdateDataFormat' )]
+    HighResolution : Boolean = True
+
+    [PropertyFixedListDesign]
+    [PropertyListDesignValue( '0.1' )]
+    [PropertyListDesignValue( '0.2' )]
+    [PropertyListDesignValue( '0.39' )]
+    [PropertyListDesignValue( '0.78' )]
+    [PropertyListDesignValue( '1.56' )]
+    [PropertyListDesignValue( '3.13' )]
+    [PropertyListDesignValue( '6.25' )]
+    [PropertyListDesignValue( '12.5' )]
+    [PropertyListDesignValue( '25.0' )]
+    [PropertyListDesignValue( '50.0' )]
+    [PropertyListDesignValue( '100.0' )]
+    [PropertyListDesignValue( '200.0' )]
+    [PropertyListDesignValue( '400.0' )]
+    [PropertyListDesignValue( '800.0' )]
+    [PropertyListDesignValue( '1600.0' )]
+    [PropertyListDesignValue( '3200.0' )]
+    [ArduinoUseBindingCheckSetter( 'UpdateRate' )]
+    SamplingRate : Single = 3200.0
+
+    Offsets : TArduinoAccelerometerADXL345Offsets
+
+    Tap : TArduinoAccelerometerADXL345Tap
+
+    FreeFall : TArduinoAccelerometerADXL345FreeFall
+
+    Activity : TArduinoAccelerometerADXL345Activity
+
+    Sleep : TArduinoAccelerometerADXL345Sleep
+
+    [ArduinoUseBindingCheckSetter( 'UpdatePowerControl' )]
+    Standby : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Wire.h' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceI2CNoSetHighBit' )]
+  TArduinoAccelerometerADXL345_I2C_Basic : TArduinoAccelerometerADXL345_Basic
+
+    [OWPrimaryPin]
+    [ArduinoExclude]
+    [ArduinoI2CInstanceTemplate]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoI2CSourcePin
+
+    [PropertyListDesignValue( '29' )] // $1D
+    [PropertyListDesignValue( '83' )] // $53
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    Address : TArduinoUInt8 = $53
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Analog Devices ADXL345 Accelerometer(I2C)' )]
+  +TArduinoAccelerometerADXL345_I2C : TArduinoAccelerometerADXL345_I2C_Basic;
+//---------------------------------------------------------------------------
+  [Category( TArduinoM5StackToolbarCategory )]
+  [Category( TArduinoGroveToolbarCategory )]
+  [Name( 'M5Stack 3-Axis Digital Accelerometer Unit (ADXL345)' )]
+  +TArduinoM5StackAccelerometerUnitADXL345_I2C : TArduinoAccelerometerADXL345_I2C_Basic;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'SPI.h' )]
+  [Name( 'Analog Devices ADXL345 Accelerometer(SPI)' )]
+  [ArduinoTemplateParameter( '0_IMPLEMENTATION', 'Mitov::InterfaceSPISpeed' )]
+  +TArduinoAccelerometerADXL345_SPI : TArduinoAccelerometerADXL345_Basic
+
+    [OWPrimaryPin]
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SensorOutputPin : TOWArduinoSPISourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    ChipSelectOutputPin : TOWArduinoDigitalSourcePin
+
+    [ArduinoAddToTemplate( '0_IMPLEMENTATION' )]
+    SPISpeed : Unsigned = 8000000
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

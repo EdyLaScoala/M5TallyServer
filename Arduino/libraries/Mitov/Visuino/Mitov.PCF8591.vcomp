@@ -1,0 +1,58 @@
+Mitov
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::PCF8591_DAC' )]
+  TArduinoPCF8591DAC : TArduinoCodeEnabledPersistent
+
+    [OWPrimaryPin]
+//    [ArduinoPinConnectDefine( '_MITOV_PCF8591_DAC_INPUT_PIN_' )]
+    [ArduinoPinCall( 'DAC_InputPin' )]
+    InputPin : TOWArduinoAnalogSinkPin
+
+//    [ArduinoPinConnectDefine( '_MITOV_PCF8591_DAC_CLOCK_PIN_' )]
+    [ArduinoPinCall( 'DAC_ClockInputPin' )]
+    [ArduinoPinIsConnectedFlag]
+    ClockInputPin : TOWArduinoClockSinkPin
+
+    [OWExcludeBindings]
+    [ArduinoFlexibleVariableIfPinConnected( InputPin )]
+    InitialValue : Single = 0.0
+
+  ;
+//---------------------------------------------------------------------------
+  TArduinoPCF8591ADCMode : Enum
+
+    adcSingleEnded
+    adc3Differential
+    adcMixed
+    adc2Differential
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_ADC_DAC_PCF8591.h' )]
+  [ArduinoWebKeywords( 'PCF8591' )]
+  [Name( 'NXP ADC/DAC PCF8591 (I2C)' )]
+  [CreateName( 'PCF8591ADCDAC' )]
+  [ArduinoClass( 'Mitov::PCF8591' )]
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [Category( TArduinoAnalogOutputToolbarCategory )]
+  [ArduinoStart]
+  +TArduinoPCF8591 : TArduinoClockedEnableFlexibleI2CComponent
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [OWPinListPrimaryPinType( TOWArduinoAnalogSourcePin )]
+    [ArduinoMinConnectedPinIndex]
+    [ArduinoMaxConnectedPinIndex]
+    [OWAddPins( '', 0, 4, TOWArduinoAnalogSourcePin )]
+    OutputPins : TOWArduinoPinList
+
+    [DesignRange( $48, $4F )]
+    Address  = $48
+
+    Mode : TArduinoPCF8591ADCMode = adcSingleEnded
+    DAC : TArduinoPCF8591DAC
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

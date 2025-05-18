@@ -1,0 +1,27 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Category( TArduinoAnalogMeasurementToolbarCategory )]
+  [ArduinoInclude( 'Mitov_UVLight_ML8511.h' )]
+  [ArduinoClass( 'Mitov::UVLightML8511' )]
+  [Name( 'UV Light Sensor Lapis ML8511' )]
+  [CreateName( 'UVLight' )]
+  [ArduinoWebKeywords( 'ML8511' )]
+  +TArduinoUVLightSensorML8511 : TArduinoCommonClockedAnalogEnableSource
+
+    [ArduinoPinDisconnectedAddCodeEntry( ceStart )]
+    [ArduinoPinDisconnectedAddCodeEntry( ceLoopBegin )]
+    ClockInputPin
+
+    [NamePostfix( '(mW/cm^2)' )]
+    OutputPin
+
+    [OWPrimaryPin]
+    SensorInputPin : TOWArduinoAnalogSinkPin
+
+    [OWPrimaryPin]
+    [ArduinoVariableIfPinConnected( Single, 'FReference', 0.66 )]
+    ReferenceInputPin : TOWArduinoAnalogSinkPin
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov

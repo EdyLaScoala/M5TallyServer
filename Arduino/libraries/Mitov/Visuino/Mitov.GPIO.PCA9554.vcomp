@@ -1,0 +1,39 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'GetMode' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'ADirection' )]
+  [ArduinoPopulatedCallChainParameter( 'uint8_t &', 'AInverted' )]
+  TArduinoPCA9554ElementGetModeCallChainAttribute : ArduinoCallChainCompleteAttribute;
+//---------------------------------------------------------------------------
+  [ArduinoClass( 'Mitov::GPIO_PCA9554_Channel' )]
+  [TArduinoPCA9554ElementGetModeCallChain]
+  +TArduinoPCA9554Channel : TArduinoBasicDigitalGPIOChannel
+
+    [ArduinoUseBindingCheckSetter( 'PinDirectionsInit' )]
+    IsInverted : Boolean = False
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_GPIO_PCA9554.h' )]
+  [CreateName( 'GPIO' )]
+  [Category( TArduinoDigitalInputOutputToolbarCategory )]
+  [ArduinoStart]
+  [ArduinoLoopBegin]
+  [ArduinoLoopUpdateHardware]
+  [ArduinoClass( 'Mitov::GPIO_PCA9554' )]
+  [ArduinoWebKeywords( 'PCA9554' )]
+  TArduinoPCA9554Basic : TArduinoI2CGPIO
+
+    [TArduinoPCA9554ElementGetModeCallChain]
+    [AddIndexedNamedItem( TArduinoPCA9554Channel, 'Channel', 8 )]
+    Channels
+
+    [DesignRange( $20, $27 )]
+    Address = $27
+
+  ;
+//---------------------------------------------------------------------------
+  [Name( 'Texas Instruments PCA9554 GPIO' )]
+  +TArduinoPCA9554 : TArduinoPCA9554Basic;
+//---------------------------------------------------------------------------
+; // Mitov

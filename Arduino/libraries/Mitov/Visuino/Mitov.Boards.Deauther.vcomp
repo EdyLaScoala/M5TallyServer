@@ -1,0 +1,73 @@
+Mitov
+//---------------------------------------------------------------------------
+  [Name( 'Deauther' )]
+  TArduinoDeautherCategory : TClassCategory;
+//---------------------------------------------------------------------------
+  [Name( 'ESP8266' )]
+  [Category( TArduinoDeautherCategory )]
+  [AlternateCategory( TESP8266Category )]
+  [ParentImage( TESP8266Category )]
+  TArduinoDeautherESP8266Category : TClassCategory;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '16' )]
+  +TArduinoDeautherESP8266_Watch_LEDModule : TArduinoBasicPWM_LEDModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( '0_I2C_TYPE_PIN', 'TwoWire' )]
+  [ArduinoTemplateParameter( '1_I2C_NAME_PIN', 'Wire' )]
+  [ArduinoTemplateParameter( 'Address', 'Mitov::ConstantProperty<88, uint8_t, 104 >' )]
+  [ArduinoI2C( 0 )]
+  +TArduinoDeautherESP8266_Watch_RTC_Module : TArduinoRTCDS3231BasicModule;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '15' )]
+  +TArduinoDeautherESP8266_Watch_RGBLed : TArduinoNeoPixelRGBLedBasicGBRLedModule;
+//---------------------------------------------------------------------------
+  [ArduinoInclude( 'Mitov_DeautherESP8266_Watch_Navigation.h' )]
+  [ArduinoClass( 'Mitov::DeautherESP8266_Watch_Navigation' )]
+  [ArduinoDeclaredClass]
+  [ArduinoInit]
+  [ArduinoLoopBegin]
+  [ArduinoExcludeUnconnectedAndDefault]
+  [Name( 'Navigation' )]
+  [CreateName( 'Navigation' )]
+  +TArduinoDeautherESP8266_Watch_NavigationModule : TArduinoShield
+
+    [OWPrimaryPin]
+    [OWPinListPrimaryPinType( TOWArduinoDigitalSourcePin )]
+    [ArduinoPinListGetterDirect]
+    [OWAddArduinoBoardDigitalPin( 'Up', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '12' )]
+    [OWAddArduinoBoardDigitalPin( 'Select', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '14' )]
+    [OWAddArduinoBoardDigitalPin( 'Down', TOWArduinoDigitalInputInterruptChangeOnlySourcePin, '13' )]
+    OutputPins : TOWArduinoPinList
+
+  ;
+//---------------------------------------------------------------------------
+  [ArduinoTemplateParameter( 'C_PIN', '0' )]
+  [ArduinoClass( 'Mitov::InvertedDigitalPullUpInput' )]
+  +TArduinoDeautherESP8266_Watch_ButtonModule : TArduinoBasicInterruptButtonModule;
+//---------------------------------------------------------------------------
+  [Name( 'Deauther Watch V2' )]
+  [Category( TArduinoDeautherESP8266Category )]
+  [ArduinoBoardCompileParams( 'esp8266:esp8266:generic:baud=921600' )]
+  +TArduinoESP8266DeautherWatchBoard : TArduinoESP8266_Basic_DefaultPins_NoI2C_Board
+
+    [AddItem( TArduinoDeautherESP8266_Watch_LEDModule )]
+    [AddItem( TArduinoDeautherESP8266_Watch_RGBLed )]
+    [AddItem( TArduinoESP8266DDuinoSH1106Display )]
+    [AddItem( TArduinoDeautherESP8266_Watch_RTC_Module )]
+    [AddItem( TArduinoDeautherESP8266_Watch_NavigationModule )]
+    [AddItem( TArduinoDeautherESP8266_Watch_ButtonModule )]
+    Modules
+
+    [AddItem( TArduinoESP8266_Generic_Reversed_I2C )]
+    I2CChannels
+
+    [ArduinoBoard_Add_ReservedChannels( 1, 1, 'Digital(TX)', True )]
+    [ArduinoBoard_Add_ReservedChannels( 2, 1, 'Digital', True )]
+    [ArduinoBoard_Add_ReservedChannels( 3, 1, 'Digital(RX)', True )]
+    [ArduinoBoard_Add_ReservedChannels( 4, 1, 'Digital(SDA)', True )]
+    [ArduinoBoard_Add_ReservedChannels( 5, 1, 'Digital(SCL)', True )]
+    Digital
+
+  ;
+//---------------------------------------------------------------------------
+; // Mitov
