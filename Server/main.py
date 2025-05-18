@@ -32,6 +32,7 @@ def compile_sketch_background(job_id, data):
         param1 = str(data.get("param1", ""))
         param2 = str(data.get("param2", ""))
         param3 = str(data.get("param3", ""))
+        param4 = str(data.get("param4", ""))
 
         ip_octets = param3.split(".")
         if len(ip_octets) != 4:
@@ -46,7 +47,8 @@ def compile_sketch_background(job_id, data):
                 ip_octet1=ip_octets[0],
                 ip_octet2=ip_octets[1],
                 ip_octet3=ip_octets[2],
-                ip_octet4=ip_octets[3]
+                ip_octet4=ip_octets[3],
+                camNumber=param4
             )
 
         os.makedirs(SKETCH_PATH, exist_ok=True)

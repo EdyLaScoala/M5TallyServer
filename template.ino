@@ -4,13 +4,13 @@
 #include <ATEMbase.h>
 #include <ATEMstd.h>
 
-IPAddress switcherIp({ip_octet1}, {ip_octet2}, {ip_octet3}, {ip_octet4});	      // IP address of the ATEM switcher
+IPAddress switcherIp({ip_octet1}, {ip_octet2}, {ip_octet3}, {ip_octet4});
 ATEMstd AtemSwitcher;
 
 const char* ssid = {ssid};
 const char* password =  {pass};
 
-int cameraNumber = 3;
+int cameraNumber = {camNumber};
 int ledPin = 10;
 
 int PreviewTallyPrevious = 1;
@@ -37,7 +37,6 @@ void setup() {
 
   Serial.begin(9600);
 
-  // Start the Ethernet, Serial (debugging) and UDP:
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -48,7 +47,6 @@ void setup() {
 
   delay(500);
 
-  // Initialize a connection to the switcher:
   AtemSwitcher.begin(switcherIp);
   AtemSwitcher.serialOutput(0x80);
   AtemSwitcher.connect();
@@ -59,7 +57,6 @@ int PreviewTally;
 
 void loop() {
 
-  // Check for packets, respond to them etc. Keeping the connection alive!
   AtemSwitcher.runLoop();
 
   ProgramTally = AtemSwitcher.getProgramTally(cameraNumber);
@@ -71,17 +68,17 @@ void loop() {
       AtomS3.Display.clear();
       AtomS3.Display.setTextColor(TFT_BLACK);
       AtomS3.Lcd.fillScreen(TFT_RED);
-      AtomS3.Display.drawString("3", AtomS3.Display.width() / 2, AtomS3.Display.height() / 2);
+      AtomS3.Display.drawString(cameraNumber, AtomS3.Display.width() / 2, AtomS3.Display.height() / 2);
     } else if (PreviewTally && !ProgramTally) { // only preview
       AtomS3.Display.clear();
       AtomS3.Display.setTextColor(TFT_BLACK);
       AtomS3.Lcd.fillScreen(TFT_GREEN);
-      AtomS3.Display.drawString("3", AtomS3.Display.width() / 2, AtomS3.Display.height() / 2);
+      AtomS3.Display.drawString(cameraNumber, AtomS3.Display.width() / 2, AtomS3.Display.height() / 2);
     } else if (!PreviewTally && !ProgramTally) { // neither
       AtomS3.Display.clear();
       AtomS3.Display.setTextColor(TFT_WHITE);
       AtomS3.Lcd.fillScreen(TFT_BLACK);
-      AtomS3.Display.drawString("3", AtomS3.Display.width() / 2, AtomS3.Display.height() / 2);
+      AtomS3.Display.drawString(cameraNumber, AtomS3.Display.width() / 2, AtomS3.Display.height() / 2);
     }
   }
   ProgramTallyPrevious = ProgramTally;
