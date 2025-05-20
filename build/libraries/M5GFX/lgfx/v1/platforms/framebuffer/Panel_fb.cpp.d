@@ -1,0 +1,2 @@
+/workspaces/M5TallyServer/build/libraries/M5GFX/lgfx/v1/platforms/framebuffer/Panel_fb.cpp.o: \
+ /workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/framebuffer/Panel_fb.cpp

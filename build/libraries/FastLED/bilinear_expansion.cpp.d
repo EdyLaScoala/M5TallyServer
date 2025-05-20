@@ -1,0 +1,23 @@
+/workspaces/M5TallyServer/build/libraries/FastLED/bilinear_expansion.cpp.o: \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/bilinear_expansion.cpp \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/bilinear_expansion.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/crgb.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/chsv.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/namespace.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/color.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/lib8tion/types.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/force_inline.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/xymap.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/ref.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/scoped_ptr.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/xmap.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/lut.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/allocator.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/screenmap.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/str.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/fixed_map.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/fixed_vector.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/inplacenew.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/json.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/third_party/arduinojson/json.h \
+ /workspaces/M5TallyServer/Arduino/libraries/FastLED/src/third_party/arduinojson/json.hpp

@@ -2,13 +2,14 @@ import requests
 import json
 import time
 
-url = "https://reimagined-space-funicular-v6vjpx575797f6xww-5000.app.github.dev/compile"
-status_url = "https://reimagined-space-funicular-v6vjpx575797f6xww-5000.app.github.dev/status/"
-download_url = "https://reimagined-space-funicular-v6vjpx575797f6xww-5000.app.github.dev/download/"
+url = "https://fuzzy-space-telegram-5gq7vw9p996w3p4gp-5000.app.github.dev/compile"
+status_url = "https://fuzzy-space-telegram-5gq7vw9p996w3p4gp-5000.app.github.dev/status/"
+download_url = "https://fuzzy-space-telegram-5gq7vw9p996w3p4gp-5000.app.github.dev/download/"
 data = {
     "param1": "wifi",
     "param2": "password",
-    "param3": "192.168.31.145"
+    "param3": "192.168.31.145",
+    "param4": "1",
 }
 
 headers = {'Content-Type': 'application/json'}

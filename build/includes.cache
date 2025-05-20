@@ -1,0 +1,777 @@
+[
+  {
+    "Sourcefile": null,
+    "Include": "",
+    "Includepath": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/cores/esp32"
+  },
+  {
+    "Sourcefile": null,
+    "Include": "",
+    "Includepath": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/variants/m5stack_atoms3"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "M5AtomS3.h",
+    "Includepath": "/workspaces/M5TallyServer/Arduino/libraries/M5AtomS3/src"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "M5Unified.h",
+    "Includepath": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "M5GFX.h",
+    "Includepath": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "FastLED.h",
+    "Includepath": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "WiFi.h",
+    "Includepath": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "Network.h",
+    "Includepath": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/Network/src"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "SkaarhojPgmspace.h",
+    "Includepath": "/workspaces/M5TallyServer/Arduino/libraries/SkaarhojPgmspace"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "ATEMbase.h",
+    "Includepath": "/workspaces/M5TallyServer/Arduino/libraries/ATEMbase"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "ATEMstd.h",
+    "Includepath": "/workspaces/M5TallyServer/Arduino/libraries/ATEMstd"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "ArduinoJson.h",
+    "Includepath": "/workspaces/M5TallyServer/Arduino/libraries/ArduinoJson/src"
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/build/sketch/sketch.ino.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5AtomS3/src/M5AtomS3.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5AtomS3/src/utility/LedDisplay.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/M5Unified.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/AXP192_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/AXP2101_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/Button_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/I2C_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/IMU_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/INA3221_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/IP5306_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/Log_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/M5Timer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/Mic_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/Power_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/RTC8563_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/Speaker_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/Touch_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/imu/AK8963_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/imu/BMI270_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/imu/BMM150_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/imu/IMU_Base.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/imu/MPU6886_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5Unified/src/utility/imu/SH200Q_Class.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/M5GFX.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/Fonts/IPA/lgfx_font_japan.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/Fonts/efont/lgfx_efont_cn.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/Fonts/efont/lgfx_efont_ja.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/Fonts/efont/lgfx_efont_kr.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/Fonts/efont/lgfx_efont_tw.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/utility/lgfx_miniz.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/utility/lgfx_pngle.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/utility/lgfx_qoi.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/utility/lgfx_qrcode.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/utility/lgfx_tjpgd.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/LGFXBase.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/LGFX_Button.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/LGFX_Sprite.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/lgfx_fonts.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/misc/DividedFrameBuffer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/misc/SpriteBuffer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/misc/common_function.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/misc/pixelcopy.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_Device.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_FrameBufferBase.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_GDEW0154D67.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_GDEW0154M09.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_HasBuffer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_IT8951.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_LCD.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_M5HDMI.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_M5UnitGLASS.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_M5UnitLCD.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/panel/Panel_SSD1306.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32/Bus_I2C.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32/Bus_Parallel8.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32/Bus_SPI.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32/Light_PWM.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32/Panel_CVBS.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32/common.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32c3/Bus_Parallel8.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32s2/Bus_Parallel16.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32s2/Bus_Parallel8.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32s3/Bus_Parallel16.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/esp32s3/Bus_Parallel8.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/framebuffer/Panel_fb.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/framebuffer/common.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/sdl/Panel_sdl.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/platforms/sdl/common.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/touch/Touch_CST816S.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/touch/Touch_FT5x06.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/M5GFX/src/lgfx/v1/touch/Touch_GT911.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/FastLED.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/allocator.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/bilinear_expansion.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/bitswap.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/colorpalettes.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/colorutils.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/crgb.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/engine_events.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/file_system.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/five_bit_hd_gamma.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/fx/detail/data_stream.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/fx/frame.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/fx/storage/bytestreammemory.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/fx/storage/filebuffer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/fx/video/frame_interpolator.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/fx/video/stream_buffered.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/hsv2rgb.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/lib8tion.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/noise.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/avr/avr_millis_timer_source.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/experimental/s3_clockless_and_clocked_driver.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/i2s.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/idf4_rmt.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/idf4_rmt_impl.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/idf5_rmt.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/led_strip/configure_led.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/led_strip/construct.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/led_strip/led_strip_api.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/led_strip/led_strip_rmt_dev.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/led_strip/led_strip_rmt_encoder.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/led_strip/rmt_strip.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/esp/32/led_strip/rmt_strip_group.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/stub/led_sysdefs_stub.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/active_strip_data.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/fs_wasm.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/js.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/timer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/ui/button.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/ui/checkbox.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/ui/events.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/ui/setup_and_loop.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/ui/slider.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/ui/ui_internal.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/ui/ui_manager.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms/wasm/ui/ui_number_field.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/platforms.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/power_mgt.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/ref.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/rgbw.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/screenmap.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/simplex.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/str.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/stub_main.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/transpose8x1_noinline.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/FastLED/src/wiring.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src/AP.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src/STA.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src/WiFi.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src/WiFiAP.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src/WiFiGeneric.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src/WiFiMulti.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src/WiFiSTA.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/WiFi/src/WiFiScan.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/Network/src/NetworkClient.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/Network/src/NetworkEvents.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/Network/src/NetworkInterface.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/Network/src/NetworkManager.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/Network/src/NetworkServer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/home/codespace/.arduino15/packages/esp32/hardware/esp32/3.2.0/libraries/Network/src/NetworkUdp.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/ATEMbase/ATEMbase.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "/workspaces/M5TallyServer/Arduino/libraries/ATEMstd/ATEMstd.cpp",
+    "Include": "",
+    "Includepath": null
+  }
+]
