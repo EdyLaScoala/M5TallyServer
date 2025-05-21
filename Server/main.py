@@ -23,7 +23,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 # Configuration
-TEMPLATE_PATH = "./template_1.2.ino"
+TEMPLATE_PATH = "./template_1.5.ino"
 SKETCH_PATH = "./sketch"
 FQBN = "esp32:esp32:m5stack_atoms3"
 BUILD_PATH = "build"
@@ -59,8 +59,8 @@ def compile_sketch_background(job_id, data):
         param1 = str(data.get("param1", ""))
         param2 = str(data.get("param2", ""))
         param3 = str(data.get("param3", ""))
-        param4 = str(data.get("param4", "0"))  # Default to camera 0 if not provided
-        
+        param4 = str(data.get("param4", "1"))  # Default to camera 1 if not provided
+
         # Validate parameters
         if not param1.strip():
             job_status[job_id] = {"status": "failed", "error": "WiFi SSID cannot be empty"}
